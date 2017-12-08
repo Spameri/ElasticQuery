@@ -6,4 +6,5 @@ namespace Spameri;
 class ElasticQuery
 {
 
+
 }
