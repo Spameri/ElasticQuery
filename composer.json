@@ -1,13 +1,25 @@
 {
-    "name": "spameri/elastic-query",
-    "authors": [
-        {
-            "name": "VBoss",
-            "email": "vcevela@gmail.com"
-        }
-    ],
-    "require": {
-    },
-    "require-dev": {
-    }
+	"name": "spameri/elastic-query",
+	"authors": [
+		{
+			"name": "VBoss",
+			"email": "vcevela@gmail.com"
+		}
+	],
+	"require": {
+		"elasticsearch/elasticsearch": "^6.0"
+	},
+	"require-dev": {
+		"phpstan/phpstan-shim": "^0.9.1",
+		"nette/tester": "^2.0",
+		"slevomat/coding-standard": "^4.0"
+	},
+  	"autoload": {
+	  	"psr-4": {
+		  	"Spameri\\": "src"
+		}
+	},
+  	"autoload-dev": {
+	  	"Spameri\\": "tests"
+	}
 }
