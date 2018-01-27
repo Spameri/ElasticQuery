@@ -3,19 +3,12 @@
 namespace Spameri\ElasticQuery;
 
 
-class Query
+class Body
 {
-
 	public function __construct(
 		
 	)
 	{
 
-	}
-
-
-	public function toArray() : array
-	{
-		return [];
 	}
 }
