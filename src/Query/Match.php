@@ -42,7 +42,7 @@ class Match extends AbstractLeafQuery
 
 	public function __construct(
 		string $field,
-		string $query,
+		$query,
 		float $boost = 1.0,
 		string $operator = \Spameri\ElasticQuery\Query\Match\Operator::OR,
 		?int $slop = NULL,

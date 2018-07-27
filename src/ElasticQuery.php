@@ -14,24 +14,39 @@ class ElasticQuery implements \Spameri\ElasticQuery\Entity\ArrayInterface
 	 * @var \Spameri\ElasticQuery\Filter\FilterCollection
 	 */
 	private $filter;
+	/**
+	 * @var null
+	 */
+	private $sort;
+	/**
+	 * @var null
+	 */
+	private $aggregation;
+	/**
+	 * @var int
+	 */
+	private $from;
+	/**
+	 * @var int
+	 */
+	private $size;
 
 
 	public function __construct(
-		?\Spameri\ElasticQuery\Query\QueryCollection $query
-		, ?\Spameri\ElasticQuery\Filter\FilterCollection $filter
-		, $aggregation
+		?\Spameri\ElasticQuery\Query\QueryCollection $query = NULL
+		, ?\Spameri\ElasticQuery\Filter\FilterCollection $filter = NULL
+		, $sort = NULL
+		, $aggregation = NULL
+		, int $from = NULL
+		, int $size = NULL
 	)
 	{
-		if ( ! $query) {
-			$query = new \Spameri\ElasticQuery\Query\QueryCollection();
-		}
-
-		if ( ! $filter) {
-			$filter = new \Spameri\ElasticQuery\Filter\FilterCollection();
-		}
-
 		$this->query = $query;
 		$this->filter = $filter;
+		$this->sort = $sort;
+		$this->aggregation = $aggregation;
+		$this->from = $from;
+		$this->size = $size;
 	}
 
 
@@ -49,12 +64,31 @@ class ElasticQuery implements \Spameri\ElasticQuery\Entity\ArrayInterface
 
 	public function toArray() : array
 	{
-		$array = [
-			'query' 		=> $this->query->toArray(),
-			'filter'		=> $this->filter->toArray(),
-			'sort',
-			'aggregation',
-		];
+		$array = [];
+
+		if ($this->query) {
+			$array['query'] = $this->query->toArray();
+		}
+
+		if ($this->filter) {
+			$array['filter'] = $this->filter->toArray();
+		}
+
+		if ($this->sort) {
+			$array['sort'] = $this->sort;
+		}
+
+		if ($this->aggregation) {
+			$array['aggregation'] = $this->aggregation;
+		}
+
+		if ($this->size) {
+			$array['size'] = $this->size;
+		}
+
+		if ($this->from) {
+			$array['from'] = $this->from;
+		}
 
 		return $array;
 	}

@@ -22,7 +22,7 @@ class Term extends AbstractLeafQuery
 
 	public function __construct(
 		string $field,
-		string $query,
+		$query,
 		float $boost = 1.0
 	)
 	{
