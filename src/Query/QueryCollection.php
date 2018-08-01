@@ -14,15 +14,24 @@ class QueryCollection extends \Spameri\ElasticQuery\Query\AbstractLeafQuery
 	 * @var \Spameri\ElasticQuery\Query\ShouldCollection
 	 */
 	private $shouldCollection;
+	/**
+	 * @var null|\Spameri\ElasticQuery\Query\MustNotCollection
+	 */
+	private $mustNotCollection;
 
 
 	public function __construct(
 		?\Spameri\ElasticQuery\Query\MustCollection $mustCollection = NULL,
-		?\Spameri\ElasticQuery\Query\ShouldCollection $shouldCollection = NULL
+		?\Spameri\ElasticQuery\Query\ShouldCollection $shouldCollection = NULL,
+		?\Spameri\ElasticQuery\Query\MustNotCollection $mustNotCollection = NULL
 	)
 	{
 		if ( ! $mustCollection) {
 			$mustCollection = new \Spameri\ElasticQuery\Query\MustCollection();
+		}
+
+		if ( ! $mustNotCollection) {
+			$mustNotCollection = new \Spameri\ElasticQuery\Query\MustNotCollection();
 		}
 
 		if ( ! $shouldCollection) {
@@ -31,6 +40,7 @@ class QueryCollection extends \Spameri\ElasticQuery\Query\AbstractLeafQuery
 
 		$this->mustCollection = $mustCollection;
 		$this->shouldCollection = $shouldCollection;
+		$this->mustNotCollection = $mustNotCollection;
 	}
 
 
@@ -59,6 +69,12 @@ class QueryCollection extends \Spameri\ElasticQuery\Query\AbstractLeafQuery
 		foreach ($this->mustCollection as $item) {
 			$array['bool']['must'][] = $item->toArray();
 		}
+
+		/** @var \Spameri\ElasticQuery\Query\AbstractLeafQuery $item */
+		foreach ($this->mustNotCollection as $item) {
+			$array['bool']['must_not'][] = $item->toArray();
+		}
+
 		/** @var \Spameri\ElasticQuery\Query\AbstractLeafQuery $item */
 		foreach ($this->shouldCollection as $item) {
 			$array['bool']['should'][] = $item->toArray();

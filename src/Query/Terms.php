@@ -26,6 +26,12 @@ class Terms extends AbstractLeafQuery
 		float $boost = 1.0
 	)
 	{
+		if ( ! \count($query)) {
+			throw new \Spameri\ElasticQuery\Exception\InvalidArgumentException(
+				'Terms query must contain values, empty array given.'
+			);
+		}
+
 		$this->field = $field;
 		$this->query = $query;
 		$this->boost = $boost;

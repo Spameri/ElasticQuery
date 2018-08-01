@@ -35,7 +35,7 @@ class ElasticQuery implements \Spameri\ElasticQuery\Entity\ArrayInterface
 	public function __construct(
 		?\Spameri\ElasticQuery\Query\QueryCollection $query = NULL
 		, ?\Spameri\ElasticQuery\Filter\FilterCollection $filter = NULL
-		, $sort = NULL
+		, \Spameri\ElasticQuery\Options\SortCollection $sort = NULL
 		, $aggregation = NULL
 		, int $from = NULL
 		, int $size = NULL
@@ -75,7 +75,7 @@ class ElasticQuery implements \Spameri\ElasticQuery\Entity\ArrayInterface
 		}
 
 		if ($this->sort) {
-			$array['sort'] = $this->sort;
+			$array['sort'] = $this->sort->toArray();
 		}
 
 		if ($this->aggregation) {
