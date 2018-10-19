@@ -3,6 +3,9 @@
 namespace Spameri\ElasticQuery\Query;
 
 
+/**
+ * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-terms-query.html
+ */
 class Terms implements LeafQueryInterface
 {
 
@@ -10,10 +13,12 @@ class Terms implements LeafQueryInterface
 	 * @var string
 	 */
 	private $field;
+
 	/**
 	 * @var array
 	 */
 	private $query;
+
 	/**
 	 * @var float
 	 */
@@ -21,9 +26,9 @@ class Terms implements LeafQueryInterface
 
 
 	public function __construct(
-		string $field,
-		array $query,
-		float $boost = 1.0
+		string $field
+		, array $query
+		, float $boost = 1.0
 	)
 	{
 		if ( ! \count($query)) {
@@ -40,7 +45,7 @@ class Terms implements LeafQueryInterface
 
 	public function key() : string
 	{
-		return $this->field . '_' . $this->query;
+		return 'terms_' . $this->field . '_' . \implode('-', $this->query);
 	}
 
 
@@ -55,4 +60,5 @@ class Terms implements LeafQueryInterface
 
 		return $array;
 	}
+
 }

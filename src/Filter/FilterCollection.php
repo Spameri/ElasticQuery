@@ -3,7 +3,7 @@
 namespace Spameri\ElasticQuery\Filter;
 
 
-class FilterCollection extends \Spameri\ElasticQuery\Filter\AbstractLeafFilter
+class FilterCollection implements FilterInterface
 {
 
 	/**

@@ -10,18 +10,22 @@ class Document implements \Spameri\ElasticQuery\Entity\ArrayInterface
 	 * @var ?string
 	 */
 	private $index;
+
 	/**
 	 * @var ?\Spameri\ElasticQuery\Document\BodyInterface
 	 */
 	private $body;
+
 	/**
 	 * @var ?string
 	 */
 	private $type;
+
 	/**
 	 * @var ?string
 	 */
 	private $id;
+
 	/**
 	 * @var array
 	 */

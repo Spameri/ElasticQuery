@@ -3,6 +3,9 @@
 namespace Spameri\ElasticQuery\Aggregation;
 
 
+/**
+ * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-terms-aggregation.html
+ */
 class Term implements LeafAggregationInterface
 {
 
@@ -17,15 +20,15 @@ class Term implements LeafAggregationInterface
 	private $size;
 	
 	/**
-	 * @var int
+	 * @var ?int
 	 */
 	private $missing;
 
 
 	public function __construct(
-		string $field,
-		int $size = 5,
-		int $missing = NULL
+		string $field
+		, int $size = 5
+		, int $missing = NULL
 	)
 	{
 		$this->field = $field;

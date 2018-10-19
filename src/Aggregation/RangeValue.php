@@ -23,9 +23,9 @@ class RangeValue implements \Spameri\ElasticQuery\Entity\EntityInterface
 
 
 	public function __construct(
-		string $key,
-		int $from,
-		int $to
+		string $key
+		, int $from
+		, int $to
 	)
 	{
 		$this->key = $key;

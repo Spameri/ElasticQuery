@@ -3,6 +3,9 @@
 namespace Spameri\ElasticQuery\Aggregation;
 
 
+/**
+ * https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-range-aggregation.html
+ */
 class Range implements LeafAggregationInterface
 {
 
@@ -23,9 +26,9 @@ class Range implements LeafAggregationInterface
 
 
 	public function __construct(
-		string $field,
-		bool $keyed = FALSE,
-		\Spameri\ElasticQuery\Aggregation\RangeValueCollection $rangeValueCollection = NULL
+		string $field
+		, bool $keyed = FALSE
+		, \Spameri\ElasticQuery\Aggregation\RangeValueCollection $rangeValueCollection = NULL
 	)
 	{
 		$this->field = $field;

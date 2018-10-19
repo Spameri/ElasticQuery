@@ -11,8 +11,7 @@
 	  	"issues": "https://github.com/Spameri/ElasticQuery/issues"
 	},
 	"require": {
-	  	"php": ">=7.1",
-		"elasticsearch/elasticsearch": "^6.0"
+	  	"php": ">=7.1"
 	},
 	"require-dev": {
 		"phpstan/phpstan-shim": "v0.10.3",
@@ -24,6 +23,8 @@
 		}
 	},
   	"autoload-dev": {
-	  	"Spameri\\": "tests"
+	  "psr-4": {
+		"SpameriTests\\": "tests/SpameriTests"
+	  }
 	}
 }

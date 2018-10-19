@@ -12,14 +12,14 @@ class AggregationCollection implements LeafAggregationInterface
 	private $filter;
 
 	/**
-	 * @var \Spameri\ElasticQuery\Aggregation\LeafAggregationCollection
+	 * @var \Spameri\ElasticQuery\Aggregation\LeafAggregationCollection[]
 	 */
 	private $aggregations;
 
 
 	public function __construct(
-		?\Spameri\ElasticQuery\Filter\FilterCollection $filter,
-		\Spameri\ElasticQuery\Aggregation\LeafAggregationCollection ... $aggregations
+		?\Spameri\ElasticQuery\Filter\FilterCollection $filter = NULL
+		, \Spameri\ElasticQuery\Aggregation\LeafAggregationCollection ... $aggregations
 	)
 	{
 		if ( ! $filter) {

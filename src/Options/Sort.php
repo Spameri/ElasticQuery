@@ -3,6 +3,9 @@
 namespace Spameri\ElasticQuery\Options;
 
 
+/**
+ * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-request-sort.html
+ */
 class Sort implements \Spameri\ElasticQuery\Entity\EntityInterface
 {
 

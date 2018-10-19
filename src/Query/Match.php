@@ -3,6 +3,9 @@
 namespace Spameri\ElasticQuery\Query;
 
 
+/**
+ * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-query.html
+ */
 class Match implements LeafQueryInterface
 {
 
@@ -10,30 +13,37 @@ class Match implements LeafQueryInterface
 	 * @var string
 	 */
 	private $field;
+
 	/**
 	 * @var string
 	 */
 	private $query;
+
 	/**
 	 * @var string
 	 */
 	private $operator;
+
 	/**
 	 * @var null|\Spameri\ElasticQuery\Query\Match\Fuzziness
 	 */
 	private $fuzziness;
+
 	/**
 	 * @var float
 	 */
 	private $boost;
+
 	/**
 	 * @var int|null
 	 */
 	private $slop;
+
 	/**
 	 * @var null|string
 	 */
 	private $analyzer;
+
 	/**
 	 * @var int|null
 	 */
@@ -41,14 +51,14 @@ class Match implements LeafQueryInterface
 
 
 	public function __construct(
-		string $field,
-		$query,
-		float $boost = 1.0,
-		string $operator = \Spameri\ElasticQuery\Query\Match\Operator::OR,
-		?int $slop = NULL,
-		?\Spameri\ElasticQuery\Query\Match\Fuzziness $fuzziness = NULL,
-		?string $analyzer = NULL,
-		?int $minimumShouldMatch = NULL
+		string $field
+		, $query
+		, float $boost = 1.0
+		, string $operator = \Spameri\ElasticQuery\Query\Match\Operator::OR
+		, ?int $slop = NULL
+		, ?\Spameri\ElasticQuery\Query\Match\Fuzziness $fuzziness = NULL
+		, ?string $analyzer = NULL
+		, ?int $minimumShouldMatch = NULL
 	)
 	{
 		if ( ! \in_array($operator, \Spameri\ElasticQuery\Query\Match\Operator::OPERATORS, TRUE)) {
@@ -70,7 +80,7 @@ class Match implements LeafQueryInterface
 
 	public function key() : string
 	{
-		return $this->field . '_' . $this->query;
+		return 'match_' . $this->field . '_' . $this->query;
 	}
 
 

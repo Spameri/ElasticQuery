@@ -3,6 +3,9 @@
 namespace Spameri\ElasticQuery\Aggregation;
 
 
+/**
+ * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-histogram-aggregation.html
+ */
 class Histogram implements LeafAggregationInterface
 {
 
@@ -18,8 +21,8 @@ class Histogram implements LeafAggregationInterface
 
 
 	public function __construct(
-		string $field,
-		int $interval
+		string $field
+		, int $interval
 	)
 	{
 		$this->field = $field;
@@ -42,4 +45,5 @@ class Histogram implements LeafAggregationInterface
 			],
 		];
 	}
+
 }

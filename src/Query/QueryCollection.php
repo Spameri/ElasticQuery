@@ -10,20 +10,22 @@ class QueryCollection implements LeafQueryInterface
 	 * @var \Spameri\ElasticQuery\Query\MustCollection
 	 */
 	private $mustCollection;
+
 	/**
 	 * @var \Spameri\ElasticQuery\Query\ShouldCollection
 	 */
 	private $shouldCollection;
+
 	/**
-	 * @var null|\Spameri\ElasticQuery\Query\MustNotCollection
+	 * @var \Spameri\ElasticQuery\Query\MustNotCollection
 	 */
 	private $mustNotCollection;
 
 
 	public function __construct(
-		?\Spameri\ElasticQuery\Query\MustCollection $mustCollection = NULL,
-		?\Spameri\ElasticQuery\Query\ShouldCollection $shouldCollection = NULL,
-		?\Spameri\ElasticQuery\Query\MustNotCollection $mustNotCollection = NULL
+		?\Spameri\ElasticQuery\Query\MustCollection $mustCollection = NULL
+		, ?\Spameri\ElasticQuery\Query\ShouldCollection $shouldCollection = NULL
+		, ?\Spameri\ElasticQuery\Query\MustNotCollection $mustNotCollection = NULL
 	)
 	{
 		if ( ! $mustCollection) {
@@ -53,6 +55,12 @@ class QueryCollection implements LeafQueryInterface
 	public function should() : \Spameri\ElasticQuery\Query\ShouldCollection
 	{
 		return $this->shouldCollection;
+	}
+
+
+	public function mustNotCollection(): \Spameri\ElasticQuery\Query\MustNotCollection
+	{
+		return $this->mustNotCollection;
 	}
 
 

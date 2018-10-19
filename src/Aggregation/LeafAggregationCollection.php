@@ -3,7 +3,7 @@
 namespace Spameri\ElasticQuery\Aggregation;
 
 
-class LeafAggregationCollection implements LeafAggregationInterface
+class LeafAggregationCollection implements LeafAggregationInterface, \IteratorAggregate
 {
 
 	/**
@@ -17,15 +17,15 @@ class LeafAggregationCollection implements LeafAggregationInterface
 	private $filter;
 
 	/**
-	 * @var \Spameri\ElasticQuery\Aggregation\LeafAggregationInterface
+	 * @var \Spameri\ElasticQuery\Aggregation\LeafAggregationInterface[]
 	 */
 	private $aggregations;
 
 
 	public function __construct(
-		string $name,
-		?\Spameri\ElasticQuery\Filter\FilterCollection $filter,
-		\Spameri\ElasticQuery\Aggregation\LeafAggregationInterface ... $aggregations
+		string $name
+		, ?\Spameri\ElasticQuery\Filter\FilterCollection $filter
+		, \Spameri\ElasticQuery\Aggregation\LeafAggregationInterface ... $aggregations
 	)
 	{
 		if ( ! $filter) {
@@ -50,12 +50,18 @@ class LeafAggregationCollection implements LeafAggregationInterface
 	}
 
 
+	public function getIterator() : \ArrayIterator
+	{
+		return new \ArrayIterator($this->aggregations);
+	}
+
+
 	public function toArray() : array
 	{
 		$array = [];
 
 		foreach ($this->aggregations as $aggregation) {
-			if ($aggregation instanceof LeafAggregationCollection) {
+			if ($aggregation instanceof \Spameri\ElasticQuery\Aggregation\LeafAggregationCollection) {
 				$array[$this->key()]['aggs'] = $aggregation->toArray();
 
 			} else {

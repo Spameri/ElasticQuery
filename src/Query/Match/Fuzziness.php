@@ -3,6 +3,9 @@
 namespace Spameri\ElasticQuery\Query\Match;
 
 
+/**
+ * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/common-options.html#fuzziness
+ */
 class Fuzziness
 {
 
@@ -30,4 +33,5 @@ class Fuzziness
 	{
 		return $this->fuzziness;
 	}
+
 }

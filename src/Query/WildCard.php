@@ -4,9 +4,9 @@ namespace Spameri\ElasticQuery\Query;
 
 
 /**
- * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-term-query.html
+ * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-wildcard-query.html
  */
-class Term implements LeafQueryInterface
+class WildCard implements LeafQueryInterface
 {
 
 	/**
@@ -39,14 +39,14 @@ class Term implements LeafQueryInterface
 
 	public function key() : string
 	{
-		return 'term_' . $this->field . '_' . $this->query;
+		return 'wildcard_' . $this->field . '_' . $this->query;
 	}
 
 
 	public function toArray() : array
 	{
 		$array = [
-			'term' => [
+			'wildcard' => [
 				$this->field => [
 					'value' => $this->query,
 					'boost' => $this->boost,

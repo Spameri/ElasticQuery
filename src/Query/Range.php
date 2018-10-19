@@ -3,6 +3,9 @@
 namespace Spameri\ElasticQuery\Query;
 
 
+/**
+ * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-range-query.html
+ */
 class Range implements LeafQueryInterface
 {
 
@@ -10,14 +13,17 @@ class Range implements LeafQueryInterface
 	 * @var string
 	 */
 	private $field;
+
 	/**
 	 * @var int|float|\DateTimeInterface|null
 	 */
 	private $gte;
+
 	/**
 	 * @var int|float|\DateTimeInterface|null
 	 */
 	private $lte;
+
 	/**
 	 * @var float
 	 */
@@ -25,10 +31,10 @@ class Range implements LeafQueryInterface
 
 
 	public function __construct(
-		string $field,
-		$gte = NULL,
-		$lte = NULL,
-		float $boost = 1.0
+		string $field
+		, $gte = NULL
+		, $lte = NULL
+		, float $boost = 1.0
 	)
 	{
 		if ($gte === NULL && $lte === NULL) {
@@ -52,7 +58,10 @@ class Range implements LeafQueryInterface
 
 	public function key() : string
 	{
-		return $this->field . '_' . $this->gte . '_' . $this->lte;
+		$gte = $this->gte instanceof \DateTimeInterface ? $this->gte->format('Y-m-d H:i:s') : $this->gte;
+		$lte = $this->lte instanceof \DateTimeInterface ? $this->lte->format('Y-m-d H:i:s') : $this->lte;
+
+		return 'range_' . $this->field . '_' . $gte . '_' . $lte;
 	}
 
 
@@ -71,7 +80,7 @@ class Range implements LeafQueryInterface
 		}
 
 		if ($this->lte !== NULL) {
-			$array['range'][$this->field]['lte'] = $this->lte instanceof \DateTimeInterface ? $this->lte->format('Y-m-d H:i:s') : $this->gte;
+			$array['range'][$this->field]['lte'] = $this->lte instanceof \DateTimeInterface ? $this->lte->format('Y-m-d H:i:s') : $this->lte;
 		}
 
 		return $array;
