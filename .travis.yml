@@ -10,4 +10,3 @@ before_script:
 script:
   - vendor/bin/tester -c tests/php.ini tests
   - vendor/bin/phpstan analyse -l 7 src tests
-  - vendor/bin/phpcs --standard=vendor/slevomat/coding-standard/SlevomatCodingStandard/ruleset.xml --sniffs=SlevomatCodingStandard.ControlStructures.DisallowYodaComparison,SlevomatCodingStandard.Namespaces.AlphabeticallySortedUses --extensions=php --encoding=utf-8 --tab-width=4 -sp src tests
