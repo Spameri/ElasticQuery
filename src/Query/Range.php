@@ -3,7 +3,7 @@
 namespace Spameri\ElasticQuery\Query;
 
 
-class Range extends AbstractLeafQuery
+class Range implements LeafQueryInterface
 {
 
 	/**

@@ -36,9 +36,9 @@ class ElasticQuery implements \Spameri\ElasticQuery\Entity\ArrayInterface
 		?\Spameri\ElasticQuery\Query\QueryCollection $query = NULL
 		, ?\Spameri\ElasticQuery\Filter\FilterCollection $filter = NULL
 		, \Spameri\ElasticQuery\Options\SortCollection $sort = NULL
-		, $aggregation = NULL
-		, int $from = NULL
-		, int $size = NULL
+		, \Spameri\ElasticQuery\Aggregation\AggregationCollection $aggregation = NULL
+		, ?int $from = NULL
+		, ?int $size = NULL
 	)
 	{
 		$this->query = $query;
@@ -79,14 +79,14 @@ class ElasticQuery implements \Spameri\ElasticQuery\Entity\ArrayInterface
 		}
 
 		if ($this->aggregation) {
-			$array['aggregation'] = $this->aggregation;
+			$array['aggs'] = $this->aggregation->toArray();
 		}
 
-		if ($this->size) {
+		if ($this->size !== NULL) {
 			$array['size'] = $this->size;
 		}
 
-		if ($this->from) {
+		if ($this->from !== NULL) {
 			$array['from'] = $this->from;
 		}
 

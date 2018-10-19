@@ -3,25 +3,28 @@
 namespace Spameri\ElasticQuery\Query;
 
 
-class MustNotCollection implements \Spameri\ElasticQuery\Collection\CollectionInterface
+class MustNotCollection implements \Spameri\ElasticQuery\Collection\QueryCollectionInterface
 {
 
 	/**
-	 * @var \Spameri\ElasticQuery\Query\AbstractLeafQuery[]
+	 * @var \Spameri\ElasticQuery\Query\LeafQueryInterface[]
 	 */
 	private $collection;
 
 
 	public function __construct(
-		\Spameri\ElasticQuery\Query\AbstractLeafQuery ... $collection
+		\Spameri\ElasticQuery\Query\LeafQueryInterface ... $collection
 	)
 	{
-		$this->collection = $collection;
+		$this->collection = [];
+		foreach ($collection as $item) {
+			$this->add($item);
+		}
 	}
 
 
 	public function add(
-		\Spameri\ElasticQuery\Query\AbstractLeafQuery $item
+		\Spameri\ElasticQuery\Query\LeafQueryInterface $item
 	) : void
 	{
 		$this->collection[$item->key()] = $item;
@@ -44,7 +47,7 @@ class MustNotCollection implements \Spameri\ElasticQuery\Collection\CollectionIn
 
 	public function get(
 		string $key
-	) : ?\Spameri\ElasticQuery\Query\AbstractLeafQuery
+	) : ?\Spameri\ElasticQuery\Query\LeafQueryInterface
 	{
 		if (isset($this->collection[$key])) {
 			return $this->collection[$key];

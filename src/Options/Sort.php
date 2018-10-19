@@ -3,19 +3,24 @@
 namespace Spameri\ElasticQuery\Options;
 
 
-class Sort extends \Spameri\ElasticQuery\Entity\AbstractEntity
+class Sort implements \Spameri\ElasticQuery\Entity\EntityInterface
 {
+
 	public const ASC = 'ASC';
 	public const DESC = 'DESC';
+	public const MISSING_LAST = '_last';
+	public const MISSING_FIRST = '_first';
 
 	/**
 	 * @var string
 	 */
 	private $field;
+
 	/**
 	 * @var string
 	 */
 	private $type;
+
 	/**
 	 * @var string
 	 */
@@ -25,12 +30,17 @@ class Sort extends \Spameri\ElasticQuery\Entity\AbstractEntity
 	public function __construct(
 		string $field
 		, string $type = self::DESC
-		, string $missing = '_last'
+		, string $missing = self::MISSING_LAST
 	)
 	{
 		if ( ! \in_array($type, [self::ASC, self::DESC], TRUE)) {
 			throw new \Spameri\ElasticQuery\Exception\InvalidArgumentException(
 				'Sorting type ' . $type . ' is out of allowed range. See \Spameri\ElasticQuery\Options\Sort for reference.'
+			);
+		}
+		if ( ! \in_array($missing, [self::MISSING_FIRST, self::MISSING_LAST], TRUE)) {
+			throw new \Spameri\ElasticQuery\Exception\InvalidArgumentException(
+				'Sorting by missing value on filed ' . $field . ' is out of allowed range. See \Spameri\ElasticQuery\Options\Sort for reference.'
 			);
 		}
 

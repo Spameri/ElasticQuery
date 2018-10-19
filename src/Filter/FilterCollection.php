@@ -39,7 +39,7 @@ class FilterCollection extends \Spameri\ElasticQuery\Filter\AbstractLeafFilter
 	public function toArray() : array
 	{
 		$array = [];
-		/** @var \Spameri\ElasticQuery\Query\AbstractLeafQuery $item */
+		/** @var \Spameri\ElasticQuery\Query\LeafQueryInterface $item */
 		foreach ($this->mustCollection as $item) {
 			$array['filter'][] = $item->toArray();
 		}

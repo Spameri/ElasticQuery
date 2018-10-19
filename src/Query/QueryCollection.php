@@ -3,7 +3,7 @@
 namespace Spameri\ElasticQuery\Query;
 
 
-class QueryCollection extends \Spameri\ElasticQuery\Query\AbstractLeafQuery
+class QueryCollection implements LeafQueryInterface
 {
 
 	/**
@@ -65,17 +65,17 @@ class QueryCollection extends \Spameri\ElasticQuery\Query\AbstractLeafQuery
 	public function toArray() : array
 	{
 		$array = [];
-		/** @var \Spameri\ElasticQuery\Query\AbstractLeafQuery $item */
+		/** @var \Spameri\ElasticQuery\Query\LeafQueryInterface $item */
 		foreach ($this->mustCollection as $item) {
 			$array['bool']['must'][] = $item->toArray();
 		}
 
-		/** @var \Spameri\ElasticQuery\Query\AbstractLeafQuery $item */
+		/** @var \Spameri\ElasticQuery\Query\LeafQueryInterface $item */
 		foreach ($this->mustNotCollection as $item) {
 			$array['bool']['must_not'][] = $item->toArray();
 		}
 
-		/** @var \Spameri\ElasticQuery\Query\AbstractLeafQuery $item */
+		/** @var \Spameri\ElasticQuery\Query\LeafQueryInterface $item */
 		foreach ($this->shouldCollection as $item) {
 			$array['bool']['should'][] = $item->toArray();
 		}

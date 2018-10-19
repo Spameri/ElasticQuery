@@ -3,28 +3,8 @@
 namespace Spameri\ElasticQuery\Options;
 
 
-class SortCollection extends \Spameri\ElasticQuery\Query\AbstractLeafQuery
+class SortCollection extends \Spameri\ElasticQuery\Collection\AbstractCollection implements \Spameri\ElasticQuery\Entity\ArrayInterface
 {
-
-	/**
-	 * @var \Spameri\ElasticQuery\Options\Sort[]
-	 */
-	private $collection;
-
-
-	public function __construct(
-		Sort ... $collection
-	)
-	{
-		$this->collection = $collection;
-	}
-
-
-	public function key() : string
-	{
-		return '';
-	}
-
 
 	public function toArray() : array
 	{

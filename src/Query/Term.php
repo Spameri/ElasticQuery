@@ -3,7 +3,7 @@
 namespace Spameri\ElasticQuery\Query;
 
 
-class Term extends AbstractLeafQuery
+class Term implements LeafQueryInterface
 {
 
 	/**

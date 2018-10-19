@@ -3,8 +3,13 @@
 namespace Spameri\ElasticQuery\Aggregation;
 
 
-class AggregationCollection implements LeafAggregationInterface
+class LeafAggregationCollection implements LeafAggregationInterface
 {
+
+	/**
+	 * @var string
+	 */
+	private $name;
 
 	/**
 	 * @var \Spameri\ElasticQuery\Filter\FilterCollection
@@ -12,20 +17,22 @@ class AggregationCollection implements LeafAggregationInterface
 	private $filter;
 
 	/**
-	 * @var \Spameri\ElasticQuery\Aggregation\LeafAggregationCollection
+	 * @var \Spameri\ElasticQuery\Aggregation\LeafAggregationInterface
 	 */
 	private $aggregations;
 
 
 	public function __construct(
+		string $name,
 		?\Spameri\ElasticQuery\Filter\FilterCollection $filter,
-		\Spameri\ElasticQuery\Aggregation\LeafAggregationCollection ... $aggregations
+		\Spameri\ElasticQuery\Aggregation\LeafAggregationInterface ... $aggregations
 	)
 	{
 		if ( ! $filter) {
 			$filter = new \Spameri\ElasticQuery\Filter\FilterCollection();
 		}
 
+		$this->name = $name;
 		$this->filter = $filter;
 		$this->aggregations = $aggregations;
 	}
@@ -33,7 +40,7 @@ class AggregationCollection implements LeafAggregationInterface
 
 	public function key() : string
 	{
-		return '';
+		return $this->name;
 	}
 
 
@@ -48,7 +55,12 @@ class AggregationCollection implements LeafAggregationInterface
 		$array = [];
 
 		foreach ($this->aggregations as $aggregation) {
-			$array = $array + $aggregation->toArray();
+			if ($aggregation instanceof LeafAggregationCollection) {
+				$array[$this->key()]['aggs'] = $aggregation->toArray();
+
+			} else {
+				$array[$this->key()] = $array + $aggregation->toArray();
+			}
 		}
 
 		return $array;

@@ -1,0 +1,36 @@
+<?php declare(strict_types = 1);
+
+namespace Spameri\ElasticQuery\Aggregation;
+
+
+class RangeValueCollection implements \IteratorAggregate
+{
+
+	/**
+	 * @var \Spameri\ElasticQuery\Aggregation\RangeValue[]
+	 */
+	private $collection;
+
+
+	public function __construct(
+		RangeValue ... $collection
+	)
+	{
+		$this->collection = $collection;
+	}
+
+
+	public function getIterator() : \ArrayIterator
+	{
+		return new \ArrayIterator($this->collection);
+	}
+
+
+	public function add(
+		\Spameri\ElasticQuery\Aggregation\RangeValue $rangeValue
+	) : void
+	{
+		$this->collection[] = $rangeValue;
+	}
+
+}

@@ -7,21 +7,23 @@ abstract class AbstractCollection implements CollectionInterface
 {
 
 	/**
-	 * @var \Spameri\ElasticQuery\Entity\AbstractEntity[]
+	 * @var \Spameri\ElasticQuery\Entity\EntityInterface[]
 	 */
-	private $collection;
+	protected $collection;
 
 
 	public function __construct(
-		\Spameri\ElasticQuery\Entity\AbstractEntity ... $collection
+		\Spameri\ElasticQuery\Entity\EntityInterface ... $collection
 	)
 	{
-		$this->collection = $collection;
+		foreach ($collection as $item) {
+			$this->add($item);
+		}
 	}
 
 
 	public function add(
-		\Spameri\ElasticQuery\Entity\AbstractEntity $item
+		\Spameri\ElasticQuery\Entity\EntityInterface $item
 	) : void
 	{
 		$this->collection[$item->key()] = $item;
@@ -44,7 +46,7 @@ abstract class AbstractCollection implements CollectionInterface
 
 	public function get(
 		string $key
-	) : ?\Spameri\ElasticQuery\Entity\AbstractEntity
+	) : ?\Spameri\ElasticQuery\Entity\EntityInterface
 	{
 		if (isset($this->collection[$key])) {
 			return $this->collection[$key];

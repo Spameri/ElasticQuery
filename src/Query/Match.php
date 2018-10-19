@@ -3,7 +3,7 @@
 namespace Spameri\ElasticQuery\Query;
 
 
-class Match extends AbstractLeafQuery
+class Match implements LeafQueryInterface
 {
 
 	/**

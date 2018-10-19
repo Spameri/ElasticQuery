@@ -6,4 +6,6 @@ namespace Spameri\ElasticQuery\Value;
 interface ValueInterface
 {
 
+	public function value();
+
 }

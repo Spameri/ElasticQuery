@@ -3,11 +3,11 @@
 namespace Spameri\ElasticQuery\Collection;
 
 
-interface CollectionInterface extends \IteratorAggregate
+interface QueryCollectionInterface extends \IteratorAggregate
 {
 
 	public function add(
-		\Spameri\ElasticQuery\Entity\EntityInterface $item
+		\Spameri\ElasticQuery\Query\LeafQueryInterface $item
 	) : void;
 
 
@@ -18,7 +18,7 @@ interface CollectionInterface extends \IteratorAggregate
 
 	public function get(
 		string $key
-	) : ?\Spameri\ElasticQuery\Entity\EntityInterface;
+	) : ?\Spameri\ElasticQuery\Query\LeafQueryInterface;
 
 
 	public function isValue(
