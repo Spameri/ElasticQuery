@@ -82,8 +82,16 @@ class ElasticQuery implements \Spameri\ElasticQuery\Entity\ArrayInterface
 	public function toArray() : array
 	{
 		$array = [];
-		$array['query'] = $this->query->toArray();
-		$array['filter'] = $this->filter->toArray();
+
+		$queryArray = $this->query->toArray();
+		if ($queryArray) {
+			$array['query'] = $queryArray;
+		}
+
+		$filterArray = $this->filter->toArray();
+		if ($filterArray) {
+			$array['filter'] = $filterArray;
+		}
 
 		$sortArray = $this->sort->toArray();
 		if ($sortArray) {

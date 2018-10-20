@@ -16,6 +16,7 @@ abstract class AbstractCollection implements CollectionInterface
 		\Spameri\ElasticQuery\Entity\EntityInterface ... $collection
 	)
 	{
+		$this->collection = [];
 		foreach ($collection as $item) {
 			$this->add($item);
 		}
