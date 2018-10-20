@@ -99,7 +99,7 @@ class Match implements LeafQueryInterface
 			$array['match'][$this->field]['operator'] = $this->operator;
 		}
 
-		if ($this->fuzziness->__toString()) {
+		if ($this->fuzziness && $this->fuzziness->__toString()) {
 			$array['match'][$this->field]['fuzziness'] = $this->fuzziness->__toString();
 		}
 
