@@ -43,6 +43,34 @@ class AggregationCollection implements LeafAggregationInterface
 	}
 
 
+	public function add(
+		LeafAggregationInterface $leafAggregation
+	) : void
+	{
+		$this->aggregations[$leafAggregation->key()] = $leafAggregation;
+	}
+
+
+	public function keys() : array
+	{
+		return \array_map('\strval', \array_keys($this->aggregations));
+	}
+
+
+	public function isKey(
+		string $key
+	) : bool
+	{
+		return \array_key_exists($key, \array_map('\strval', \array_keys($this->aggregations)));
+	}
+
+
+	public function count() : int
+	{
+		return \count($this->aggregations);
+	}
+
+
 	public function toArray() : array
 	{
 		$array = [];
