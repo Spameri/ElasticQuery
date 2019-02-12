@@ -7,11 +7,11 @@ class Options
 {
 
 	/**
-	 * @var int
+	 * @var ?int
 	 */
 	private $size;
 	/**
-	 * @var int
+	 * @var ?int
 	 */
 	private $from;
 	/**
@@ -19,7 +19,7 @@ class Options
 	 */
 	private $sort;
 	/**
-	 * @var int
+	 * @var ?float
 	 */
 	private $minScore;
 
@@ -28,7 +28,7 @@ class Options
 		?int $size = NULL,
 		?int $from = NULL,
 		?\Spameri\ElasticQuery\Options\SortCollection $sort = NULL,
-		float $minScore = NULL
+		?float $minScore = NULL
 	)
 	{
 		$this->size = $size;

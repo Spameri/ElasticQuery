@@ -9,7 +9,7 @@ require_once __DIR__ . '/../../bootstrap.php';
 class Result extends \Tester\TestCase
 {
 
-	public function createTest(): void
+	public function testCreate() : void
 	{
 		$result = [
 			'took' => 37,

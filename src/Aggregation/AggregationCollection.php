@@ -44,7 +44,7 @@ class AggregationCollection implements LeafAggregationInterface
 
 
 	public function add(
-		LeafAggregationInterface $leafAggregation
+		LeafAggregationCollection $leafAggregation
 	) : void
 	{
 		$this->aggregations[$leafAggregation->key()] = $leafAggregation;

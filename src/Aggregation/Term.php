@@ -25,7 +25,7 @@ class Term implements LeafAggregationInterface
 	private $missing;
 
 	/**
-	 * @var string
+	 * @var ?string
 	 */
 	private $key;
 

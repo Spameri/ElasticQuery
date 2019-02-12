@@ -9,4 +9,4 @@ before_script:
 
 script:
   - vendor/bin/tester -c tests/php.ini tests
-  - vendor/bin/phpstan analyse -l 7 src tests
+  - vendor/bin/phpstan analyse -l 7 -c phpstan.neon src tests
