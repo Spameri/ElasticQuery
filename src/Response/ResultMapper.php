@@ -24,8 +24,8 @@ class ResultMapper
 	) : \Spameri\ElasticQuery\Response\Result\HitCollection
 	{
 		$hits = [];
-		foreach ($elasticSearchResponse['hits'] as $hitPosition => $hit) {
-			$hits[] = $this->mapHit($hit, $hitPosition);
+		foreach ($elasticSearchResponse['hits']['hits'] as $hitPosition => $hit) {
+			$hits[] = $this->mapHit($hit, (int) $hitPosition);
 		}
 
 		return new \Spameri\ElasticQuery\Response\Result\HitCollection(
@@ -65,6 +65,7 @@ class ResultMapper
 			... $aggregationArray
 		);
 	}
+
 
 	private function mapAggregation(
 		string $name

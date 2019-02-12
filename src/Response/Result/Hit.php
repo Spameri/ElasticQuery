@@ -27,7 +27,7 @@ class Hit
 	 */
 	private $id;
 	/**
-	 * @var string
+	 * @var float
 	 */
 	private $score;
 
@@ -38,7 +38,7 @@ class Hit
 		, string $index
 		, string $type
 		, string $id
-		, string $score
+		, float $score
 	)
 	{
 		$this->source = $source;
@@ -88,7 +88,7 @@ class Hit
 	}
 
 
-	public function score() : string
+	public function score() : float
 	{
 		return $this->score;
 	}
