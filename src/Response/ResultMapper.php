@@ -8,9 +8,38 @@ class ResultMapper
 
 	public function map(
 		array $elasticSearchResponse
-	) : Result
+	) : ResultInterface
 	{
-		return new Result(
+		if (isset($elasticSearchResponse['found'])) {
+			$result = $this->mapSingleResult($elasticSearchResponse);
+
+		} elseif (isset($elasticSearchResponse['hits'])) {
+			$result = $this->mapSearchResults($elasticSearchResponse);
+
+		} else {
+			throw new \Spameri\ElasticQuery\Exception\ResponseCouldNotBeMapped($elasticSearchResponse);
+		}
+
+		return $result;
+	}
+
+
+	public function mapSingleResult(
+		array $elasticSearchResponse
+	) : ResultSingle
+	{
+		return new ResultSingle(
+			$this->mapHit($elasticSearchResponse, 0),
+			$this->mapSingleStats($elasticSearchResponse)
+		);
+	}
+
+
+	public function mapSearchResults(
+		array $elasticSearchResponse
+	) : ResultSearch
+	{
+		return new ResultSearch(
 			$this->mapStats($elasticSearchResponse),
 			$this->mapShards($elasticSearchResponse),
 			$this->mapHits($elasticSearchResponse),
@@ -40,12 +69,12 @@ class ResultMapper
 	) : \Spameri\ElasticQuery\Response\Result\Hit
 	{
 		return new \Spameri\ElasticQuery\Response\Result\Hit(
-			$hit['_source'],
+			$hit['_source'] ?? [],
 			$position,
 			$hit['_index'],
 			$hit['_type'],
 			$hit['_id'],
-			$hit['_score']
+			$hit['_score'] ?? 1
 		);
 	}
 
@@ -121,6 +150,17 @@ class ResultMapper
 			$elasticSearchResponse['took'],
 			$elasticSearchResponse['timed_out'],
 			$elasticSearchResponse['hits']['total']
+		);
+	}
+
+
+	public function mapSingleStats(
+		array $elasticSearchResponse
+	) : StatsSingle
+	{
+		return new StatsSingle(
+			$elasticSearchResponse['version'] ?? 0,
+			$elasticSearchResponse['found']
 		);
 	}
 

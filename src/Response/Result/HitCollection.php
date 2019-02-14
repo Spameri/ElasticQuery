@@ -7,7 +7,7 @@ class HitCollection implements \IteratorAggregate
 {
 
 	/**
-	 * @var \Spameri\ElasticQuery\Response\Result\Hit[]
+	 * @var array<\Spameri\ElasticQuery\Response\Result\Hit>
 	 */
 	private $hits;
 

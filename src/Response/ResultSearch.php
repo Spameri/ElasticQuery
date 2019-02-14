@@ -3,7 +3,7 @@
 namespace Spameri\ElasticQuery\Response;
 
 
-class Result
+class ResultSearch implements ResultInterface
 {
 
 	/**
