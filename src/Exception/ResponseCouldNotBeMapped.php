@@ -12,7 +12,7 @@ class ResponseCouldNotBeMapped extends \InvalidArgumentException
 		\Throwable $previous = NULL
 	)
 	{
-		parent::__construct(json_encode($message), $code, $previous);
+		parent::__construct((string) \json_encode($message), $code, $previous);
 	}
 
 }

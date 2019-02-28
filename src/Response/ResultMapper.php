@@ -17,7 +17,7 @@ class ResultMapper
 			$result = $this->mapSearchResults($elasticSearchResponse);
 
 		} elseif (isset($elasticSearchResponse['items'])) {
-			$result = $this->mapBulkActions($elasticSearchResponse);
+			$result = $this->mapBulkResult($elasticSearchResponse);
 
 		} else {
 			throw new \Spameri\ElasticQuery\Exception\ResponseCouldNotBeMapped($elasticSearchResponse);
