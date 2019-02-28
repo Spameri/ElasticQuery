@@ -30,6 +30,10 @@ class Hit
 	 * @var float
 	 */
 	private $score;
+	/**
+	 * @var int
+	 */
+	private $version;
 
 
 	public function __construct(
@@ -39,6 +43,7 @@ class Hit
 		, string $type
 		, string $id
 		, float $score
+		, int $version
 	)
 	{
 		$this->source = $source;
@@ -47,6 +52,7 @@ class Hit
 		$this->type = $type;
 		$this->id = $id;
 		$this->score = $score;
+		$this->version = $version;
 	}
 
 
@@ -91,6 +97,12 @@ class Hit
 	public function score() : float
 	{
 		return $this->score;
+	}
+
+
+	public function version(): int
+	{
+		return $this->version;
 	}
 
 }

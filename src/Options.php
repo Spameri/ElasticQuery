@@ -22,19 +22,25 @@ class Options
 	 * @var ?float
 	 */
 	private $minScore;
+	/**
+	 * @var bool
+	 */
+	private $includeVersion;
 
 
 	public function __construct(
 		?int $size = NULL,
 		?int $from = NULL,
 		?\Spameri\ElasticQuery\Options\SortCollection $sort = NULL,
-		?float $minScore = NULL
+		?float $minScore = NULL,
+		bool $includeVersion = FALSE
 	)
 	{
 		$this->size = $size;
 		$this->from = $from;
 		$this->sort = $sort ?: new \Spameri\ElasticQuery\Options\SortCollection();
 		$this->minScore = $minScore;
+		$this->includeVersion = $includeVersion;
 	}
 
 
@@ -68,6 +74,10 @@ class Options
 
 		if ($this->minScore) {
 			$array['min_score'] = $this->minScore;
+		}
+
+		if ($this->includeVersion === TRUE) {
+			$array['version'] = $this->includeVersion;
 		}
 
 		return $array;

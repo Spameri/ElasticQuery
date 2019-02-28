@@ -16,6 +16,9 @@ class ResultMapper
 		} elseif (isset($elasticSearchResponse['hits'])) {
 			$result = $this->mapSearchResults($elasticSearchResponse);
 
+		} elseif (isset($elasticSearchResponse['items'])) {
+			$result = $this->mapBulkActions($elasticSearchResponse);
+
 		} else {
 			throw new \Spameri\ElasticQuery\Exception\ResponseCouldNotBeMapped($elasticSearchResponse);
 		}
@@ -31,6 +34,17 @@ class ResultMapper
 		return new ResultSingle(
 			$this->mapHit($elasticSearchResponse, 0),
 			$this->mapSingleStats($elasticSearchResponse)
+		);
+	}
+
+
+	public function mapBulkResult(
+		array $elasticSearchResponse
+	) : ResultBulk
+	{
+		return new ResultBulk(
+			$this->mapStats($elasticSearchResponse),
+			$this->mapBulkActions($elasticSearchResponse['items'])
 		);
 	}
 
@@ -74,7 +88,43 @@ class ResultMapper
 			$hit['_index'],
 			$hit['_type'],
 			$hit['_id'],
-			$hit['_score'] ?? 1
+			$hit['_score'] ?? 1,
+			$hit['version'] ?? 0
+		);
+	}
+
+
+	public function mapBulkActions(
+		array $elasticSearchResponse
+	) : \Spameri\ElasticQuery\Response\Result\BulkActionCollection
+	{
+		$bulkActions = [];
+		foreach ($elasticSearchResponse as $actionType => $action) {
+			$bulkActions[] = $this->mapBulkAction($action, $actionType);
+		}
+
+		return new \Spameri\ElasticQuery\Response\Result\BulkActionCollection(
+			... $bulkActions
+		);
+	}
+
+
+	public function mapBulkAction(
+		array $bulkAction,
+		string $actionType
+	) : \Spameri\ElasticQuery\Response\Result\BulkAction
+	{
+		return new \Spameri\ElasticQuery\Response\Result\BulkAction(
+			$actionType,
+			$bulkAction['_index'],
+			$bulkAction['_type'],
+			$bulkAction['_id'],
+			$bulkAction['_version'],
+			$bulkAction['result'],
+			$this->mapShards($bulkAction),
+			$bulkAction['status'],
+			$bulkAction['_seq_no'],
+			$bulkAction['_primary_term']
 		);
 	}
 
