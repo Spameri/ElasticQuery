@@ -26,6 +26,14 @@ class Options
 	 * @var bool
 	 */
 	private $includeVersion;
+	/**
+	 * @var string|null
+	 */
+	private $scroll;
+	/**
+	 * @var string|null
+	 */
+	private $scrollId;
 
 
 	public function __construct(
@@ -33,7 +41,9 @@ class Options
 		?int $from = NULL,
 		?\Spameri\ElasticQuery\Options\SortCollection $sort = NULL,
 		?float $minScore = NULL,
-		bool $includeVersion = FALSE
+		bool $includeVersion = FALSE,
+		?string $scroll = NULL,
+		?string $scrollId = NULL
 	)
 	{
 		$this->size = $size;
@@ -41,6 +51,8 @@ class Options
 		$this->sort = $sort ?: new \Spameri\ElasticQuery\Options\SortCollection();
 		$this->minScore = $minScore;
 		$this->includeVersion = $includeVersion;
+		$this->scroll = $scroll;
+		$this->scrollId = $scrollId;
 	}
 
 
@@ -53,6 +65,40 @@ class Options
 	public function changeSize(int $size) : void
 	{
 		$this->size = $size;
+	}
+
+
+	public function sort() : \Spameri\ElasticQuery\Options\SortCollection
+	{
+		return $this->sort;
+	}
+
+
+	public function scroll() : ?string
+	{
+		return $this->scroll;
+	}
+
+
+	public function startScroll(
+		string $scroll
+	) : void
+	{
+		$this->scroll = $scroll;
+	}
+
+
+	public function scrollId() : ?string
+	{
+		return $this->scrollId;
+	}
+
+
+	public function scrollInitialized(
+		string $scrollId
+	) : void
+	{
+		$this->scrollId = $scrollId;
 	}
 
 
@@ -80,13 +126,12 @@ class Options
 			$array['version'] = $this->includeVersion;
 		}
 
+		if ($this->scrollId !== NULL) {
+			$array['scroll_id'] = $this->scrollId;
+			$array['scroll'] = $this->scroll;
+		}
+
 		return $array;
-	}
-
-
-	public function sort() : \Spameri\ElasticQuery\Options\SortCollection
-	{
-		return $this->sort;
 	}
 
 }

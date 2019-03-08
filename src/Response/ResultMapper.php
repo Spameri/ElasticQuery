@@ -135,9 +135,11 @@ class ResultMapper
 	{
 		$aggregationArray = [];
 		$i = 0;
-		foreach ($elasticSearchResponse['aggregations'] as $aggregationName => $aggregation) {
-			$aggregationArray[] = $this->mapAggregation($aggregationName, $i, $aggregation);
-			$i++;
+		if (isset($elasticSearchResponse['aggregations'])) {
+			foreach ($elasticSearchResponse['aggregations'] as $aggregationName => $aggregation) {
+				$aggregationArray[] = $this->mapAggregation($aggregationName, $i, $aggregation);
+				$i++;
+			}
 		}
 
 		return new \Spameri\ElasticQuery\Response\Result\AggregationCollection(
@@ -222,7 +224,7 @@ class ResultMapper
 		return new Shards(
 			$elasticSearchResponse['_shards']['total'],
 			$elasticSearchResponse['_shards']['successful'],
-			$elasticSearchResponse['_shards']['skipped'],
+			$elasticSearchResponse['_shards']['skipped'] ?? 0,
 			$elasticSearchResponse['_shards']['failed']
 		);
 	}
