@@ -19,6 +19,9 @@ class ResultMapper
 		} elseif (isset($elasticSearchResponse['items'])) {
 			$result = $this->mapBulkResult($elasticSearchResponse);
 
+		} elseif (isset($elasticSearchResponse['version']['number'])) {
+			$result = $this->mapVersionResults($elasticSearchResponse);
+
 		} else {
 			throw new \Spameri\ElasticQuery\Exception\ResponseCouldNotBeMapped($elasticSearchResponse);
 		}
@@ -45,6 +48,30 @@ class ResultMapper
 		return new ResultBulk(
 			$this->mapStats($elasticSearchResponse),
 			$this->mapBulkActions($elasticSearchResponse['items'])
+		);
+	}
+
+
+	public function mapVersionResults(
+		array $elasticSearchResponse
+	) : ResultVersion
+	{
+		return new ResultVersion(
+			$elasticSearchResponse['name'],
+			$elasticSearchResponse['cluster_name'],
+			$elasticSearchResponse['cluster_uuid'],
+			new \Spameri\ElasticQuery\Response\Result\Version(
+				$elasticSearchResponse['version']['number'],
+				$elasticSearchResponse['version']['build_flavor'] ?? NULL,
+				$elasticSearchResponse['version']['build_type'] ?? NULL,
+				$elasticSearchResponse['version']['build_hash'],
+				$elasticSearchResponse['version']['build_date'],
+				$elasticSearchResponse['version']['build_snapshot'],
+				$elasticSearchResponse['version']['lucene_version'],
+				$elasticSearchResponse['version']['minimum_wire_compatibility_version'] ?? NULL,
+				$elasticSearchResponse['version']['minimum_index_compatibility_version'] ?? NULL
+			),
+			$elasticSearchResponse['tagline']
 		);
 	}
 
@@ -135,6 +162,7 @@ class ResultMapper
 	{
 		$aggregationArray = [];
 		$i = 0;
+
 		if (isset($elasticSearchResponse['aggregations'])) {
 			foreach ($elasticSearchResponse['aggregations'] as $aggregationName => $aggregation) {
 				$aggregationArray[] = $this->mapAggregation($aggregationName, $i, $aggregation);

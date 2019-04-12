@@ -1,6 +1,6 @@
 {
 	"name": "spameri/elastic-query",
-  	"description": "Objects instead of arrays for querying to ElasticSearch.",
+	"description": "Objects instead of arrays for querying to ElasticSearch.",
 	"authors": [
 		{
 			"name": "Václav Čevela",
@@ -8,25 +8,27 @@
 		}
 	],
 	"support": {
-	  	"issues": "https://github.com/Spameri/ElasticQuery/issues"
+		"issues": "https://github.com/Spameri/ElasticQuery/issues"
 	},
 	"require": {
-	  	"php": ">=7.1"
+		"php": ">=7.1",
+		"ext-json": "*"
 	},
 	"require-dev": {
 		"phpstan/phpstan-shim": "v0.10.3",
 		"nette/tester": "v2.1.0",
 		"elasticsearch/elasticsearch": "^6.1",
-		"guzzlehttp/guzzle": "^6.3"
+		"guzzlehttp/guzzle": "^6.3",
+		"spameri/coding-standard": "@dev"
 	},
-  	"autoload": {
-	  	"psr-4": {
-		  	"Spameri\\ElasticQuery\\": "src"
+	"autoload": {
+		"psr-4": {
+			"Spameri\\ElasticQuery\\": "src"
 		}
 	},
-  	"autoload-dev": {
-	  "psr-4": {
-		"SpameriTests\\": "tests/SpameriTests"
-	  }
+	"autoload-dev": {
+		"psr-4": {
+			"SpameriTests\\": "tests/SpameriTests"
+		}
 	}
 }

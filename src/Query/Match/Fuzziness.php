@@ -9,6 +9,8 @@ namespace Spameri\ElasticQuery\Query\Match;
 class Fuzziness
 {
 
+	public const AUTO = 'AUTO';
+
 	/**
 	 * @var string
 	 */
@@ -19,7 +21,7 @@ class Fuzziness
 		string $fuzziness
 	)
 	{
-		if ( ! (\strpos($fuzziness, 'AUTO') === 0 || \is_numeric($fuzziness))) {
+		if ( ! (\strpos($fuzziness, self::AUTO) === 0 || \is_numeric($fuzziness))) {
 			throw new \Spameri\ElasticQuery\Exception\InvalidArgumentException(
 				'Parameter $fuzziness is not in valid pattern see https://www.elastic.co/guide/en/elasticsearch/reference/current/common-options.html#fuzziness'
 			);

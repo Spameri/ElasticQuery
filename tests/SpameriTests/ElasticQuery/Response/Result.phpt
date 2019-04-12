@@ -73,7 +73,10 @@ class Result extends \Tester\TestCase
 	  	];
 
 		$resultMapper = new \Spameri\ElasticQuery\Response\ResultMapper();
+		/** @var \Spameri\ElasticQuery\Response\ResultSearch $resultObject */
 		$resultObject = $resultMapper->map($result);
+
+		\Tester\Assert::true($resultObject instanceof \Spameri\ElasticQuery\Response\ResultSearch);
 
 		// HIT tests
 		$hit = $resultObject->getHit('EWhVcWcBhsjlL-GzEP8i');
