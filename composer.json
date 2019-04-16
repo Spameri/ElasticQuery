@@ -15,7 +15,9 @@
 	},
 	"require-dev": {
 		"phpstan/phpstan-shim": "v0.10.3",
-		"nette/tester": "v2.1.0"
+		"nette/tester": "v2.1.0",
+		"elasticsearch/elasticsearch": "^6.1",
+		"guzzlehttp/guzzle": "^6.3"
 	},
   	"autoload": {
 	  	"psr-4": {

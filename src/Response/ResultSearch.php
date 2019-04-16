@@ -3,6 +3,9 @@
 namespace Spameri\ElasticQuery\Response;
 
 
+/**
+ * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/getting-started-search-API.html
+ */
 class ResultSearch implements ResultInterface
 {
 
