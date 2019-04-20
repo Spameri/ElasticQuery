@@ -26,6 +26,8 @@ matrix:
   include:
     - php: 7.3
       env: CODING_STANDARD=1 PHPSTAN=1
+  allow_failures:
+    - env: RUN_TESTS=1 ES_VERSION="7.0.0-linux-x86_64"
 
 before_install:
   - travis_retry composer self-update
@@ -33,7 +35,7 @@ before_install:
   - java -version
   - sudo update-alternatives --set java /usr/lib/jvm/java-8-oracle/jre/bin/java
   - java -version
-  - ./travis-elastic.sh
+  - if [ "$ES_VERSION" != "" ]; then ./travis-elastic.sh; fi
 
 install:
   - travis_retry composer update --no-interaction --no-suggest --no-progress --prefer-dist --prefer-stable
