@@ -3,7 +3,7 @@
 namespace Spameri\ElasticQuery\Exception;
 
 
-class HitNotFound extends InvalidArgumentException
+class HitNotFound extends \InvalidArgumentException
 {
 
 }

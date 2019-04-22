@@ -5,32 +5,26 @@ namespace SpameriTests\ElasticQuery\Query;
 require_once __DIR__ . '/../../bootstrap.php';
 
 
-class Match extends \Tester\TestCase
+class MatchPhrase extends \Tester\TestCase
 {
 
 	public function testCreate() : void
 	{
-		$match = new \Spameri\ElasticQuery\Query\Match(
+		$match = new \Spameri\ElasticQuery\Query\MatchPhrase(
 			'name',
 			'Avengers',
 			1.0,
-			\Spameri\ElasticQuery\Query\Match\Operator::OR,
-			new \Spameri\ElasticQuery\Query\Match\Fuzziness(
-				\Spameri\ElasticQuery\Query\Match\Fuzziness::AUTO
-			),
-			'standard',
-			2
+			1,
+			'standard'
 		);
 
 		$array = $match->toArray();
 
-		\Tester\Assert::true(isset($array['match']['name']['query']));
-		\Tester\Assert::same('Avengers', $array['match']['name']['query']);
-		\Tester\Assert::same(1.0, $array['match']['name']['boost']);
-		\Tester\Assert::same(\Spameri\ElasticQuery\Query\Match\Operator::OR, $array['match']['name']['operator']);
-		\Tester\Assert::same(\Spameri\ElasticQuery\Query\Match\Fuzziness::AUTO, $array['match']['name']['fuzziness']);
-		\Tester\Assert::same('standard', $array['match']['name']['analyzer']);
-		\Tester\Assert::same(2, $array['match']['name']['minimum_should_match']);
+		\Tester\Assert::true(isset($array['match_phrase']['name']['query']));
+		\Tester\Assert::same('Avengers', $array['match_phrase']['name']['query']);
+		\Tester\Assert::same(1.0, $array['match_phrase']['name']['boost']);
+		\Tester\Assert::same(1, $array['match_phrase']['name']['slop']);
+		\Tester\Assert::same('standard', $array['match_phrase']['name']['analyzer']);
 
 		$document = new \Spameri\ElasticQuery\Document(
 			'spameri_video',
@@ -71,4 +65,4 @@ class Match extends \Tester\TestCase
 
 }
 
-(new Match())->run();
+(new MatchPhrase())->run();

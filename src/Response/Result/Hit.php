@@ -100,7 +100,7 @@ class Hit
 	}
 
 
-	public function version(): int
+	public function version() : int
 	{
 		return $this->version;
 	}

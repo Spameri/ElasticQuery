@@ -51,6 +51,7 @@ class Terms implements LeafQueryInterface
 
 	public function toArray() : array
 	{
+		// phpcs:ignore SlevomatCodingStandard.Variables.UselessVariable
 		$array = [
 			'terms' => [
 				$this->field 	=> $this->query,

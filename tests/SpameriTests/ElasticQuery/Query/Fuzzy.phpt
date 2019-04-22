@@ -5,32 +5,28 @@ namespace SpameriTests\ElasticQuery\Query;
 require_once __DIR__ . '/../../bootstrap.php';
 
 
-class Match extends \Tester\TestCase
+class Fuzzy extends \Tester\TestCase
 {
 
 	public function testCreate() : void
 	{
-		$match = new \Spameri\ElasticQuery\Query\Match(
+		$fuzzy = new \Spameri\ElasticQuery\Query\Fuzzy(
 			'name',
 			'Avengers',
 			1.0,
-			\Spameri\ElasticQuery\Query\Match\Operator::OR,
-			new \Spameri\ElasticQuery\Query\Match\Fuzziness(
-				\Spameri\ElasticQuery\Query\Match\Fuzziness::AUTO
-			),
-			'standard',
-			2
+			2,
+			0,
+			100
 		);
 
-		$array = $match->toArray();
+		$array = $fuzzy->toArray();
 
-		\Tester\Assert::true(isset($array['match']['name']['query']));
-		\Tester\Assert::same('Avengers', $array['match']['name']['query']);
-		\Tester\Assert::same(1.0, $array['match']['name']['boost']);
-		\Tester\Assert::same(\Spameri\ElasticQuery\Query\Match\Operator::OR, $array['match']['name']['operator']);
-		\Tester\Assert::same(\Spameri\ElasticQuery\Query\Match\Fuzziness::AUTO, $array['match']['name']['fuzziness']);
-		\Tester\Assert::same('standard', $array['match']['name']['analyzer']);
-		\Tester\Assert::same(2, $array['match']['name']['minimum_should_match']);
+		\Tester\Assert::true(isset($array['fuzzy']['name']['value']));
+		\Tester\Assert::same('Avengers', $array['fuzzy']['name']['value']);
+		\Tester\Assert::same(1.0, $array['fuzzy']['name']['boost']);
+		\Tester\Assert::same(2, $array['fuzzy']['name']['fuzziness']);
+		\Tester\Assert::same(0, $array['fuzzy']['name']['prefix_length']);
+		\Tester\Assert::same(100, $array['fuzzy']['name']['max_expansions']);
 
 		$document = new \Spameri\ElasticQuery\Document(
 			'spameri_video',
@@ -39,7 +35,7 @@ class Match extends \Tester\TestCase
 				new \Spameri\ElasticQuery\ElasticQuery(
 					new \Spameri\ElasticQuery\Query\QueryCollection(
 						new \Spameri\ElasticQuery\Query\MustCollection(
-							$match
+							$fuzzy
 						)
 					)
 				)
@@ -71,4 +67,4 @@ class Match extends \Tester\TestCase
 
 }
 
-(new Match())->run();
+(new Fuzzy())->run();

@@ -35,11 +35,6 @@ class Match implements LeafQueryInterface
 	private $boost;
 
 	/**
-	 * @var int|null
-	 */
-	private $slop;
-
-	/**
 	 * @var null|string
 	 */
 	private $analyzer;
@@ -55,7 +50,6 @@ class Match implements LeafQueryInterface
 		, $query
 		, float $boost = 1.0
 		, string $operator = \Spameri\ElasticQuery\Query\Match\Operator::OR
-		, ?int $slop = NULL
 		, ?\Spameri\ElasticQuery\Query\Match\Fuzziness $fuzziness = NULL
 		, ?string $analyzer = NULL
 		, ?int $minimumShouldMatch = NULL
@@ -72,7 +66,6 @@ class Match implements LeafQueryInterface
 		$this->operator = $operator;
 		$this->fuzziness = $fuzziness;
 		$this->boost = $boost;
-		$this->slop = $slop;
 		$this->analyzer = $analyzer;
 		$this->minimumShouldMatch = $minimumShouldMatch;
 	}
@@ -101,10 +94,6 @@ class Match implements LeafQueryInterface
 
 		if ($this->fuzziness && $this->fuzziness->__toString()) {
 			$array['match'][$this->field]['fuzziness'] = $this->fuzziness->__toString();
-		}
-
-		if ($this->slop) {
-			$array['match'][$this->field]['slop'] = $this->slop;
 		}
 
 		if ($this->analyzer) {

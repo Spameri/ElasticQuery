@@ -58,7 +58,7 @@ class QueryCollection implements LeafQueryInterface
 	}
 
 
-	public function mustNotCollection(): \Spameri\ElasticQuery\Query\MustNotCollection
+	public function mustNotCollection() : \Spameri\ElasticQuery\Query\MustNotCollection
 	{
 		return $this->mustNotCollection;
 	}

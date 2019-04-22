@@ -66,6 +66,7 @@ class Fuzzy implements LeafQueryInterface
 
 	public function toArray() : array
 	{
+		// phpcs:ignore SlevomatCodingStandard.Variables.UselessVariable
 		$array = [
 			'fuzzy' => [
 				$this->field => [
@@ -73,7 +74,7 @@ class Fuzzy implements LeafQueryInterface
 					'boost' 			=> $this->boost,
 					'fuzziness' 		=> $this->fuzziness,
 					'prefix_length' 	=> $this->prefixLength,
-					'max_expansion' 	=> $this->maxExpansion,
+					'max_expansions' 	=> $this->maxExpansion,
 				],
 			],
 		];

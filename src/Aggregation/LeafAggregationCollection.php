@@ -17,7 +17,7 @@ class LeafAggregationCollection implements LeafAggregationInterface, \IteratorAg
 	private $filter;
 
 	/**
-	 * @var \Spameri\ElasticQuery\Aggregation\LeafAggregationInterface[]
+	 * @var array<\Spameri\ElasticQuery\Aggregation\LeafAggregationInterface>
 	 */
 	private $aggregations;
 

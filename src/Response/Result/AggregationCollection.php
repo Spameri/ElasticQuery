@@ -7,7 +7,7 @@ class AggregationCollection implements \IteratorAggregate
 {
 
 	/**
-	 * @var \Spameri\ElasticQuery\Response\Result\Aggregation[]
+	 * @var array<\Spameri\ElasticQuery\Response\Result\Aggregation>
 	 */
 	private $aggregations;
 

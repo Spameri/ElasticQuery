@@ -7,7 +7,7 @@ class MustNotCollection implements \Spameri\ElasticQuery\Collection\QueryCollect
 {
 
 	/**
-	 * @var \Spameri\ElasticQuery\Query\LeafQueryInterface[]
+	 * @var array<\Spameri\ElasticQuery\Query\LeafQueryInterface>
 	 */
 	private $collection;
 

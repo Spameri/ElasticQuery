@@ -7,7 +7,7 @@ class ShouldCollection implements \Spameri\ElasticQuery\Collection\QueryCollecti
 {
 
 	/**
-	 * @var \Spameri\ElasticQuery\Query\LeafQueryInterface[]
+	 * @var array<\Spameri\ElasticQuery\Query\LeafQueryInterface>
 	 */
 	private $collection;
 

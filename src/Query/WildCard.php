@@ -45,6 +45,7 @@ class WildCard implements LeafQueryInterface
 
 	public function toArray() : array
 	{
+		// phpcs:ignore SlevomatCodingStandard.Variables.UselessVariable
 		$array = [
 			'wildcard' => [
 				$this->field => [

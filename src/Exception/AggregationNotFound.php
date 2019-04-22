@@ -3,7 +3,7 @@
 namespace Spameri\ElasticQuery\Exception;
 
 
-class AggregationNotFound extends InvalidArgumentException
+class AggregationNotFound extends \InvalidArgumentException
 {
 
 }

@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<ruleset name="Spameri\ElasticQuery">
+	<rule ref="./vendor/spameri/coding-standard/src/ruleset.xml"/>
+
+	<rule ref="SlevomatCodingStandard.Files.TypeNameMatchesFileName">
+		<properties>
+			<property name="rootNamespaces" type="array">
+				<element key="src" value="Spameri\ElasticQuery"/>
+			</property>
+		</properties>
+	</rule>
+
+</ruleset>
