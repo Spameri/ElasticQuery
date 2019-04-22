@@ -3,7 +3,7 @@
 namespace Spameri\ElasticQuery\Exception;
 
 
-class BulkActionNotFound extends InvalidArgumentException
+class BulkActionNotFound extends \InvalidArgumentException
 {
 
 }

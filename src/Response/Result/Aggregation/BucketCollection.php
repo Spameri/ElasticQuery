@@ -7,7 +7,7 @@ class BucketCollection implements \IteratorAggregate
 {
 
 	/**
-	 * @var \Spameri\ElasticQuery\Response\Result\Aggregation\Bucket[]
+	 * @var array<\Spameri\ElasticQuery\Response\Result\Aggregation\Bucket>
 	 */
 	private $buckets;
 

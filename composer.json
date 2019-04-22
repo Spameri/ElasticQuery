@@ -15,7 +15,7 @@
 		"ext-json": "*"
 	},
 	"require-dev": {
-		"phpstan/phpstan-shim": "v0.10.3",
+		"phpstan/phpstan-shim": "v0.11.4",
 		"nette/tester": "v2.1.0",
 		"elasticsearch/elasticsearch": "^6.1",
 		"guzzlehttp/guzzle": "^6.3",

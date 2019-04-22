@@ -95,7 +95,7 @@ class Version
 
 	public function convertVersionNumber(
 		string $number
-	): int
+	) : int
 	{
 		$exploded = \explode('.', $number);
 
@@ -106,6 +106,7 @@ class Version
 		$version += $minor * 100;
 
 		$patch = (int) $exploded[2];
+		// phpcs:ignore SlevomatCodingStandard.Variables.UselessVariable
 		$version += $patch;
 
 		return $version;

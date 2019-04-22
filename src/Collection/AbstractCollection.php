@@ -7,7 +7,7 @@ abstract class AbstractCollection implements CollectionInterface
 {
 
 	/**
-	 * @var \Spameri\ElasticQuery\Entity\EntityInterface[]
+	 * @var array<\Spameri\ElasticQuery\Entity\EntityInterface>
 	 */
 	protected $collection;
 

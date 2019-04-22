@@ -12,7 +12,7 @@ class AggregationCollection implements LeafAggregationInterface
 	private $filter;
 
 	/**
-	 * @var \Spameri\ElasticQuery\Aggregation\LeafAggregationCollection[]
+	 * @var array<\Spameri\ElasticQuery\Aggregation\LeafAggregationCollection>
 	 */
 	private $aggregations;
 
@@ -33,7 +33,7 @@ class AggregationCollection implements LeafAggregationInterface
 
 	public function key() : string
 	{
-		return '';
+		return 'top-aggs-collection';
 	}
 
 
@@ -76,7 +76,7 @@ class AggregationCollection implements LeafAggregationInterface
 		$array = [];
 
 		foreach ($this->aggregations as $aggregation) {
-			$array = $array + $aggregation->toArray();
+			$array += $aggregation->toArray();
 		}
 
 		return $array;

@@ -45,6 +45,7 @@ class Term implements LeafQueryInterface
 
 	public function toArray() : array
 	{
+		// phpcs:ignore SlevomatCodingStandard.Variables.UselessVariable
 		$array = [
 			'term' => [
 				$this->field => [

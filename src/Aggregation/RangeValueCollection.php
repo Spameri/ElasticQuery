@@ -7,7 +7,7 @@ class RangeValueCollection implements \IteratorAggregate
 {
 
 	/**
-	 * @var \Spameri\ElasticQuery\Aggregation\RangeValue[]
+	 * @var array<\Spameri\ElasticQuery\Aggregation\RangeValue>
 	 */
 	private $collection;
 
