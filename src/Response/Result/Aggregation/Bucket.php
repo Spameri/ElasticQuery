@@ -21,7 +21,7 @@ class Bucket
 
 
 	public function __construct(
-		string $key
+		$key
 		, int $docCount
 		, int $position
 	)
