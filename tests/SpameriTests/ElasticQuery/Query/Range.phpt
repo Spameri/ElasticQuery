@@ -8,6 +8,9 @@ require_once __DIR__ . '/../../bootstrap.php';
 class Range extends \Tester\TestCase
 {
 
+	private const SPAMERI_VIDEO = 'spameri_test_video';
+
+
 	public function testCreate() : void
 	{
 		$range = new \Spameri\ElasticQuery\Query\Range(
@@ -25,7 +28,7 @@ class Range extends \Tester\TestCase
 		\Tester\Assert::same(1.0, $array['range']['id']['boost']);
 
 		$document = new \Spameri\ElasticQuery\Document(
-			'spameri_video',
+			self::SPAMERI_VIDEO,
 			new \Spameri\ElasticQuery\Document\Body\Plain(
 				(
 				new \Spameri\ElasticQuery\ElasticQuery(
@@ -37,11 +40,11 @@ class Range extends \Tester\TestCase
 				)
 				)->toArray()
 			),
-			'spameri_video'
+			self::SPAMERI_VIDEO
 		);
 
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, 'localhost:9200/_search');
+		curl_setopt($ch, CURLOPT_URL, 'localhost:9200/' . $document->index() . '/_search');
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
 		curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);

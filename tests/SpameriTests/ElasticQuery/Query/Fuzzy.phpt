@@ -8,6 +8,9 @@ require_once __DIR__ . '/../../bootstrap.php';
 class Fuzzy extends \Tester\TestCase
 {
 
+	private const SPAMERI_VIDEO = 'spameri_test_video';
+
+
 	public function testCreate() : void
 	{
 		$fuzzy = new \Spameri\ElasticQuery\Query\Fuzzy(
@@ -29,7 +32,7 @@ class Fuzzy extends \Tester\TestCase
 		\Tester\Assert::same(100, $array['fuzzy']['name']['max_expansions']);
 
 		$document = new \Spameri\ElasticQuery\Document(
-			'spameri_video',
+			self::SPAMERI_VIDEO,
 			new \Spameri\ElasticQuery\Document\Body\Plain(
 				(
 				new \Spameri\ElasticQuery\ElasticQuery(
@@ -41,11 +44,11 @@ class Fuzzy extends \Tester\TestCase
 				)
 				)->toArray()
 			),
-			'spameri_video'
+			self::SPAMERI_VIDEO
 		);
 
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, 'localhost:9200/_search');
+		curl_setopt($ch, CURLOPT_URL, 'localhost:9200/' . $document->index() . '/_search');
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
 		curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);

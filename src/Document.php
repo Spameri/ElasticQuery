@@ -48,6 +48,12 @@ class Document implements \Spameri\ElasticQuery\Entity\ArrayInterface
 	}
 
 
+	public function index(): ?string
+	{
+		return $this->index;
+	}
+
+
 	public function toArray() : array
 	{
 		$array = [];
