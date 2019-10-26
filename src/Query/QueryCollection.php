@@ -58,9 +58,27 @@ class QueryCollection implements LeafQueryInterface
 	}
 
 
-	public function mustNotCollection() : \Spameri\ElasticQuery\Query\MustNotCollection
+	public function mustNot() : \Spameri\ElasticQuery\Query\MustNotCollection
 	{
 		return $this->mustNotCollection;
+	}
+
+
+	public function addMustQuery(\Spameri\ElasticQuery\Query\LeafQueryInterface $leafQuery) : void
+	{
+		$this->mustCollection->add($leafQuery);
+	}
+
+
+	public function addMustNotQuery(\Spameri\ElasticQuery\Query\LeafQueryInterface $leafQuery) : void
+	{
+		$this->mustNotCollection->add($leafQuery);
+	}
+
+
+	public function addShouldQuery(\Spameri\ElasticQuery\Query\LeafQueryInterface $leafQuery) : void
+	{
+		$this->shouldCollection->add($leafQuery);
 	}
 
 

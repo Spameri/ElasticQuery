@@ -87,6 +87,30 @@ class ElasticQuery implements \Spameri\ElasticQuery\Entity\ArrayInterface
 	}
 
 
+	public function addMustQuery(\Spameri\ElasticQuery\Query\LeafQueryInterface $leafQuery) : void
+	{
+		$this->query->must()->add($leafQuery);
+	}
+
+
+	public function addMustNotQuery(\Spameri\ElasticQuery\Query\LeafQueryInterface $leafQuery) : void
+	{
+		$this->query->mustNot()->add($leafQuery);
+	}
+
+
+	public function addShouldQuery(\Spameri\ElasticQuery\Query\LeafQueryInterface $leafQuery) : void
+	{
+		$this->query->should()->add($leafQuery);
+	}
+
+
+	public function addFilter(\Spameri\ElasticQuery\Query\LeafQueryInterface $leafQuery) : void
+	{
+		$this->filter->must()->add($leafQuery);
+	}
+
+
 	public function toArray() : array
 	{
 		$array = $this->options->toArray();

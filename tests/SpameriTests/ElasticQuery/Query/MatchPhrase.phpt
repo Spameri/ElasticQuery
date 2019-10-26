@@ -8,6 +8,22 @@ require_once __DIR__ . '/../../bootstrap.php';
 class MatchPhrase extends \Tester\TestCase
 {
 
+	private const SPAMERI_VIDEO = 'spameri_test_video_match_phrase';
+
+
+	public function setUp() : void
+	{
+		$ch = \curl_init();
+		\curl_setopt($ch, CURLOPT_URL, 'localhost:9200/' . self::SPAMERI_VIDEO);
+		\curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		\curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+		\curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+
+		\curl_exec($ch);
+		\curl_close($ch);
+	}
+
+
 	public function testCreate() : void
 	{
 		$match = new \Spameri\ElasticQuery\Query\MatchPhrase(
@@ -27,7 +43,7 @@ class MatchPhrase extends \Tester\TestCase
 		\Tester\Assert::same('standard', $array['match_phrase']['name']['analyzer']);
 
 		$document = new \Spameri\ElasticQuery\Document(
-			'spameri_video',
+			self::SPAMERI_VIDEO,
 			new \Spameri\ElasticQuery\Document\Body\Plain(
 				(
 				new \Spameri\ElasticQuery\ElasticQuery(
@@ -39,11 +55,11 @@ class MatchPhrase extends \Tester\TestCase
 				)
 				)->toArray()
 			),
-			'spameri_video'
+			self::SPAMERI_VIDEO
 		);
 
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, 'localhost:9200/_search');
+		curl_setopt($ch, CURLOPT_URL, 'localhost:9200/' . $document->index() . '/_search');
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
 		curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
@@ -61,6 +77,19 @@ class MatchPhrase extends \Tester\TestCase
 		});
 
 		curl_close($ch);
+	}
+
+
+	public function tearDown() : void
+	{
+		$ch = \curl_init();
+		\curl_setopt($ch, CURLOPT_URL, 'localhost:9200/' . self::SPAMERI_VIDEO);
+		\curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		\curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
+		\curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+
+		\curl_exec($ch);
+		\curl_close($ch);
 	}
 
 }
