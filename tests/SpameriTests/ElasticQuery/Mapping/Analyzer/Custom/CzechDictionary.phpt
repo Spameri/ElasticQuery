@@ -14,13 +14,12 @@ class CzechDictionary extends \Tester\TestCase
 
 	public function testCreate() : void
 	{
+		$settings = new \Spameri\ElasticQuery\Mapping\Settings(self::INDEX);
+		$settings->addAnalyzer(new \Spameri\ElasticQuery\Mapping\Analyzer\Custom\CzechDictionary());
 		$document = new \Spameri\ElasticQuery\Document(
 			self::INDEX,
-			new \Spameri\ElasticQuery\Document\Body\Settings(
-				new \Spameri\ElasticQuery\Mapping\Settings\Analysis\AnalyzerCollection(
-					new \Spameri\ElasticQuery\Mapping\Analyzer\Custom\CzechDictionary()
-				),
-				new \Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection()
+			new \Spameri\ElasticQuery\Document\Body\Plain(
+				$settings->toArray()
 			)
 		);
 
@@ -36,10 +35,7 @@ class CzechDictionary extends \Tester\TestCase
 			\json_encode($document->toArray()['body'])
 		);
 
-		$response = curl_exec($ch);
-
-//		\var_dump($response);
-
+		curl_exec($ch);
 
 		// Fetch settings and test if analyzer is configured
 
@@ -49,17 +45,15 @@ class CzechDictionary extends \Tester\TestCase
 
 		$responseSettings = \json_decode(curl_exec($ch), TRUE);
 
-		\var_dump($responseSettings);
-
 		\Tester\Assert::true(isset(
 			$responseSettings[self::INDEX]['settings']['index']['analysis']['analyzer']['czechDictionary']
 		));
 		\Tester\Assert::same(
-			'removeDuplicities',
-			$responseSettings[self::INDEX]['settings']['index']['analysis']['analyzer']['czechDictionary'][2]
+			'dictionary_CZ',
+			$responseSettings[self::INDEX]['settings']['index']['analysis']['analyzer']['czechDictionary']['filter'][2]
 		);
 		\Tester\Assert::same(
-			'standard',
+			'custom',
 			$responseSettings[self::INDEX]['settings']['index']['analysis']['analyzer']['czechDictionary']['type']
 		);
 
@@ -81,17 +75,15 @@ class CzechDictionary extends \Tester\TestCase
 
 	protected function tearDown(): void
 	{
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, 'localhost:9200/' . self::INDEX);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
-		curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+		$ch = \curl_init();
+		\curl_setopt($ch, CURLOPT_URL, 'localhost:9200/' . self::INDEX);
+		\curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		\curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
+		\curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
 
-		$response = curl_exec($ch);
+		\curl_exec($ch);
 
-//		\var_dump($response);
-
-		curl_close($ch);
+		\curl_close($ch);
 	}
 
 }
