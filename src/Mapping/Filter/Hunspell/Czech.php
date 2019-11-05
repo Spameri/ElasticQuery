@@ -16,10 +16,4 @@ class Czech extends \Spameri\ElasticQuery\Mapping\Filter\Hunspell
 		return 'dictionary_CZ';
 	}
 
-
-	public function key(): string
-	{
-		return $this->getName();
-	}
-
 }
