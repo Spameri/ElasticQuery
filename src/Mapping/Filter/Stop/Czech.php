@@ -15,14 +15,10 @@ class Czech extends \Spameri\ElasticQuery\Mapping\Filter\Stop
 		];
 	}
 
+
 	public function getName(): string
 	{
 		return 'czechStopWords';
-	}
-
-	public function key(): string
-	{
-		return $this->getName();
 	}
 
 }

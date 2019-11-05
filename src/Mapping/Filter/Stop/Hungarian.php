@@ -15,4 +15,10 @@ class Hungarian extends \Spameri\ElasticQuery\Mapping\Filter\Stop
 		];
 	}
 
+
+	public function getName() : string
+	{
+		return 'hungarianStopWords';
+	}
+
 }

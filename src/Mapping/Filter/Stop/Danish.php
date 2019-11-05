@@ -15,4 +15,10 @@ class Danish extends \Spameri\ElasticQuery\Mapping\Filter\Stop
 		];
 	}
 
+
+	public function getName() : string
+	{
+		return 'danishStopWords';
+	}
+
 }

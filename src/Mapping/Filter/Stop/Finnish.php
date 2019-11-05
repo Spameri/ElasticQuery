@@ -15,4 +15,10 @@ class Finnish extends \Spameri\ElasticQuery\Mapping\Filter\Stop
 		];
 	}
 
+
+	public function getName() : string
+	{
+		return 'finnishStopWords';
+	}
+
 }

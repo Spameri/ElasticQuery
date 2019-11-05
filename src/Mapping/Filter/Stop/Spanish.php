@@ -15,4 +15,10 @@ class Spanish extends \Spameri\ElasticQuery\Mapping\Filter\Stop
 		];
 	}
 
+
+	public function getName() : string
+	{
+		return 'spanishStopWords';
+	}
+
 }

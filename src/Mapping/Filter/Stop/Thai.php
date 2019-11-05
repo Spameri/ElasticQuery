@@ -15,4 +15,10 @@ class Thai extends \Spameri\ElasticQuery\Mapping\Filter\Stop
 		];
 	}
 
+
+	public function getName() : string
+	{
+		return 'thaiStopWords';
+	}
+
 }

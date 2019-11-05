@@ -15,4 +15,10 @@ class Russian extends \Spameri\ElasticQuery\Mapping\Filter\Stop
 		];
 	}
 
+
+	public function getName() : string
+	{
+		return 'russianStopWords';
+	}
+
 }

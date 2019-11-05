@@ -15,4 +15,10 @@ class Brazilian extends \Spameri\ElasticQuery\Mapping\Filter\Stop
 		];
 	}
 
+
+	public function getName() : string
+	{
+		return 'brazilianStopWords';
+	}
+
 }

@@ -15,4 +15,10 @@ class Dutch extends \Spameri\ElasticQuery\Mapping\Filter\Stop
 		];
 	}
 
+
+	public function getName() : string
+	{
+		return 'dutchStopWords';
+	}
+
 }

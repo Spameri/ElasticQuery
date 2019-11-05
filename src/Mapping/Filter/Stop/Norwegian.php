@@ -15,4 +15,10 @@ class Norwegian extends \Spameri\ElasticQuery\Mapping\Filter\Stop
 		];
 	}
 
+
+	public function getName() : string
+	{
+		return 'norwegianStopWords';
+	}
+
 }
