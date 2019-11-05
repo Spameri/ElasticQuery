@@ -20,6 +20,12 @@ abstract class Hunspell implements \Spameri\ElasticQuery\Mapping\FilterInterface
 	abstract public function getName() : string;
 
 
+	public function key() : string
+	{
+		return $this->getName();
+	}
+
+
 	public function toArray() : array
 	{
 		return [
