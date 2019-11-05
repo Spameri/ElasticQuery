@@ -2,12 +2,12 @@
 
 namespace Spameri\ElasticQuery\Mapping\Analyzer\Custom;
 
-class CzechDictionary extends \Spameri\ElasticQuery\Mapping\Analyzer\AbstractDictionary
+class BulgarianDictionary extends \Spameri\ElasticQuery\Mapping\Analyzer\AbstractDictionary
 {
 
 	public function name(): string
 	{
-		return 'czechDictionary';
+		return 'bulgarianDictionary';
 	}
 
 
@@ -19,16 +19,16 @@ class CzechDictionary extends \Spameri\ElasticQuery\Mapping\Analyzer\AbstractDic
 				new \Spameri\ElasticQuery\Mapping\Filter\Lowercase()
 			);
 			$this->filter->add(
-				new \Spameri\ElasticQuery\Mapping\Filter\Stop\Czech()
+				new \Spameri\ElasticQuery\Mapping\Filter\Stop\Bulgarian()
 			);
 			$this->filter->add(
-				new \Spameri\ElasticQuery\Mapping\Filter\Hunspell\Czech()
+				new \Spameri\ElasticQuery\Mapping\Filter\Hunspell\Bulgarian()
 			);
 			$this->filter->add(
 				new \Spameri\ElasticQuery\Mapping\Filter\Lowercase()
 			);
 			$this->filter->add(
-				new \Spameri\ElasticQuery\Mapping\Filter\Stop\Czech()
+				new \Spameri\ElasticQuery\Mapping\Filter\Stop\Bulgarian()
 			);
 			$this->filter->add(
 				new \Spameri\ElasticQuery\Mapping\Filter\Unique()
