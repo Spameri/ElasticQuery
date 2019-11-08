@@ -46,7 +46,7 @@ class Term implements LeafAggregationInterface
 
 	public function key() : string
 	{
-		return $this->key ?: $this->field;
+		return $this->key ?? $this->field;
 	}
 
 
@@ -62,9 +62,7 @@ class Term implements LeafAggregationInterface
 		}
 
 		return [
-			$this->key => [
-				'terms' => $array,
-			],
+			'terms' => $array,
 		];
 	}
 
