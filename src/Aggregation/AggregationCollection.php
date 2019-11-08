@@ -76,7 +76,7 @@ class AggregationCollection implements LeafAggregationInterface
 		$array = [];
 
 		foreach ($this->aggregations as $aggregation) {
-			$array += $aggregation->toArray();
+			$array[$aggregation->key()] = $aggregation->toArray()[$aggregation->key()];
 		}
 
 		return $array;
