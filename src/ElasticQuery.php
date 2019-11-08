@@ -111,6 +111,12 @@ class ElasticQuery implements \Spameri\ElasticQuery\Entity\ArrayInterface
 	}
 
 
+	public function addAggregation(\Spameri\ElasticQuery\Aggregation\LeafAggregationCollection $aggregation): void
+	{
+		$this->aggregation->add($aggregation);
+	}
+
+
 	public function toArray() : array
 	{
 		$array = $this->options->toArray();
