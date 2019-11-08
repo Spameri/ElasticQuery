@@ -56,6 +56,18 @@ class Aggregation
 	}
 
 
+	public function countBuckets() : int
+	{
+		$count = 0;
+		/** @var \Spameri\ElasticQuery\Response\Result\Aggregation\Bucket $bucket */
+		foreach ($this->bucketCollection as $bucket) {
+			$count += $bucket->docCount();
+		}
+
+		return $count;
+	}
+
+
 	public function aggregations() : \Spameri\ElasticQuery\Response\Result\AggregationCollection
 	{
 		return $this->aggregations;
