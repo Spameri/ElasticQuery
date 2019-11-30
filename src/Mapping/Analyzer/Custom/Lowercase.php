@@ -25,7 +25,7 @@ class Lowercase implements \Spameri\ElasticQuery\Mapping\CustomAnalyzerInterface
 
 	public function getType(): string
 	{
-		return 'lowercase';
+		return 'custom';
 	}
 
 
@@ -64,7 +64,7 @@ class Lowercase implements \Spameri\ElasticQuery\Mapping\CustomAnalyzerInterface
 
 		return [
 			$this->name() => [
-				'type' => 'custom',
+				'type' => $this->getType(),
 				'tokenizer' => $this->tokenizer(),
 				'filter' => $filterArray,
 			],
