@@ -12,6 +12,19 @@ abstract class AbstractDictionary
 	 */
 	protected $filter;
 
+	/**
+	 * @var \Spameri\ElasticQuery\Mapping\Filter\Stop
+	 */
+	protected $stopFilter;
+
+
+	public function __construct(
+		?\Spameri\ElasticQuery\Mapping\Filter\Stop $stopFilter = NULL
+	)
+	{
+		$this->stopFilter = $stopFilter;
+	}
+
 
 	public function key() : string
 	{
