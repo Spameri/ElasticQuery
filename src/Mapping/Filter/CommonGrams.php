@@ -8,9 +8,37 @@ namespace Spameri\ElasticQuery\Mapping\Filter;
 class CommonGrams implements \Spameri\ElasticQuery\Mapping\FilterInterface
 {
 
+	/**
+	 * @var array<string>
+	 */
+	private $words;
+
+
+	public function __construct(array $words)
+	{
+		$this->words = $words;
+	}
+
+
 	public function getType(): string
 	{
 		return 'common_grams';
 	}
 
+
+	public function key(): string
+	{
+		return 'customCommonGrams';
+	}
+
+
+	public function toArray(): array
+	{
+		return [
+			$this->key() => [
+				'type' => $this->getType(),
+				'common_words' => $this->words,
+			],
+		];
+	}
 }
