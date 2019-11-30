@@ -78,6 +78,12 @@ class Settings implements \Spameri\ElasticQuery\Entity\ArrayInterface
 	}
 
 
+	public function addMappingSubField(\Spameri\ElasticQuery\Mapping\Settings\Mapping\SubFields $subFields): void
+	{
+		$this->mapping->addSubField($subFields);
+	}
+
+
 	public function addAnalyzer(\Spameri\ElasticQuery\Mapping\AnalyzerInterface $analyzer): void
 	{
 		$this->analysis->analyzer()->add($analyzer);

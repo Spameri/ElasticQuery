@@ -43,12 +43,23 @@ class Mapping implements \Spameri\ElasticQuery\Entity\ArrayInterface
 	}
 
 
+	public function addSubField(\Spameri\ElasticQuery\Mapping\Settings\Mapping\SubFields $subFields): void
+	{
+		$this->fields->add($subFields);
+	}
+
+
 	public function toArray(): array
 	{
 		$fields = [];
 		/** @var \Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldInterface $field */
 		foreach ($this->fields as $field) {
-			$fields[$field->key()] = $field->toArray()[$field->key()];
+			if ($field instanceof \Spameri\ElasticQuery\Mapping\Settings\Mapping\SubFields) {
+				$fields[$field->key()] = $field->toArray();
+
+			} else {
+				$fields[$field->key()] = $field->toArray()[$field->key()];
+			}
 		}
 
 		return [
