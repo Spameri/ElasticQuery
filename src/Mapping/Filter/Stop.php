@@ -8,6 +8,21 @@ namespace Spameri\ElasticQuery\Mapping\Filter;
 abstract class Stop implements \Spameri\ElasticQuery\Mapping\FilterInterface
 {
 
+
+	/**
+	 * @var array<string>
+	 */
+	private $extraWords;
+
+
+	public function __construct(
+		array $extraWords = []
+	)
+	{
+		$this->extraWords = $extraWords;
+	}
+
+
 	public function getType() : string
 	{
 		return 'stop';
@@ -15,6 +30,9 @@ abstract class Stop implements \Spameri\ElasticQuery\Mapping\FilterInterface
 
 
 	abstract public function getStopWords() : array;
+
+
+	abstract public function getName() : string;
 
 
 	public function key() : string
@@ -25,10 +43,15 @@ abstract class Stop implements \Spameri\ElasticQuery\Mapping\FilterInterface
 
 	public function toArray() : array
 	{
+		$stopWords = $this->getStopWords();
+		if ($this->extraWords) {
+			$stopWords += $this->extraWords;
+		}
+
 		return [
 			$this->getName() => [
 				'type'      => $this->getType(),
-				'stopwords' => $this->getStopWords(),
+				'stopwords' => $stopWords,
 			],
 		];
 	}
