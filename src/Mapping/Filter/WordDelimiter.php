@@ -13,4 +13,21 @@ class WordDelimiter implements \Spameri\ElasticQuery\Mapping\FilterInterface
 		return 'word_delimiter';
 	}
 
+
+	public function key(): string
+	{
+		return 'customWordDelimiter';
+	}
+
+
+	public function toArray(): array
+	{
+		return [
+			$this->key() => [
+				'type' => $this->getType(),
+				'catenate_all' => TRUE,
+			],
+		];
+	}
+
 }
