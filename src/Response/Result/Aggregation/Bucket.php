@@ -15,7 +15,7 @@ class Bucket
 	 */
 	private $docCount;
 	/**
-	 * @var int
+	 * @var int|null
 	 */
 	private $position;
 
@@ -23,7 +23,7 @@ class Bucket
 	public function __construct(
 		$key
 		, int $docCount
-		, int $position
+		, ?int $position = NULL
 	)
 	{
 		$this->key = $key;
@@ -44,7 +44,7 @@ class Bucket
 	}
 
 
-	public function position() : int
+	public function position() : ?int
 	{
 		return $this->position;
 	}

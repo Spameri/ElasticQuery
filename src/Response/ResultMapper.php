@@ -210,14 +210,14 @@ class ResultMapper
 
 
 	private function mapBucket(
-		int $bucketPosition
+		$bucketPosition
 		, array $bucketArray
 	) : \Spameri\ElasticQuery\Response\Result\Aggregation\Bucket
 	{
 		return new \Spameri\ElasticQuery\Response\Result\Aggregation\Bucket(
-			$bucketArray['key'],
+			$bucketArray['key'] ?? $bucketPosition,
 			$bucketArray['doc_count'],
-			$bucketPosition
+			\is_int($bucketPosition) ? $bucketPosition : NULL
 		);
 	}
 
