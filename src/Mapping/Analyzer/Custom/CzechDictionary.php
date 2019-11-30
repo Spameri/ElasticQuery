@@ -18,18 +18,28 @@ class CzechDictionary extends \Spameri\ElasticQuery\Mapping\Analyzer\AbstractDic
 			$this->filter->add(
 				new \Spameri\ElasticQuery\Mapping\Filter\Lowercase()
 			);
-			$this->filter->add(
-				new \Spameri\ElasticQuery\Mapping\Filter\Stop\Czech()
-			);
+			if ($this->stopFilter) {
+				$this->filter->add($this->stopFilter);
+
+			} else {
+				$this->filter->add(
+					new \Spameri\ElasticQuery\Mapping\Filter\Stop\Czech()
+				);
+			}
 			$this->filter->add(
 				new \Spameri\ElasticQuery\Mapping\Filter\Hunspell\Czech()
 			);
 			$this->filter->add(
 				new \Spameri\ElasticQuery\Mapping\Filter\Lowercase()
 			);
-			$this->filter->add(
-				new \Spameri\ElasticQuery\Mapping\Filter\Stop\Czech()
-			);
+			if ($this->stopFilter) {
+				$this->filter->add($this->stopFilter);
+
+			} else {
+				$this->filter->add(
+					new \Spameri\ElasticQuery\Mapping\Filter\Stop\Czech()
+				);
+			}
 			$this->filter->add(
 				new \Spameri\ElasticQuery\Mapping\Filter\Unique()
 			);

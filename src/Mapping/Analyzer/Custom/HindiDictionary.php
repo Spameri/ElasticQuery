@@ -18,18 +18,30 @@ class HindiDictionary extends \Spameri\ElasticQuery\Mapping\Analyzer\AbstractDic
 			$this->filter->add(
 				new \Spameri\ElasticQuery\Mapping\Filter\Lowercase()
 			);
-			$this->filter->add(
-				new \Spameri\ElasticQuery\Mapping\Filter\Stop\Hindi()
-			);
+
+			if ($this->stopFilter) {
+				$this->filter->add($this->stopFilter);
+
+			} else {
+				$this->filter->add(
+					new \Spameri\ElasticQuery\Mapping\Filter\Stop\Hindi()
+				);
+			}
 			$this->filter->add(
 				new \Spameri\ElasticQuery\Mapping\Filter\Hunspell\Hindi()
 			);
 			$this->filter->add(
 				new \Spameri\ElasticQuery\Mapping\Filter\Lowercase()
 			);
-			$this->filter->add(
-				new \Spameri\ElasticQuery\Mapping\Filter\Stop\Hindi()
-			);
+
+			if ($this->stopFilter) {
+				$this->filter->add($this->stopFilter);
+
+			} else {
+				$this->filter->add(
+					new \Spameri\ElasticQuery\Mapping\Filter\Stop\Hindi()
+				);
+			}
 			$this->filter->add(
 				new \Spameri\ElasticQuery\Mapping\Filter\Unique()
 			);

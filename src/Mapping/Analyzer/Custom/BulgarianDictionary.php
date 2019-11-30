@@ -18,18 +18,30 @@ class BulgarianDictionary extends \Spameri\ElasticQuery\Mapping\Analyzer\Abstrac
 			$this->filter->add(
 				new \Spameri\ElasticQuery\Mapping\Filter\Lowercase()
 			);
-			$this->filter->add(
-				new \Spameri\ElasticQuery\Mapping\Filter\Stop\Bulgarian()
-			);
+
+			if ($this->stopFilter) {
+				$this->filter->add($this->stopFilter);
+
+			} else {
+				$this->filter->add(
+					new \Spameri\ElasticQuery\Mapping\Filter\Stop\Bulgarian()
+				);
+			}
 			$this->filter->add(
 				new \Spameri\ElasticQuery\Mapping\Filter\Hunspell\Bulgarian()
 			);
 			$this->filter->add(
 				new \Spameri\ElasticQuery\Mapping\Filter\Lowercase()
 			);
-			$this->filter->add(
-				new \Spameri\ElasticQuery\Mapping\Filter\Stop\Bulgarian()
-			);
+
+			if ($this->stopFilter) {
+				$this->filter->add($this->stopFilter);
+
+			} else {
+				$this->filter->add(
+					new \Spameri\ElasticQuery\Mapping\Filter\Stop\Bulgarian()
+				);
+			}
 			$this->filter->add(
 				new \Spameri\ElasticQuery\Mapping\Filter\Unique()
 			);

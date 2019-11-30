@@ -18,18 +18,30 @@ class IndonesianDictionary extends \Spameri\ElasticQuery\Mapping\Analyzer\Abstra
 			$this->filter->add(
 				new \Spameri\ElasticQuery\Mapping\Filter\Lowercase()
 			);
-			$this->filter->add(
-				new \Spameri\ElasticQuery\Mapping\Filter\Stop\Indonesian()
-			);
+
+			if ($this->stopFilter) {
+				$this->filter->add($this->stopFilter);
+
+			} else {
+				$this->filter->add(
+					new \Spameri\ElasticQuery\Mapping\Filter\Stop\Indonesian()
+				);
+			}
 			$this->filter->add(
 				new \Spameri\ElasticQuery\Mapping\Filter\Hunspell\Indonesian()
 			);
 			$this->filter->add(
 				new \Spameri\ElasticQuery\Mapping\Filter\Lowercase()
 			);
-			$this->filter->add(
-				new \Spameri\ElasticQuery\Mapping\Filter\Stop\Indonesian()
-			);
+
+			if ($this->stopFilter) {
+				$this->filter->add($this->stopFilter);
+
+			} else {
+				$this->filter->add(
+					new \Spameri\ElasticQuery\Mapping\Filter\Stop\Indonesian()
+				);
+			}
 			$this->filter->add(
 				new \Spameri\ElasticQuery\Mapping\Filter\Unique()
 			);

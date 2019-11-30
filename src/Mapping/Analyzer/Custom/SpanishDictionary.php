@@ -18,18 +18,30 @@ class SpanishDictionary extends \Spameri\ElasticQuery\Mapping\Analyzer\AbstractD
 			$this->filter->add(
 				new \Spameri\ElasticQuery\Mapping\Filter\Lowercase()
 			);
-			$this->filter->add(
-				new \Spameri\ElasticQuery\Mapping\Filter\Stop\Spanish()
-			);
+
+			if ($this->stopFilter) {
+				$this->filter->add($this->stopFilter);
+
+			} else {
+				$this->filter->add(
+					new \Spameri\ElasticQuery\Mapping\Filter\Stop\Spanish()
+				);
+			}
 			$this->filter->add(
 				new \Spameri\ElasticQuery\Mapping\Filter\Hunspell\Spanish()
 			);
 			$this->filter->add(
 				new \Spameri\ElasticQuery\Mapping\Filter\Lowercase()
 			);
-			$this->filter->add(
-				new \Spameri\ElasticQuery\Mapping\Filter\Stop\Spanish()
-			);
+
+			if ($this->stopFilter) {
+				$this->filter->add($this->stopFilter);
+
+			} else {
+				$this->filter->add(
+					new \Spameri\ElasticQuery\Mapping\Filter\Stop\Spanish()
+				);
+			}
 			$this->filter->add(
 				new \Spameri\ElasticQuery\Mapping\Filter\Unique()
 			);
