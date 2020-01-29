@@ -16,8 +16,8 @@
 	},
 	"require-dev": {
 		"phpstan/phpstan-shim": "v0.11.4",
-		"nette/tester": "v2.1.0",
-		"elasticsearch/elasticsearch": "^6.1",
+		"nette/tester": "v2.3.1",
+		"elasticsearch/elasticsearch": "^7",
 		"guzzlehttp/guzzle": "^6.3",
 		"spameri/coding-standard": "@dev"
 	},
