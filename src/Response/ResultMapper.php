@@ -239,10 +239,17 @@ class ResultMapper
 		array $elasticSearchResponse
 	) : Stats
 	{
+		$total = 0;
+		if (\is_int($elasticSearchResponse['hits']['total'])) {
+			$total = $elasticSearchResponse['hits']['total'];
+
+		} elseif (isset($elasticSearchResponse['hits']['total']['value'])) {
+			$elasticSearchResponse['hits']['total']['value'];
+		}
 		return new Stats(
 			$elasticSearchResponse['took'],
 			$elasticSearchResponse['timed_out'],
-			$elasticSearchResponse['hits']['total']
+			$total
 		);
 	}
 
