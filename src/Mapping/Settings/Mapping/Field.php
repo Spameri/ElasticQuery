@@ -21,11 +21,17 @@ class Field
 	 */
 	private $analyzer;
 
+	/**
+	 * @var bool|null
+	 */
+	private $fieldData;
+
 
 	public function __construct(
 		string $name,
 		string $type = \Spameri\Elastic\Model\ValidateMapping\AllowedValues::TYPE_KEYWORD,
-		?\Spameri\ElasticQuery\Mapping\AnalyzerInterface $analyzer = NULL
+		?\Spameri\ElasticQuery\Mapping\AnalyzerInterface $analyzer = NULL,
+		?bool $fieldData = NULL
 	)
 	{
 		$this->name = $name;
@@ -36,6 +42,7 @@ class Field
 		}
 		$this->type = $type;
 		$this->analyzer = $analyzer;
+		$this->fieldData = $fieldData;
 	}
 
 
@@ -55,6 +62,10 @@ class Field
 
 		if ($this->analyzer) {
 			$array[$this->name]['analyzer'] = $this->analyzer->name();
+		}
+
+		if ($this->fieldData !== NULL) {
+			$array[$this->name]['fielddata'] = $this->fieldData;
 		}
 
 		return $array;
