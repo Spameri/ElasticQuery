@@ -244,8 +244,9 @@ class ResultMapper
 			$total = $elasticSearchResponse['hits']['total'];
 
 		} elseif (isset($elasticSearchResponse['hits']['total']['value'])) {
-			$elasticSearchResponse['hits']['total']['value'];
+			$total = $elasticSearchResponse['hits']['total']['value'];
 		}
+
 		return new Stats(
 			$elasticSearchResponse['took'],
 			$elasticSearchResponse['timed_out'],
