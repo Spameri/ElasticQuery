@@ -19,16 +19,30 @@ class Bucket
 	 */
 	private $position;
 
+	/**
+	 * @var int|float|null
+	 */
+	private $from;
+
+	/**
+	 * @var int|float|null
+	 */
+	private $to;
+
 
 	public function __construct(
 		$key
 		, int $docCount
 		, ?int $position = NULL
+		, $from = NULL
+		, $to = NULL
 	)
 	{
 		$this->key = $key;
 		$this->docCount = $docCount;
 		$this->position = $position;
+		$this->from = $from;
+		$this->to = $to;
 	}
 
 
@@ -47,6 +61,18 @@ class Bucket
 	public function position() : ?int
 	{
 		return $this->position;
+	}
+
+
+	public function from()
+	{
+		return $this->from;
+	}
+
+
+	public function to()
+	{
+		return $this->to;
 	}
 
 }
