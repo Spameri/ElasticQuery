@@ -192,6 +192,12 @@ class ResultMapper
 			}
 		}
 
+		if (isset($aggregationArray[$name]['buckets'])) {
+			foreach ($aggregationArray[$name]['buckets'] as $bucketPosition => $bucket) {
+				$buckets[] = $this->mapBucket($bucketPosition, $bucket);
+			}
+		}
+
 		if (isset($aggregationArray['doc_count']) && $aggregationArray['doc_count'] > 0) {
 			foreach ($aggregationArray as $aggregationName => $aggregation) {
 				if ( ! \is_array($aggregation)) {
@@ -230,7 +236,9 @@ class ResultMapper
 		return new \Spameri\ElasticQuery\Response\Result\Aggregation\Bucket(
 			$bucketArray['key'] ?? $bucketPosition,
 			$bucketArray['doc_count'],
-			\is_int($bucketPosition) ? $bucketPosition : NULL
+			\is_int($bucketPosition) ? $bucketPosition : NULL,
+			$bucketArray['from'] ?? NULL,
+			$bucketArray['to'] ?? NULL
 		);
 	}
 

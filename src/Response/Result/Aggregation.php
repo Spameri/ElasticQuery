@@ -50,7 +50,7 @@ class Aggregation
 	}
 
 
-	public function bucketCollection() : \Spameri\ElasticQuery\Response\Result\Aggregation\BucketCollection
+	public function buckets() : \Spameri\ElasticQuery\Response\Result\Aggregation\BucketCollection
 	{
 		return $this->bucketCollection;
 	}

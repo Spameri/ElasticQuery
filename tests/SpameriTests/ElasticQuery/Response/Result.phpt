@@ -93,7 +93,7 @@ class Result extends \Tester\TestCase
 		\Tester\Assert::same(0, $aggregation->position());
 		\Tester\Assert::same('guessedRight', $aggregation->name());
 		/** @var \Spameri\ElasticQuery\Response\Result\Aggregation\Bucket $bucket */
-		foreach ($aggregation->bucketCollection() as $bucket) {
+		foreach ($aggregation->buckets() as $bucket) {
 			if ($bucket->position() === 0) {
 				\Tester\Assert::same(0, $bucket->position());
 				\Tester\Assert::same('7kASSmUBq9pZLj7-1Uv4', $bucket->key());

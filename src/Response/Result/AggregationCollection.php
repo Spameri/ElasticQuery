@@ -25,4 +25,18 @@ class AggregationCollection implements \IteratorAggregate
 		return new \ArrayIterator($this->aggregations);
 	}
 
+
+	public function getAggregation(
+		string $name
+	): ?\Spameri\ElasticQuery\Response\Result\Aggregation
+	{
+		foreach ($this->aggregations as $aggregation) {
+			if ($aggregation->name() === $name) {
+				return $aggregation;
+			}
+		}
+
+		return NULL;
+	}
+
 }
