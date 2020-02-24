@@ -54,8 +54,7 @@ class MatchPhrase extends \Tester\TestCase
 					)
 				)
 				)->toArray()
-			),
-			self::SPAMERI_VIDEO
+			)
 		);
 
 		$ch = curl_init();
