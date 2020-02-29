@@ -8,9 +8,52 @@ namespace Spameri\ElasticQuery\Mapping\Filter;
 class Synonym implements \Spameri\ElasticQuery\Mapping\FilterInterface
 {
 
+	/**
+	 * @var array<string>
+	 */
+	private $synonyms;
+
+
+	public function __construct(
+		array $synonyms = []
+	)
+	{
+		$this->synonyms = $synonyms;
+	}
+
+
 	public function getType(): string
 	{
 		return 'synonym';
+	}
+
+
+	public function getSynonyms() : array
+	{
+		return $this->synonyms;
+	}
+
+
+	public function getName() : string
+	{
+		return 'customSynonyms';
+	}
+
+
+	public function key() : string
+	{
+		return $this->getName();
+	}
+
+
+	public function toArray() : array
+	{
+		return [
+			$this->getName() => [
+				'type'      => $this->getType(),
+				'synonyms' => $this->synonyms,
+			],
+		];
 	}
 
 }
