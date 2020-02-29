@@ -48,7 +48,7 @@ class Bucket
 
 	public function key() : string
 	{
-		return $this->key;
+		return (string) $this->key;
 	}
 
 

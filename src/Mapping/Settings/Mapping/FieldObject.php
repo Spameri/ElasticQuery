@@ -19,7 +19,7 @@ class FieldObject
 
 	public function __construct(
 		string $name,
-		\Spameri\ElasticQuery\Mapping\Settings $fields
+		\Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldCollection $fields
 	)
 	{
 		$this->name = $name;
@@ -38,13 +38,12 @@ class FieldObject
 		$fields = [];
 		/** @var \Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldInterface $field */
 		foreach ($this->fields as $field) {
-			$fields[$field->key()] = $field->toArray();
+			$fields[$field->key()] = $field->toArray()[$field->key()];
 		}
 
 		return [
-			$this->name => [
-				'properties' => $fields,
-			],
+			'properties' => $fields,
+			'type' => 'object',
 		];
 	}
 
