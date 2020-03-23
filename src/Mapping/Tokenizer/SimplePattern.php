@@ -13,4 +13,18 @@ class SimplePattern implements \Spameri\ElasticQuery\Mapping\TokenizerInterface
 		return 'simple_pattern';
 	}
 
+
+	public function toArray(): array
+	{
+		return [
+			$this->getType()
+		];
+	}
+
+
+	public function key(): string
+	{
+		return $this->getType();
+	}
+
 }

@@ -10,11 +10,14 @@ composer:
 phpstan:
 	vendor/bin/phpstan analyse -l 7 -c phpstan.neon src tests
 
+cs-local:
+	vendor/bin/phpcs --standard=ruleset.xml --cache=.phpcs-cache src tests
+
 cs:
 	vendor/bin/phpcs --standard=ruleset.xml --cache=$HOME/phpcs-cache/.phpcs-cache src tests
 
 tests:
-	vendor/bin/tester -s -p php --colors 1 -C tests
+	vendor/bin/tester -s -c tests/php.ini -p php --colors 1 -C tests
 
 coverage:
 	vendor/bin/tester -s -p php --colors 1 -C --coverage ./coverage.html --coverage-src ./src tests

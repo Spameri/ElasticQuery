@@ -13,4 +13,17 @@ class Whitespace implements \Spameri\ElasticQuery\Mapping\TokenizerInterface
 		return 'whitespace';
 	}
 
+	public function toArray(): array
+	{
+		return [
+			$this->getType()
+		];
+	}
+
+
+	public function key(): string
+	{
+		return $this->getType();
+	}
+
 }

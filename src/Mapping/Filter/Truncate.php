@@ -13,4 +13,20 @@ class Truncate implements \Spameri\ElasticQuery\Mapping\FilterInterface
 		return 'truncate';
 	}
 
+
+	public function key(): string
+	{
+		return $this->getType();
+	}
+
+
+	public function toArray(): array
+	{
+		return [
+			$this->key() => [
+				'type' => $this->getType(),
+			],
+		];
+	}
+
 }

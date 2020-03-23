@@ -13,4 +13,20 @@ class MinHash implements \Spameri\ElasticQuery\Mapping\FilterInterface
 		return 'min_hash';
 	}
 
+
+	public function key(): string
+	{
+		return $this->getType();
+	}
+
+
+	public function toArray(): array
+	{
+		return [
+			$this->key() => [
+				'type' => $this->getType(),
+			],
+		];
+	}
+
 }

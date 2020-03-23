@@ -13,4 +13,20 @@ class PorterStem implements \Spameri\ElasticQuery\Mapping\FilterInterface
 		return 'porter_stem';
 	}
 
+
+	public function key(): string
+	{
+		return 'customPorterStem';
+	}
+
+
+	public function toArray(): array
+	{
+		return [
+			$this->key() => [
+				'type' => $this->getType(),
+			],
+		];
+	}
+
 }

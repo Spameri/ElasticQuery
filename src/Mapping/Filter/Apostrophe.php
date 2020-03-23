@@ -5,7 +5,7 @@ namespace Spameri\ElasticQuery\Mapping\Filter;
 /**
  * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis-apostrophe-tokenfilter.html
  */
-class Apostrophe implements \Spameri\ElasticQuery\Mapping\FilterInterface, \Spameri\ElasticQuery\Collection\Item
+class Apostrophe implements \Spameri\ElasticQuery\Mapping\FilterInterface
 {
 
 	public function getType(): string
@@ -14,15 +14,19 @@ class Apostrophe implements \Spameri\ElasticQuery\Mapping\FilterInterface, \Spam
 	}
 
 
-	public function toArray() : array
+	public function key(): string
 	{
-		// TODO: Implement toArray() method.
+		return $this->getType();
 	}
 
 
-	public function key() : string
+	public function toArray(): array
 	{
-		// TODO: Implement key() method.
+		return [
+			$this->key() => [
+				'type' => $this->getType(),
+			],
+		];
 	}
 
 }

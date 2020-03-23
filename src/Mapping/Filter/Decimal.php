@@ -13,4 +13,20 @@ class Decimal implements \Spameri\ElasticQuery\Mapping\FilterInterface
 		return 'decimal';
 	}
 
+
+	public function key(): string
+	{
+		return $this->getType();
+	}
+
+
+	public function toArray(): array
+	{
+		return [
+			$this->key() => [
+				'type' => $this->getType(),
+			],
+		];
+	}
+
 }

@@ -13,4 +13,18 @@ class CharGroup implements \Spameri\ElasticQuery\Mapping\TokenizerInterface
 		return 'char_group';
 	}
 
+
+	public function toArray(): array
+	{
+		return [
+			$this->getType()
+		];
+	}
+
+
+	public function key(): string
+	{
+		return $this->getType();
+	}
+
 }

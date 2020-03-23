@@ -13,4 +13,18 @@ class EdgeNGram implements \Spameri\ElasticQuery\Mapping\TokenizerInterface
 		return 'edge_ngram';
 	}
 
+
+	public function toArray(): array
+	{
+		return [
+			$this->getType()
+		];
+	}
+
+
+	public function key(): string
+	{
+		return $this->getType();
+	}
+
 }

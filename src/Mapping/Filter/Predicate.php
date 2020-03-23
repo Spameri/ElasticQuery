@@ -13,4 +13,20 @@ class Predicate implements \Spameri\ElasticQuery\Mapping\FilterInterface
 		return 'predicate_token_filter';
 	}
 
+
+	public function key(): string
+	{
+		return $this->getType();
+	}
+
+
+	public function toArray(): array
+	{
+		return [
+			$this->key() => [
+				'type' => $this->getType(),
+			],
+		];
+	}
+
 }
