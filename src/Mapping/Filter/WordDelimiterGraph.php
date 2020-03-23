@@ -13,4 +13,20 @@ class WordDelimiterGraph implements \Spameri\ElasticQuery\Mapping\FilterInterfac
 		return 'word_delimiter_graph';
 	}
 
+
+	public function key(): string
+	{
+		return $this->getType();
+	}
+
+
+	public function toArray(): array
+	{
+		return [
+			$this->key() => [
+				'type' => $this->getType(),
+			],
+		];
+	}
+
 }

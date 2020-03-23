@@ -13,4 +13,18 @@ class Lowercase implements \Spameri\ElasticQuery\Mapping\TokenizerInterface
 		return 'lowercase';
 	}
 
+
+	public function toArray(): array
+	{
+		return [
+			$this->getType()
+		];
+	}
+
+
+	public function key(): string
+	{
+		return $this->getType();
+	}
+
 }

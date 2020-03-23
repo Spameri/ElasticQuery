@@ -13,4 +13,18 @@ class SimplePatternSplit implements \Spameri\ElasticQuery\Mapping\TokenizerInter
 		return 'simple_pattern_split';
 	}
 
+
+	public function toArray(): array
+	{
+		return [
+			$this->getType()
+		];
+	}
+
+
+	public function key(): string
+	{
+		return $this->getType();
+	}
+
 }

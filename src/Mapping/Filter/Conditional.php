@@ -13,4 +13,20 @@ class Conditional implements \Spameri\ElasticQuery\Mapping\FilterInterface
 		return 'conditional';
 	}
 
+
+	public function key(): string
+	{
+		return $this->getType();
+	}
+
+
+	public function toArray(): array
+	{
+		return [
+			$this->key() => [
+				'type' => $this->getType(),
+			],
+		];
+	}
+
 }

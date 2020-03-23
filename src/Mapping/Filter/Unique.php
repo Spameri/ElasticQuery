@@ -22,7 +22,11 @@ class Unique implements \Spameri\ElasticQuery\Mapping\FilterInterface
 
 	public function toArray(): array
 	{
-		return [];
+		return [
+			$this->key() => [
+				'type' => $this->getType(),
+			],
+		];
 	}
 
 }

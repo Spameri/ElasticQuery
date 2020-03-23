@@ -13,4 +13,20 @@ class Length implements \Spameri\ElasticQuery\Mapping\FilterInterface
 		return 'length';
 	}
 
+
+	public function key(): string
+	{
+		return $this->getType();
+	}
+
+
+	public function toArray(): array
+	{
+		return [
+			$this->key() => [
+				'type' => $this->getType(),
+			],
+		];
+	}
+
 }

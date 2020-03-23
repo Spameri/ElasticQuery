@@ -21,6 +21,11 @@ class Stop implements \Spameri\ElasticQuery\Mapping\AnalyzerInterface
 		$this->stopWords = $stopWords;
 	}
 
+	public function name(): string
+	{
+		return 'customStop';
+	}
+
 
 	public function getType(): string
 	{

@@ -43,6 +43,12 @@ class Pattern implements \Spameri\ElasticQuery\Mapping\AnalyzerInterface
 	}
 
 
+	public function name(): string
+	{
+		return 'customPattern';
+	}
+
+
 	public function getType(): string
 	{
 		return 'pattern';

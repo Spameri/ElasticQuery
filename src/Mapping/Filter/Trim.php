@@ -13,4 +13,19 @@ class Trim implements \Spameri\ElasticQuery\Mapping\FilterInterface
 		return 'trim';
 	}
 
+	public function key(): string
+	{
+		return $this->getType();
+	}
+
+
+	public function toArray(): array
+	{
+		return [
+			$this->key() => [
+				'type' => $this->getType(),
+			],
+		];
+	}
+
 }

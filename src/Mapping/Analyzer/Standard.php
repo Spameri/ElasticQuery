@@ -29,6 +29,12 @@ class Standard implements \Spameri\ElasticQuery\Mapping\AnalyzerInterface
 	}
 
 
+	public function name(): string
+	{
+		return 'customStandard';
+	}
+
+
 	public function getType(): string
 	{
 		return 'standard';
