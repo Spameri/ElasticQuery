@@ -27,4 +27,4 @@ install:
 script:
     - if [ "$PHPSTAN" = "1" ]; then docker-compose exec web make phpstan; fi
     - if [ "$CODING_STANDARD" = "1" ]; then docker-compose exec web make cs; fi
-    - if [ "$RUN_TESTS" = "1" ]; then docker-compose exec web make tests; fi
+    - docker-compose exec web make tests
