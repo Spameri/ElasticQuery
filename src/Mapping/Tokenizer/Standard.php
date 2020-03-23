@@ -13,4 +13,18 @@ class Standard implements \Spameri\ElasticQuery\Mapping\TokenizerInterface
 		return 'standard';
 	}
 
+
+	public function toArray(): array
+	{
+		return [
+			$this->getType()
+		];
+	}
+
+
+	public function key(): string
+	{
+		return $this->getType();
+	}
+
 }

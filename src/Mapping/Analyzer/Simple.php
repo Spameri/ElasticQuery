@@ -14,6 +14,12 @@ class Simple implements \Spameri\ElasticQuery\Mapping\AnalyzerInterface
 	}
 
 
+	public function name(): string
+	{
+		return 'customSimple';
+	}
+
+
 	public function toArray(): array
 	{
 		return [

@@ -13,4 +13,18 @@ class Keyword implements \Spameri\ElasticQuery\Mapping\TokenizerInterface
 		return 'keyword';
 	}
 
+
+	public function toArray(): array
+	{
+		return [
+			$this->getType()
+		];
+	}
+
+
+	public function key(): string
+	{
+		return $this->getType();
+	}
+
 }
