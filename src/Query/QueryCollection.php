@@ -21,11 +21,17 @@ class QueryCollection implements LeafQueryInterface
 	 */
 	private $mustNotCollection;
 
+	/**
+	 * @var int|string|null
+	 */
+	private $key;
+
 
 	public function __construct(
 		?\Spameri\ElasticQuery\Query\MustCollection $mustCollection = NULL
 		, ?\Spameri\ElasticQuery\Query\ShouldCollection $shouldCollection = NULL
 		, ?\Spameri\ElasticQuery\Query\MustNotCollection $mustNotCollection = NULL
+		, $key = NULL
 	)
 	{
 		if ( ! $mustCollection) {
@@ -43,6 +49,7 @@ class QueryCollection implements LeafQueryInterface
 		$this->mustCollection = $mustCollection;
 		$this->shouldCollection = $shouldCollection;
 		$this->mustNotCollection = $mustNotCollection;
+		$this->key = $key;
 	}
 
 
@@ -84,7 +91,11 @@ class QueryCollection implements LeafQueryInterface
 
 	public function key() : string
 	{
-		return '';
+		if ($this->key) {
+			return $this->key;
+		}
+
+		return \md5(\serialize($this->toArray()));
 	}
 
 
