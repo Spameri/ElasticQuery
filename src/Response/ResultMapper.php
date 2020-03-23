@@ -198,6 +198,16 @@ class ResultMapper
 			}
 		}
 
+		if (
+			! isset($aggregationArray['buckets'])
+			&& ! isset($aggregationArray[$name]['buckets'])
+			&& isset($aggregationArray['value'])
+		) {
+			$buckets[] = $this->mapBucket(0, [
+				'doc_count' => $aggregationArray['value'],
+			]);
+		}
+
 		if (isset($aggregationArray['doc_count']) && $aggregationArray['doc_count'] > 0) {
 			foreach ($aggregationArray as $aggregationName => $aggregation) {
 				if ( ! \is_array($aggregation)) {
