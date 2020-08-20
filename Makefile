@@ -14,7 +14,7 @@ cs:
 	vendor/bin/phpcs --standard=ruleset.xml --cache=$HOME/phpcs-cache/.phpcs-cache src tests
 
 tests:
-	vendor/bin/tester -s -p php --colors 1 -C tests
+	vendor/bin/tester -s -p php --colors 1 -C -j 1 tests
 
 coverage:
 	vendor/bin/tester -s -p php --colors 1 -C --coverage ./coverage.html --coverage-src ./src tests
