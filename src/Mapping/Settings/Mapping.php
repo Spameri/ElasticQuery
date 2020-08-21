@@ -57,9 +57,6 @@ class Mapping implements \Spameri\ElasticQuery\Entity\ArrayInterface
 			if ($field instanceof \Spameri\ElasticQuery\Mapping\Settings\Mapping\SubFields) {
 				$fields[$field->key()] = $field->toArray();
 
-			} elseif ($field instanceof \Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldObject) {
-				$fields[$field->key()] = $field->toArray();
-
 			} else {
 				$fields[$field->key()] = $field->toArray()[$field->key()];
 			}
@@ -67,7 +64,9 @@ class Mapping implements \Spameri\ElasticQuery\Entity\ArrayInterface
 
 		return [
 			'mappings' => [
-				'properties' => $fields,
+				$this->indexName => [
+					'properties' => $fields,
+				],
 			],
 		];
 	}

@@ -2,7 +2,7 @@
 
 namespace Spameri\ElasticQuery\Mapping\Settings;
 
-class Mapping implements \Spameri\ElasticQuery\Entity\ArrayInterface
+class MappingOld implements \Spameri\ElasticQuery\Entity\ArrayInterface
 {
 
 	/**

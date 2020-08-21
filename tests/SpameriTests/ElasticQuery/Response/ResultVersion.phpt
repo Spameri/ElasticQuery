@@ -41,6 +41,14 @@ class ResultVersion extends \Tester\TestCase
 				\Spameri\ElasticQuery\Response\Result\Version::ELASTIC_VERSION_ID_6 > $resultObject->version()->id()
 			);
 
+		} elseif (\Spameri\ElasticQuery\Response\Result\Version::ELASTIC_VERSION_ID_2 <= $resultObject->version()->id()) {
+			\Tester\Assert::true(
+				\Spameri\ElasticQuery\Response\Result\Version::ELASTIC_VERSION_ID_2 < $resultObject->version()->id()
+			);
+			\Tester\Assert::true(
+				\Spameri\ElasticQuery\Response\Result\Version::ELASTIC_VERSION_ID_5 > $resultObject->version()->id()
+			);
+
 		} else {
 			\Tester\Assert::fail('ElasticSearch version did not match supported versions.');
 		}
