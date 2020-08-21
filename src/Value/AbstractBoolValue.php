@@ -3,7 +3,7 @@
 namespace Spameri\ElasticQuery\Value;
 
 
-abstract class BoolValue implements \Spameri\ElasticQuery\Value\ValueInterface
+abstract class AbstractBoolValue implements \Spameri\ElasticQuery\Value\ValueInterface
 {
 
 	/**

@@ -5,7 +5,7 @@ namespace Spameri\ElasticQuery\Mapping\Filter;
 /**
  * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis-stop-tokenfilter.html
  */
-abstract class Stop implements \Spameri\ElasticQuery\Mapping\FilterInterface
+abstract class AbstractStop implements \Spameri\ElasticQuery\Mapping\FilterInterface
 {
 
 

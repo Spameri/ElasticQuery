@@ -13,13 +13,13 @@ abstract class AbstractDictionary
 	protected $filter;
 
 	/**
-	 * @var \Spameri\ElasticQuery\Mapping\Filter\Stop
+	 * @var \Spameri\ElasticQuery\Mapping\Filter\AbstractStop
 	 */
 	protected $stopFilter;
 
 
 	public function __construct(
-		?\Spameri\ElasticQuery\Mapping\Filter\Stop $stopFilter = NULL
+		?\Spameri\ElasticQuery\Mapping\Filter\AbstractStop $stopFilter = NULL
 	)
 	{
 		$this->stopFilter = $stopFilter;
@@ -49,9 +49,9 @@ abstract class AbstractDictionary
 		$filterArray = [];
 		/** @var \Spameri\ElasticQuery\Mapping\FilterInterface $filter */
 		foreach ($this->filter() as $filter) {
-			if ($filter instanceof \Spameri\ElasticQuery\Mapping\Filter\Hunspell) {
+			if ($filter instanceof \Spameri\ElasticQuery\Mapping\Filter\AbstractHunspell) {
 				$filterArray[] = $filter->getName();
-			} elseif ($filter instanceof \Spameri\ElasticQuery\Mapping\Filter\Stop) {
+			} elseif ($filter instanceof \Spameri\ElasticQuery\Mapping\Filter\AbstractStop) {
 				$filterArray[] = $filter->getName();
 			} else {
 				$filterArray[] = $filter->getType();
