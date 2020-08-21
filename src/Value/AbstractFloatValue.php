@@ -3,7 +3,7 @@
 namespace Spameri\ElasticQuery\Value;
 
 
-abstract class FloatValue implements \Spameri\ElasticQuery\Value\ValueInterface
+abstract class AbstractFloatValue implements \Spameri\ElasticQuery\Value\ValueInterface
 {
 
 	/**

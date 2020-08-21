@@ -2,7 +2,7 @@
 
 namespace Spameri\ElasticQuery\Mapping\Filter\Hunspell;
 
-class Russian extends \Spameri\ElasticQuery\Mapping\Filter\Hunspell
+class Russian extends \Spameri\ElasticQuery\Mapping\Filter\AbstractHunspell
 {
 
 	public function getLocale() : string

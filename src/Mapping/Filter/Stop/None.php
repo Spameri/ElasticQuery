@@ -2,7 +2,7 @@
 
 namespace Spameri\ElasticQuery\Mapping\Filter\Stop;
 
-class None extends \Spameri\ElasticQuery\Mapping\Filter\Stop
+class None extends \Spameri\ElasticQuery\Mapping\Filter\AbstractStop
 {
 
 	public function getStopWords() : array

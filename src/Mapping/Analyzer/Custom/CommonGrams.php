@@ -16,14 +16,14 @@ class CommonGrams implements \Spameri\ElasticQuery\Mapping\CustomAnalyzerInterfa
 	private $commonGramWords;
 
 	/**
-	 * @var \Spameri\ElasticQuery\Mapping\Filter\Stop
+	 * @var \Spameri\ElasticQuery\Mapping\Filter\AbstractStop
 	 */
 	private $stopFilter;
 
 
 	public function __construct(
 		array $commonGramWords,
-		?\Spameri\ElasticQuery\Mapping\Filter\Stop $stopFilter = NULL
+		?\Spameri\ElasticQuery\Mapping\Filter\AbstractStop $stopFilter = NULL
 	)
 	{
 		$this->commonGramWords = $commonGramWords;

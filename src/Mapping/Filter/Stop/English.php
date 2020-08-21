@@ -5,7 +5,7 @@ namespace Spameri\ElasticQuery\Mapping\Filter\Stop;
 /**
  * @see https://github.com/apache/lucene-solr/blob/master/solr/example/files/conf/lang/stopwords_en.txt
  */
-class English extends \Spameri\ElasticQuery\Mapping\Filter\Stop
+class English extends \Spameri\ElasticQuery\Mapping\Filter\AbstractStop
 {
 
 	public function getStopWords() : array

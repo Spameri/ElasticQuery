@@ -5,7 +5,7 @@ namespace Spameri\ElasticQuery\Mapping\Filter;
 /**
  * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis-hunspell-tokenfilter.html
  */
-abstract class Hunspell implements \Spameri\ElasticQuery\Mapping\FilterInterface
+abstract class AbstractHunspell implements \Spameri\ElasticQuery\Mapping\FilterInterface
 {
 
 	public function getType(): string
