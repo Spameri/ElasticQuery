@@ -65,7 +65,7 @@ class ResultMapper
 				$elasticSearchResponse['version']['build_flavor'] ?? NULL,
 				$elasticSearchResponse['version']['build_type'] ?? NULL,
 				$elasticSearchResponse['version']['build_hash'],
-				$elasticSearchResponse['version']['build_date'],
+				$elasticSearchResponse['version']['build_date'] ?? NULL,
 				$elasticSearchResponse['version']['build_snapshot'],
 				$elasticSearchResponse['version']['lucene_version'],
 				$elasticSearchResponse['version']['minimum_wire_compatibility_version'] ?? NULL,

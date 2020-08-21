@@ -8,13 +8,13 @@ require_once __DIR__ . '/../../bootstrap.php';
 class WildCard extends \Tester\TestCase
 {
 
-	private const SPAMERI_VIDEO = 'spameri_test_video_wildcard';
+	private const INDEX = 'spameri_test_video_wildcard';
 
 
 	public function setUp() : void
 	{
 		$ch = \curl_init();
-		\curl_setopt($ch, CURLOPT_URL, 'localhost:9200/' . self::SPAMERI_VIDEO);
+		\curl_setopt($ch, CURLOPT_URL, 'localhost:9200/' . self::INDEX);
 		\curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		\curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
 		\curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
@@ -39,7 +39,7 @@ class WildCard extends \Tester\TestCase
 		\Tester\Assert::same(1.0, $array['wildcard']['name']['boost']);
 
 		$document = new \Spameri\ElasticQuery\Document(
-			self::SPAMERI_VIDEO,
+			self::INDEX,
 			new \Spameri\ElasticQuery\Document\Body\Plain(
 				(
 				new \Spameri\ElasticQuery\ElasticQuery(
@@ -51,7 +51,7 @@ class WildCard extends \Tester\TestCase
 				)
 				)->toArray()
 			),
-			self::SPAMERI_VIDEO
+			self::INDEX
 		);
 
 		$ch = curl_init();
@@ -79,7 +79,7 @@ class WildCard extends \Tester\TestCase
 	public function tearDown() : void
 	{
 		$ch = \curl_init();
-		\curl_setopt($ch, CURLOPT_URL, 'localhost:9200/' . self::SPAMERI_VIDEO);
+		\curl_setopt($ch, CURLOPT_URL, 'localhost:9200/' . self::INDEX . '/');
 		\curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		\curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
 		\curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);

@@ -47,7 +47,7 @@ class Version
 	 */
 	private $buildHash;
 	/**
-	 * @var string
+	 * @var string|NULL
 	 */
 	private $buildDate;
 	/**
@@ -73,7 +73,7 @@ class Version
 		, ?string $buildFlavor
 		, ?string $buildType
 		, string $buildHash
-		, string $buildDate
+		, ?string $buildDate
 		, bool $buildSnapshot
 		, string $luceneVersion
 		, ?string $minimumWireCompatibility
@@ -143,7 +143,7 @@ class Version
 	}
 
 
-	public function buildDate() : string
+	public function buildDate() : ?string
 	{
 		return $this->buildDate;
 	}
