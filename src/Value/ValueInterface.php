@@ -6,6 +6,9 @@ namespace Spameri\ElasticQuery\Value;
 interface ValueInterface
 {
 
+	/**
+	 * @return mixed
+	 */
 	public function value();
 
 }
