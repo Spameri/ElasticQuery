@@ -13,7 +13,7 @@ abstract class AbstractSynonym
 	protected $filter;
 
 	/**
-	 * @var \Spameri\ElasticQuery\Mapping\Filter\AbstractStop
+	 * @var ?\Spameri\ElasticQuery\Mapping\Filter\AbstractStop
 	 */
 	protected $stopFilter;
 
@@ -22,14 +22,21 @@ abstract class AbstractSynonym
 	 */
 	protected $synonyms;
 
+	/**
+	 * @var ?string
+	 */
+	protected $filePath;
+
 
 	public function __construct(
 		?\Spameri\ElasticQuery\Mapping\Filter\AbstractStop $stopFilter = NULL,
-		array $synonyms
+		array $synonyms= [],
+		?string $filePath = NULL
 	)
 	{
 		$this->stopFilter = $stopFilter;
 		$this->synonyms = $synonyms;
+		$this->filePath = $filePath;
 	}
 
 
