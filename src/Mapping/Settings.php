@@ -84,6 +84,12 @@ class Settings implements \Spameri\ElasticQuery\Entity\ArrayInterface
 	}
 
 
+	public function removeMappingSubField($subFields): void
+	{
+		$this->mapping->removeSubField($subFields);
+	}
+
+
 	public function addAnalyzer(\Spameri\ElasticQuery\Mapping\AnalyzerInterface $analyzer): void
 	{
 		$this->analysis->analyzer()->add($analyzer);
@@ -96,6 +102,19 @@ class Settings implements \Spameri\ElasticQuery\Entity\ArrayInterface
 	}
 
 
+	public function removeAnalyzer(string $analyzerName): void
+	{
+		$analyzer = $this->analysis->analyzer()->get($analyzerName);
+		if ($analyzer instanceof \Spameri\ElasticQuery\Mapping\CustomAnalyzerInterface) {
+			foreach ($analyzer->filter() as $filter) {
+				$this->removeFilter($filter);
+			}
+		}
+
+		$this->analysis->analyzer()->remove($analyzerName);
+	}
+
+
 	public function addTokenizer(\Spameri\ElasticQuery\Mapping\TokenizerInterface $tokenizer): void
 	{
 		$this->analysis->tokenizer()->add($tokenizer);
@@ -105,6 +124,12 @@ class Settings implements \Spameri\ElasticQuery\Entity\ArrayInterface
 	public function addFilter(\Spameri\ElasticQuery\Mapping\FilterInterface $filter): void
 	{
 		$this->analysis->filter()->add($filter);
+	}
+
+
+	public function removeFilter(\Spameri\ElasticQuery\Mapping\FilterInterface $filter): void
+	{
+		$this->analysis->filter()->remove($filter->key());
 	}
 
 

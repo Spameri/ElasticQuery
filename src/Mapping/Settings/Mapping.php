@@ -43,9 +43,21 @@ class Mapping implements \Spameri\ElasticQuery\Entity\ArrayInterface
 	}
 
 
+	public function removeFieldObject(string $field): void
+	{
+		$this->fields->remove($field);
+	}
+
+
 	public function addSubField(\Spameri\ElasticQuery\Mapping\Settings\Mapping\SubFields $subFields): void
 	{
 		$this->fields->add($subFields);
+	}
+
+
+	public function removeSubField($subFields): void
+	{
+		$this->fields->remove($subFields);
 	}
 
 
