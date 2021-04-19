@@ -61,6 +61,12 @@ class SubFields
 	}
 
 
+	public function removeMappingField(string $field): void
+	{
+		$this->fields->remove($field);
+	}
+
+
 	public function toArray(): array
 	{
 		$array['fields'] = [];
