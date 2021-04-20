@@ -55,7 +55,7 @@ class Mapping implements \Spameri\ElasticQuery\Entity\ArrayInterface
 	}
 
 
-	public function removeSubField($subFields): void
+	public function removeSubField(string $subFields): void
 	{
 		$this->fields->remove($subFields);
 	}

@@ -60,4 +60,10 @@ class Fingerprint implements \Spameri\ElasticQuery\Mapping\AnalyzerInterface
 		];
 	}
 
+
+	public function name(): string
+	{
+		return 'customFingerprint';
+	}
+
 }

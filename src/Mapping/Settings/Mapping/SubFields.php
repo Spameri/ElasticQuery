@@ -24,7 +24,7 @@ class SubFields
 
 	public function __construct(
 		string $name,
-		string $type = \Spameri\Elastic\Model\ValidateMapping\AllowedValues::TYPE_KEYWORD,
+		string $type = \Spameri\ElasticQuery\Mapping\AllowedValues::TYPE_KEYWORD,
 		?\Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldCollection $fields = NULL
 	)
 	{
@@ -33,9 +33,9 @@ class SubFields
 			$fields = new \Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldCollection();
 		}
 
-		if ( ! \in_array($type, \Spameri\Elastic\Model\ValidateMapping\AllowedValues::TYPES, TRUE)) {
+		if ( ! \in_array($type, \Spameri\ElasticQuery\Mapping\AllowedValues::TYPES, TRUE)) {
 			throw new \Spameri\ElasticQuery\Exception\InvalidArgumentException(
-				'Not allowed type see \Spameri\Elastic\Model\ValidateMapping\AllowedValues::TYPES'
+				'Not allowed type see \Spameri\ElasticQuery\Mapping\AllowedValues::TYPES'
 			);
 		}
 		$this->type = $type;

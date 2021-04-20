@@ -6,6 +6,9 @@ namespace Spameri\ElasticQuery\Collection;
 interface SimpleCollectionInterface extends \IteratorAggregate
 {
 
+	/**
+	 * @phpstan-param mixed $item
+	 */
 	public function add(
 		$item
 	) : void;
@@ -16,6 +19,9 @@ interface SimpleCollectionInterface extends \IteratorAggregate
 	) : bool;
 
 
+	/**
+	 * @phpstan-return mixed
+	 */
 	public function get(
 		string $key
 	);

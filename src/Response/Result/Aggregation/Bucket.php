@@ -30,8 +30,12 @@ class Bucket
 	private $to;
 
 
+	/**
+	 * @phpstan-param int|float|null $from
+	 * @phpstan-param int|float|null $to
+	 */
 	public function __construct(
-		$key
+		string $key
 		, int $docCount
 		, ?int $position = NULL
 		, $from = NULL
@@ -64,12 +68,18 @@ class Bucket
 	}
 
 
+	/**
+	 * @return int|float|null
+	 */
 	public function from()
 	{
 		return $this->from;
 	}
 
 
+	/**
+	 * @return int|float|null
+	 */
 	public function to()
 	{
 		return $this->to;

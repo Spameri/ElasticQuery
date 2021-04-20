@@ -13,7 +13,7 @@ abstract class AbstractDictionary
 	protected $filter;
 
 	/**
-	 * @var \Spameri\ElasticQuery\Mapping\Filter\AbstractStop
+	 * @var ?\Spameri\ElasticQuery\Mapping\Filter\AbstractStop
 	 */
 	protected $stopFilter;
 

@@ -10,12 +10,12 @@ class MultiMatch implements LeafQueryInterface
 {
 
 	/**
-	 * @var string
+	 * @var array
 	 */
 	private $fields;
 
 	/**
-	 * @var string
+	 * @var string|int|bool|null
 	 */
 	private $query;
 
@@ -50,6 +50,9 @@ class MultiMatch implements LeafQueryInterface
 	private $minimumShouldMatch;
 
 
+	/**
+	 * @param string|int|bool|null $query
+	 */
 	public function __construct(
 		array $fields
 		, $query
@@ -85,7 +88,7 @@ class MultiMatch implements LeafQueryInterface
 
 	public function key() : string
 	{
-		return 'multiMatch_' . \implode('-', $this->fields) . '_' . $this->query;
+		return 'multiMatch_' . \implode('-', $this->fields) . '_' . (string) $this->query;
 	}
 
 
