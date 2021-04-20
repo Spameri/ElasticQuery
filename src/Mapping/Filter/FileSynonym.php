@@ -28,25 +28,25 @@ class FileSynonym implements \Spameri\ElasticQuery\Mapping\FilterInterface
 	}
 
 
-	public function getPath() : string
+	public function getPath(): string
 	{
 		return $this->path;
 	}
 
 
-	public function getName() : string
+	public function getName(): string
 	{
 		return 'customSynonyms';
 	}
 
 
-	public function key() : string
+	public function key(): string
 	{
 		return $this->getName();
 	}
 
 
-	public function toArray() : array
+	public function toArray(): array
 	{
 		return [
 			$this->getName() => [

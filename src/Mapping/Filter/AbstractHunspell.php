@@ -14,19 +14,19 @@ abstract class AbstractHunspell implements \Spameri\ElasticQuery\Mapping\FilterI
 	}
 
 
-	abstract public function getLocale() : string;
+	abstract public function getLocale(): string;
 
 
-	abstract public function getName() : string;
+	abstract public function getName(): string;
 
 
-	public function key() : string
+	public function key(): string
 	{
 		return $this->getName();
 	}
 
 
-	public function toArray() : array
+	public function toArray(): array
 	{
 		return [
 			$this->getName() => [

@@ -38,25 +38,25 @@ class LeafAggregationCollection implements LeafAggregationInterface, \IteratorAg
 	}
 
 
-	public function key() : string
+	public function key(): string
 	{
 		return $this->name;
 	}
 
 
-	public function filter() : \Spameri\ElasticQuery\Filter\FilterCollection
+	public function filter(): \Spameri\ElasticQuery\Filter\FilterCollection
 	{
 		return $this->filter;
 	}
 
 
-	public function getIterator() : \ArrayIterator
+	public function getIterator(): \ArrayIterator
 	{
 		return new \ArrayIterator($this->aggregations);
 	}
 
 
-	public function toArray() : array
+	public function toArray(): array
 	{
 		$array = [];
 		$hasFilter = \count($this->filter->toArray());

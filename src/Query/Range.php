@@ -74,7 +74,7 @@ class Range implements LeafQueryInterface
 	}
 
 
-	public function key() : string
+	public function key(): string
 	{
 		$gte = $this->gte instanceof \DateTimeInterface ? $this->gte->format('Y-m-d H:i:s') : $this->gte;
 		$lte = $this->lte instanceof \DateTimeInterface ? $this->lte->format('Y-m-d H:i:s') : $this->lte;
@@ -83,7 +83,7 @@ class Range implements LeafQueryInterface
 	}
 
 
-	public function toArray() : array
+	public function toArray(): array
 	{
 		$array = [
 			'range' => [

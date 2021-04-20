@@ -63,49 +63,49 @@ class ElasticQuery implements \Spameri\ElasticQuery\Entity\ArrayInterface
 	}
 
 
-	public function query() : \Spameri\ElasticQuery\Query\QueryCollection
+	public function query(): \Spameri\ElasticQuery\Query\QueryCollection
 	{
 		return $this->query;
 	}
 
 
-	public function filter() : \Spameri\ElasticQuery\Filter\FilterCollection
+	public function filter(): \Spameri\ElasticQuery\Filter\FilterCollection
 	{
 		return $this->filter;
 	}
 
 
-	public function aggregation() : \Spameri\ElasticQuery\Aggregation\AggregationCollection
+	public function aggregation(): \Spameri\ElasticQuery\Aggregation\AggregationCollection
 	{
 		return $this->aggregation;
 	}
 
 
-	public function options() : \Spameri\ElasticQuery\Options
+	public function options(): \Spameri\ElasticQuery\Options
 	{
 		return $this->options;
 	}
 
 
-	public function addMustQuery(\Spameri\ElasticQuery\Query\LeafQueryInterface $leafQuery) : void
+	public function addMustQuery(\Spameri\ElasticQuery\Query\LeafQueryInterface $leafQuery): void
 	{
 		$this->query->must()->add($leafQuery);
 	}
 
 
-	public function addMustNotQuery(\Spameri\ElasticQuery\Query\LeafQueryInterface $leafQuery) : void
+	public function addMustNotQuery(\Spameri\ElasticQuery\Query\LeafQueryInterface $leafQuery): void
 	{
 		$this->query->mustNot()->add($leafQuery);
 	}
 
 
-	public function addShouldQuery(\Spameri\ElasticQuery\Query\LeafQueryInterface $leafQuery) : void
+	public function addShouldQuery(\Spameri\ElasticQuery\Query\LeafQueryInterface $leafQuery): void
 	{
 		$this->query->should()->add($leafQuery);
 	}
 
 
-	public function addFilter(\Spameri\ElasticQuery\Query\LeafQueryInterface $leafQuery) : void
+	public function addFilter(\Spameri\ElasticQuery\Query\LeafQueryInterface $leafQuery): void
 	{
 		$this->filter->must()->add($leafQuery);
 	}
@@ -117,7 +117,7 @@ class ElasticQuery implements \Spameri\ElasticQuery\Entity\ArrayInterface
 	}
 
 
-	public function toArray() : array
+	public function toArray(): array
 	{
 		$array = $this->options->toArray();
 

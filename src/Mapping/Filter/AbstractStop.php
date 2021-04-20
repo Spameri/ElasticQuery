@@ -23,25 +23,25 @@ abstract class AbstractStop implements \Spameri\ElasticQuery\Mapping\FilterInter
 	}
 
 
-	public function getType() : string
+	public function getType(): string
 	{
 		return 'stop';
 	}
 
 
-	abstract public function getStopWords() : array;
+	abstract public function getStopWords(): array;
 
 
-	abstract public function getName() : string;
+	abstract public function getName(): string;
 
 
-	public function key() : string
+	public function key(): string
 	{
 		return $this->getName();
 	}
 
 
-	public function toArray() : array
+	public function toArray(): array
 	{
 		$stopWords = $this->getStopWords();
 		if ($this->extraWords) {

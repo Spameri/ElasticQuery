@@ -20,7 +20,7 @@ abstract class AbstractNumberValue implements \Spameri\ElasticQuery\Value\ValueI
 	}
 
 
-	public function value() : int
+	public function value(): int
 	{
 		return $this->value;
 	}

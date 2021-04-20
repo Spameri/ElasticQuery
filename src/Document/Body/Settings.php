@@ -26,7 +26,7 @@ class Settings implements \Spameri\ElasticQuery\Document\BodyInterface
 	}
 
 
-	public function toArray() : array
+	public function toArray(): array
 	{
 		$analyzers = [];
 		/** @var \Spameri\ElasticQuery\Mapping\AnalyzerInterface&\Spameri\ElasticQuery\Collection\Item $analyzer */

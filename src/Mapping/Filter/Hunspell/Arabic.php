@@ -5,13 +5,13 @@ namespace Spameri\ElasticQuery\Mapping\Filter\Hunspell;
 class Arabic extends \Spameri\ElasticQuery\Mapping\Filter\AbstractHunspell
 {
 
-	public function getLocale() : string
+	public function getLocale(): string
 	{
 		return 'ar';
 	}
 
 
-	public function getName() : string
+	public function getName(): string
 	{
 		return 'dictionary_AR';
 	}

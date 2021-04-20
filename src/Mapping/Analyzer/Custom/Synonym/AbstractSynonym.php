@@ -40,25 +40,25 @@ abstract class AbstractSynonym
 	}
 
 
-	public function key() : string
+	public function key(): string
 	{
 		return $this->name();
 	}
 
 
-	public function getType() : string
+	public function getType(): string
 	{
 		return 'custom';
 	}
 
 
-	public function tokenizer() : string
+	public function tokenizer(): string
 	{
 		return 'standard';
 	}
 
 
-	public function toArray() : array
+	public function toArray(): array
 	{
 		$filterArray = [];
 		/** @var \Spameri\ElasticQuery\Mapping\FilterInterface $filter */

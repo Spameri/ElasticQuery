@@ -8,7 +8,7 @@ namespace Spameri\ElasticQuery\Mapping\Filter\Stop;
 class Catalan extends \Spameri\ElasticQuery\Mapping\Filter\AbstractStop
 {
 
-	public function getStopWords() : array
+	public function getStopWords(): array
 	{
 		return [
 			\Spameri\ElasticQuery\Mapping\Analyzer\Stop\StopWords::CATALAN,
@@ -16,7 +16,7 @@ class Catalan extends \Spameri\ElasticQuery\Mapping\Filter\AbstractStop
 	}
 
 
-	public function getName() : string
+	public function getName(): string
 	{
 		return 'catalanStopWords';
 	}

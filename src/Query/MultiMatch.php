@@ -86,13 +86,13 @@ class MultiMatch implements LeafQueryInterface
 	}
 
 
-	public function key() : string
+	public function key(): string
 	{
 		return 'multiMatch_' . \implode('-', $this->fields) . '_' . (string) $this->query;
 	}
 
 
-	public function toArray() : array
+	public function toArray(): array
 	{
 		$array = [
 			'multi_match' => [

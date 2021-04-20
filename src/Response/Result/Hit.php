@@ -56,7 +56,7 @@ class Hit
 	}
 
 
-	public function source() : array
+	public function source(): array
 	{
 		return $this->source;
 	}
@@ -73,37 +73,37 @@ class Hit
 	}
 
 
-	public function position() : int
+	public function position(): int
 	{
 		return $this->position;
 	}
 
 
-	public function index() : string
+	public function index(): string
 	{
 		return $this->index;
 	}
 
 
-	public function type() : string
+	public function type(): string
 	{
 		return $this->type;
 	}
 
 
-	public function id() : string
+	public function id(): string
 	{
 		return $this->id;
 	}
 
 
-	public function score() : float
+	public function score(): float
 	{
 		return $this->score;
 	}
 
 
-	public function version() : int
+	public function version(): int
 	{
 		return $this->version;
 	}

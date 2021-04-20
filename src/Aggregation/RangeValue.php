@@ -34,13 +34,13 @@ class RangeValue implements \Spameri\ElasticQuery\Entity\EntityInterface
 	}
 
 
-	public function key() : string
+	public function key(): string
 	{
 		return $this->key;
 	}
 
 
-	public function toArray() : array
+	public function toArray(): array
 	{
 		return [
 			'key'  => $this->key,

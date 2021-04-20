@@ -31,13 +31,13 @@ class AggregationCollection implements LeafAggregationInterface
 	}
 
 
-	public function key() : string
+	public function key(): string
 	{
 		return 'top-aggs-collection';
 	}
 
 
-	public function filter() : \Spameri\ElasticQuery\Filter\FilterCollection
+	public function filter(): \Spameri\ElasticQuery\Filter\FilterCollection
 	{
 		return $this->filter;
 	}
@@ -45,13 +45,13 @@ class AggregationCollection implements LeafAggregationInterface
 
 	public function add(
 		LeafAggregationCollection $leafAggregation
-	) : void
+	): void
 	{
 		$this->aggregations[$leafAggregation->key()] = $leafAggregation;
 	}
 
 
-	public function keys() : array
+	public function keys(): array
 	{
 		return \array_map('\strval', \array_keys($this->aggregations));
 	}
@@ -59,19 +59,19 @@ class AggregationCollection implements LeafAggregationInterface
 
 	public function isKey(
 		string $key
-	) : bool
+	): bool
 	{
 		return \array_key_exists($key, \array_map('\strval', \array_keys($this->aggregations)));
 	}
 
 
-	public function count() : int
+	public function count(): int
 	{
 		return \count($this->aggregations);
 	}
 
 
-	public function toArray() : array
+	public function toArray(): array
 	{
 		$array = [];
 

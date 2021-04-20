@@ -11,12 +11,12 @@ interface SimpleCollectionInterface extends \IteratorAggregate
 	 */
 	public function add(
 		$item
-	) : void;
+	): void;
 
 
 	public function remove(
 		string $key
-	) : bool;
+	): bool;
 
 
 	/**
@@ -29,15 +29,15 @@ interface SimpleCollectionInterface extends \IteratorAggregate
 
 	public function isValue(
 		string $key
-	) : bool;
+	): bool;
 
 
-	public function count() : int;
+	public function count(): int;
 
 
-	public function keys() : array;
+	public function keys(): array;
 
 
-	public function clear() : void;
+	public function clear(): void;
 
 }

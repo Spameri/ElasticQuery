@@ -37,13 +37,13 @@ class WildCard implements LeafQueryInterface
 	}
 
 
-	public function key() : string
+	public function key(): string
 	{
 		return 'wildcard_' . $this->field . '_' . $this->query;
 	}
 
 
-	public function toArray() : array
+	public function toArray(): array
 	{
 		// phpcs:ignore SlevomatCodingStandard.Variables.UselessVariable
 		$array = [
