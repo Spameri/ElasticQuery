@@ -20,7 +20,7 @@ abstract class AbstractFloatValue implements \Spameri\ElasticQuery\Value\ValueIn
 	}
 
 
-	public function value() : float
+	public function value(): float
 	{
 		return $this->value;
 	}

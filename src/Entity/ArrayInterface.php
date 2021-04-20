@@ -6,6 +6,6 @@ namespace Spameri\ElasticQuery\Entity;
 interface ArrayInterface
 {
 
-	public function toArray() : array;
+	public function toArray(): array;
 
 }

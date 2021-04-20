@@ -56,43 +56,43 @@ class QueryCollection implements LeafQueryInterface
 	}
 
 
-	public function must() : \Spameri\ElasticQuery\Query\MustCollection
+	public function must(): \Spameri\ElasticQuery\Query\MustCollection
 	{
 		return $this->mustCollection;
 	}
 
 
-	public function should() : \Spameri\ElasticQuery\Query\ShouldCollection
+	public function should(): \Spameri\ElasticQuery\Query\ShouldCollection
 	{
 		return $this->shouldCollection;
 	}
 
 
-	public function mustNot() : \Spameri\ElasticQuery\Query\MustNotCollection
+	public function mustNot(): \Spameri\ElasticQuery\Query\MustNotCollection
 	{
 		return $this->mustNotCollection;
 	}
 
 
-	public function addMustQuery(\Spameri\ElasticQuery\Query\LeafQueryInterface $leafQuery) : void
+	public function addMustQuery(\Spameri\ElasticQuery\Query\LeafQueryInterface $leafQuery): void
 	{
 		$this->mustCollection->add($leafQuery);
 	}
 
 
-	public function addMustNotQuery(\Spameri\ElasticQuery\Query\LeafQueryInterface $leafQuery) : void
+	public function addMustNotQuery(\Spameri\ElasticQuery\Query\LeafQueryInterface $leafQuery): void
 	{
 		$this->mustNotCollection->add($leafQuery);
 	}
 
 
-	public function addShouldQuery(\Spameri\ElasticQuery\Query\LeafQueryInterface $leafQuery) : void
+	public function addShouldQuery(\Spameri\ElasticQuery\Query\LeafQueryInterface $leafQuery): void
 	{
 		$this->shouldCollection->add($leafQuery);
 	}
 
 
-	public function key() : string
+	public function key(): string
 	{
 		if ($this->key) {
 			return (string) $this->key;
@@ -102,7 +102,7 @@ class QueryCollection implements LeafQueryInterface
 	}
 
 
-	public function toArray() : array
+	public function toArray(): array
 	{
 		$array = [];
 		/** @var \Spameri\ElasticQuery\Query\LeafQueryInterface $item */

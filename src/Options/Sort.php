@@ -53,13 +53,13 @@ class Sort implements \Spameri\ElasticQuery\Entity\EntityInterface
 	}
 
 
-	public function key() : string
+	public function key(): string
 	{
 		return $this->field;
 	}
 
 
-	public function toArray() : array
+	public function toArray(): array
 	{
 		return [
 			$this->field => [

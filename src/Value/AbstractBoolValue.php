@@ -20,7 +20,7 @@ abstract class AbstractBoolValue implements \Spameri\ElasticQuery\Value\ValueInt
 	}
 
 
-	public function value() : bool
+	public function value(): bool
 	{
 		return $this->value;
 	}

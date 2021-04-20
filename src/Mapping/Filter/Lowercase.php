@@ -14,7 +14,7 @@ class Lowercase implements \Spameri\ElasticQuery\Mapping\FilterInterface
 	}
 
 
-	public function toArray() : array
+	public function toArray(): array
 	{
 		return [];
 	}

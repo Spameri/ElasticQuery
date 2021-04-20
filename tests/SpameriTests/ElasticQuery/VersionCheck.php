@@ -11,7 +11,7 @@ class VersionCheck
 	private static $resultMapper;
 
 
-	public static function check() : \Spameri\ElasticQuery\Response\ResultVersion
+	public static function check(): \Spameri\ElasticQuery\Response\ResultVersion
 	{
 		if (self::$resultMapper === NULL) {
 			self::$resultMapper = new \Spameri\ElasticQuery\Response\ResultMapper();

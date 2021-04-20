@@ -54,13 +54,13 @@ class MatchPhrase implements LeafQueryInterface
 	}
 
 
-	public function key() : string
+	public function key(): string
 	{
 		return 'match_phrase_' . $this->field . '_' . (string) $this->query;
 	}
 
 
-	public function toArray() : array
+	public function toArray(): array
 	{
 		$array = [
 			'match_phrase' => [

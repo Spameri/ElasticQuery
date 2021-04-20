@@ -50,19 +50,19 @@ class Bucket
 	}
 
 
-	public function key() : string
+	public function key(): string
 	{
 		return (string) $this->key;
 	}
 
 
-	public function docCount() : int
+	public function docCount(): int
 	{
 		return $this->docCount;
 	}
 
 
-	public function position() : ?int
+	public function position(): ?int
 	{
 		return $this->position;
 	}

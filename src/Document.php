@@ -60,7 +60,7 @@ class Document implements \Spameri\ElasticQuery\Entity\ArrayInterface
 	}
 
 
-	public function toArray() : array
+	public function toArray(): array
 	{
 		$array = [];
 

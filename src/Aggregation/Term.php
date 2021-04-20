@@ -44,13 +44,13 @@ class Term implements LeafAggregationInterface
 	}
 
 
-	public function key() : string
+	public function key(): string
 	{
 		return $this->key ?? $this->field;
 	}
 
 
-	public function toArray() : array
+	public function toArray(): array
 	{
 		$array = [
 			'field' => $this->field,

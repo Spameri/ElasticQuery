@@ -23,13 +23,13 @@ class Exists implements LeafQueryInterface
 	}
 
 
-	public function key() : string
+	public function key(): string
 	{
 		return 'exits_' . $this->field;
 	}
 
 
-	public function toArray() : array
+	public function toArray(): array
 	{
 		return [
 			'exists' => [
