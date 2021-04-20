@@ -20,7 +20,7 @@ class RangeValueCollection implements \IteratorAggregate
 	}
 
 
-	public function getIterator() : \ArrayIterator
+	public function getIterator(): \ArrayIterator
 	{
 		return new \ArrayIterator($this->collection);
 	}
@@ -28,7 +28,7 @@ class RangeValueCollection implements \IteratorAggregate
 
 	public function add(
 		\Spameri\ElasticQuery\Aggregation\RangeValue $rangeValue
-	) : void
+	): void
 	{
 		$this->collection[] = $rangeValue;
 	}

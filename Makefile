@@ -1,6 +1,7 @@
 .PHONY: composer
 .PHONY: phpstan
 .PHONY: cs
+.PHONY: cs-local
 .PHONY: tests
 .PHONY: coverage
 
@@ -12,6 +13,9 @@ phpstan:
 
 cs:
 	vendor/bin/phpcs --standard=ruleset.xml --cache=$HOME/phpcs-cache/.phpcs-cache src tests
+
+cs-local:
+	vendor/bin/phpcs --standard=ruleset.xml src tests
 
 tests:
 	vendor/bin/tester -s -p php --colors 1 -C -j 1 tests

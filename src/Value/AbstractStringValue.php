@@ -20,7 +20,7 @@ abstract class AbstractStringValue implements \Spameri\ElasticQuery\Value\ValueI
 	}
 
 
-	public function value() : string
+	public function value(): string
 	{
 		return $this->value;
 	}

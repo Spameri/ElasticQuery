@@ -38,25 +38,25 @@ class Aggregation
 	}
 
 
-	public function name() : string
+	public function name(): string
 	{
 		return $this->name;
 	}
 
 
-	public function position() : int
+	public function position(): int
 	{
 		return $this->position;
 	}
 
 
-	public function buckets() : \Spameri\ElasticQuery\Response\Result\Aggregation\BucketCollection
+	public function buckets(): \Spameri\ElasticQuery\Response\Result\Aggregation\BucketCollection
 	{
 		return $this->bucketCollection;
 	}
 
 
-	public function countBuckets() : int
+	public function countBuckets(): int
 	{
 		$count = 0;
 		/** @var \Spameri\ElasticQuery\Response\Result\Aggregation\Bucket $bucket */
@@ -68,7 +68,7 @@ class Aggregation
 	}
 
 
-	public function aggregations() : \Spameri\ElasticQuery\Response\Result\AggregationCollection
+	public function aggregations(): \Spameri\ElasticQuery\Response\Result\AggregationCollection
 	{
 		return $this->aggregations;
 	}

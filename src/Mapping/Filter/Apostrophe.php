@@ -14,13 +14,13 @@ class Apostrophe implements \Spameri\ElasticQuery\Mapping\FilterInterface
 	}
 
 
-	public function toArray() : array
+	public function toArray(): array
 	{
 		// TODO: Implement toArray() method.
 	}
 
 
-	public function key() : string
+	public function key(): string
 	{
 		// TODO: Implement key() method.
 	}

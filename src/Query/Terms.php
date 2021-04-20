@@ -43,13 +43,13 @@ class Terms implements LeafQueryInterface
 	}
 
 
-	public function key() : string
+	public function key(): string
 	{
 		return 'terms_' . $this->field . '_' . \implode('-', $this->query);
 	}
 
 
-	public function toArray() : array
+	public function toArray(): array
 	{
 		// phpcs:ignore SlevomatCodingStandard.Variables.UselessVariable
 		$array = [

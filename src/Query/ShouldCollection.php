@@ -25,7 +25,7 @@ class ShouldCollection implements \Spameri\ElasticQuery\Collection\QueryCollecti
 
 	public function add(
 		\Spameri\ElasticQuery\Query\LeafQueryInterface $item
-	) : void
+	): void
 	{
 		$this->collection[$item->key()] = $item;
 	}
@@ -33,7 +33,7 @@ class ShouldCollection implements \Spameri\ElasticQuery\Collection\QueryCollecti
 
 	public function remove(
 		string $key
-	) : bool
+	): bool
 	{
 		if (isset($this->collection[$key])) {
 			unset($this->collection[$key]);
@@ -47,7 +47,7 @@ class ShouldCollection implements \Spameri\ElasticQuery\Collection\QueryCollecti
 
 	public function get(
 		string $key
-	) : ?\Spameri\ElasticQuery\Query\LeafQueryInterface
+	): ?\Spameri\ElasticQuery\Query\LeafQueryInterface
 	{
 		if (isset($this->collection[$key])) {
 			return $this->collection[$key];
@@ -59,7 +59,7 @@ class ShouldCollection implements \Spameri\ElasticQuery\Collection\QueryCollecti
 
 	public function isValue(
 		string $key
-	) : bool
+	): bool
 	{
 		if (isset($this->collection[$key])) {
 			return TRUE;
@@ -69,25 +69,25 @@ class ShouldCollection implements \Spameri\ElasticQuery\Collection\QueryCollecti
 	}
 
 
-	public function count() : int
+	public function count(): int
 	{
 		return \count($this->collection);
 	}
 
 
-	public function keys() : array
+	public function keys(): array
 	{
 		return \array_map('\strval', \array_keys($this->collection));
 	}
 
 
-	public function clear() : void
+	public function clear(): void
 	{
 		$this->collection = [];
 	}
 
 
-	public function getIterator() : \ArrayIterator
+	public function getIterator(): \ArrayIterator
 	{
 		return new \ArrayIterator($this->collection);
 	}
