@@ -13,4 +13,16 @@ class HtmlStrip implements \Spameri\ElasticQuery\Mapping\FilterInterface
 		return 'html_strip';
 	}
 
+
+	public function toArray(): array
+	{
+		// TODO: Implement toArray() method.
+	}
+
+
+	public function key(): string
+	{
+		// TODO: Implement key() method.
+	}
+
 }

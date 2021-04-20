@@ -84,12 +84,15 @@ class Settings implements \Spameri\ElasticQuery\Entity\ArrayInterface
 	}
 
 
-	public function removeMappingSubField($subFields): void
+	public function removeMappingSubField(string $subFields): void
 	{
 		$this->mapping->removeSubField($subFields);
 	}
 
 
+	/**
+	 * @phpstan-param \Spameri\ElasticQuery\Mapping\AnalyzerInterface&\Spameri\ElasticQuery\Collection\Item $analyzer
+	 */
 	public function addAnalyzer(\Spameri\ElasticQuery\Mapping\AnalyzerInterface $analyzer): void
 	{
 		$this->analysis->analyzer()->add($analyzer);
@@ -148,9 +151,7 @@ class Settings implements \Spameri\ElasticQuery\Entity\ArrayInterface
 			}
 		}
 
-		if ($this->mapping) {
-			$array = \array_merge($array, $this->mapping->toArray());
-		}
+		$array = \array_merge($array, $this->mapping->toArray());
 
 		return $array;
 	}

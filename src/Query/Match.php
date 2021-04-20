@@ -15,7 +15,7 @@ class Match implements LeafQueryInterface
 	private $field;
 
 	/**
-	 * @var string
+	 * @var string|int|bool|null
 	 */
 	private $query;
 
@@ -45,6 +45,9 @@ class Match implements LeafQueryInterface
 	private $minimumShouldMatch;
 
 
+	/**
+	 * @param string|int|bool|null $query
+	 */
 	public function __construct(
 		string $field
 		, $query
@@ -73,7 +76,7 @@ class Match implements LeafQueryInterface
 
 	public function key() : string
 	{
-		return 'match_' . $this->field . '_' . $this->query;
+		return 'match_' . $this->field . '_' . (string) $this->query;
 	}
 
 

@@ -13,4 +13,16 @@ class KeepTypes implements \Spameri\ElasticQuery\Mapping\FilterInterface
 		return 'keep_types';
 	}
 
+
+	public function toArray(): array
+	{
+		// TODO: Implement toArray() method.
+	}
+
+
+	public function key(): string
+	{
+		// TODO: Implement key() method.
+	}
+
 }

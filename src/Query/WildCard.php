@@ -27,7 +27,7 @@ class WildCard implements LeafQueryInterface
 
 	public function __construct(
 		string $field
-		, $query
+		, string $query
 		, float $boost = 1.0
 	)
 	{

@@ -13,4 +13,16 @@ class WordDelimiterGraph implements \Spameri\ElasticQuery\Mapping\FilterInterfac
 		return 'word_delimiter_graph';
 	}
 
+
+	public function toArray(): array
+	{
+		// TODO: Implement toArray() method.
+	}
+
+
+	public function key(): string
+	{
+		// TODO: Implement key() method.
+	}
+
 }

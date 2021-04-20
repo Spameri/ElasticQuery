@@ -13,4 +13,16 @@ class Fingerprint implements \Spameri\ElasticQuery\Mapping\FilterInterface
 		return 'fingerprint';
 	}
 
+
+	public function toArray(): array
+	{
+		// TODO: Implement toArray() method.
+	}
+
+
+	public function key(): string
+	{
+		// TODO: Implement key() method.
+	}
+
 }

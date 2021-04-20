@@ -16,6 +16,9 @@ class AnalyzerCollection implements \Spameri\ElasticQuery\Collection\SimpleColle
 	)
 	{
 		$this->collection = [];
+		/**
+		 * @phpstan-var \Spameri\ElasticQuery\Mapping\AnalyzerInterface&\Spameri\ElasticQuery\Collection\Item $item
+		 */
 		foreach ($collection as $item) {
 			$this->add($item);
 		}
@@ -23,7 +26,7 @@ class AnalyzerCollection implements \Spameri\ElasticQuery\Collection\SimpleColle
 
 
 	/**
-	 * @param \Spameri\ElasticQuery\Mapping\AnalyzerInterface $item
+	 * @param \Spameri\ElasticQuery\Mapping\AnalyzerInterface&\Spameri\ElasticQuery\Collection\Item $item
 	 */
 	public function add(
 		$item

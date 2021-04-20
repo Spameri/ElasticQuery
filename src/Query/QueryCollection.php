@@ -27,6 +27,9 @@ class QueryCollection implements LeafQueryInterface
 	private $key;
 
 
+	/**
+	 * @param int|string|null $key
+	 */
 	public function __construct(
 		?\Spameri\ElasticQuery\Query\MustCollection $mustCollection = NULL
 		, ?\Spameri\ElasticQuery\Query\ShouldCollection $shouldCollection = NULL
@@ -92,7 +95,7 @@ class QueryCollection implements LeafQueryInterface
 	public function key() : string
 	{
 		if ($this->key) {
-			return $this->key;
+			return (string) $this->key;
 		}
 
 		return \md5(\serialize($this->toArray()));

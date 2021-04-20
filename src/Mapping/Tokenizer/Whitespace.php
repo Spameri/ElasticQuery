@@ -13,4 +13,16 @@ class Whitespace implements \Spameri\ElasticQuery\Mapping\TokenizerInterface
 		return 'whitespace';
 	}
 
+
+	public function toArray(): array
+	{
+		// TODO: Implement toArray() method.
+	}
+
+
+	public function key(): string
+	{
+		// TODO: Implement key() method.
+	}
+
 }

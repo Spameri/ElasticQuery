@@ -13,4 +13,16 @@ class SimplePattern implements \Spameri\ElasticQuery\Mapping\TokenizerInterface
 		return 'simple_pattern';
 	}
 
+
+	public function toArray(): array
+	{
+		// TODO: Implement toArray() method.
+	}
+
+
+	public function key(): string
+	{
+		// TODO: Implement key() method.
+	}
+
 }

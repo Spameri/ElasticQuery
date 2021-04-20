@@ -13,4 +13,16 @@ class Path implements \Spameri\ElasticQuery\Mapping\TokenizerInterface
 		return 'path_hierarchy';
 	}
 
+
+	public function toArray(): array
+	{
+		// TODO: Implement toArray() method.
+	}
+
+
+	public function key(): string
+	{
+		// TODO: Implement key() method.
+	}
+
 }

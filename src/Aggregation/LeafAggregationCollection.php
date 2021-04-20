@@ -59,7 +59,7 @@ class LeafAggregationCollection implements LeafAggregationInterface, \IteratorAg
 	public function toArray() : array
 	{
 		$array = [];
-		$hasFilter = $this->filter && \count($this->filter->toArray());
+		$hasFilter = \count($this->filter->toArray());
 
 		foreach ($this->aggregations as $aggregation) {
 			if ($aggregation instanceof \Spameri\ElasticQuery\Aggregation\LeafAggregationCollection) {

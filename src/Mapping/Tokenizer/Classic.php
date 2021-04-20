@@ -13,4 +13,16 @@ class Classic implements \Spameri\ElasticQuery\Mapping\TokenizerInterface
 		return 'classic';
 	}
 
+
+	public function toArray(): array
+	{
+		// TODO: Implement toArray() method.
+	}
+
+
+	public function key(): string
+	{
+		// TODO: Implement key() method.
+	}
+
 }

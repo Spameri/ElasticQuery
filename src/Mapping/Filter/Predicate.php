@@ -13,4 +13,16 @@ class Predicate implements \Spameri\ElasticQuery\Mapping\FilterInterface
 		return 'predicate_token_filter';
 	}
 
+
+	public function toArray(): array
+	{
+		// TODO: Implement toArray() method.
+	}
+
+
+	public function key(): string
+	{
+		// TODO: Implement key() method.
+	}
+
 }

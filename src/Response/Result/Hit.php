@@ -62,6 +62,9 @@ class Hit
 	}
 
 
+	/**
+	 * @phpstan-return mixed
+	 */
 	public function getValue(
 		string $key
 	)

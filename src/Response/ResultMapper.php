@@ -23,7 +23,7 @@ class ResultMapper
 			$result = $this->mapVersionResults($elasticSearchResponse);
 
 		} else {
-			throw new \Spameri\ElasticQuery\Exception\ResponseCouldNotBeMapped($elasticSearchResponse);
+			throw new \Spameri\ElasticQuery\Exception\ResponseCouldNotBeMapped((string) \json_encode($elasticSearchResponse));
 		}
 
 		return $result;
@@ -209,6 +209,10 @@ class ResultMapper
 		}
 
 		if (isset($aggregationArray['doc_count']) && $aggregationArray['doc_count'] > 0) {
+			/**
+			 * @var string $aggregationName
+			 * @var array<mixed> $aggregation
+			 */
 			foreach ($aggregationArray as $aggregationName => $aggregation) {
 				if ( ! \is_array($aggregation)) {
 					continue;
@@ -239,12 +243,12 @@ class ResultMapper
 
 
 	private function mapBucket(
-		$bucketPosition
+		?int $bucketPosition
 		, array $bucketArray
 	) : \Spameri\ElasticQuery\Response\Result\Aggregation\Bucket
 	{
 		return new \Spameri\ElasticQuery\Response\Result\Aggregation\Bucket(
-			$bucketArray['key'] ?? $bucketPosition,
+			$bucketArray['key'] ?? (string) $bucketPosition,
 			$bucketArray['doc_count'],
 			\is_int($bucketPosition) ? $bucketPosition : NULL,
 			$bucketArray['from'] ?? NULL,

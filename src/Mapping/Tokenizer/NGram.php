@@ -13,4 +13,16 @@ class NGram implements \Spameri\ElasticQuery\Mapping\TokenizerInterface
 		return 'ngram';
 	}
 
+
+	public function toArray(): array
+	{
+		// TODO: Implement toArray() method.
+	}
+
+
+	public function key(): string
+	{
+		// TODO: Implement key() method.
+	}
+
 }

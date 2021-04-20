@@ -13,4 +13,16 @@ class UaxUrlEmail implements \Spameri\ElasticQuery\Mapping\TokenizerInterface
 		return 'uax_url_email';
 	}
 
+
+	public function toArray(): array
+	{
+		// TODO: Implement toArray() method.
+	}
+
+
+	public function key(): string
+	{
+		// TODO: Implement key() method.
+	}
+
 }

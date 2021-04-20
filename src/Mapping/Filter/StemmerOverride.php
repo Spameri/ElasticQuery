@@ -13,4 +13,16 @@ class StemmerOverride implements \Spameri\ElasticQuery\Mapping\FilterInterface
 		return 'stemmer_override';
 	}
 
+
+	public function toArray(): array
+	{
+		// TODO: Implement toArray() method.
+	}
+
+
+	public function key(): string
+	{
+		// TODO: Implement key() method.
+	}
+
 }

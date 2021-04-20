@@ -23,4 +23,10 @@ class Keyword implements \Spameri\ElasticQuery\Mapping\AnalyzerInterface
 		];
 	}
 
+
+	public function name(): string
+	{
+		return 'customKeyword';
+	}
+
 }

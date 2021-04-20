@@ -13,4 +13,16 @@ class Snowball implements \Spameri\ElasticQuery\Mapping\FilterInterface
 		return 'snowball';
 	}
 
+
+	public function toArray(): array
+	{
+		// TODO: Implement toArray() method.
+	}
+
+
+	public function key(): string
+	{
+		// TODO: Implement key() method.
+	}
+
 }

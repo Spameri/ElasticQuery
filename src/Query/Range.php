@@ -30,6 +30,10 @@ class Range implements LeafQueryInterface
 	private $boost;
 
 
+	/**
+	 * @phpstan-param int|float|\DateTimeInterface|null $gte
+	 * @phpstan-param int|float|\DateTimeInterface|null $lte
+	 */
 	public function __construct(
 		string $field
 		, $gte = NULL
@@ -44,8 +48,22 @@ class Range implements LeafQueryInterface
 		}
 
 		if ($lte && $gte && $lte < $gte) {
+			if ($gte instanceof \DateTimeInterface) {
+				$gteValue = $gte->format('U');
+
+			} else {
+				$gteValue = $gte;
+			}
+
+			if ($lte instanceof \DateTimeInterface) {
+				$lteValue = $lte->format('U');
+
+			} else {
+				$lteValue = $lte;
+			}
+
 			throw new \Spameri\ElasticQuery\Exception\InvalidArgumentException(
-				'Input values does not make range. From: ' . $gte . ' To: ' . $lte
+				'Input values does not make range. From: ' . $gteValue . ' To: ' . $lteValue
 			);
 		}
 
