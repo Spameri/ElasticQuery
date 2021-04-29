@@ -31,6 +31,12 @@ class Mapping implements \Spameri\ElasticQuery\Entity\ArrayInterface
 	}
 
 
+	public function fields(): \Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldCollection
+	{
+		return $this->fields;
+	}
+
+
 	public function addField(\Spameri\ElasticQuery\Mapping\Settings\Mapping\Field $field): void
 	{
 		$this->fields->add($field);
