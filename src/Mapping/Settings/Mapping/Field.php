@@ -46,6 +46,12 @@ class Field
 	}
 
 
+	public function changeAnalyzer(\Spameri\ElasticQuery\Mapping\AnalyzerInterface $newAnalyzer): void
+	{
+		$this->analyzer = $newAnalyzer;
+	}
+
+
 	public function key(): string
 	{
 		return $this->name;
