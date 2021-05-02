@@ -48,10 +48,15 @@ class Synonym implements \Spameri\ElasticQuery\Mapping\FilterInterface
 
 	public function toArray(): array
 	{
+		$synonyms = [];
+		foreach ($this->synonyms as $word => $synonym) {
+			$synonyms[] = $word . ' => ' . $synonym;
+		}
+
 		return [
 			$this->getName() => [
 				'type'      => $this->getType(),
-				'synonyms' => $this->synonyms,
+				'synonyms' => $synonyms,
 			],
 		];
 	}
