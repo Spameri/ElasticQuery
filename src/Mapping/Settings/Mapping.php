@@ -82,9 +82,7 @@ class Mapping implements \Spameri\ElasticQuery\Entity\ArrayInterface
 
 		return [
 			'mappings' => [
-				$this->indexName => [
-					'properties' => $fields,
-				],
+				'properties' => $fields,
 			],
 		];
 	}
