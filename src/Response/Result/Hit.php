@@ -69,7 +69,26 @@ class Hit
 		string $key
 	)
 	{
-		return $this->source[$key];
+		$value = $this->source[$key] ?? NULL;
+		if ($value === NULL) {
+			return NULL;
+		}
+
+		if (\strpos($key, '.') === FALSE) {
+			return $value;
+		}
+
+		$levels = \explode('.', $key);
+
+		foreach ($levels as $subKey) {
+			$value = $value[$subKey] ?? NULL;
+
+			if ($value === NULL) {
+				return NULL;
+			}
+		}
+
+		return $value;
 	}
 
 
