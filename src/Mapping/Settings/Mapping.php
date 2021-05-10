@@ -74,10 +74,14 @@ class Mapping implements \Spameri\ElasticQuery\Entity\ArrayInterface
 		foreach ($this->fields as $field) {
 			if ($field instanceof \Spameri\ElasticQuery\Mapping\Settings\Mapping\SubFields) {
 				$fields[$field->key()] = $field->toArray();
-
-			} else {
-				$fields[$field->key()] = $field->toArray()[$field->key()];
+				continue;
 			}
+			if ($field instanceof \Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldObject) {
+				$fields[$field->key()] = $field->toArray();
+				continue;
+			}
+
+			$fields[$field->key()] = $field->toArray()[$field->key()];
 		}
 
 		return [
