@@ -66,6 +66,9 @@ abstract class AbstractSynonym
 			if ($filter instanceof \Spameri\ElasticQuery\Mapping\Filter\Synonym) {
 				$filterArray[] = $filter->getName();
 
+			} elseif ($filter instanceof \Spameri\ElasticQuery\Mapping\Filter\FileSynonym) {
+				$filterArray[] = $filter->getName();
+
 			} elseif ($filter instanceof \Spameri\ElasticQuery\Mapping\Filter\AbstractStop) {
 				$filterArray[] = $filter->getName();
 
