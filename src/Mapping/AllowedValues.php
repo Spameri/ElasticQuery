@@ -18,6 +18,7 @@ class AllowedValues
 	// Text types
 	public const TYPE_TEXT = 'text';
 	public const TYPE_KEYWORD = 'keyword';
+	public const TYPE_STRING = 'string'; // deprecated
 
 	// Boolean types
 	public const TYPE_BOOLEAN = 'boolean';
