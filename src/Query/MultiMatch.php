@@ -28,8 +28,6 @@ class MultiMatch implements LeafQueryInterface
 
 	private ?int $minimumShouldMatch;
 
-	private int $slop;
-
 
 	/**
 	 * @param string|int|bool|null $query
@@ -38,7 +36,6 @@ class MultiMatch implements LeafQueryInterface
 		array $fields,
 		$query,
 		float $boost = 1.0,
-		int $slop = 1,
 		?\Spameri\ElasticQuery\Query\Match\Fuzziness $fuzziness = NULL,
 		string $type = \Spameri\ElasticQuery\Query\Match\MultiMatchType::BEST_FIELDS,
 		?int $minimumShouldMatch = NULL,
@@ -65,7 +62,6 @@ class MultiMatch implements LeafQueryInterface
 		$this->boost = $boost;
 		$this->analyzer = $analyzer;
 		$this->minimumShouldMatch = $minimumShouldMatch;
-		$this->slop = $slop;
 	}
 
 
@@ -81,7 +77,6 @@ class MultiMatch implements LeafQueryInterface
 			'multi_match' => [
 				'query' => $this->query,
 				'type' => $this->type,
-				'slop'	=> $this->slop,
 				'fields' => $this->fields,
 				'boost' => $this->boost,
 			],

@@ -138,7 +138,7 @@ class ElasticQuery implements \Spameri\ElasticQuery\Entity\ArrayInterface
 
 		$filterArray = $this->filter->toArray();
 		if ($filterArray) {
-			$array['filter'] = $filterArray;
+			$array['query']['bool']['filter'] = $filterArray;
 		}
 
 		$sortArray = $this->sort->toArray();

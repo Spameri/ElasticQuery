@@ -54,8 +54,11 @@ class Term implements LeafAggregationInterface
 	{
 		$array = [
 			'field' => $this->field,
-			'size'  => $this->size,
 		];
+
+		if ($this->size > 0) {
+			$array['size']  = $this->size;
+		}
 
 		if ($this->missing !== NULL) {
 			$array['missing'] = $this->missing;

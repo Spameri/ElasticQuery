@@ -45,15 +45,12 @@ class Terms implements LeafQueryInterface
 
 	public function toArray(): array
 	{
-		// phpcs:ignore SlevomatCodingStandard.Variables.UselessVariable
-		$array = [
+		return [
 			'terms' => [
 				$this->field 	=> $this->query,
 				'boost' 		=> $this->boost,
 			],
 		];
-
-		return $array;
 	}
 
 }

@@ -16,8 +16,9 @@ class OrderCollection implements
 	public function __construct(
 		\Spameri\ElasticQuery\Aggregation\Terms\Order ... $collection
 	) {
-		foreach ($collection as $order) {
-			$this->add($order);
+		$this->collection = [];
+		foreach ($collection as $item) {
+			$this->add($item);
 		}
 	}
 

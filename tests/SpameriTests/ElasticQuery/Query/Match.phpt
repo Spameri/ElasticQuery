@@ -30,12 +30,12 @@ class Match extends \Tester\TestCase
 			'name',
 			'Avengers',
 			1.0,
-			\Spameri\ElasticQuery\Query\Match\Operator::OR,
 			new \Spameri\ElasticQuery\Query\Match\Fuzziness(
 				\Spameri\ElasticQuery\Query\Match\Fuzziness::AUTO
 			),
-			'standard',
-			2
+			2,
+			\Spameri\ElasticQuery\Query\Match\Operator::OR,
+			'standard'
 		);
 
 		$array = $match->toArray();

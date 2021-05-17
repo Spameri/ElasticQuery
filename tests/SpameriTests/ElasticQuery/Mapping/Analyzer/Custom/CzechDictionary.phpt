@@ -38,7 +38,7 @@ class CzechDictionary extends \Tester\TestCase
 
 		$indexCreating = \curl_exec($ch);
 
-		\Tester\Assert::same('{"acknowledged":true}', $indexCreating);
+		\Tester\Assert::type('int', \strpos($indexCreating, '"acknowledged":true'));
 
 		// Fetch settings and test if analyzer is configured
 

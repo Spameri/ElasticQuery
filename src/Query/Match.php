@@ -26,10 +26,6 @@ class Match implements \Spameri\ElasticQuery\Query\LeafQueryInterface
 
 	private ?int $minimumShouldMatch;
 
-	private int $slop;
-
-	private ?string $type;
-
 
 	/**
 	 * @param string|int|bool|null $query
@@ -38,9 +34,7 @@ class Match implements \Spameri\ElasticQuery\Query\LeafQueryInterface
 		string $field,
 		$query,
 		float $boost = 1.0,
-		int $slop = 1,
 		?\Spameri\ElasticQuery\Query\Match\Fuzziness $fuzziness = NULL,
-		?string $type = NULL,
 		?int $minimumShouldMatch = NULL,
 		string $operator = \Spameri\ElasticQuery\Query\Match\Operator::OR,
 		?string $analyzer = NULL
@@ -59,8 +53,6 @@ class Match implements \Spameri\ElasticQuery\Query\LeafQueryInterface
 		$this->boost = $boost;
 		$this->analyzer = $analyzer;
 		$this->minimumShouldMatch = $minimumShouldMatch;
-		$this->slop = $slop;
-		$this->type = $type;
 	}
 
 
@@ -77,14 +69,9 @@ class Match implements \Spameri\ElasticQuery\Query\LeafQueryInterface
 				$this->field => [
 					'query' => $this->query,
 					'boost' => $this->boost,
-					'slop' 	=> $this->slop,
 				],
 			],
 		];
-
-		if ($this->type) {
-			$array['match'][$this->field]['type'] = $this->type;
-		}
 
 		if ($this->operator) {
 			$array['match'][$this->field]['operator'] = $this->operator;
