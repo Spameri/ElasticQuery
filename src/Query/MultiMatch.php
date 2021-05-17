@@ -9,59 +9,41 @@ namespace Spameri\ElasticQuery\Query;
 class MultiMatch implements LeafQueryInterface
 {
 
-	/**
-	 * @var array
-	 */
-	private $fields;
+	private array $fields;
 
 	/**
 	 * @var string|int|bool|null
 	 */
 	private $query;
 
-	/**
-	 * @var string
-	 */
-	private $type;
+	private string $type;
 
-	/**
-	 * @var string
-	 */
-	private $operator;
+	private string $operator;
 
-	/**
-	 * @var null|\Spameri\ElasticQuery\Query\Match\Fuzziness
-	 */
-	private $fuzziness;
+	private ?\Spameri\ElasticQuery\Query\Match\Fuzziness $fuzziness;
 
-	/**
-	 * @var float
-	 */
-	private $boost;
+	private float $boost;
 
-	/**
-	 * @var null|string
-	 */
-	private $analyzer;
+	private ?string $analyzer;
 
-	/**
-	 * @var int|null
-	 */
-	private $minimumShouldMatch;
+	private ?int $minimumShouldMatch;
+
+	private int $slop;
 
 
 	/**
 	 * @param string|int|bool|null $query
 	 */
 	public function __construct(
-		array $fields
-		, $query
-		, float $boost = 1.0
-		, string $type = \Spameri\ElasticQuery\Query\Match\MultiMatchType::BEST_FIELDS
-		, string $operator = \Spameri\ElasticQuery\Query\Match\Operator::OR
-		, ?\Spameri\ElasticQuery\Query\Match\Fuzziness $fuzziness = NULL
-		, ?string $analyzer = NULL
-		, ?int $minimumShouldMatch = NULL
+		array $fields,
+		$query,
+		float $boost = 1.0,
+		int $slop = 1,
+		?\Spameri\ElasticQuery\Query\Match\Fuzziness $fuzziness = NULL,
+		string $type = \Spameri\ElasticQuery\Query\Match\MultiMatchType::BEST_FIELDS,
+		?int $minimumShouldMatch = NULL,
+		string $operator = \Spameri\ElasticQuery\Query\Match\Operator::OR,
+		?string $analyzer = NULL
 	)
 	{
 		if ( ! \in_array($operator, \Spameri\ElasticQuery\Query\Match\Operator::OPERATORS, TRUE)) {
@@ -83,6 +65,7 @@ class MultiMatch implements LeafQueryInterface
 		$this->boost = $boost;
 		$this->analyzer = $analyzer;
 		$this->minimumShouldMatch = $minimumShouldMatch;
+		$this->slop = $slop;
 	}
 
 
@@ -98,6 +81,7 @@ class MultiMatch implements LeafQueryInterface
 			'multi_match' => [
 				'query' => $this->query,
 				'type' => $this->type,
+				'slop'	=> $this->slop,
 				'fields' => $this->fields,
 				'boost' => $this->boost,
 			],
