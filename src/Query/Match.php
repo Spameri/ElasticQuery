@@ -6,56 +6,44 @@ namespace Spameri\ElasticQuery\Query;
 /**
  * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-query.html
  */
-class Match implements LeafQueryInterface
+class Match implements \Spameri\ElasticQuery\Query\LeafQueryInterface
 {
 
-	/**
-	 * @var string
-	 */
-	private $field;
+	private string $field;
 
 	/**
 	 * @var string|int|bool|null
 	 */
 	private $query;
 
-	/**
-	 * @var string
-	 */
-	private $operator;
+	private string $operator;
 
-	/**
-	 * @var null|\Spameri\ElasticQuery\Query\Match\Fuzziness
-	 */
-	private $fuzziness;
+	private ?\Spameri\ElasticQuery\Query\Match\Fuzziness $fuzziness;
 
-	/**
-	 * @var float
-	 */
-	private $boost;
+	private float $boost;
 
-	/**
-	 * @var null|string
-	 */
-	private $analyzer;
+	private ?string $analyzer;
 
-	/**
-	 * @var int|null
-	 */
-	private $minimumShouldMatch;
+	private ?int $minimumShouldMatch;
+
+	private int $slop;
+
+	private ?string $type;
 
 
 	/**
 	 * @param string|int|bool|null $query
 	 */
 	public function __construct(
-		string $field
-		, $query
-		, float $boost = 1.0
-		, string $operator = \Spameri\ElasticQuery\Query\Match\Operator::OR
-		, ?\Spameri\ElasticQuery\Query\Match\Fuzziness $fuzziness = NULL
-		, ?string $analyzer = NULL
-		, ?int $minimumShouldMatch = NULL
+		string $field,
+		$query,
+		float $boost = 1.0,
+		int $slop = 1,
+		?\Spameri\ElasticQuery\Query\Match\Fuzziness $fuzziness = NULL,
+		?string $type = NULL,
+		?int $minimumShouldMatch = NULL,
+		string $operator = \Spameri\ElasticQuery\Query\Match\Operator::OR,
+		?string $analyzer = NULL
 	)
 	{
 		if ( ! \in_array($operator, \Spameri\ElasticQuery\Query\Match\Operator::OPERATORS, TRUE)) {
@@ -71,6 +59,8 @@ class Match implements LeafQueryInterface
 		$this->boost = $boost;
 		$this->analyzer = $analyzer;
 		$this->minimumShouldMatch = $minimumShouldMatch;
+		$this->slop = $slop;
+		$this->type = $type;
 	}
 
 
@@ -87,9 +77,14 @@ class Match implements LeafQueryInterface
 				$this->field => [
 					'query' => $this->query,
 					'boost' => $this->boost,
+					'slop' 	=> $this->slop,
 				],
 			],
 		];
+
+		if ($this->type) {
+			$array['match'][$this->field]['type'] = $this->type;
+		}
 
 		if ($this->operator) {
 			$array['match'][$this->field]['operator'] = $this->operator;
