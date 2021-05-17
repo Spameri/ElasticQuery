@@ -6,60 +6,54 @@ namespace Spameri\ElasticQuery;
 class ElasticQuery implements \Spameri\ElasticQuery\Entity\ArrayInterface
 {
 
-	/**
-	 * @var \Spameri\ElasticQuery\Query\QueryCollection
-	 */
-	private $query;
+	private \Spameri\ElasticQuery\Query\QueryCollection $query;
 
-	/**
-	 * @var \Spameri\ElasticQuery\Filter\FilterCollection
-	 */
-	private $filter;
+	private \Spameri\ElasticQuery\Filter\FilterCollection $filter;
 
-	/**
-	 * @var \Spameri\ElasticQuery\Options\SortCollection
-	 */
-	private $sort;
+	private \Spameri\ElasticQuery\Options\SortCollection $sort;
 
-	/**
-	 * @var \Spameri\ElasticQuery\Aggregation\AggregationCollection
-	 */
-	private $aggregation;
+	private \Spameri\ElasticQuery\Aggregation\AggregationCollection $aggregation;
 
-	/**
-	 * @var \Spameri\ElasticQuery\Options
-	 */
-	private $options;
+	private \Spameri\ElasticQuery\Options $options;
+
+	private ?\Spameri\ElasticQuery\Highlight $highlight;
+
+	private ?\Spameri\ElasticQuery\FunctionScore $functionScore;
 
 
 	public function __construct(
-		?\Spameri\ElasticQuery\Query\QueryCollection $query = NULL
-		, ?\Spameri\ElasticQuery\Filter\FilterCollection $filter = NULL
-		, ?\Spameri\ElasticQuery\Options\SortCollection $sort = NULL
-		, ?\Spameri\ElasticQuery\Aggregation\AggregationCollection $aggregation = NULL
-		, ?Options $options = NULL
+		?\Spameri\ElasticQuery\Query\QueryCollection $query = NULL,
+		?\Spameri\ElasticQuery\Filter\FilterCollection $filter = NULL,
+		?\Spameri\ElasticQuery\Options\SortCollection $sort = NULL,
+		?\Spameri\ElasticQuery\Aggregation\AggregationCollection $aggregation = NULL,
+		?\Spameri\ElasticQuery\Highlight $highlight = NULL,
+		?\Spameri\ElasticQuery\FunctionScore $functionScore = NULL,
+		?\Spameri\ElasticQuery\Options $options = NULL
 	)
 	{
-		if ( ! $query) {
+		if ($query === NULL) {
 			$query = new \Spameri\ElasticQuery\Query\QueryCollection();
 		}
-		if ( ! $filter) {
+		if ($filter === NULL) {
 			$filter = new \Spameri\ElasticQuery\Filter\FilterCollection();
 		}
-		if ( ! $sort) {
+		if ($sort === NULL) {
 			$sort = new \Spameri\ElasticQuery\Options\SortCollection();
 		}
-		if ( ! $aggregation) {
+		if ($aggregation === NULL) {
 			$aggregation = new \Spameri\ElasticQuery\Aggregation\AggregationCollection();
 		}
-		if ( ! $options) {
-			$options = new Options();
+		if ($options === NULL) {
+			$options = new \Spameri\ElasticQuery\Options();
 		}
+
 		$this->query = $query;
 		$this->filter = $filter;
 		$this->sort = $sort;
 		$this->aggregation = $aggregation;
 		$this->options = $options;
+		$this->highlight = $highlight;
+		$this->functionScore = $functionScore;
 	}
 
 
@@ -84,6 +78,18 @@ class ElasticQuery implements \Spameri\ElasticQuery\Entity\ArrayInterface
 	public function options(): \Spameri\ElasticQuery\Options
 	{
 		return $this->options;
+	}
+
+
+	public function highlight(): ?\Spameri\ElasticQuery\Highlight
+	{
+		return $this->highlight;
+	}
+
+
+	public function functionScore(): ?\Spameri\ElasticQuery\FunctionScore
+	{
+		return $this->functionScore;
 	}
 
 
@@ -126,6 +132,10 @@ class ElasticQuery implements \Spameri\ElasticQuery\Entity\ArrayInterface
 			$array['query'] = $queryArray;
 		}
 
+		if ($this->functionScore !== NULL) {
+			$array['query'] = $this->functionScore->toArray($array['query']);
+		}
+
 		$filterArray = $this->filter->toArray();
 		if ($filterArray) {
 			$array['filter'] = $filterArray;
@@ -139,6 +149,10 @@ class ElasticQuery implements \Spameri\ElasticQuery\Entity\ArrayInterface
 		$aggregation = $this->aggregation->toArray();
 		if ($aggregation) {
 			$array['aggs'] = $aggregation;
+		}
+
+		if ($this->highlight !== NULL) {
+			$array['highlight'] = $this->highlight->toArray();
 		}
 
 		return $array;
