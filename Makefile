@@ -2,6 +2,7 @@
 .PHONY: phpstan
 .PHONY: cs
 .PHONY: cs-local
+.PHONY: cbf
 .PHONY: tests
 .PHONY: coverage
 
