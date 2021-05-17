@@ -94,11 +94,17 @@ class Range implements LeafQueryInterface
 		];
 
 		if ($this->gte !== NULL) {
-			$array['range'][$this->field]['gte'] = $this->gte instanceof \DateTimeInterface ? $this->gte->format('Y-m-d H:i:s') : $this->gte;
+			$array['range'][$this->field]['gte'] =
+				$this->gte instanceof \DateTimeInterface
+					? $this->gte->format('Y-m-d H:i:s')
+					: $this->gte;
 		}
 
 		if ($this->lte !== NULL) {
-			$array['range'][$this->field]['lte'] = $this->lte instanceof \DateTimeInterface ? $this->lte->format('Y-m-d H:i:s') : $this->lte;
+			$array['range'][$this->field]['lte'] =
+				$this->lte instanceof \DateTimeInterface
+					? $this->lte->format('Y-m-d H:i:s')
+					: $this->lte;
 		}
 
 		return $array;

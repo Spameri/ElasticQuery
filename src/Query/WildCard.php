@@ -2,27 +2,17 @@
 
 namespace Spameri\ElasticQuery\Query;
 
-
 /**
  * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-wildcard-query.html
  */
 class WildCard implements LeafQueryInterface
 {
 
-	/**
-	 * @var string
-	 */
-	private $field;
+	private string $field;
 
-	/**
-	 * @var string
-	 */
-	private $query;
+	private string $query;
 
-	/**
-	 * @var float
-	 */
-	private $boost;
+	private float $boost;
 
 
 	public function __construct(
@@ -45,8 +35,7 @@ class WildCard implements LeafQueryInterface
 
 	public function toArray(): array
 	{
-		// phpcs:ignore SlevomatCodingStandard.Variables.UselessVariable
-		$array = [
+		return [
 			'wildcard' => [
 				$this->field => [
 					'value' => $this->query,
@@ -54,8 +43,6 @@ class WildCard implements LeafQueryInterface
 				],
 			],
 		];
-
-		return $array;
 	}
 
 }

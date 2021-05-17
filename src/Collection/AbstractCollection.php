@@ -49,11 +49,7 @@ abstract class AbstractCollection implements CollectionInterface
 		string $key
 	): ?\Spameri\ElasticQuery\Entity\EntityInterface
 	{
-		if (isset($this->collection[$key])) {
-			return $this->collection[$key];
-		}
-
-		return NULL;
+		return $this->collection[$key] ?? NULL;
 	}
 
 
