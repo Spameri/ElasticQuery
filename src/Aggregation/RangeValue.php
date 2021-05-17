@@ -21,16 +21,30 @@ class RangeValue implements \Spameri\ElasticQuery\Entity\EntityInterface
 	 */
 	private $to;
 
+	/**
+	 * @var bool
+	 */
+	private $fromEqual;
+
+	/**
+	 * @var bool
+	 */
+	private $toEqual;
+
 
 	public function __construct(
-		string $key
-		, int $from
-		, int $to
+		string $key,
+		int $from,
+		int $to,
+		bool $fromEqual = TRUE,
+		bool $toEqual = TRUE
 	)
 	{
 		$this->key = $key;
 		$this->from = $from;
 		$this->to = $to;
+		$this->fromEqual = $fromEqual;
+		$this->toEqual = $toEqual;
 	}
 
 
@@ -42,10 +56,20 @@ class RangeValue implements \Spameri\ElasticQuery\Entity\EntityInterface
 
 	public function toArray(): array
 	{
+		$from = $this->from;
+		$to = $this->to;
+
+		if ( ! $this->fromEqual) {
+			$from++;
+		}
+		if ($this->toEqual) {
+			$to++;
+		}
+
 		return [
 			'key'  => $this->key,
-			'from' => $this->from,
-			'to'   => $this->to,
+			'from' => $from,
+			'to' => $to,
 		];
 	}
 
