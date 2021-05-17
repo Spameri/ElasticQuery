@@ -6,6 +6,7 @@
 .PHONY: tests
 .PHONY: coverage
 
+
 composer:
 	composer update --no-interaction --no-suggest --no-progress --prefer-dist --prefer-stable
 
