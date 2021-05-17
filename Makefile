@@ -17,6 +17,9 @@ cs:
 cs-local:
 	vendor/bin/phpcs --standard=ruleset.xml src tests/SpameriTests
 
+cbf:
+	vendor/bin/phpcbf --standard=ruleset.xml src tests/SpameriTests
+
 tests:
 	vendor/bin/tester -s -p php --colors 1 -C -j 1 tests
 

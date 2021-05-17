@@ -31,6 +31,12 @@ class Mapping implements \Spameri\ElasticQuery\Entity\ArrayInterface
 	}
 
 
+	public function getIndexName(): string
+	{
+		return $this->indexName;
+	}
+
+
 	public function fields(): \Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldCollection
 	{
 		return $this->fields;

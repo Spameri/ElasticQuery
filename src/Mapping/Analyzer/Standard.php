@@ -52,10 +52,4 @@ class Standard implements \Spameri\ElasticQuery\Mapping\AnalyzerInterface
 		];
 	}
 
-
-	public function name(): string
-	{
-		return 'customStandard';
-	}
-
 }
