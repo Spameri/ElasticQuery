@@ -33,11 +33,11 @@ jobs:
       - name: Composer
         run: make composer
 
-      - if: matrix.php == '7.4' && matrix.elastic == "7.12.1"
+      - if: matrix.php == '7.4' && matrix.elastic == '7.12.1'
         name: Coding standard
         run: make cs
 
-      - if: matrix.php == '7.4' && matrix.elastic == "7.12.1"
+      - if: matrix.php == '7.4' && matrix.elastic == '7.12.1'
         name: PHPStan
         run: make phpstan
 
