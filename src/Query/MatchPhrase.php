@@ -54,6 +54,12 @@ class MatchPhrase implements LeafQueryInterface
 	}
 
 
+	public function changeAnalyzer(string $newAnalyzer): void
+	{
+		$this->analyzer = $newAnalyzer;
+	}
+
+
 	public function key(): string
 	{
 		return 'match_phrase_' . $this->field . '_' . (string) $this->query;

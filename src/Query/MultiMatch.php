@@ -65,6 +65,12 @@ class MultiMatch implements LeafQueryInterface
 	}
 
 
+	public function changeAnalyzer(string $newAnalyzer): void
+	{
+		$this->analyzer = $newAnalyzer;
+	}
+
+
 	public function key(): string
 	{
 		return 'multiMatch_' . \implode('-', $this->fields) . '_' . (string) $this->query;

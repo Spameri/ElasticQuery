@@ -56,6 +56,12 @@ class Match implements \Spameri\ElasticQuery\Query\LeafQueryInterface
 	}
 
 
+	public function changeAnalyzer(string $newAnalyzer): void
+	{
+		$this->analyzer = $newAnalyzer;
+	}
+
+
 	public function key(): string
 	{
 		return 'match_' . $this->field . '_' . (string) $this->query;
