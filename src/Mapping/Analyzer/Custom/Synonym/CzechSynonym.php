@@ -5,9 +5,11 @@ namespace Spameri\ElasticQuery\Mapping\Analyzer\Custom\Synonym;
 class CzechSynonym extends \Spameri\ElasticQuery\Mapping\Analyzer\Custom\Synonym\AbstractSynonym
 {
 
+	public const NAME = 'czechSynonym';
+
 	public function name(): string
 	{
-		return 'czechSynonym';
+		return self::NAME;
 	}
 
 

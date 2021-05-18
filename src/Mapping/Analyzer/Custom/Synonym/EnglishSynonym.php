@@ -5,9 +5,11 @@ namespace Spameri\ElasticQuery\Mapping\Analyzer\Custom\Synonym;
 class EnglishSynonym extends \Spameri\ElasticQuery\Mapping\Analyzer\Custom\Synonym\AbstractSynonym
 {
 
+	public const NAME = 'englishSynonym';
+
 	public function name(): string
 	{
-		return 'englishSynonym';
+		return self::NAME;
 	}
 
 
