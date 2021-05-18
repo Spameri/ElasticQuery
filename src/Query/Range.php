@@ -9,36 +9,30 @@ namespace Spameri\ElasticQuery\Query;
 class Range implements LeafQueryInterface
 {
 
-	/**
-	 * @var string
-	 */
-	private $field;
+	private string $field;
 
 	/**
-	 * @var int|float|\DateTimeInterface|null
+	 * @var int|float|string|\DateTimeInterface|null
 	 */
 	private $gte;
 
 	/**
-	 * @var int|float|\DateTimeInterface|null
+	 * @var int|float|string|\DateTimeInterface|null
 	 */
 	private $lte;
 
-	/**
-	 * @var float
-	 */
-	private $boost;
+	private float $boost;
 
 
 	/**
-	 * @phpstan-param int|float|\DateTimeInterface|null $gte
-	 * @phpstan-param int|float|\DateTimeInterface|null $lte
+	 * @param int|float|string|\DateTimeInterface|null $gte
+	 * @param int|float|string|\DateTimeInterface|null $lte
 	 */
 	public function __construct(
-		string $field
-		, $gte = NULL
-		, $lte = NULL
-		, float $boost = 1.0
+		string $field,
+		$gte = NULL,
+		$lte = NULL,
+		float $boost = 1.0
 	)
 	{
 		if ($gte === NULL && $lte === NULL) {
