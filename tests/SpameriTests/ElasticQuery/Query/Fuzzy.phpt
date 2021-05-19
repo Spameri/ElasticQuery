@@ -50,6 +50,7 @@ class Fuzzy extends \Tester\TestCase
 				(
 				new \Spameri\ElasticQuery\ElasticQuery(
 					new \Spameri\ElasticQuery\Query\QueryCollection(
+						NULL,
 						new \Spameri\ElasticQuery\Query\MustCollection(
 							$fuzzy
 						)

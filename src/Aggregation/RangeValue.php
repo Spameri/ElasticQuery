@@ -53,10 +53,10 @@ class RangeValue implements \Spameri\ElasticQuery\Entity\EntityInterface
 		$from = $this->from;
 		$to = $this->to;
 
-		if ( ! $this->fromEqual) {
+		if ( ! $this->fromEqual && \is_int($from)) {
 			$from++;
 		}
-		if ($this->toEqual) {
+		if ($this->toEqual && \is_int($to)) {
 			$to++;
 		}
 

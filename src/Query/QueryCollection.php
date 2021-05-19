@@ -31,10 +31,10 @@ class QueryCollection implements LeafQueryInterface
 	 * @param int|string|null $key
 	 */
 	public function __construct(
-		?\Spameri\ElasticQuery\Query\MustCollection $mustCollection = NULL
-		, ?\Spameri\ElasticQuery\Query\ShouldCollection $shouldCollection = NULL
-		, ?\Spameri\ElasticQuery\Query\MustNotCollection $mustNotCollection = NULL
-		, $key = NULL
+		$key = NULL,
+		?\Spameri\ElasticQuery\Query\MustCollection $mustCollection = NULL,
+		?\Spameri\ElasticQuery\Query\ShouldCollection $shouldCollection = NULL,
+		?\Spameri\ElasticQuery\Query\MustNotCollection $mustNotCollection = NULL
 	)
 	{
 		if ( ! $mustCollection) {
