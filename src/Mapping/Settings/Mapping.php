@@ -55,6 +55,12 @@ class Mapping implements \Spameri\ElasticQuery\Entity\ArrayInterface
 	}
 
 
+	public function addNestedObject(\Spameri\ElasticQuery\Mapping\Settings\Mapping\NestedObject $fieldObject): void
+	{
+		$this->fields->add($fieldObject);
+	}
+
+
 	public function removeFieldObject(string $field): void
 	{
 		$this->fields->remove($field);

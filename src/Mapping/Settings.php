@@ -78,6 +78,12 @@ class Settings implements \Spameri\ElasticQuery\Entity\ArrayInterface
 	}
 
 
+	public function addMappingNestedObject(\Spameri\ElasticQuery\Mapping\Settings\Mapping\NestedObject $fieldObject): void
+	{
+		$this->mapping->addNestedObject($fieldObject);
+	}
+
+
 	public function addMappingSubField(\Spameri\ElasticQuery\Mapping\Settings\Mapping\SubFields $subFields): void
 	{
 		$this->mapping->addSubField($subFields);
