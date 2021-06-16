@@ -83,15 +83,15 @@ class Match implements \Spameri\ElasticQuery\Query\LeafQueryInterface
 			$array['match'][$this->field]['operator'] = $this->operator;
 		}
 
-		if ($this->fuzziness && $this->fuzziness->__toString()) {
+		if ($this->fuzziness !== NULL) {
 			$array['match'][$this->field]['fuzziness'] = $this->fuzziness->__toString();
 		}
 
-		if ($this->analyzer) {
+		if ($this->analyzer !== NULL) {
 			$array['match'][$this->field]['analyzer'] = $this->analyzer;
 		}
 
-		if ($this->minimumShouldMatch) {
+		if ($this->minimumShouldMatch !== NULL) {
 			$array['match'][$this->field]['minimum_should_match'] = $this->minimumShouldMatch;
 		}
 
