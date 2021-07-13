@@ -2,29 +2,25 @@
 
 namespace Spameri\ElasticQuery\Query;
 
-
 /**
  * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-term-query.html
  */
 class Term implements LeafQueryInterface
 {
 
-	/**
-	 * @var string
-	 */
-	private $field;
+	private string $field;
 
 	/**
-	 * @var string
+	 * @var string|int|bool|float
 	 */
 	private $query;
 
+	private float $boost;
+
+
 	/**
-	 * @var float
+	 * @param string|int|bool|float $query
 	 */
-	private $boost;
-
-
 	public function __construct(
 		string $field
 		, $query
@@ -37,16 +33,15 @@ class Term implements LeafQueryInterface
 	}
 
 
-	public function key() : string
+	public function key(): string
 	{
 		return 'term_' . $this->field . '_' . $this->query;
 	}
 
 
-	public function toArray() : array
+	public function toArray(): array
 	{
-		// phpcs:ignore SlevomatCodingStandard.Variables.UselessVariable
-		$array = [
+		return [
 			'term' => [
 				$this->field => [
 					'value' => $this->query,
@@ -54,8 +49,6 @@ class Term implements LeafQueryInterface
 				],
 			],
 		];
-
-		return $array;
 	}
 
 }

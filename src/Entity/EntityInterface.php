@@ -6,6 +6,6 @@ namespace Spameri\ElasticQuery\Entity;
 interface EntityInterface extends ArrayInterface
 {
 
-	public function key() : string;
+	public function key(): string;
 
 }

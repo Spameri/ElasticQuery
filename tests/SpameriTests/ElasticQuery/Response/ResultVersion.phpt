@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace SpameriTests\ElasticQuery\Result;
+namespace SpameriTests\ElasticQuery\Response;
 
 
 require_once __DIR__ . '/../../bootstrap.php';
@@ -39,6 +39,14 @@ class ResultVersion extends \Tester\TestCase
 			);
 			\Tester\Assert::true(
 				\Spameri\ElasticQuery\Response\Result\Version::ELASTIC_VERSION_ID_6 > $resultObject->version()->id()
+			);
+
+		} elseif (\Spameri\ElasticQuery\Response\Result\Version::ELASTIC_VERSION_ID_2 <= $resultObject->version()->id()) {
+			\Tester\Assert::true(
+				\Spameri\ElasticQuery\Response\Result\Version::ELASTIC_VERSION_ID_2 < $resultObject->version()->id()
+			);
+			\Tester\Assert::true(
+				\Spameri\ElasticQuery\Response\Result\Version::ELASTIC_VERSION_ID_5 > $resultObject->version()->id()
 			);
 
 		} else {

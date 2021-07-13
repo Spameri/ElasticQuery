@@ -21,7 +21,7 @@ class EdgeNgram implements \Spameri\ElasticQuery\Mapping\CustomAnalyzerInterface
 	private $maxGram;
 
 	/**
-	 * @var \Spameri\ElasticQuery\Mapping\Filter\Stop
+	 * @var \Spameri\ElasticQuery\Mapping\Filter\AbstractStop
 	 */
 	private $stopFilter;
 
@@ -29,7 +29,7 @@ class EdgeNgram implements \Spameri\ElasticQuery\Mapping\CustomAnalyzerInterface
 	public function __construct(
 		int $minGram = 2,
 		int $maxGram = 6,
-		?\Spameri\ElasticQuery\Mapping\Filter\Stop $stopFilter = NULL
+		?\Spameri\ElasticQuery\Mapping\Filter\AbstractStop $stopFilter = NULL
 	)
 	{
 		$this->minGram = $minGram;

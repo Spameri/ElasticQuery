@@ -3,24 +3,24 @@
 namespace Spameri\ElasticQuery\Value;
 
 
-abstract class FloatValue implements \Spameri\ElasticQuery\Value\ValueInterface
+abstract class AbstractBoolValue implements \Spameri\ElasticQuery\Value\ValueInterface
 {
 
 	/**
-	 * @var float
+	 * @var bool
 	 */
 	private $value;
 
 
 	public function __construct(
-		float $value
+		bool $value
 	)
 	{
 		$this->value = $value;
 	}
 
 
-	public function value() : float
+	public function value(): bool
 	{
 		return $this->value;
 	}

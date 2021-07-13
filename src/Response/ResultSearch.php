@@ -41,25 +41,25 @@ class ResultSearch implements ResultInterface
 	}
 
 
-	public function stats() : \Spameri\ElasticQuery\Response\Stats
+	public function stats(): \Spameri\ElasticQuery\Response\Stats
 	{
 		return $this->stats;
 	}
 
 
-	public function shards() : \Spameri\ElasticQuery\Response\Shards
+	public function shards(): \Spameri\ElasticQuery\Response\Shards
 	{
 		return $this->shards;
 	}
 
 
-	public function hits() : \Spameri\ElasticQuery\Response\Result\HitCollection
+	public function hits(): \Spameri\ElasticQuery\Response\Result\HitCollection
 	{
 		return $this->hitCollection;
 	}
 
 
-	public function aggregations() : \Spameri\ElasticQuery\Response\Result\AggregationCollection
+	public function aggregations(): \Spameri\ElasticQuery\Response\Result\AggregationCollection
 	{
 		return $this->aggregationCollection;
 	}
@@ -67,7 +67,7 @@ class ResultSearch implements ResultInterface
 
 	public function getHit(
 		string $id
-	) : \Spameri\ElasticQuery\Response\Result\Hit
+	): \Spameri\ElasticQuery\Response\Result\Hit
 	{
 		/** @var \Spameri\ElasticQuery\Response\Result\Hit $hit */
 		foreach ($this->hitCollection as $hit) {
@@ -84,7 +84,7 @@ class ResultSearch implements ResultInterface
 
 	public function getAggregation(
 		string $name
-	) : \Spameri\ElasticQuery\Response\Result\Aggregation
+	): \Spameri\ElasticQuery\Response\Result\Aggregation
 	{
 		/** @var \Spameri\ElasticQuery\Response\Result\Aggregation $aggregation */
 		foreach ($this->aggregationCollection as $aggregation) {

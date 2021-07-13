@@ -27,7 +27,7 @@ class ResultBulk implements ResultInterface
 	}
 
 
-	public function stats() : \Spameri\ElasticQuery\Response\Stats
+	public function stats(): \Spameri\ElasticQuery\Response\Stats
 	{
 		return $this->stats;
 	}
@@ -35,7 +35,7 @@ class ResultBulk implements ResultInterface
 
 	public function getFirstAction(
 		string $id
-	) : \Spameri\ElasticQuery\Response\Result\BulkAction
+	): \Spameri\ElasticQuery\Response\Result\BulkAction
 	{
 		/** @var \Spameri\ElasticQuery\Response\Result\BulkAction $bulkIAction */
 		foreach ($this->bulkActionCollection as $bulkIAction) {

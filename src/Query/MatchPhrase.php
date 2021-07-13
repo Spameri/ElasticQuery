@@ -15,7 +15,7 @@ class MatchPhrase implements LeafQueryInterface
 	private $field;
 
 	/**
-	 * @var string
+	 * @var string|int|bool|null
 	 */
 	private $query;
 
@@ -35,6 +35,9 @@ class MatchPhrase implements LeafQueryInterface
 	private $slop;
 
 
+	/**
+	 * @param string|int|bool|null $query
+	 */
 	public function __construct(
 		string $field
 		, $query
@@ -51,13 +54,19 @@ class MatchPhrase implements LeafQueryInterface
 	}
 
 
-	public function key() : string
+	public function changeAnalyzer(string $newAnalyzer): void
 	{
-		return 'match_phrase_' . $this->field . '_' . $this->query;
+		$this->analyzer = $newAnalyzer;
 	}
 
 
-	public function toArray() : array
+	public function key(): string
+	{
+		return 'match_phrase_' . $this->field . '_' . (string) $this->query;
+	}
+
+
+	public function toArray(): array
 	{
 		$array = [
 			'match_phrase' => [

@@ -5,10 +5,10 @@ namespace Spameri\ElasticQuery\Mapping\Filter\Stop;
 /**
  * @see https://github.com/apache/lucene-solr/tree/master/solr/example/files/conf/lang
  */
-class Irish extends \Spameri\ElasticQuery\Mapping\Filter\Stop
+class Irish extends \Spameri\ElasticQuery\Mapping\Filter\AbstractStop
 {
 
-	public function getStopWords() : array
+	public function getStopWords(): array
 	{
 		return [
 			\Spameri\ElasticQuery\Mapping\Analyzer\Stop\StopWords::IRISH,
@@ -16,7 +16,7 @@ class Irish extends \Spameri\ElasticQuery\Mapping\Filter\Stop
 	}
 
 
-	public function getName() : string
+	public function getName(): string
 	{
 		return 'irishStopWords';
 	}

@@ -17,7 +17,7 @@ class SimplePatternSplit implements \Spameri\ElasticQuery\Mapping\TokenizerInter
 	public function toArray(): array
 	{
 		return [
-			$this->getType()
+			$this->getType(),
 		];
 	}
 

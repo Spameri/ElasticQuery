@@ -17,7 +17,7 @@ class Thai implements \Spameri\ElasticQuery\Mapping\TokenizerInterface
 	public function toArray(): array
 	{
 		return [
-			$this->getType()
+			$this->getType(),
 		];
 	}
 

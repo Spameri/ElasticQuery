@@ -9,56 +9,71 @@ namespace Spameri\ElasticQuery\Aggregation;
 class Term implements LeafAggregationInterface
 {
 
-	/**
-	 * @var string
-	 */
-	private $field;
-	
-	/**
-	 * @var int
-	 */
-	private $size;
-	
-	/**
-	 * @var ?int
-	 */
-	private $missing;
+	private string $field;
 
-	/**
-	 * @var ?string
-	 */
-	private $key;
+	private int $size;
+
+	private ?int $missing;
+
+	private ?string $key;
+
+	private \Spameri\ElasticQuery\Aggregation\Terms\OrderCollection $order;
+
+	private ?string $include;
+
+	private ?string $exclude;
 
 
 	public function __construct(
-		string $field
-		, int $size = 5
-		, int $missing = NULL
-		, string $key = NULL
+		string $field,
+		int $size = 0,
+		int $missing = NULL,
+		?\Spameri\ElasticQuery\Aggregation\Terms\OrderCollection $order = NULL,
+		?string $include = NULL,
+		?string $exclude = NULL,
+		?string $key = NULL
 	)
 	{
 		$this->field = $field;
 		$this->size = $size;
 		$this->missing = $missing;
 		$this->key = $key;
+		$this->order = $order ?? new \Spameri\ElasticQuery\Aggregation\Terms\OrderCollection();
+		$this->include = $include;
+		$this->exclude = $exclude;
 	}
 
 
-	public function key() : string
+	public function key(): string
 	{
 		return $this->key ?? $this->field;
 	}
 
 
-	public function toArray() : array
+	public function toArray(): array
 	{
 		$array = [
 			'field' => $this->field,
-			'size'  => $this->size,
 		];
+
+		if ($this->size > 0) {
+			$array['size']  = $this->size;
+		}
 
 		if ($this->missing !== NULL) {
 			$array['missing'] = $this->missing;
+		}
+
+		if (\count($this->order)) {
+			$array['order'] = $this->order->toArray();
+		}
+
+		if ($this->include !== NULL) {
+			$array['include'] = $this->include;
+		}
+
+		if ($this->exclude !== NULL) {
+			$array['exclude'] = $this->exclude;
 		}
 
 		return [

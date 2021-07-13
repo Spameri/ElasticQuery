@@ -9,56 +9,38 @@ namespace Spameri\ElasticQuery\Query;
 class MultiMatch implements LeafQueryInterface
 {
 
-	/**
-	 * @var string
-	 */
-	private $fields;
+	private array $fields;
 
 	/**
-	 * @var string
+	 * @var string|int|bool|null
 	 */
 	private $query;
 
-	/**
-	 * @var string
-	 */
-	private $type;
+	private string $type;
 
-	/**
-	 * @var string
-	 */
-	private $operator;
+	private string $operator;
 
-	/**
-	 * @var null|\Spameri\ElasticQuery\Query\Match\Fuzziness
-	 */
-	private $fuzziness;
+	private ?\Spameri\ElasticQuery\Query\Match\Fuzziness $fuzziness;
+
+	private float $boost;
+
+	private ?string $analyzer;
+
+	private ?int $minimumShouldMatch;
+
 
 	/**
-	 * @var float
+	 * @param string|int|bool|null $query
 	 */
-	private $boost;
-
-	/**
-	 * @var null|string
-	 */
-	private $analyzer;
-
-	/**
-	 * @var int|null
-	 */
-	private $minimumShouldMatch;
-
-
 	public function __construct(
-		array $fields
-		, $query
-		, float $boost = 1.0
-		, string $type = \Spameri\ElasticQuery\Query\Match\MultiMatchType::BEST_FIELDS
-		, string $operator = \Spameri\ElasticQuery\Query\Match\Operator::OR
-		, ?\Spameri\ElasticQuery\Query\Match\Fuzziness $fuzziness = NULL
-		, ?string $analyzer = NULL
-		, ?int $minimumShouldMatch = NULL
+		array $fields,
+		$query,
+		float $boost = 1.0,
+		?\Spameri\ElasticQuery\Query\Match\Fuzziness $fuzziness = NULL,
+		string $type = \Spameri\ElasticQuery\Query\Match\MultiMatchType::BEST_FIELDS,
+		?int $minimumShouldMatch = NULL,
+		string $operator = \Spameri\ElasticQuery\Query\Match\Operator::OR,
+		?string $analyzer = NULL
 	)
 	{
 		if ( ! \in_array($operator, \Spameri\ElasticQuery\Query\Match\Operator::OPERATORS, TRUE)) {
@@ -83,13 +65,19 @@ class MultiMatch implements LeafQueryInterface
 	}
 
 
-	public function key() : string
+	public function changeAnalyzer(string $newAnalyzer): void
 	{
-		return 'multiMatch_' . \implode('-', $this->fields) . '_' . $this->query;
+		$this->analyzer = $newAnalyzer;
 	}
 
 
-	public function toArray() : array
+	public function key(): string
+	{
+		return 'multiMatch_' . \implode('-', $this->fields) . '_' . (string) $this->query;
+	}
+
+
+	public function toArray(): array
 	{
 		$array = [
 			'multi_match' => [

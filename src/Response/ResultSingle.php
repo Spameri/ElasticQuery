@@ -26,13 +26,13 @@ class ResultSingle implements ResultInterface
 	}
 
 
-	public function hit() : \Spameri\ElasticQuery\Response\Result\Hit
+	public function hit(): \Spameri\ElasticQuery\Response\Result\Hit
 	{
 		return $this->hit;
 	}
 
 
-	public function stats() : \Spameri\ElasticQuery\Response\StatsSingle
+	public function stats(): \Spameri\ElasticQuery\Response\StatsSingle
 	{
 		return $this->stats;
 	}

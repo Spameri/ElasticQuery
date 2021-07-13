@@ -56,25 +56,25 @@ class Options
 	}
 
 
-	public function changeFrom(int $from) : void
+	public function changeFrom(int $from): void
 	{
 		$this->from = $from;
 	}
 
 
-	public function changeSize(int $size) : void
+	public function changeSize(int $size): void
 	{
 		$this->size = $size;
 	}
 
 
-	public function sort() : \Spameri\ElasticQuery\Options\SortCollection
+	public function sort(): \Spameri\ElasticQuery\Options\SortCollection
 	{
 		return $this->sort;
 	}
 
 
-	public function scroll() : ?string
+	public function scroll(): ?string
 	{
 		return $this->scroll;
 	}
@@ -82,13 +82,13 @@ class Options
 
 	public function startScroll(
 		string $scroll
-	) : void
+	): void
 	{
 		$this->scroll = $scroll;
 	}
 
 
-	public function scrollId() : ?string
+	public function scrollId(): ?string
 	{
 		return $this->scrollId;
 	}
@@ -96,13 +96,13 @@ class Options
 
 	public function scrollInitialized(
 		string $scrollId
-	) : void
+	): void
 	{
 		$this->scrollId = $scrollId;
 	}
 
 
-	public function toArray() : array
+	public function toArray(): array
 	{
 		$array = [];
 

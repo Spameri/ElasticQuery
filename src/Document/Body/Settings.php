@@ -26,18 +26,21 @@ class Settings implements \Spameri\ElasticQuery\Document\BodyInterface
 	}
 
 
-	public function toArray() : array
+	public function toArray(): array
 	{
 		$analyzers = [];
-		/** @var \Spameri\ElasticQuery\Mapping\AnalyzerInterface $analyzer */
+		/** @var \Spameri\ElasticQuery\Mapping\AnalyzerInterface&\Spameri\ElasticQuery\Collection\Item $analyzer */
 		foreach ($this->analyzer as $analyzer) {
-			$analyzers[$analyzer->key()] = $analyzer->toArray();
+			$analyzers[$analyzer->key()] = $analyzer->toArray()[$analyzer->key()];
 		}
 
 		$filters = [];
 		/** @var \Spameri\ElasticQuery\Mapping\FilterInterface $filter */
 		foreach ($this->filter as $filter) {
-			$filters[$filter->key()] = $filter->toArray();
+			if ($filter->toArray() === [] ) {
+				continue;
+			}
+			$filters[$filter->key()] = $filter->toArray()[$filter->key()];
 		}
 
 		return [

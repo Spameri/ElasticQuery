@@ -44,31 +44,31 @@ class ResultVersion implements ResultInterface
 	}
 
 
-	public function name() : string
+	public function name(): string
 	{
 		return $this->name;
 	}
 
 
-	public function clusterName() : string
+	public function clusterName(): string
 	{
 		return $this->clusterName;
 	}
 
 
-	public function clusterUUID() : string
+	public function clusterUUID(): string
 	{
 		return $this->clusterUUID;
 	}
 
 
-	public function version() : \Spameri\ElasticQuery\Response\Result\Version
+	public function version(): \Spameri\ElasticQuery\Response\Result\Version
 	{
 		return $this->version;
 	}
 
 
-	public function tagLine() : string
+	public function tagLine(): string
 	{
 		return $this->tagLine;
 	}

@@ -8,13 +8,13 @@ require_once __DIR__ . '/../../bootstrap.php';
 class Match extends \Tester\TestCase
 {
 
-	private const SPAMERI_VIDEO = 'spameri_test_video_match';
+	private const INDEX = 'spameri_test_video_match';
 
 
 	public function setUp() : void
 	{
 		$ch = \curl_init();
-		\curl_setopt($ch, CURLOPT_URL, 'localhost:9200/' . self::SPAMERI_VIDEO);
+		\curl_setopt($ch, CURLOPT_URL, 'localhost:9200/' . self::INDEX);
 		\curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		\curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
 		\curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
@@ -30,12 +30,12 @@ class Match extends \Tester\TestCase
 			'name',
 			'Avengers',
 			1.0,
-			\Spameri\ElasticQuery\Query\Match\Operator::OR,
 			new \Spameri\ElasticQuery\Query\Match\Fuzziness(
 				\Spameri\ElasticQuery\Query\Match\Fuzziness::AUTO
 			),
-			'standard',
-			2
+			2,
+			\Spameri\ElasticQuery\Query\Match\Operator::OR,
+			'standard'
 		);
 
 		$array = $match->toArray();
@@ -49,18 +49,20 @@ class Match extends \Tester\TestCase
 		\Tester\Assert::same(2, $array['match']['name']['minimum_should_match']);
 
 		$document = new \Spameri\ElasticQuery\Document(
-			self::SPAMERI_VIDEO,
+			self::INDEX,
 			new \Spameri\ElasticQuery\Document\Body\Plain(
 				(
 				new \Spameri\ElasticQuery\ElasticQuery(
 					new \Spameri\ElasticQuery\Query\QueryCollection(
+						NULL,
 						new \Spameri\ElasticQuery\Query\MustCollection(
 							$match
 						)
 					)
 				)
 				)->toArray()
-			)
+			),
+			self::INDEX
 		);
 
 		$ch = curl_init();
@@ -88,7 +90,7 @@ class Match extends \Tester\TestCase
 	public function tearDown() : void
 	{
 		$ch = \curl_init();
-		\curl_setopt($ch, CURLOPT_URL, 'localhost:9200/' . self::SPAMERI_VIDEO);
+		\curl_setopt($ch, CURLOPT_URL, 'localhost:9200/' . self::INDEX);
 		\curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		\curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
 		\curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);

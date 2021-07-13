@@ -37,13 +37,13 @@ class Range implements LeafAggregationInterface
 	}
 
 
-	public function key() : string
+	public function key(): string
 	{
 		return $this->field;
 	}
 
 
-	public function toArray() : array
+	public function toArray(): array
 	{
 		$array = [
 			'field' => $this->field,
@@ -63,7 +63,7 @@ class Range implements LeafAggregationInterface
 	}
 
 
-	public function ranges() : \Spameri\ElasticQuery\Aggregation\RangeValueCollection
+	public function ranges(): \Spameri\ElasticQuery\Aggregation\RangeValueCollection
 	{
 		return $this->ranges;
 	}

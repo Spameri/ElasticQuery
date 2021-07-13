@@ -5,9 +5,11 @@ namespace Spameri\ElasticQuery\Mapping\Analyzer\Custom\Synonym;
 class CzechSynonym extends \Spameri\ElasticQuery\Mapping\Analyzer\Custom\Synonym\AbstractSynonym
 {
 
+	public const NAME = 'czechSynonym';
+
 	public function name(): string
 	{
-		return 'czechSynonym';
+		return self::NAME;
 	}
 
 
@@ -26,11 +28,23 @@ class CzechSynonym extends \Spameri\ElasticQuery\Mapping\Analyzer\Custom\Synonym
 					new \Spameri\ElasticQuery\Mapping\Filter\Stop\Czech()
 				);
 			}
-			$this->filter->add(
-				new \Spameri\ElasticQuery\Mapping\Filter\Synonym(
-					$this->synonyms
-				)
-			);
+
+			if (\count($this->synonyms)) {
+				$this->filter->add(
+					new \Spameri\ElasticQuery\Mapping\Filter\Synonym(
+						$this->synonyms
+					)
+				);
+			}
+
+			if ($this->filePath !== NULL) {
+				$this->filter->add(
+					new \Spameri\ElasticQuery\Mapping\Filter\FileSynonym(
+						$this->filePath
+					)
+				);
+			}
+
 			$this->filter->add(
 				new \Spameri\ElasticQuery\Mapping\Filter\Lowercase()
 			);

@@ -8,7 +8,7 @@ class ResultMapper
 
 	public function map(
 		array $elasticSearchResponse
-	) : ResultInterface
+	): ResultInterface
 	{
 		if (isset($elasticSearchResponse['found'])) {
 			$result = $this->mapSingleResult($elasticSearchResponse);
@@ -23,7 +23,7 @@ class ResultMapper
 			$result = $this->mapVersionResults($elasticSearchResponse);
 
 		} else {
-			throw new \Spameri\ElasticQuery\Exception\ResponseCouldNotBeMapped($elasticSearchResponse);
+			throw new \Spameri\ElasticQuery\Exception\ResponseCouldNotBeMapped((string) \json_encode($elasticSearchResponse));
 		}
 
 		return $result;
@@ -32,7 +32,7 @@ class ResultMapper
 
 	public function mapSingleResult(
 		array $elasticSearchResponse
-	) : ResultSingle
+	): ResultSingle
 	{
 		return new ResultSingle(
 			$this->mapHit($elasticSearchResponse, 0),
@@ -43,7 +43,7 @@ class ResultMapper
 
 	public function mapBulkResult(
 		array $elasticSearchResponse
-	) : ResultBulk
+	): ResultBulk
 	{
 		return new ResultBulk(
 			$this->mapStats($elasticSearchResponse),
@@ -54,7 +54,7 @@ class ResultMapper
 
 	public function mapVersionResults(
 		array $elasticSearchResponse
-	) : ResultVersion
+	): ResultVersion
 	{
 		return new ResultVersion(
 			$elasticSearchResponse['name'],
@@ -65,7 +65,7 @@ class ResultMapper
 				$elasticSearchResponse['version']['build_flavor'] ?? NULL,
 				$elasticSearchResponse['version']['build_type'] ?? NULL,
 				$elasticSearchResponse['version']['build_hash'],
-				$elasticSearchResponse['version']['build_date'],
+				$elasticSearchResponse['version']['build_date'] ?? NULL,
 				$elasticSearchResponse['version']['build_snapshot'],
 				$elasticSearchResponse['version']['lucene_version'],
 				$elasticSearchResponse['version']['minimum_wire_compatibility_version'] ?? NULL,
@@ -78,7 +78,7 @@ class ResultMapper
 
 	public function mapSearchResults(
 		array $elasticSearchResponse
-	) : ResultSearch
+	): ResultSearch
 	{
 		return new ResultSearch(
 			$this->mapStats($elasticSearchResponse),
@@ -91,7 +91,7 @@ class ResultMapper
 
 	public function mapHits(
 		array $elasticSearchResponse
-	) : \Spameri\ElasticQuery\Response\Result\HitCollection
+	): \Spameri\ElasticQuery\Response\Result\HitCollection
 	{
 		$hits = [];
 		foreach ($elasticSearchResponse['hits']['hits'] as $hitPosition => $hit) {
@@ -107,7 +107,7 @@ class ResultMapper
 	private function mapHit(
 		array $hit
 		, int $position
-	) : \Spameri\ElasticQuery\Response\Result\Hit
+	): \Spameri\ElasticQuery\Response\Result\Hit
 	{
 		return new \Spameri\ElasticQuery\Response\Result\Hit(
 			$hit['_source'] ?? [],
@@ -123,7 +123,7 @@ class ResultMapper
 
 	public function mapBulkActions(
 		array $elasticSearchResponse
-	) : \Spameri\ElasticQuery\Response\Result\BulkActionCollection
+	): \Spameri\ElasticQuery\Response\Result\BulkActionCollection
 	{
 		$bulkActions = [];
 		foreach ($elasticSearchResponse as $actionType => $action) {
@@ -139,7 +139,7 @@ class ResultMapper
 	public function mapBulkAction(
 		array $bulkAction,
 		string $actionType
-	) : \Spameri\ElasticQuery\Response\Result\BulkAction
+	): \Spameri\ElasticQuery\Response\Result\BulkAction
 	{
 		return new \Spameri\ElasticQuery\Response\Result\BulkAction(
 			$actionType,
@@ -158,7 +158,7 @@ class ResultMapper
 
 	public function mapAggregations(
 		array $elasticSearchResponse
-	) : \Spameri\ElasticQuery\Response\Result\AggregationCollection
+	): \Spameri\ElasticQuery\Response\Result\AggregationCollection
 	{
 		$aggregationArray = [];
 		$i = 0;
@@ -180,7 +180,7 @@ class ResultMapper
 		string $name
 		, int $position
 		, array $aggregationArray
-	) : \Spameri\ElasticQuery\Response\Result\Aggregation
+	): \Spameri\ElasticQuery\Response\Result\Aggregation
 	{
 		$i = 0;
 		$buckets = [];
@@ -209,6 +209,10 @@ class ResultMapper
 		}
 
 		if (isset($aggregationArray['doc_count']) && $aggregationArray['doc_count'] > 0) {
+			/**
+			 * @var string $aggregationName
+			 * @var array<mixed> $aggregation
+			 */
 			foreach ($aggregationArray as $aggregationName => $aggregation) {
 				if ( ! \is_array($aggregation)) {
 					continue;
@@ -239,12 +243,12 @@ class ResultMapper
 
 
 	private function mapBucket(
-		$bucketPosition
+		?int $bucketPosition
 		, array $bucketArray
-	) : \Spameri\ElasticQuery\Response\Result\Aggregation\Bucket
+	): \Spameri\ElasticQuery\Response\Result\Aggregation\Bucket
 	{
 		return new \Spameri\ElasticQuery\Response\Result\Aggregation\Bucket(
-			$bucketArray['key'] ?? $bucketPosition,
+			$bucketArray['key'] ?? (string) $bucketPosition,
 			$bucketArray['doc_count'],
 			\is_int($bucketPosition) ? $bucketPosition : NULL,
 			$bucketArray['from'] ?? NULL,
@@ -255,7 +259,7 @@ class ResultMapper
 
 	public function mapStats(
 		array $elasticSearchResponse
-	) : Stats
+	): Stats
 	{
 		$total = 0;
 		if (\is_int($elasticSearchResponse['hits']['total'])) {
@@ -275,7 +279,7 @@ class ResultMapper
 
 	public function mapSingleStats(
 		array $elasticSearchResponse
-	) : StatsSingle
+	): StatsSingle
 	{
 		return new StatsSingle(
 			$elasticSearchResponse['version'] ?? 0,
@@ -286,7 +290,7 @@ class ResultMapper
 
 	public function mapShards(
 		array $elasticSearchResponse
-	) : Shards
+	): Shards
 	{
 		return new Shards(
 			$elasticSearchResponse['_shards']['total'],

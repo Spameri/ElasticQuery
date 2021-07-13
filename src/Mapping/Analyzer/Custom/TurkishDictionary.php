@@ -5,9 +5,11 @@ namespace Spameri\ElasticQuery\Mapping\Analyzer\Custom;
 class TurkishDictionary extends \Spameri\ElasticQuery\Mapping\Analyzer\AbstractDictionary
 {
 
+	public const NAME = 'turkishDictionary';
+
 	public function name(): string
 	{
-		return 'turkishDictionary';
+		return self::NAME;
 	}
 
 

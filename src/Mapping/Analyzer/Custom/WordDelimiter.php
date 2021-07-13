@@ -11,13 +11,13 @@ class WordDelimiter implements \Spameri\ElasticQuery\Mapping\CustomAnalyzerInter
 	private $filter;
 
 	/**
-	 * @var \Spameri\ElasticQuery\Mapping\Filter\Stop
+	 * @var \Spameri\ElasticQuery\Mapping\Filter\AbstractStop
 	 */
 	private $stopFilter;
 
 
 	public function __construct(
-		?\Spameri\ElasticQuery\Mapping\Filter\Stop $stopFilter = NULL
+		?\Spameri\ElasticQuery\Mapping\Filter\AbstractStop $stopFilter = NULL
 	)
 	{
 		if ($stopFilter === NULL) {

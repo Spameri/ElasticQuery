@@ -16,7 +16,7 @@ class NGram implements \Spameri\ElasticQuery\Mapping\TokenizerInterface
 	public function toArray(): array
 	{
 		return [
-			$this->getType()
+			$this->getType(),
 		];
 	}
 

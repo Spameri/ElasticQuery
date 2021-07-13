@@ -38,25 +38,25 @@ class Shards
 	}
 
 
-	public function total() : int
+	public function total(): int
 	{
 		return $this->total;
 	}
 
 
-	public function successful() : int
+	public function successful(): int
 	{
 		return $this->successful;
 	}
 
 
-	public function skipped() : int
+	public function skipped(): int
 	{
 		return $this->skipped;
 	}
 
 
-	public function failed() : int
+	public function failed(): int
 	{
 		return $this->failed;
 	}

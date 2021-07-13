@@ -83,61 +83,61 @@ class BulkAction
 	}
 
 
-	public function action() : string
+	public function action(): string
 	{
 		return $this->action;
 	}
 
 
-	public function index() : string
+	public function index(): string
 	{
 		return $this->index;
 	}
 
 
-	public function type() : string
+	public function type(): string
 	{
 		return $this->type;
 	}
 
 
-	public function id() : string
+	public function id(): string
 	{
 		return $this->id;
 	}
 
 
-	public function version() : int
+	public function version(): int
 	{
 		return $this->version;
 	}
 
 
-	public function result() : string
+	public function result(): string
 	{
 		return $this->result;
 	}
 
 
-	public function shards() : \Spameri\ElasticQuery\Response\Shards
+	public function shards(): \Spameri\ElasticQuery\Response\Shards
 	{
 		return $this->shards;
 	}
 
 
-	public function status() : int
+	public function status(): int
 	{
 		return $this->status;
 	}
 
 
-	public function seqNo() : int
+	public function seqNo(): int
 	{
 		return $this->seqNo;
 	}
 
 
-	public function primaryTerm() : int
+	public function primaryTerm(): int
 	{
 		return $this->primaryTerm;
 	}

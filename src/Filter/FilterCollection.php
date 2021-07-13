@@ -24,19 +24,19 @@ class FilterCollection implements FilterInterface
 	}
 
 
-	public function must() : \Spameri\ElasticQuery\Query\MustCollection
+	public function must(): \Spameri\ElasticQuery\Query\MustCollection
 	{
 		return $this->mustCollection;
 	}
 
 
-	public function key() : string
+	public function key(): string
 	{
 		return '';
 	}
 
 
-	public function toArray() : array
+	public function toArray(): array
 	{
 		$array = [];
 		/** @var \Spameri\ElasticQuery\Query\LeafQueryInterface $item */
