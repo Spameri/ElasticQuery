@@ -44,6 +44,12 @@ abstract class AbstractDictionary
 	}
 
 
+	public function getStopFilter(): ?\Spameri\ElasticQuery\Mapping\Filter\AbstractStop
+	{
+		return $this->stopFilter;
+	}
+
+
 	public function toArray(): array
 	{
 		$filterArray = [];
