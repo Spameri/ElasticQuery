@@ -10,9 +10,10 @@ class Slovak extends \Spameri\ElasticQuery\Mapping\Filter\AbstractStop
 
 	public function getStopWords(): array
 	{
-		return [
-			\Spameri\ElasticQuery\Mapping\Analyzer\Stop\StopWords::CZECH,
-		];
+		$parent = parent::getStopWords();
+		$parent[] = \Spameri\ElasticQuery\Mapping\Analyzer\Stop\StopWords::CZECH;
+
+		return $parent;
 	}
 
 

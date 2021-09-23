@@ -10,9 +10,10 @@ class Spanish extends \Spameri\ElasticQuery\Mapping\Filter\AbstractStop
 
 	public function getStopWords(): array
 	{
-		return [
-			\Spameri\ElasticQuery\Mapping\Analyzer\Stop\StopWords::SPANISH,
-		];
+		$parent = parent::getStopWords();
+		$parent[] = \Spameri\ElasticQuery\Mapping\Analyzer\Stop\StopWords::SPANISH;
+
+		return $parent;
 	}
 
 

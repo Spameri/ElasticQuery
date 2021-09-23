@@ -10,9 +10,10 @@ class Latvian extends \Spameri\ElasticQuery\Mapping\Filter\AbstractStop
 
 	public function getStopWords(): array
 	{
-		return [
-			\Spameri\ElasticQuery\Mapping\Analyzer\Stop\StopWords::LATVIAN,
-		];
+		$parent = parent::getStopWords();
+		$parent[] = \Spameri\ElasticQuery\Mapping\Analyzer\Stop\StopWords::LATVIAN;
+
+		return $parent;
 	}
 
 

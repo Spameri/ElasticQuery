@@ -10,9 +10,10 @@ class Hungarian extends \Spameri\ElasticQuery\Mapping\Filter\AbstractStop
 
 	public function getStopWords(): array
 	{
-		return [
-			\Spameri\ElasticQuery\Mapping\Analyzer\Stop\StopWords::HUNGARIAN,
-		];
+		$parent = parent::getStopWords();
+		$parent[] = \Spameri\ElasticQuery\Mapping\Analyzer\Stop\StopWords::HUNGARIAN;
+
+		return $parent;
 	}
 
 
