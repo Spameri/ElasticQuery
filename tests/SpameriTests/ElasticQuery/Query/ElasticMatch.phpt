@@ -5,7 +5,7 @@ namespace SpameriTests\ElasticQuery\Query;
 require_once __DIR__ . '/../../bootstrap.php';
 
 
-class Match extends \Tester\TestCase
+class ElasticMatch extends \Tester\TestCase
 {
 
 	private const INDEX = 'spameri_test_video_match';
@@ -26,7 +26,7 @@ class Match extends \Tester\TestCase
 
 	public function testCreate() : void
 	{
-		$match = new \Spameri\ElasticQuery\Query\Match(
+		$match = new \Spameri\ElasticQuery\Query\ElasticMatch(
 			'name',
 			'Avengers',
 			1.0,
@@ -101,4 +101,4 @@ class Match extends \Tester\TestCase
 
 }
 
-(new Match())->run();
+(new ElasticMatch())->run();

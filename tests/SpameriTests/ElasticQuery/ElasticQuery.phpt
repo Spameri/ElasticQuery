@@ -49,7 +49,7 @@ class ElasticQuery extends \Tester\TestCase
 
 	public function testCreate() : void
 	{
-		$match = new \Spameri\ElasticQuery\Query\Match(
+		$match = new \Spameri\ElasticQuery\Query\ElasticMatch(
 			'name',
 			'Avengers',
 			1.0,

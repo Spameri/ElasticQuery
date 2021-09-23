@@ -6,7 +6,7 @@ namespace Spameri\ElasticQuery\Query;
 /**
  * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-query.html
  */
-class Match implements \Spameri\ElasticQuery\Query\LeafQueryInterface
+class ElasticMatch implements \Spameri\ElasticQuery\Query\LeafQueryInterface
 {
 
 	private string $field;
