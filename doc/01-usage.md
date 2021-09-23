@@ -1,9 +1,10 @@
 # Using with [ElasticSearch/ElasticSearch](https://github.com/elastic/elasticsearch-php)
 First we need to prepare query for what we want to search.
+
 ```php
 $query = new \Spameri\ElasticQuery\ElasticQuery();
 $query->query()->must()->add(
-	new \Spameri\ElasticQuery\Query\Match(
+	new \Spameri\ElasticQuery\Query\ElasticMatch(
 		'name',
 		'Avengers'
 	)

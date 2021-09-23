@@ -6,7 +6,7 @@ namespace Spameri\ElasticQuery\Query;
 /**
  * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-query.html
  */
-class Match implements LeafQueryInterface
+class ElasticMatch implements LeafQueryInterface
 {
 
 	/**
