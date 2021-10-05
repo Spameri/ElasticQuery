@@ -38,6 +38,12 @@ class LeafAggregationCollection implements LeafAggregationInterface, \IteratorAg
 	}
 
 
+	public function addAggregation(LeafAggregationInterface $aggregation): void
+	{
+		$this->aggregations[$aggregation->key()] = $aggregation;
+	}
+
+
 	public function key(): string
 	{
 		return $this->name;
