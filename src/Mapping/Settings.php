@@ -72,6 +72,50 @@ class Settings implements \Spameri\ElasticQuery\Entity\ArrayInterface
 	}
 
 
+	public function addMappingFieldKeyword(string $name): void
+	{
+		$this->addMappingField(
+			new \Spameri\ElasticQuery\Mapping\Settings\Mapping\Field(
+				$name,
+				\Spameri\Elastic\Model\ValidateMapping\AllowedValues::TYPE_KEYWORD
+			)
+		);
+	}
+
+
+	public function addMappingFieldFloat(string $name): void
+	{
+		$this->addMappingField(
+			new \Spameri\ElasticQuery\Mapping\Settings\Mapping\Field(
+				$name,
+				\Spameri\Elastic\Model\ValidateMapping\AllowedValues::TYPE_FLOAT
+			)
+		);
+	}
+
+
+	public function addMappingFieldInteger(string $name): void
+	{
+		$this->addMappingField(
+			new \Spameri\ElasticQuery\Mapping\Settings\Mapping\Field(
+				$name,
+				\Spameri\Elastic\Model\ValidateMapping\AllowedValues::TYPE_INTEGER
+			)
+		);
+	}
+
+
+	public function addMappingFieldBoolean(string $name): void
+	{
+		$this->addMappingField(
+			new \Spameri\ElasticQuery\Mapping\Settings\Mapping\Field(
+				$name,
+				\Spameri\Elastic\Model\ValidateMapping\AllowedValues::TYPE_BOOLEAN
+			)
+		);
+	}
+
+
 	public function addMappingFieldObject(\Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldObject $fieldObject): void
 	{
 		$this->mapping->addFieldObject($fieldObject);
