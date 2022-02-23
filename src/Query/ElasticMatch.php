@@ -6,53 +6,38 @@ namespace Spameri\ElasticQuery\Query;
 /**
  * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-query.html
  */
-class Match implements LeafQueryInterface
+class ElasticMatch implements \Spameri\ElasticQuery\Query\LeafQueryInterface
 {
 
-	/**
-	 * @var string
-	 */
-	private $field;
+	private string $field;
 
 	/**
-	 * @var string
+	 * @var string|int|bool|null
 	 */
 	private $query;
 
-	/**
-	 * @var string
-	 */
-	private $operator;
+	private string $operator;
 
-	/**
-	 * @var null|\Spameri\ElasticQuery\Query\Match\Fuzziness
-	 */
-	private $fuzziness;
+	private ?\Spameri\ElasticQuery\Query\Match\Fuzziness $fuzziness;
 
-	/**
-	 * @var float
-	 */
-	private $boost;
+	private float $boost;
+
+	private ?string $analyzer;
+
+	private ?int $minimumShouldMatch;
+
 
 	/**
-	 * @var null|string
+	 * @param string|int|bool|null $query
 	 */
-	private $analyzer;
-
-	/**
-	 * @var int|null
-	 */
-	private $minimumShouldMatch;
-
-
 	public function __construct(
-		string $field
-		, $query
-		, float $boost = 1.0
-		, string $operator = \Spameri\ElasticQuery\Query\Match\Operator::OR
-		, ?\Spameri\ElasticQuery\Query\Match\Fuzziness $fuzziness = NULL
-		, ?string $analyzer = NULL
-		, ?int $minimumShouldMatch = NULL
+		string $field,
+		$query,
+		float $boost = 1.0,
+		?\Spameri\ElasticQuery\Query\Match\Fuzziness $fuzziness = NULL,
+		?int $minimumShouldMatch = NULL,
+		string $operator = \Spameri\ElasticQuery\Query\Match\Operator::OR,
+		?string $analyzer = NULL
 	)
 	{
 		if ( ! \in_array($operator, \Spameri\ElasticQuery\Query\Match\Operator::OPERATORS, TRUE)) {
@@ -71,13 +56,19 @@ class Match implements LeafQueryInterface
 	}
 
 
-	public function key() : string
+	public function changeAnalyzer(string $newAnalyzer): void
 	{
-		return 'match_' . $this->field . '_' . $this->query;
+		$this->analyzer = $newAnalyzer;
 	}
 
 
-	public function toArray() : array
+	public function key(): string
+	{
+		return 'match_' . $this->field . '_' . (string) $this->query;
+	}
+
+
+	public function toArray(): array
 	{
 		$array = [
 			'match' => [
@@ -92,15 +83,15 @@ class Match implements LeafQueryInterface
 			$array['match'][$this->field]['operator'] = $this->operator;
 		}
 
-		if ($this->fuzziness && $this->fuzziness->__toString()) {
+		if ($this->fuzziness !== NULL) {
 			$array['match'][$this->field]['fuzziness'] = $this->fuzziness->__toString();
 		}
 
-		if ($this->analyzer) {
+		if ($this->analyzer !== NULL) {
 			$array['match'][$this->field]['analyzer'] = $this->analyzer;
 		}
 
-		if ($this->minimumShouldMatch) {
+		if ($this->minimumShouldMatch !== NULL) {
 			$array['match'][$this->field]['minimum_should_match'] = $this->minimumShouldMatch;
 		}
 

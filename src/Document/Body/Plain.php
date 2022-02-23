@@ -20,7 +20,7 @@ class Plain implements \Spameri\ElasticQuery\Document\BodyInterface
 	}
 
 
-	public function toArray() : array
+	public function toArray(): array
 	{
 		return $this->parameters;
 	}

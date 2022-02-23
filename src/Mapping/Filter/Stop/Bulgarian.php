@@ -5,18 +5,19 @@ namespace Spameri\ElasticQuery\Mapping\Filter\Stop;
 /**
  * @see https://github.com/apache/lucene-solr/tree/master/solr/example/files/conf/lang
  */
-class Bulgarian extends \Spameri\ElasticQuery\Mapping\Filter\Stop
+class Bulgarian extends \Spameri\ElasticQuery\Mapping\Filter\AbstractStop
 {
 
-	public function getStopWords() : array
+	public function getStopWords(): array
 	{
-		return [
-			\Spameri\ElasticQuery\Mapping\Analyzer\Stop\StopWords::BULGARIAN,
-		];
+		$parent = parent::getStopWords();
+		$parent[] = \Spameri\ElasticQuery\Mapping\Analyzer\Stop\StopWords::BULGARIAN;
+
+		return $parent;
 	}
 
 
-	public function getName() : string
+	public function getName(): string
 	{
 		return 'bulgarianStopWords';
 	}

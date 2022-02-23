@@ -5,7 +5,10 @@ namespace SpameriTests\ElasticQuery\Mapping\Analyzer\Custom;
 
 require_once __DIR__ . '/../../../../bootstrap.php';
 
-
+/**
+ * @skip
+ * Should be run only locally, dictionaries are not initialized on GHA yet.
+ */
 class CzechDictionary extends \Tester\TestCase
 {
 
@@ -20,13 +23,14 @@ class CzechDictionary extends \Tester\TestCase
 			self::INDEX,
 			new \Spameri\ElasticQuery\Document\Body\Plain(
 				$settings->toArray()
-			)
+			),
+			self::INDEX
 		);
 
 		// Set up index and analyzer
 
 		$ch = \curl_init();
-		\curl_setopt($ch, CURLOPT_URL, 'localhost:9200/' . $document->index());
+		\curl_setopt($ch, CURLOPT_URL, 'localhost:9200/' . $document->index() . '/');
 		\curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		\curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
 		\curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
@@ -35,7 +39,9 @@ class CzechDictionary extends \Tester\TestCase
 			\json_encode($document->toArray()['body'])
 		);
 
-		\curl_exec($ch);
+		$indexCreating = \curl_exec($ch);
+
+		\Tester\Assert::type('int', \strpos($indexCreating, '"acknowledged":true'));
 
 		// Fetch settings and test if analyzer is configured
 
@@ -45,20 +51,17 @@ class CzechDictionary extends \Tester\TestCase
 
 		$responseSettings = \json_decode(\curl_exec($ch), TRUE);
 
-		$version = \SpameriTests\ElasticQuery\VersionCheck::check();
-		if ($version->version()->id() > \Spameri\ElasticQuery\Response\Result\Version::ELASTIC_VERSION_ID_7) {
-			\Tester\Assert::true(isset(
-				$responseSettings[self::INDEX]['settings']['index']['analysis']['analyzer']['czechDictionary']
-			));
-			\Tester\Assert::same(
-				'dictionary_CZ',
-				$responseSettings[self::INDEX]['settings']['index']['analysis']['analyzer']['czechDictionary']['filter'][2]
-			);
-			\Tester\Assert::same(
-				'custom',
-				$responseSettings[self::INDEX]['settings']['index']['analysis']['analyzer']['czechDictionary']['type']
-			);
-		}
+		\Tester\Assert::true(isset(
+			$responseSettings[self::INDEX]['settings']['index']['analysis']['analyzer']['czechDictionary']
+		));
+		\Tester\Assert::same(
+			'dictionary_CZ',
+			$responseSettings[self::INDEX]['settings']['index']['analysis']['analyzer']['czechDictionary']['filter'][2]
+		);
+		\Tester\Assert::same(
+			'custom',
+			$responseSettings[self::INDEX]['settings']['index']['analysis']['analyzer']['czechDictionary']['type']
+		);
 
 		// Analyze text and test if output is as expected
 

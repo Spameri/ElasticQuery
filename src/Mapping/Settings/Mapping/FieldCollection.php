@@ -27,7 +27,7 @@ class FieldCollection implements \Spameri\ElasticQuery\Collection\SimpleCollecti
 	 */
 	public function add(
 		$item
-	) : void
+	): void
 	{
 		$this->collection[$item->key()] = $item;
 	}
@@ -35,7 +35,7 @@ class FieldCollection implements \Spameri\ElasticQuery\Collection\SimpleCollecti
 
 	public function remove(
 		string $key
-	) : bool
+	): bool
 	{
 		if (isset($this->collection[$key])) {
 			unset($this->collection[$key]);
@@ -49,7 +49,7 @@ class FieldCollection implements \Spameri\ElasticQuery\Collection\SimpleCollecti
 
 	public function get(
 		string $key
-	) : ?\Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldInterface
+	): ?\Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldInterface
 	{
 		if (isset($this->collection[$key])) {
 			return $this->collection[$key];
@@ -61,7 +61,7 @@ class FieldCollection implements \Spameri\ElasticQuery\Collection\SimpleCollecti
 
 	public function isValue(
 		string $key
-	) : bool
+	): bool
 	{
 		if (isset($this->collection[$key])) {
 			return TRUE;
@@ -71,25 +71,25 @@ class FieldCollection implements \Spameri\ElasticQuery\Collection\SimpleCollecti
 	}
 
 
-	public function count() : int
+	public function count(): int
 	{
 		return \count($this->collection);
 	}
 
 
-	public function keys() : array
+	public function keys(): array
 	{
 		return \array_map('\strval', \array_keys($this->collection));
 	}
 
 
-	public function clear() : void
+	public function clear(): void
 	{
 		$this->collection = [];
 	}
 
 
-	public function getIterator() : \ArrayIterator
+	public function getIterator(): \ArrayIterator
 	{
 		return new \ArrayIterator($this->collection);
 	}

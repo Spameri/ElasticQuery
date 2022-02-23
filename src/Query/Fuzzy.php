@@ -15,7 +15,7 @@ class Fuzzy implements LeafQueryInterface
 	private $field;
 
 	/**
-	 * @var string
+	 * @var string|int|bool|null
 	 */
 	private $query;
 
@@ -40,6 +40,9 @@ class Fuzzy implements LeafQueryInterface
 	private $maxExpansion;
 
 
+	/**
+	 * @param string|int|bool|null $query
+	 */
 	public function __construct(
 		string $field
 		, $query
@@ -58,13 +61,13 @@ class Fuzzy implements LeafQueryInterface
 	}
 
 
-	public function key() : string
+	public function key(): string
 	{
-		return 'fuzzy_' . $this->field . '_' . $this->query;
+		return 'fuzzy_' . $this->field . '_' . (string) $this->query;
 	}
 
 
-	public function toArray() : array
+	public function toArray(): array
 	{
 		// phpcs:ignore SlevomatCodingStandard.Variables.UselessVariable
 		$array = [

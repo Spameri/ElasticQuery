@@ -9,20 +9,14 @@ namespace Spameri\ElasticQuery\Query;
 class Terms implements LeafQueryInterface
 {
 
-	/**
-	 * @var string
-	 */
-	private $field;
+	private string $field;
 
 	/**
-	 * @var array
+	 * @var array<string|int|bool|float>
 	 */
-	private $query;
+	private array $query;
 
-	/**
-	 * @var float
-	 */
-	private $boost;
+	private float $boost;
 
 
 	public function __construct(
@@ -43,23 +37,20 @@ class Terms implements LeafQueryInterface
 	}
 
 
-	public function key() : string
+	public function key(): string
 	{
 		return 'terms_' . $this->field . '_' . \implode('-', $this->query);
 	}
 
 
-	public function toArray() : array
+	public function toArray(): array
 	{
-		// phpcs:ignore SlevomatCodingStandard.Variables.UselessVariable
-		$array = [
+		return [
 			'terms' => [
 				$this->field 	=> $this->query,
 				'boost' 		=> $this->boost,
 			],
 		];
-
-		return $array;
 	}
 
 }

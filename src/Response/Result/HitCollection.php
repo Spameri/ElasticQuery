@@ -20,7 +20,7 @@ class HitCollection implements \IteratorAggregate
 	}
 
 
-	public function getIterator() : \ArrayIterator
+	public function getIterator(): \ArrayIterator
 	{
 		return new \ArrayIterator($this->hits);
 	}

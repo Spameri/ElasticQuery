@@ -32,19 +32,19 @@ class Stats
 	}
 
 
-	public function took() : int
+	public function took(): int
 	{
 		return $this->took;
 	}
 
 
-	public function timedOut() : bool
+	public function timedOut(): bool
 	{
 		return $this->timedOut;
 	}
 
 
-	public function total() : int
+	public function total(): int
 	{
 		return $this->total;
 	}

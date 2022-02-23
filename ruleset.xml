@@ -6,6 +6,7 @@
 		<properties>
 			<property name="rootNamespaces" type="array">
 				<element key="src" value="Spameri\ElasticQuery"/>
+				<element key="tests/SpameriTests" value="SpameriTests"/>
 			</property>
 		</properties>
 	</rule>

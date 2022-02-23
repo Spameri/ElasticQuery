@@ -6,7 +6,7 @@ namespace Spameri\ElasticQuery\Options;
 class SortCollection extends \Spameri\ElasticQuery\Collection\AbstractCollection implements \Spameri\ElasticQuery\Entity\ArrayInterface
 {
 
-	public function toArray() : array
+	public function toArray(): array
 	{
 		$array = [];
 

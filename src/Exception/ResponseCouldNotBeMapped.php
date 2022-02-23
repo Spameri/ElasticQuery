@@ -6,6 +6,9 @@ namespace Spameri\ElasticQuery\Exception;
 class ResponseCouldNotBeMapped extends \InvalidArgumentException
 {
 
+	/**
+	 * @param string $message [optional] The Exception message to throw.
+	 */
 	public function __construct(
 		$message,
 		int $code = 0,

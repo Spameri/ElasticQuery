@@ -13,7 +13,7 @@ abstract class AbstractSynonym
 	protected $filter;
 
 	/**
-	 * @var \Spameri\ElasticQuery\Mapping\Filter\Stop
+	 * @var ?\Spameri\ElasticQuery\Mapping\Filter\AbstractStop
 	 */
 	protected $stopFilter;
 
@@ -22,36 +22,43 @@ abstract class AbstractSynonym
 	 */
 	protected $synonyms;
 
+	/**
+	 * @var ?string
+	 */
+	protected $filePath;
+
 
 	public function __construct(
-		?\Spameri\ElasticQuery\Mapping\Filter\Stop $stopFilter = NULL,
-		array $synonyms
+		?\Spameri\ElasticQuery\Mapping\Filter\AbstractStop $stopFilter = NULL,
+		array $synonyms= [],
+		?string $filePath = NULL
 	)
 	{
 		$this->stopFilter = $stopFilter;
 		$this->synonyms = $synonyms;
+		$this->filePath = $filePath;
 	}
 
 
-	public function key() : string
+	public function key(): string
 	{
 		return $this->name();
 	}
 
 
-	public function getType() : string
+	public function getType(): string
 	{
 		return 'custom';
 	}
 
 
-	public function tokenizer() : string
+	public function tokenizer(): string
 	{
 		return 'standard';
 	}
 
 
-	public function toArray() : array
+	public function toArray(): array
 	{
 		$filterArray = [];
 		/** @var \Spameri\ElasticQuery\Mapping\FilterInterface $filter */
@@ -59,7 +66,10 @@ abstract class AbstractSynonym
 			if ($filter instanceof \Spameri\ElasticQuery\Mapping\Filter\Synonym) {
 				$filterArray[] = $filter->getName();
 
-			} elseif ($filter instanceof \Spameri\ElasticQuery\Mapping\Filter\Stop) {
+			} elseif ($filter instanceof \Spameri\ElasticQuery\Mapping\Filter\FileSynonym) {
+				$filterArray[] = $filter->getName();
+
+			} elseif ($filter instanceof \Spameri\ElasticQuery\Mapping\Filter\AbstractStop) {
 				$filterArray[] = $filter->getName();
 
 			} else {

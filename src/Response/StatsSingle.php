@@ -26,13 +26,13 @@ class StatsSingle
 	}
 
 
-	public function version() : int
+	public function version(): int
 	{
 		return $this->version;
 	}
 
 
-	public function found() : bool
+	public function found(): bool
 	{
 		return $this->found;
 	}

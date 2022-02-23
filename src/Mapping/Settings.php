@@ -72,9 +72,59 @@ class Settings implements \Spameri\ElasticQuery\Entity\ArrayInterface
 	}
 
 
+	public function addMappingFieldKeyword(string $name): void
+	{
+		$this->addMappingField(
+			new \Spameri\ElasticQuery\Mapping\Settings\Mapping\Field(
+				$name,
+				\Spameri\ElasticQuery\Mapping\AllowedValues::TYPE_KEYWORD
+			)
+		);
+	}
+
+
+	public function addMappingFieldFloat(string $name): void
+	{
+		$this->addMappingField(
+			new \Spameri\ElasticQuery\Mapping\Settings\Mapping\Field(
+				$name,
+				\Spameri\ElasticQuery\Mapping\AllowedValues::TYPE_FLOAT
+			)
+		);
+	}
+
+
+	public function addMappingFieldInteger(string $name): void
+	{
+		$this->addMappingField(
+			new \Spameri\ElasticQuery\Mapping\Settings\Mapping\Field(
+				$name,
+				\Spameri\ElasticQuery\Mapping\AllowedValues::TYPE_INTEGER
+			)
+		);
+	}
+
+
+	public function addMappingFieldBoolean(string $name): void
+	{
+		$this->addMappingField(
+			new \Spameri\ElasticQuery\Mapping\Settings\Mapping\Field(
+				$name,
+				\Spameri\ElasticQuery\Mapping\AllowedValues::TYPE_BOOLEAN
+			)
+		);
+	}
+
+
 	public function addMappingFieldObject(\Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldObject $fieldObject): void
 	{
 		$this->mapping->addFieldObject($fieldObject);
+	}
+
+
+	public function addMappingNestedObject(\Spameri\ElasticQuery\Mapping\Settings\Mapping\NestedObject $fieldObject): void
+	{
+		$this->mapping->addNestedObject($fieldObject);
 	}
 
 
@@ -84,6 +134,15 @@ class Settings implements \Spameri\ElasticQuery\Entity\ArrayInterface
 	}
 
 
+	public function removeMappingSubField(string $subFields): void
+	{
+		$this->mapping->removeSubField($subFields);
+	}
+
+
+	/**
+	 * @phpstan-param \Spameri\ElasticQuery\Mapping\AnalyzerInterface&\Spameri\ElasticQuery\Collection\Item $analyzer
+	 */
 	public function addAnalyzer(\Spameri\ElasticQuery\Mapping\AnalyzerInterface $analyzer): void
 	{
 		$this->analysis->analyzer()->add($analyzer);
@@ -96,6 +155,19 @@ class Settings implements \Spameri\ElasticQuery\Entity\ArrayInterface
 	}
 
 
+	public function removeAnalyzer(string $analyzerName): void
+	{
+		$analyzer = $this->analysis->analyzer()->get($analyzerName);
+		if ($analyzer instanceof \Spameri\ElasticQuery\Mapping\CustomAnalyzerInterface) {
+			foreach ($analyzer->filter() as $filter) {
+				$this->removeFilter($filter);
+			}
+		}
+
+		$this->analysis->analyzer()->remove($analyzerName);
+	}
+
+
 	public function addTokenizer(\Spameri\ElasticQuery\Mapping\TokenizerInterface $tokenizer): void
 	{
 		$this->analysis->tokenizer()->add($tokenizer);
@@ -105,6 +177,12 @@ class Settings implements \Spameri\ElasticQuery\Entity\ArrayInterface
 	public function addFilter(\Spameri\ElasticQuery\Mapping\FilterInterface $filter): void
 	{
 		$this->analysis->filter()->add($filter);
+	}
+
+
+	public function removeFilter(\Spameri\ElasticQuery\Mapping\FilterInterface $filter): void
+	{
+		$this->analysis->filter()->remove($filter->key());
 	}
 
 
@@ -123,9 +201,7 @@ class Settings implements \Spameri\ElasticQuery\Entity\ArrayInterface
 			}
 		}
 
-		if ($this->mapping) {
-			$array = \array_merge($array, $this->mapping->toArray());
-		}
+		$array = \array_merge($array, $this->mapping->toArray());
 
 		return $array;
 	}

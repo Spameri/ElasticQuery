@@ -31,6 +31,18 @@ class Mapping implements \Spameri\ElasticQuery\Entity\ArrayInterface
 	}
 
 
+	public function getIndexName(): string
+	{
+		return $this->indexName;
+	}
+
+
+	public function fields(): \Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldCollection
+	{
+		return $this->fields;
+	}
+
+
 	public function addField(\Spameri\ElasticQuery\Mapping\Settings\Mapping\Field $field): void
 	{
 		$this->fields->add($field);
@@ -43,9 +55,27 @@ class Mapping implements \Spameri\ElasticQuery\Entity\ArrayInterface
 	}
 
 
+	public function addNestedObject(\Spameri\ElasticQuery\Mapping\Settings\Mapping\NestedObject $fieldObject): void
+	{
+		$this->fields->add($fieldObject);
+	}
+
+
+	public function removeFieldObject(string $field): void
+	{
+		$this->fields->remove($field);
+	}
+
+
 	public function addSubField(\Spameri\ElasticQuery\Mapping\Settings\Mapping\SubFields $subFields): void
 	{
 		$this->fields->add($subFields);
+	}
+
+
+	public function removeSubField(string $subFields): void
+	{
+		$this->fields->remove($subFields);
 	}
 
 
@@ -56,13 +86,18 @@ class Mapping implements \Spameri\ElasticQuery\Entity\ArrayInterface
 		foreach ($this->fields as $field) {
 			if ($field instanceof \Spameri\ElasticQuery\Mapping\Settings\Mapping\SubFields) {
 				$fields[$field->key()] = $field->toArray();
-
-			} elseif ($field instanceof \Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldObject) {
-				$fields[$field->key()] = $field->toArray();
-
-			} else {
-				$fields[$field->key()] = $field->toArray()[$field->key()];
+				continue;
 			}
+			if ($field instanceof \Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldObject) {
+				$fields[$field->key()] = $field->toArray();
+				continue;
+			}
+			if ($field instanceof \Spameri\ElasticQuery\Mapping\Settings\Mapping\NestedObject) {
+				$fields[$field->key()] = $field->toArray();
+				continue;
+			}
+
+			$fields[$field->key()] = $field->toArray()[$field->key()];
 		}
 
 		return [

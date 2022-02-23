@@ -5,7 +5,7 @@ namespace Spameri\ElasticQuery\Mapping\Filter;
 /**
  * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis-stop-tokenfilter.html
  */
-abstract class Stop implements \Spameri\ElasticQuery\Mapping\FilterInterface
+abstract class AbstractStop implements \Spameri\ElasticQuery\Mapping\FilterInterface
 {
 
 
@@ -23,25 +23,28 @@ abstract class Stop implements \Spameri\ElasticQuery\Mapping\FilterInterface
 	}
 
 
-	public function getType() : string
+	public function getType(): string
 	{
 		return 'stop';
 	}
 
 
-	abstract public function getStopWords() : array;
+	public function getStopWords(): array
+	{
+		return $this->extraWords;
+	}
 
 
-	abstract public function getName() : string;
+	abstract public function getName(): string;
 
 
-	public function key() : string
+	public function key(): string
 	{
 		return $this->getName();
 	}
 
 
-	public function toArray() : array
+	public function toArray(): array
 	{
 		$stopWords = $this->getStopWords();
 		if ($this->extraWords) {

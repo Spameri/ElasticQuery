@@ -3,24 +3,24 @@
 namespace Spameri\ElasticQuery\Value;
 
 
-abstract class StringValue implements \Spameri\ElasticQuery\Value\ValueInterface
+abstract class AbstractNumberValue implements \Spameri\ElasticQuery\Value\ValueInterface
 {
 
 	/**
-	 * @var string
+	 * @var int
 	 */
 	private $value;
 
 
 	public function __construct(
-		string $value
+		int $value
 	)
 	{
 		$this->value = $value;
 	}
 
 
-	public function value() : string
+	public function value(): int
 	{
 		return $this->value;
 	}

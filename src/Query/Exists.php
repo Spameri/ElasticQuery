@@ -9,10 +9,7 @@ namespace Spameri\ElasticQuery\Query;
 class Exists implements LeafQueryInterface
 {
 
-	/**
-	 * @var string
-	 */
-	private $field;
+	private string $field;
 
 
 	public function __construct(
@@ -23,13 +20,13 @@ class Exists implements LeafQueryInterface
 	}
 
 
-	public function key() : string
+	public function key(): string
 	{
 		return 'exits_' . $this->field;
 	}
 
 
-	public function toArray() : array
+	public function toArray(): array
 	{
 		return [
 			'exists' => [

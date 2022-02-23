@@ -28,30 +28,35 @@ class Synonym implements \Spameri\ElasticQuery\Mapping\FilterInterface
 	}
 
 
-	public function getSynonyms() : array
+	public function getSynonyms(): array
 	{
 		return $this->synonyms;
 	}
 
 
-	public function getName() : string
+	public function getName(): string
 	{
 		return 'customSynonyms';
 	}
 
 
-	public function key() : string
+	public function key(): string
 	{
 		return $this->getName();
 	}
 
 
-	public function toArray() : array
+	public function toArray(): array
 	{
+		$synonyms = [];
+		foreach ($this->synonyms as $word => $synonym) {
+			$synonyms[] = $word . ' => ' . $synonym;
+		}
+
 		return [
 			$this->getName() => [
 				'type'      => $this->getType(),
-				'synonyms' => $this->synonyms,
+				'synonyms' => $synonyms,
 			],
 		];
 	}

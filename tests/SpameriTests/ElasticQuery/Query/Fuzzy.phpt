@@ -8,13 +8,13 @@ require_once __DIR__ . '/../../bootstrap.php';
 class Fuzzy extends \Tester\TestCase
 {
 
-	private const SPAMERI_VIDEO = 'spameri_test_video_fuzzy';
+	private const INDEX = 'spameri_test_video_fuzzy';
 
 
 	public function setUp() : void
 	{
 		$ch = \curl_init();
-		\curl_setopt($ch, CURLOPT_URL, 'localhost:9200/' . self::SPAMERI_VIDEO);
+		\curl_setopt($ch, CURLOPT_URL, 'localhost:9200/' . self::INDEX);
 		\curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		\curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
 		\curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
@@ -45,18 +45,20 @@ class Fuzzy extends \Tester\TestCase
 		\Tester\Assert::same(100, $array['fuzzy']['name']['max_expansions']);
 
 		$document = new \Spameri\ElasticQuery\Document(
-			self::SPAMERI_VIDEO,
+			self::INDEX,
 			new \Spameri\ElasticQuery\Document\Body\Plain(
 				(
 				new \Spameri\ElasticQuery\ElasticQuery(
 					new \Spameri\ElasticQuery\Query\QueryCollection(
+						NULL,
 						new \Spameri\ElasticQuery\Query\MustCollection(
 							$fuzzy
 						)
 					)
 				)
 				)->toArray()
-			)
+			),
+			self::INDEX
 		);
 
 		$ch = curl_init();
@@ -84,7 +86,7 @@ class Fuzzy extends \Tester\TestCase
 	public function tearDown() : void
 	{
 		$ch = \curl_init();
-		\curl_setopt($ch, CURLOPT_URL, 'localhost:9200/' . self::SPAMERI_VIDEO);
+		\curl_setopt($ch, CURLOPT_URL, 'localhost:9200/' . self::INDEX);
 		\curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		\curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
 		\curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
