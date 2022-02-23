@@ -9,8 +9,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php: [ 7.4 ]
-        elastic: [ 7.12.1, 6.8.15, 5.6.16 ]
+        php: [ 7.4, 8.1 ]
+        elastic: [ 7.17.0 ]
 
     steps:
       - uses: actions/checkout@v2
@@ -33,14 +33,14 @@ jobs:
       - name: Composer
         run: make composer
 
-      - if: matrix.php == '7.4' && matrix.elastic == '7.12.1'
+      - if: matrix.php == '8.1' && matrix.elastic == '7.17.0'
         name: Coding standard
         run: make cs
 
-      - if: matrix.php == '7.4' && matrix.elastic == '7.12.1'
+      - if: matrix.php == '8.1' && matrix.elastic == '7.17.0'
         name: PHPStan
         run: make phpstan
 
-      - if: matrix.php == '7.4'
+      - if: matrix.php == '8.1'
         name: Tests
         run: make tests

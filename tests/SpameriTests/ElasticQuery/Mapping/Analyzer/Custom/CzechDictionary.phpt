@@ -5,7 +5,10 @@ namespace SpameriTests\ElasticQuery\Mapping\Analyzer\Custom;
 
 require_once __DIR__ . '/../../../../bootstrap.php';
 
-
+/**
+ * @skip
+ * Should be run only locally, dictionaries are not initialized on GHA yet.
+ */
 class CzechDictionary extends \Tester\TestCase
 {
 

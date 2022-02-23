@@ -77,7 +77,7 @@ class Settings implements \Spameri\ElasticQuery\Entity\ArrayInterface
 		$this->addMappingField(
 			new \Spameri\ElasticQuery\Mapping\Settings\Mapping\Field(
 				$name,
-				\Spameri\Elastic\Model\ValidateMapping\AllowedValues::TYPE_KEYWORD
+				\Spameri\ElasticQuery\Mapping\AllowedValues::TYPE_KEYWORD
 			)
 		);
 	}
@@ -88,7 +88,7 @@ class Settings implements \Spameri\ElasticQuery\Entity\ArrayInterface
 		$this->addMappingField(
 			new \Spameri\ElasticQuery\Mapping\Settings\Mapping\Field(
 				$name,
-				\Spameri\Elastic\Model\ValidateMapping\AllowedValues::TYPE_FLOAT
+				\Spameri\ElasticQuery\Mapping\AllowedValues::TYPE_FLOAT
 			)
 		);
 	}
@@ -99,7 +99,7 @@ class Settings implements \Spameri\ElasticQuery\Entity\ArrayInterface
 		$this->addMappingField(
 			new \Spameri\ElasticQuery\Mapping\Settings\Mapping\Field(
 				$name,
-				\Spameri\Elastic\Model\ValidateMapping\AllowedValues::TYPE_INTEGER
+				\Spameri\ElasticQuery\Mapping\AllowedValues::TYPE_INTEGER
 			)
 		);
 	}
@@ -110,7 +110,7 @@ class Settings implements \Spameri\ElasticQuery\Entity\ArrayInterface
 		$this->addMappingField(
 			new \Spameri\ElasticQuery\Mapping\Settings\Mapping\Field(
 				$name,
-				\Spameri\Elastic\Model\ValidateMapping\AllowedValues::TYPE_BOOLEAN
+				\Spameri\ElasticQuery\Mapping\AllowedValues::TYPE_BOOLEAN
 			)
 		);
 	}
