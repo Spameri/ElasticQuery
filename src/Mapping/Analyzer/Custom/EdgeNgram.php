@@ -93,7 +93,7 @@ class EdgeNgram implements \Spameri\ElasticQuery\Mapping\CustomAnalyzerInterface
 		$filterArray = [];
 		/** @var \Spameri\ElasticQuery\Mapping\FilterInterface $filter */
 		foreach ($this->filter() as $filter) {
-			$filterArray[] = $filter->getType();
+			$filterArray[] = $filter->key();
 		}
 
 		return [
