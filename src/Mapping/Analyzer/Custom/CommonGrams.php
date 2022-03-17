@@ -86,7 +86,7 @@ class CommonGrams implements \Spameri\ElasticQuery\Mapping\CustomAnalyzerInterfa
 		$filterArray = [];
 		/** @var \Spameri\ElasticQuery\Mapping\FilterInterface $filter */
 		foreach ($this->filter() as $filter) {
-			$filterArray[] = $filter->getType();
+			$filterArray[] = $filter->key();
 		}
 
 		return [
