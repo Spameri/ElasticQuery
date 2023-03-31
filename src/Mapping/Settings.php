@@ -56,15 +56,23 @@ class Settings implements \Spameri\ElasticQuery\Entity\ArrayInterface
 	}
 
 
+	public function changeIndexName(string $index): void
+	{
+		$this->indexName = $index;
+	}
+
+
 	public function analysis(): \Spameri\ElasticQuery\Mapping\Settings\Analysis
 	{
 		return $this->analysis;
 	}
 
+
 	public function mapping(): \Spameri\ElasticQuery\Mapping\Settings\Mapping
 	{
 		return $this->mapping;
 	}
+
 
 	public function addMappingField(\Spameri\ElasticQuery\Mapping\Settings\Mapping\Field $field): void
 	{
@@ -184,7 +192,6 @@ class Settings implements \Spameri\ElasticQuery\Entity\ArrayInterface
 	{
 		$this->analysis->filter()->remove($filter->key());
 	}
-
 
 	public function toArray(): array
 	{
