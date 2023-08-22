@@ -5,6 +5,8 @@ namespace Spameri\ElasticQuery\Mapping\Analyzer\Custom;
 class EdgeNgram implements \Spameri\ElasticQuery\Mapping\CustomAnalyzerInterface, \Spameri\ElasticQuery\Collection\Item
 {
 
+	public const NAME = 'customEdgeNgram';
+
 	/**
 	 * @var \Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection
 	 */
@@ -49,7 +51,7 @@ class EdgeNgram implements \Spameri\ElasticQuery\Mapping\CustomAnalyzerInterface
 
 	public function name(): string
 	{
-		return 'customEdgeNgram';
+		return self::NAME;
 	}
 
 

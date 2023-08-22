@@ -5,6 +5,8 @@ namespace Spameri\ElasticQuery\Mapping\Analyzer\Custom;
 class CommonGrams implements \Spameri\ElasticQuery\Mapping\CustomAnalyzerInterface, \Spameri\ElasticQuery\Collection\Item
 {
 
+	public const NAME = 'customCommonGrams';
+
 	/**
 	 * @var \Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection
 	 */
@@ -42,7 +44,7 @@ class CommonGrams implements \Spameri\ElasticQuery\Mapping\CustomAnalyzerInterfa
 
 	public function name(): string
 	{
-		return 'customCommonGrams';
+		return self::NAME;
 	}
 
 

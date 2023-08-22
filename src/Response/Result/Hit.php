@@ -69,26 +69,36 @@ class Hit
 		string $key
 	)
 	{
-		$value = $this->source[$key] ?? NULL;
-		if ($value === NULL) {
-			return NULL;
-		}
+		$value = $this->getSubValue($key);
 
-		if (\strpos($key, '.') === FALSE) {
+		if ($value !== NULL) {
 			return $value;
 		}
 
-		$levels = \explode('.', $key);
+		return $this->source[$key] ?? NULL;
+	}
 
-		foreach ($levels as $subKey) {
-			$value = $value[$subKey] ?? NULL;
+	/**
+	 * @phpstan-return mixed
+	 */
+	public function getSubValue($key)
+	{
+		if (\str_contains($key, \Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldSeparator::FIELD_SEPARATOR) === TRUE) {
+			$levels = \explode(\Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldSeparator::FIELD_SEPARATOR, $key);
 
-			if ($value === NULL) {
-				return NULL;
+			$value = $this->source[$levels[0]];
+			unset($levels[0]);
+
+			foreach ($levels as $subKey) {
+				$value = $value[$subKey] ?? NULL;
+
+				if ($value !== NULL) {
+					return $value;
+				}
 			}
 		}
 
-		return $value;
+		return NULL;
 	}
 
 

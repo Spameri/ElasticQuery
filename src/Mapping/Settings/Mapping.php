@@ -15,10 +15,13 @@ class Mapping implements \Spameri\ElasticQuery\Entity\ArrayInterface
 	 */
 	private $fields;
 
+	private bool $dynamic;
+
 
 	public function __construct(
 		string $indexName,
-		?\Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldCollection $fields = NULL
+		?\Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldCollection $fields = NULL,
+		bool $dynamic = true
 	)
 	{
 		$this->indexName = $indexName;
@@ -28,8 +31,13 @@ class Mapping implements \Spameri\ElasticQuery\Entity\ArrayInterface
 		}
 
 		$this->fields = $fields;
+		$this->dynamic = $dynamic;
 	}
 
+	public function enableStrictMapping(): void
+	{
+		$this->dynamic = false;
+	}
 
 	public function getIndexName(): string
 	{
@@ -103,6 +111,7 @@ class Mapping implements \Spameri\ElasticQuery\Entity\ArrayInterface
 		return [
 			'mappings' => [
 				'properties' => $fields,
+				'dynamic' => $this->dynamic,
 			],
 		];
 	}

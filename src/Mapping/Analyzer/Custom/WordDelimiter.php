@@ -5,6 +5,8 @@ namespace Spameri\ElasticQuery\Mapping\Analyzer\Custom;
 class WordDelimiter implements \Spameri\ElasticQuery\Mapping\CustomAnalyzerInterface, \Spameri\ElasticQuery\Collection\Item
 {
 
+	public const NAME = 'customWordDelimiter';
+
 	/**
 	 * @var \Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection
 	 */
@@ -35,7 +37,7 @@ class WordDelimiter implements \Spameri\ElasticQuery\Mapping\CustomAnalyzerInter
 
 	public function name(): string
 	{
-		return 'customWordDelimiter';
+		return self::NAME;
 	}
 
 
