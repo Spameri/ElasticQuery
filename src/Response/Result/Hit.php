@@ -86,7 +86,7 @@ class Hit
 		if (\str_contains($key, \Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldSeparator::FIELD_SEPARATOR) === TRUE) {
 			$levels = \explode(\Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldSeparator::FIELD_SEPARATOR, $key);
 
-			$value = $this->source[$levels[0]];
+			$value = $this->source[$levels[0]] ?? NULL;
 			unset($levels[0]);
 
 			foreach ($levels as $subKey) {
