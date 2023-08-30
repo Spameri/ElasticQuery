@@ -78,6 +78,103 @@ class Hit
 		return $this->source[$key] ?? NULL;
 	}
 
+
+	public function getStringValue(string $key): string
+	{
+		if (
+			isset($this->source[$key])
+			&& \is_string($this->source[$key]) === TRUE
+		) {
+			return $this->source[$key];
+		}
+
+		throw new \Spameri\ElasticQuery\Exception\InvalidArgumentException('Value is not string.');
+	}
+
+
+	public function getStringOrNullValue(string $key): string|null
+	{
+		try {
+			return $this->getStringValue($key);
+
+		} catch (\Spameri\ElasticQuery\Exception\InvalidArgumentException $exception) {
+			return NULL;
+		}
+	}
+
+
+	public function getArrayValue(string $key): array
+	{
+		if (
+			isset($this->source[$key])
+			&& \is_array($this->source[$key]) === TRUE
+		) {
+			return $this->source[$key];
+		}
+
+		throw new \Spameri\ElasticQuery\Exception\InvalidArgumentException('Value is not array.');
+	}
+
+
+	public function getArrayOrNullValue(string $key): array|null
+	{
+		try {
+			return $this->getArrayValue($key);
+
+		} catch (\Spameri\ElasticQuery\Exception\InvalidArgumentException $exception) {
+			return NULL;
+		}
+	}
+
+
+	public function getBoolValue(string $key): bool
+	{
+		if (
+			isset($this->source[$key])
+			&& \is_bool($this->source[$key]) === TRUE
+		) {
+			return $this->source[$key];
+		}
+
+		throw new \Spameri\ElasticQuery\Exception\InvalidArgumentException('Value is not bool.');
+	}
+
+
+	public function getBoolOrNullValue(string $key): bool|null
+	{
+		try {
+			return $this->getBoolValue($key);
+
+		} catch (\Spameri\ElasticQuery\Exception\InvalidArgumentException $exception) {
+			return NULL;
+		}
+	}
+
+
+	public function getIntegerValue(string $key): int
+	{
+		if (
+			isset($this->source[$key])
+			&& \is_int($this->source[$key]) === TRUE
+		) {
+			return $this->source[$key];
+		}
+
+		throw new \Spameri\ElasticQuery\Exception\InvalidArgumentException('Value is not integer.');
+	}
+
+
+	public function getIntegerOrNullValue(string $key): int|null
+	{
+		try {
+			return $this->getIntegerValue($key);
+
+		} catch (\Spameri\ElasticQuery\Exception\InvalidArgumentException $exception) {
+			return NULL;
+		}
+	}
+
+
 	/**
 	 * @phpstan-return mixed
 	 */
