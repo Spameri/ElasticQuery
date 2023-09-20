@@ -3,7 +3,7 @@
 namespace Spameri\ElasticQuery\Response\Result;
 
 
-class HitCollection implements \IteratorAggregate
+class HitCollection implements \IteratorAggregate, \Countable
 {
 
 	/**
@@ -23,6 +23,12 @@ class HitCollection implements \IteratorAggregate
 	public function getIterator(): \ArrayIterator
 	{
 		return new \ArrayIterator($this->hits);
+	}
+
+
+	public function count(): int
+	{
+		return \count($this->hits);
 	}
 
 }
