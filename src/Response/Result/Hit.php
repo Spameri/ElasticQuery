@@ -88,7 +88,7 @@ class Hit
 			return $this->source[$key];
 		}
 
-		throw new \Spameri\ElasticQuery\Exception\InvalidArgumentException('Value is not string.');
+		throw new \Spameri\ElasticQuery\Exception\InvalidArgumentException(\sprintf('Value for key %s is not string.', $key));
 	}
 
 
@@ -112,7 +112,7 @@ class Hit
 			return $this->source[$key];
 		}
 
-		throw new \Spameri\ElasticQuery\Exception\InvalidArgumentException('Value is not array.');
+		throw new \Spameri\ElasticQuery\Exception\InvalidArgumentException(\sprintf('Value for key %s is not array.', $key));
 	}
 
 
@@ -136,7 +136,7 @@ class Hit
 			return $this->source[$key];
 		}
 
-		throw new \Spameri\ElasticQuery\Exception\InvalidArgumentException('Value is not bool.');
+		throw new \Spameri\ElasticQuery\Exception\InvalidArgumentException(\sprintf('Value for key %s is not bool.', $key));
 	}
 
 
@@ -160,7 +160,7 @@ class Hit
 			return $this->source[$key];
 		}
 
-		throw new \Spameri\ElasticQuery\Exception\InvalidArgumentException('Value is not integer.');
+		throw new \Spameri\ElasticQuery\Exception\InvalidArgumentException(\sprintf('Value for key %s is not integer.', $key));
 	}
 
 
