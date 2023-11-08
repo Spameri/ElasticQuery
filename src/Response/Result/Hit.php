@@ -175,6 +175,30 @@ class Hit
 	}
 
 
+	public function getFloatValue(string $key): float
+	{
+		if (
+			isset($this->source[$key])
+			&& \is_float($this->source[$key]) === TRUE
+		) {
+			return $this->source[$key];
+		}
+
+		throw new \Spameri\ElasticQuery\Exception\InvalidArgumentException(\sprintf('Value for key %s is not float.', $key));
+	}
+
+
+	public function getFloatOrNullValue(string $key): float|null
+	{
+		try {
+			return $this->getFloatValue($key);
+
+		} catch (\Spameri\ElasticQuery\Exception\InvalidArgumentException $exception) {
+			return NULL;
+		}
+	}
+
+
 	/**
 	 * @phpstan-return mixed
 	 */
