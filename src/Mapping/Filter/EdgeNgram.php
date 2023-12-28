@@ -21,7 +21,7 @@ class EdgeNgram implements \Spameri\ElasticQuery\Mapping\FilterInterface
 
 	public function __construct(
 		int $minGram = 2,
-		int $maxGram = 6
+		int $maxGram = 6,
 	)
 	{
 		$this->minGram = $minGram;

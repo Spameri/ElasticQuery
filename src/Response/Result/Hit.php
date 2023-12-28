@@ -43,7 +43,7 @@ class Hit
 		, string $type
 		, string $id
 		, float $score
-		, int $version
+		, int $version,
 	)
 	{
 		$this->source = $source;
@@ -66,7 +66,7 @@ class Hit
 	 * @phpstan-return mixed
 	 */
 	public function getValue(
-		string $key
+		string $key,
 	)
 	{
 		$value = $this->getSubValue($key);

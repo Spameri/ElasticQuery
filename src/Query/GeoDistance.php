@@ -28,7 +28,7 @@ class GeoDistance implements LeafQueryInterface
 	public function __construct(
 		string $field
 		, float $lat
-		, float $lon
+		, float $lon,
 	)
 	{
 

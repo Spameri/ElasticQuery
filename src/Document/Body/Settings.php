@@ -18,7 +18,7 @@ class Settings implements \Spameri\ElasticQuery\Document\BodyInterface
 
 	public function __construct(
 		\Spameri\ElasticQuery\Mapping\Settings\Analysis\AnalyzerCollection $analyzer,
-		\Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection $filter
+		\Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection $filter,
 	)
 	{
 		$this->analyzer = $analyzer;

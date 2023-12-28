@@ -19,7 +19,7 @@ abstract class AbstractDictionary
 
 
 	public function __construct(
-		?\Spameri\ElasticQuery\Mapping\Filter\AbstractStop $stopFilter = NULL
+		\Spameri\ElasticQuery\Mapping\Filter\AbstractStop|null $stopFilter = NULL,
 	)
 	{
 		$this->stopFilter = $stopFilter;
@@ -44,7 +44,7 @@ abstract class AbstractDictionary
 	}
 
 
-	public function getStopFilter(): ?\Spameri\ElasticQuery\Mapping\Filter\AbstractStop
+	public function getStopFilter(): \Spameri\ElasticQuery\Mapping\Filter\AbstractStop|null
 	{
 		return $this->stopFilter;
 	}

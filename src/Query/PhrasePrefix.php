@@ -18,7 +18,7 @@ class PhrasePrefix implements \Spameri\ElasticQuery\Query\LeafQueryInterface
 		string $field,
 		string $queryString,
 		int $boost = 1,
-		int $slop = 1
+		int $slop = 1,
 	) {
 		$this->field = $field;
 		$this->queryString = $queryString;

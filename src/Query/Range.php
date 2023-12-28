@@ -32,12 +32,12 @@ class Range implements LeafQueryInterface
 		string $field,
 		$gte = NULL,
 		$lte = NULL,
-		float $boost = 1.0
+		float $boost = 1.0,
 	)
 	{
 		if ($gte === NULL && $lte === NULL) {
 			throw new \Spameri\ElasticQuery\Exception\InvalidArgumentException(
-				'Range must have at least one border value.'
+				'Range must have at least one border value.',
 			);
 		}
 
@@ -57,7 +57,7 @@ class Range implements LeafQueryInterface
 			}
 
 			throw new \Spameri\ElasticQuery\Exception\InvalidArgumentException(
-				'Input values does not make range. From: ' . $gteValue . ' To: ' . $lteValue
+				'Input values does not make range. From: ' . $gteValue . ' To: ' . $lteValue,
 			);
 		}
 

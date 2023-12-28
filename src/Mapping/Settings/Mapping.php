@@ -20,8 +20,8 @@ class Mapping implements \Spameri\ElasticQuery\Entity\ArrayInterface
 
 	public function __construct(
 		string $indexName,
-		?\Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldCollection $fields = NULL,
-		bool $dynamic = true
+		\Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldCollection|null $fields = NULL,
+		bool $dynamic = true,
 	)
 	{
 		$this->indexName = $indexName;

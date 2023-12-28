@@ -16,7 +16,7 @@ class Histogram implements LeafAggregationInterface
 
 	public function __construct(
 		string $field
-		, int $interval
+		, int $interval,
 	)
 	{
 		$this->field = $field;

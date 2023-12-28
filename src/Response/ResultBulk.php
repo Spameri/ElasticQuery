@@ -19,7 +19,7 @@ class ResultBulk implements ResultInterface
 
 	public function __construct(
 		Stats $stats
-		, \Spameri\ElasticQuery\Response\Result\BulkActionCollection $bulkActionCollection
+		, \Spameri\ElasticQuery\Response\Result\BulkActionCollection $bulkActionCollection,
 	)
 	{
 		$this->stats = $stats;
@@ -34,7 +34,7 @@ class ResultBulk implements ResultInterface
 
 
 	public function getFirstAction(
-		string $id
+		string $id,
 	): \Spameri\ElasticQuery\Response\Result\BulkAction
 	{
 		/** @var \Spameri\ElasticQuery\Response\Result\BulkAction $bulkIAction */
@@ -45,7 +45,7 @@ class ResultBulk implements ResultInterface
 		}
 
 		throw new \Spameri\ElasticQuery\Exception\BulkActionNotFound(
-			'Action with id: ' . $id . 'not found.'
+			'Action with id: ' . $id . 'not found.',
 		);
 	}
 

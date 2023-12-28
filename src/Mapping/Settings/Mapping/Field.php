@@ -30,14 +30,14 @@ class Field
 	public function __construct(
 		string $name,
 		string $type = \Spameri\ElasticQuery\Mapping\AllowedValues::TYPE_KEYWORD,
-		?\Spameri\ElasticQuery\Mapping\AnalyzerInterface $analyzer = NULL,
-		?bool $fieldData = NULL
+		\Spameri\ElasticQuery\Mapping\AnalyzerInterface|null $analyzer = NULL,
+		bool|null $fieldData = NULL,
 	)
 	{
 		$this->name = $name;
 		if ( ! \in_array($type, \Spameri\ElasticQuery\Mapping\AllowedValues::TYPES, TRUE)) {
 			throw new \Spameri\ElasticQuery\Exception\InvalidArgumentException(
-				'Not allowed type see \Spameri\ElasticQuery\Mapping\AllowedValues::TYPES'
+				'Not allowed type see \Spameri\ElasticQuery\Mapping\AllowedValues::TYPES',
 			);
 		}
 		$this->type = $type;

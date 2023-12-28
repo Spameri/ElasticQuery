@@ -49,7 +49,7 @@ class Fuzzy implements LeafQueryInterface
 		, float $boost = 1.0
 		, int $fuzziness = 2
 		, int $prefixLength = 0
-		, int $maxExpansion = 100
+		, int $maxExpansion = 100,
 	)
 	{
 		$this->field = $field;

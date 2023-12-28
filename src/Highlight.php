@@ -15,7 +15,7 @@ class Highlight implements \Spameri\ElasticQuery\Entity\ArrayInterface
 	public function __construct(
 		array $preTags,
 		array $postTags,
-		array $fields
+		array $fields,
 	) {
 		$this->preTags = $preTags;
 		$this->postTags = $postTags;

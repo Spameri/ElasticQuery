@@ -13,7 +13,7 @@ class ShouldCollection implements \Spameri\ElasticQuery\Collection\QueryCollecti
 
 
 	public function __construct(
-		\Spameri\ElasticQuery\Query\LeafQueryInterface ... $collection
+		\Spameri\ElasticQuery\Query\LeafQueryInterface ... $collection,
 	)
 	{
 		$this->collection = [];
@@ -24,7 +24,7 @@ class ShouldCollection implements \Spameri\ElasticQuery\Collection\QueryCollecti
 
 
 	public function add(
-		\Spameri\ElasticQuery\Query\LeafQueryInterface $item
+		\Spameri\ElasticQuery\Query\LeafQueryInterface $item,
 	): void
 	{
 		$this->collection[$item->key()] = $item;
@@ -32,7 +32,7 @@ class ShouldCollection implements \Spameri\ElasticQuery\Collection\QueryCollecti
 
 
 	public function remove(
-		string $key
+		string $key,
 	): bool
 	{
 		if (isset($this->collection[$key])) {
@@ -46,8 +46,8 @@ class ShouldCollection implements \Spameri\ElasticQuery\Collection\QueryCollecti
 
 
 	public function get(
-		string $key
-	): ?\Spameri\ElasticQuery\Query\LeafQueryInterface
+		string $key,
+	): \Spameri\ElasticQuery\Query\LeafQueryInterface|null
 	{
 		if (isset($this->collection[$key])) {
 			return $this->collection[$key];
@@ -58,7 +58,7 @@ class ShouldCollection implements \Spameri\ElasticQuery\Collection\QueryCollecti
 
 
 	public function isValue(
-		string $key
+		string $key,
 	): bool
 	{
 		if (isset($this->collection[$key])) {

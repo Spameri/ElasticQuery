@@ -31,7 +31,7 @@ class ResultSearch implements ResultInterface
 		Stats $stats
 		, Shards $shards
 		, \Spameri\ElasticQuery\Response\Result\HitCollection $hitCollection
-		, \Spameri\ElasticQuery\Response\Result\AggregationCollection $aggregationCollection
+		, \Spameri\ElasticQuery\Response\Result\AggregationCollection $aggregationCollection,
 	)
 	{
 		$this->stats = $stats;
@@ -66,7 +66,7 @@ class ResultSearch implements ResultInterface
 
 
 	public function getHit(
-		string $id
+		string $id,
 	): \Spameri\ElasticQuery\Response\Result\Hit
 	{
 		/** @var \Spameri\ElasticQuery\Response\Result\Hit $hit */
@@ -77,13 +77,13 @@ class ResultSearch implements ResultInterface
 		}
 
 		throw new \Spameri\ElasticQuery\Exception\HitNotFound(
-			'Hit with id: ' . $id . 'not found.'
+			'Hit with id: ' . $id . 'not found.',
 		);
 	}
 
 
 	public function getAggregation(
-		string $name
+		string $name,
 	): \Spameri\ElasticQuery\Response\Result\Aggregation
 	{
 		/** @var \Spameri\ElasticQuery\Response\Result\Aggregation $aggregation */
@@ -94,7 +94,7 @@ class ResultSearch implements ResultInterface
 		}
 
 		throw new \Spameri\ElasticQuery\Exception\AggregationNotFound(
-			'Aggregation with name: ' . $name . ' has not been found.'
+			'Aggregation with name: ' . $name . ' has not been found.',
 		);
 	}
 

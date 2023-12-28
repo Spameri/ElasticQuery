@@ -24,8 +24,8 @@ class LeafAggregationCollection implements LeafAggregationInterface, \IteratorAg
 
 	public function __construct(
 		string $name
-		, ?\Spameri\ElasticQuery\Filter\FilterCollection $filter
-		, \Spameri\ElasticQuery\Aggregation\LeafAggregationInterface ... $aggregations
+		, \Spameri\ElasticQuery\Filter\FilterCollection|null $filter
+		, \Spameri\ElasticQuery\Aggregation\LeafAggregationInterface ... $aggregations,
 	)
 	{
 		if ( ! $filter) {

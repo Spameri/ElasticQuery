@@ -28,7 +28,7 @@ class Range implements LeafAggregationInterface
 	public function __construct(
 		string $field
 		, bool $keyed = FALSE
-		, \Spameri\ElasticQuery\Aggregation\RangeValueCollection $rangeValueCollection = NULL
+		, \Spameri\ElasticQuery\Aggregation\RangeValueCollection $rangeValueCollection = NULL,
 	)
 	{
 		$this->field = $field;

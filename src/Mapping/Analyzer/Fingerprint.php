@@ -27,7 +27,7 @@ class Fingerprint implements \Spameri\ElasticQuery\Mapping\AnalyzerInterface
 	public function __construct(
 		array $stopWords = [],
 		string $separator = ' ',
-		int $maxOutputSize = 255
+		int $maxOutputSize = 255,
 	)
 	{
 		$this->stopWords = $stopWords;

@@ -18,7 +18,7 @@ class ThaiDictionary extends \Spameri\ElasticQuery\Mapping\Analyzer\AbstractDict
 		if ( ! $this->filter instanceof \Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection) {
 			$this->filter = new \Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection();
 			$this->filter->add(
-				new \Spameri\ElasticQuery\Mapping\Filter\Lowercase()
+				new \Spameri\ElasticQuery\Mapping\Filter\Lowercase(),
 			);
 
 			if ($this->stopFilter) {
@@ -26,14 +26,14 @@ class ThaiDictionary extends \Spameri\ElasticQuery\Mapping\Analyzer\AbstractDict
 
 			} else {
 				$this->filter->add(
-					new \Spameri\ElasticQuery\Mapping\Filter\Stop\Thai()
+					new \Spameri\ElasticQuery\Mapping\Filter\Stop\Thai(),
 				);
 			}
 			$this->filter->add(
-				new \Spameri\ElasticQuery\Mapping\Filter\Hunspell\Thai()
+				new \Spameri\ElasticQuery\Mapping\Filter\Hunspell\Thai(),
 			);
 			$this->filter->add(
-				new \Spameri\ElasticQuery\Mapping\Filter\Lowercase()
+				new \Spameri\ElasticQuery\Mapping\Filter\Lowercase(),
 			);
 
 			if ($this->stopFilter) {
@@ -41,14 +41,14 @@ class ThaiDictionary extends \Spameri\ElasticQuery\Mapping\Analyzer\AbstractDict
 
 			} else {
 				$this->filter->add(
-					new \Spameri\ElasticQuery\Mapping\Filter\Stop\Thai()
+					new \Spameri\ElasticQuery\Mapping\Filter\Stop\Thai(),
 				);
 			}
 			$this->filter->add(
-				new \Spameri\ElasticQuery\Mapping\Filter\Unique()
+				new \Spameri\ElasticQuery\Mapping\Filter\Unique(),
 			);
 			$this->filter->add(
-				new \Spameri\ElasticQuery\Mapping\Filter\ASCIIFolding()
+				new \Spameri\ElasticQuery\Mapping\Filter\ASCIIFolding(),
 			);
 		}
 

@@ -13,7 +13,7 @@ class BulkActionCollection implements \IteratorAggregate
 
 
 	public function __construct(
-		BulkAction ... $bulkActions
+		BulkAction ... $bulkActions,
 	)
 	{
 		$this->bulkActions = $bulkActions;

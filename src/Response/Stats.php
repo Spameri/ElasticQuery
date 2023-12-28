@@ -23,7 +23,7 @@ class Stats
 	public function __construct(
 		int $took
 		, bool $timedOut
-		, int $total
+		, int $total,
 	)
 	{
 		$this->took = $took;

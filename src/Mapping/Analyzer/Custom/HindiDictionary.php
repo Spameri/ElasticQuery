@@ -18,7 +18,7 @@ class HindiDictionary extends \Spameri\ElasticQuery\Mapping\Analyzer\AbstractDic
 		if ( ! $this->filter instanceof \Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection) {
 			$this->filter = new \Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection();
 			$this->filter->add(
-				new \Spameri\ElasticQuery\Mapping\Filter\Lowercase()
+				new \Spameri\ElasticQuery\Mapping\Filter\Lowercase(),
 			);
 
 			if ($this->stopFilter) {
@@ -26,14 +26,14 @@ class HindiDictionary extends \Spameri\ElasticQuery\Mapping\Analyzer\AbstractDic
 
 			} else {
 				$this->filter->add(
-					new \Spameri\ElasticQuery\Mapping\Filter\Stop\Hindi()
+					new \Spameri\ElasticQuery\Mapping\Filter\Stop\Hindi(),
 				);
 			}
 			$this->filter->add(
-				new \Spameri\ElasticQuery\Mapping\Filter\Hunspell\Hindi()
+				new \Spameri\ElasticQuery\Mapping\Filter\Hunspell\Hindi(),
 			);
 			$this->filter->add(
-				new \Spameri\ElasticQuery\Mapping\Filter\Lowercase()
+				new \Spameri\ElasticQuery\Mapping\Filter\Lowercase(),
 			);
 
 			if ($this->stopFilter) {
@@ -41,14 +41,14 @@ class HindiDictionary extends \Spameri\ElasticQuery\Mapping\Analyzer\AbstractDic
 
 			} else {
 				$this->filter->add(
-					new \Spameri\ElasticQuery\Mapping\Filter\Stop\Hindi()
+					new \Spameri\ElasticQuery\Mapping\Filter\Stop\Hindi(),
 				);
 			}
 			$this->filter->add(
-				new \Spameri\ElasticQuery\Mapping\Filter\Unique()
+				new \Spameri\ElasticQuery\Mapping\Filter\Unique(),
 			);
 			$this->filter->add(
-				new \Spameri\ElasticQuery\Mapping\Filter\ASCIIFolding()
+				new \Spameri\ElasticQuery\Mapping\Filter\ASCIIFolding(),
 			);
 		}
 

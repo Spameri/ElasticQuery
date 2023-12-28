@@ -12,7 +12,7 @@ class Alias implements \Spameri\ElasticQuery\Entity\ArrayInterface, \Spameri\Ela
 
 
 	public function __construct(
-		string $name
+		string $name,
 	)
 	{
 		$this->name = $name;

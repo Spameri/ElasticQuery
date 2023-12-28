@@ -25,7 +25,7 @@ class CommonGrams implements \Spameri\ElasticQuery\Mapping\CustomAnalyzerInterfa
 
 	public function __construct(
 		array $commonGramWords,
-		?\Spameri\ElasticQuery\Mapping\Filter\AbstractStop $stopFilter = NULL
+		\Spameri\ElasticQuery\Mapping\Filter\AbstractStop|null $stopFilter = NULL,
 	)
 	{
 		$this->commonGramWords = $commonGramWords;
@@ -65,17 +65,17 @@ class CommonGrams implements \Spameri\ElasticQuery\Mapping\CustomAnalyzerInterfa
 		if ( ! $this->filter instanceof \Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection) {
 			$this->filter = new \Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection();
 			$this->filter->add(
-				new \Spameri\ElasticQuery\Mapping\Filter\ASCIIFolding()
+				new \Spameri\ElasticQuery\Mapping\Filter\ASCIIFolding(),
 			);
 			$this->filter->add(
-				new \Spameri\ElasticQuery\Mapping\Filter\Lowercase()
+				new \Spameri\ElasticQuery\Mapping\Filter\Lowercase(),
 			);
 			$this->filter->add($this->stopFilter);
 			$this->filter->add(
-				new \Spameri\ElasticQuery\Mapping\Filter\CommonGrams($this->commonGramWords)
+				new \Spameri\ElasticQuery\Mapping\Filter\CommonGrams($this->commonGramWords),
 			);
 			$this->filter->add(
-				new \Spameri\ElasticQuery\Mapping\Filter\Unique()
+				new \Spameri\ElasticQuery\Mapping\Filter\Unique(),
 			);
 		}
 

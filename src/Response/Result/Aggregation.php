@@ -28,7 +28,7 @@ class Aggregation
 		string $name
 		, int $position
 		, \Spameri\ElasticQuery\Response\Result\Aggregation\BucketCollection $bucketCollection
-		, \Spameri\ElasticQuery\Response\Result\AggregationCollection $subAggregations
+		, \Spameri\ElasticQuery\Response\Result\AggregationCollection $subAggregations,
 	)
 	{
 		$this->name = $name;

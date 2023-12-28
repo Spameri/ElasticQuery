@@ -67,7 +67,7 @@ class BulkAction
 		, \Spameri\ElasticQuery\Response\Shards $shards
 		, int $status
 		, int $seqNo
-		, int $primaryTerm
+		, int $primaryTerm,
 	)
 	{
 		$this->action = $action;

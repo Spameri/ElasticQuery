@@ -28,7 +28,7 @@ class Shards
 		int $total
 		, int $successful
 		, int $skipped
-		, int $failed
+		, int $failed,
 	)
 	{
 		$this->total = $total;

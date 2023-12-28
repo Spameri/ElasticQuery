@@ -15,7 +15,7 @@ class Synonym implements \Spameri\ElasticQuery\Mapping\FilterInterface
 
 
 	public function __construct(
-		array $synonyms = []
+		array $synonyms = [],
 	)
 	{
 		$this->synonyms = $synonyms;

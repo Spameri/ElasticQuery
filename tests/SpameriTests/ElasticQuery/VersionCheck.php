@@ -21,8 +21,8 @@ class VersionCheck
 		$resultObject = self::$resultMapper->map(
 			\json_decode(
 				(string) \file_get_contents('http://127.0.0.1:9200'),
-				TRUE
-			)
+				TRUE,
+			),
 		);
 
 		return $resultObject;

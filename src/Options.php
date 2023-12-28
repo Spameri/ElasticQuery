@@ -37,13 +37,13 @@ class Options
 
 
 	public function __construct(
-		?int $size = NULL,
-		?int $from = NULL,
-		?\Spameri\ElasticQuery\Options\SortCollection $sort = NULL,
-		?float $minScore = NULL,
+		int|null $size = NULL,
+		int|null $from = NULL,
+		\Spameri\ElasticQuery\Options\SortCollection|null $sort = NULL,
+		float|null $minScore = NULL,
 		bool $includeVersion = FALSE,
-		?string $scroll = NULL,
-		?string $scrollId = NULL
+		string|null $scroll = NULL,
+		string|null $scrollId = NULL,
 	)
 	{
 		$this->size = $size;
@@ -74,28 +74,28 @@ class Options
 	}
 
 
-	public function scroll(): ?string
+	public function scroll(): string|null
 	{
 		return $this->scroll;
 	}
 
 
 	public function startScroll(
-		string $scroll
+		string $scroll,
 	): void
 	{
 		$this->scroll = $scroll;
 	}
 
 
-	public function scrollId(): ?string
+	public function scrollId(): string|null
 	{
 		return $this->scrollId;
 	}
 
 
 	public function scrollInitialized(
-		string $scrollId
+		string $scrollId,
 	): void
 	{
 		$this->scrollId = $scrollId;

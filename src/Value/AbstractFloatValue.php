@@ -13,7 +13,7 @@ abstract class AbstractFloatValue implements \Spameri\ElasticQuery\Value\ValueIn
 
 
 	public function __construct(
-		float $value
+		float $value,
 	)
 	{
 		$this->value = $value;

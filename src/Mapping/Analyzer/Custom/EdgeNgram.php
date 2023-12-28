@@ -31,7 +31,7 @@ class EdgeNgram implements \Spameri\ElasticQuery\Mapping\CustomAnalyzerInterface
 	public function __construct(
 		int $minGram = 2,
 		int $maxGram = 6,
-		?\Spameri\ElasticQuery\Mapping\Filter\AbstractStop $stopFilter = NULL
+		\Spameri\ElasticQuery\Mapping\Filter\AbstractStop|null $stopFilter = NULL,
 	)
 	{
 		$this->minGram = $minGram;
@@ -72,17 +72,17 @@ class EdgeNgram implements \Spameri\ElasticQuery\Mapping\CustomAnalyzerInterface
 		if ( ! $this->filter instanceof \Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection) {
 			$this->filter = new \Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection();
 			$this->filter->add(
-				new \Spameri\ElasticQuery\Mapping\Filter\ASCIIFolding()
+				new \Spameri\ElasticQuery\Mapping\Filter\ASCIIFolding(),
 			);
 			$this->filter->add(
-				new \Spameri\ElasticQuery\Mapping\Filter\Lowercase()
+				new \Spameri\ElasticQuery\Mapping\Filter\Lowercase(),
 			);
 			$this->filter->add($this->stopFilter);
 			$this->filter->add(
-				new \Spameri\ElasticQuery\Mapping\Filter\EdgeNgram($this->minGram, $this->maxGram)
+				new \Spameri\ElasticQuery\Mapping\Filter\EdgeNgram($this->minGram, $this->maxGram),
 			);
 			$this->filter->add(
-				new \Spameri\ElasticQuery\Mapping\Filter\Unique()
+				new \Spameri\ElasticQuery\Mapping\Filter\Unique(),
 			);
 		}
 

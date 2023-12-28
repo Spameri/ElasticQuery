@@ -31,7 +31,7 @@ class RangeValue implements \Spameri\ElasticQuery\Entity\EntityInterface
 		$from,
 		$to,
 		bool $fromEqual = TRUE,
-		bool $toEqual = TRUE
+		bool $toEqual = TRUE,
 	)
 	{
 		$this->key = $key;

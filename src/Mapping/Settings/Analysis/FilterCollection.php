@@ -12,7 +12,7 @@ class FilterCollection implements \Spameri\ElasticQuery\Collection\SimpleCollect
 
 
 	public function __construct(
-		\Spameri\ElasticQuery\Mapping\FilterInterface ... $collection
+		\Spameri\ElasticQuery\Mapping\FilterInterface ... $collection,
 	)
 	{
 		$this->collection = [];
@@ -26,7 +26,7 @@ class FilterCollection implements \Spameri\ElasticQuery\Collection\SimpleCollect
 	 * @param \Spameri\ElasticQuery\Mapping\FilterInterface $item
 	 */
 	public function add(
-		$item
+		$item,
 	): void
 	{
 		$this->collection[$item->key()] = $item;
@@ -34,7 +34,7 @@ class FilterCollection implements \Spameri\ElasticQuery\Collection\SimpleCollect
 
 
 	public function remove(
-		string $key
+		string $key,
 	): bool
 	{
 		if (isset($this->collection[$key])) {
@@ -48,8 +48,8 @@ class FilterCollection implements \Spameri\ElasticQuery\Collection\SimpleCollect
 
 
 	public function get(
-		string $key
-	): ?\Spameri\ElasticQuery\Mapping\FilterInterface
+		string $key,
+	): \Spameri\ElasticQuery\Mapping\FilterInterface|null
 	{
 		if (isset($this->collection[$key])) {
 			return $this->collection[$key];
@@ -60,7 +60,7 @@ class FilterCollection implements \Spameri\ElasticQuery\Collection\SimpleCollect
 
 
 	public function isValue(
-		string $key
+		string $key,
 	): bool
 	{
 		if (isset($this->collection[$key])) {

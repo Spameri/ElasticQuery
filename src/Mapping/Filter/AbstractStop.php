@@ -16,7 +16,7 @@ abstract class AbstractStop implements \Spameri\ElasticQuery\Mapping\FilterInter
 
 
 	public function __construct(
-		array $extraWords = []
+		array $extraWords = [],
 	)
 	{
 		$this->extraWords = $extraWords;

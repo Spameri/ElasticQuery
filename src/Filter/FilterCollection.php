@@ -13,7 +13,7 @@ class FilterCollection implements FilterInterface
 
 
 	public function __construct(
-		?\Spameri\ElasticQuery\Query\MustCollection $mustCollection = NULL
+		\Spameri\ElasticQuery\Query\MustCollection|null $mustCollection = NULL,
 	)
 	{
 		if ( ! $mustCollection) {

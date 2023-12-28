@@ -18,7 +18,7 @@ class StatsSingle
 
 	public function __construct(
 		int $version
-		, bool $found
+		, bool $found,
 	)
 	{
 		$this->version = $version;

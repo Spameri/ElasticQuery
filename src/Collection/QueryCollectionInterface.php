@@ -7,22 +7,22 @@ interface QueryCollectionInterface extends \IteratorAggregate
 {
 
 	public function add(
-		\Spameri\ElasticQuery\Query\LeafQueryInterface $item
+		\Spameri\ElasticQuery\Query\LeafQueryInterface $item,
 	): void;
 
 
 	public function remove(
-		string $key
+		string $key,
 	): bool;
 
 
 	public function get(
-		string $key
-	): ?\Spameri\ElasticQuery\Query\LeafQueryInterface;
+		string $key,
+	): \Spameri\ElasticQuery\Query\LeafQueryInterface|null;
 
 
 	public function isValue(
-		string $key
+		string $key,
 	): bool;
 
 

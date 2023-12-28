@@ -9,7 +9,7 @@ class Max implements \Spameri\ElasticQuery\Aggregation\LeafAggregationInterface
 
 
 	public function __construct(
-		string $field
+		string $field,
 	)
 	{
 		$this->field = $field;

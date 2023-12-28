@@ -21,7 +21,7 @@ class Standard implements \Spameri\ElasticQuery\Mapping\AnalyzerInterface
 
 	public function __construct(
 		array $stopWords = [],
-		int $maxTokenLength = 5
+		int $maxTokenLength = 5,
 	)
 	{
 		$this->stopWords = $stopWords;

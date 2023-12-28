@@ -22,9 +22,9 @@ class Analysis implements \Spameri\ElasticQuery\Entity\ArrayInterface
 
 
 	public function __construct(
-		?\Spameri\ElasticQuery\Mapping\Settings\Analysis\AnalyzerCollection $analyzer = NULL,
-		?\Spameri\ElasticQuery\Mapping\Settings\Analysis\TokenizerCollection $tokenizer = NULL,
-		?\Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection $filter = NULL
+		\Spameri\ElasticQuery\Mapping\Settings\Analysis\AnalyzerCollection|null $analyzer = NULL,
+		\Spameri\ElasticQuery\Mapping\Settings\Analysis\TokenizerCollection|null $tokenizer = NULL,
+		\Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection|null $filter = NULL,
 	)
 	{
 		if ($analyzer === NULL) {

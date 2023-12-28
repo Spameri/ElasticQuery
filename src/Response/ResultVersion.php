@@ -33,7 +33,7 @@ class ResultVersion implements ResultInterface
 		string $clusterName,
 		string $clusterUUID,
 		\Spameri\ElasticQuery\Response\Result\Version $version,
-		string $tagLine
+		string $tagLine,
 	)
 	{
 		$this->name = $name;

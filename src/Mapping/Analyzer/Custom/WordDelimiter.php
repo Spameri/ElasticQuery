@@ -19,7 +19,7 @@ class WordDelimiter implements \Spameri\ElasticQuery\Mapping\CustomAnalyzerInter
 
 
 	public function __construct(
-		?\Spameri\ElasticQuery\Mapping\Filter\AbstractStop $stopFilter = NULL
+		\Spameri\ElasticQuery\Mapping\Filter\AbstractStop|null $stopFilter = NULL,
 	)
 	{
 		if ($stopFilter === NULL) {
@@ -59,16 +59,16 @@ class WordDelimiter implements \Spameri\ElasticQuery\Mapping\CustomAnalyzerInter
 			$this->filter = new \Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection();
 			$this->filter->add($this->stopFilter);
 			$this->filter->add(
-				new \Spameri\ElasticQuery\Mapping\Filter\WordDelimiter()
+				new \Spameri\ElasticQuery\Mapping\Filter\WordDelimiter(),
 			);
 			$this->filter->add(
-				new \Spameri\ElasticQuery\Mapping\Filter\ASCIIFolding()
+				new \Spameri\ElasticQuery\Mapping\Filter\ASCIIFolding(),
 			);
 			$this->filter->add(
-				new \Spameri\ElasticQuery\Mapping\Filter\Lowercase()
+				new \Spameri\ElasticQuery\Mapping\Filter\Lowercase(),
 			);
 			$this->filter->add(
-				new \Spameri\ElasticQuery\Mapping\Filter\Unique()
+				new \Spameri\ElasticQuery\Mapping\Filter\Unique(),
 			);
 		}
 

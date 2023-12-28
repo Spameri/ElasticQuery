@@ -13,7 +13,7 @@ abstract class AbstractBoolValue implements \Spameri\ElasticQuery\Value\ValueInt
 
 
 	public function __construct(
-		bool $value
+		bool $value,
 	)
 	{
 		$this->value = $value;

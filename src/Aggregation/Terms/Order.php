@@ -12,7 +12,7 @@ class Order implements \Spameri\ElasticQuery\Collection\Item
 
 	public function __construct(
 		string $field,
-		string $type
+		string $type,
 	) {
 		$this->field = $field;
 		$this->type = $type;

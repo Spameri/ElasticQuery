@@ -18,13 +18,13 @@ class ElasticMatch implements \Spameri\ElasticQuery\Query\LeafQueryInterface
 
 	private string $operator;
 
-	private ?\Spameri\ElasticQuery\Query\Match\Fuzziness $fuzziness;
+	private \Spameri\ElasticQuery\Query\Match\Fuzziness|null $fuzziness;
 
 	private float $boost;
 
-	private ?string $analyzer;
+	private string|null $analyzer;
 
-	private ?int $minimumShouldMatch;
+	private int|null $minimumShouldMatch;
 
 
 	/**
@@ -34,15 +34,15 @@ class ElasticMatch implements \Spameri\ElasticQuery\Query\LeafQueryInterface
 		string $field,
 		$query,
 		float $boost = 1.0,
-		?\Spameri\ElasticQuery\Query\Match\Fuzziness $fuzziness = NULL,
-		?int $minimumShouldMatch = NULL,
+		\Spameri\ElasticQuery\Query\Match\Fuzziness|null $fuzziness = NULL,
+		int|null $minimumShouldMatch = NULL,
 		string $operator = \Spameri\ElasticQuery\Query\Match\Operator::OR,
-		?string $analyzer = NULL
+		string|null $analyzer = NULL,
 	)
 	{
 		if ( ! \in_array($operator, \Spameri\ElasticQuery\Query\Match\Operator::OPERATORS, TRUE)) {
 			throw new \Spameri\ElasticQuery\Exception\InvalidArgumentException(
-				'Parameter $operator is invalid, see \Spameri\ElasticQuery\Query\Match\Operator::OPERATORS for valid arguments.'
+				'Parameter $operator is invalid, see \Spameri\ElasticQuery\Query\Match\Operator::OPERATORS for valid arguments.',
 			);
 		}
 

@@ -12,7 +12,7 @@ class AnalyzerCollection implements \Spameri\ElasticQuery\Collection\SimpleColle
 
 
 	public function __construct(
-		\Spameri\ElasticQuery\Mapping\AnalyzerInterface ... $collection
+		\Spameri\ElasticQuery\Mapping\AnalyzerInterface ... $collection,
 	)
 	{
 		$this->collection = [];
@@ -29,7 +29,7 @@ class AnalyzerCollection implements \Spameri\ElasticQuery\Collection\SimpleColle
 	 * @param \Spameri\ElasticQuery\Mapping\AnalyzerInterface&\Spameri\ElasticQuery\Collection\Item $item
 	 */
 	public function add(
-		$item
+		$item,
 	): void
 	{
 		$this->collection[$item->key()] = $item;
@@ -37,7 +37,7 @@ class AnalyzerCollection implements \Spameri\ElasticQuery\Collection\SimpleColle
 
 
 	public function remove(
-		string $key
+		string $key,
 	): bool
 	{
 		if (isset($this->collection[$key])) {
@@ -51,8 +51,8 @@ class AnalyzerCollection implements \Spameri\ElasticQuery\Collection\SimpleColle
 
 
 	public function get(
-		string $key
-	): ?\Spameri\ElasticQuery\Mapping\AnalyzerInterface
+		string $key,
+	): \Spameri\ElasticQuery\Mapping\AnalyzerInterface|null
 	{
 		if (isset($this->collection[$key])) {
 			return $this->collection[$key];
@@ -63,7 +63,7 @@ class AnalyzerCollection implements \Spameri\ElasticQuery\Collection\SimpleColle
 
 
 	public function isValue(
-		string $key
+		string $key,
 	): bool
 	{
 		if (isset($this->collection[$key])) {

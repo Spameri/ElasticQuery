@@ -20,13 +20,13 @@ class MultiMatch implements LeafQueryInterface
 
 	private string $operator;
 
-	private ?\Spameri\ElasticQuery\Query\Match\Fuzziness $fuzziness;
+	private \Spameri\ElasticQuery\Query\Match\Fuzziness|null $fuzziness;
 
 	private float $boost;
 
-	private ?string $analyzer;
+	private string|null $analyzer;
 
-	private ?int $minimumShouldMatch;
+	private int|null $minimumShouldMatch;
 
 
 	/**
@@ -36,21 +36,21 @@ class MultiMatch implements LeafQueryInterface
 		array $fields,
 		$query,
 		float $boost = 1.0,
-		?\Spameri\ElasticQuery\Query\Match\Fuzziness $fuzziness = NULL,
+		\Spameri\ElasticQuery\Query\Match\Fuzziness|null $fuzziness = NULL,
 		string $type = \Spameri\ElasticQuery\Query\Match\MultiMatchType::BEST_FIELDS,
-		?int $minimumShouldMatch = NULL,
+		int|null $minimumShouldMatch = NULL,
 		string $operator = \Spameri\ElasticQuery\Query\Match\Operator::OR,
-		?string $analyzer = NULL
+		string|null $analyzer = NULL,
 	)
 	{
 		if ( ! \in_array($operator, \Spameri\ElasticQuery\Query\Match\Operator::OPERATORS, TRUE)) {
 			throw new \Spameri\ElasticQuery\Exception\InvalidArgumentException(
-				'Parameter $operator is invalid, see \Spameri\ElasticQuery\Query\Match\Operator::OPERATORS for valid arguments.'
+				'Parameter $operator is invalid, see \Spameri\ElasticQuery\Query\Match\Operator::OPERATORS for valid arguments.',
 			);
 		}
 		if ( ! \in_array($type, \Spameri\ElasticQuery\Query\Match\MultiMatchType::TYPES, TRUE)) {
 			throw new \Spameri\ElasticQuery\Exception\InvalidArgumentException(
-				'Parameter $type is invalid, see \Spameri\ElasticQuery\Query\Match\MultiMatchType::TYPES for valid arguments.'
+				'Parameter $type is invalid, see \Spameri\ElasticQuery\Query\Match\MultiMatchType::TYPES for valid arguments.',
 			);
 		}
 

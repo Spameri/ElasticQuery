@@ -28,9 +28,9 @@ class Settings implements \Spameri\ElasticQuery\Entity\ArrayInterface
 
 	public function __construct(
 		string $indexName,
-		?\Spameri\ElasticQuery\Mapping\Settings\Analysis $analysis = NULL,
-		?\Spameri\ElasticQuery\Mapping\Settings\Mapping $mapping = NULL,
-		?\Spameri\ElasticQuery\Mapping\Settings\AliasCollection $alias = NULL
+		\Spameri\ElasticQuery\Mapping\Settings\Analysis|null $analysis = NULL,
+		\Spameri\ElasticQuery\Mapping\Settings\Mapping|null $mapping = NULL,
+		\Spameri\ElasticQuery\Mapping\Settings\AliasCollection|null $alias = NULL,
 	)
 	{
 		if ($analysis === NULL) {
@@ -85,8 +85,8 @@ class Settings implements \Spameri\ElasticQuery\Entity\ArrayInterface
 		$this->addMappingField(
 			new \Spameri\ElasticQuery\Mapping\Settings\Mapping\Field(
 				$name,
-				\Spameri\ElasticQuery\Mapping\AllowedValues::TYPE_KEYWORD
-			)
+				\Spameri\ElasticQuery\Mapping\AllowedValues::TYPE_KEYWORD,
+			),
 		);
 	}
 
@@ -96,8 +96,8 @@ class Settings implements \Spameri\ElasticQuery\Entity\ArrayInterface
 		$this->addMappingField(
 			new \Spameri\ElasticQuery\Mapping\Settings\Mapping\Field(
 				$name,
-				\Spameri\ElasticQuery\Mapping\AllowedValues::TYPE_FLOAT
-			)
+				\Spameri\ElasticQuery\Mapping\AllowedValues::TYPE_FLOAT,
+			),
 		);
 	}
 
@@ -107,8 +107,8 @@ class Settings implements \Spameri\ElasticQuery\Entity\ArrayInterface
 		$this->addMappingField(
 			new \Spameri\ElasticQuery\Mapping\Settings\Mapping\Field(
 				$name,
-				\Spameri\ElasticQuery\Mapping\AllowedValues::TYPE_INTEGER
-			)
+				\Spameri\ElasticQuery\Mapping\AllowedValues::TYPE_INTEGER,
+			),
 		);
 	}
 
@@ -118,8 +118,8 @@ class Settings implements \Spameri\ElasticQuery\Entity\ArrayInterface
 		$this->addMappingField(
 			new \Spameri\ElasticQuery\Mapping\Settings\Mapping\Field(
 				$name,
-				\Spameri\ElasticQuery\Mapping\AllowedValues::TYPE_BOOLEAN
-			)
+				\Spameri\ElasticQuery\Mapping\AllowedValues::TYPE_BOOLEAN,
+			),
 		);
 	}
 

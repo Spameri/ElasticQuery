@@ -13,7 +13,7 @@ abstract class AbstractStringValue implements \Spameri\ElasticQuery\Value\ValueI
 
 
 	public function __construct(
-		string $value
+		string $value,
 	)
 	{
 		$this->value = $value;

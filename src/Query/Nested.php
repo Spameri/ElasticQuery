@@ -12,7 +12,7 @@ class Nested implements \Spameri\ElasticQuery\Query\LeafQueryInterface
 
 	public function __construct(
 		string $path,
-		?\Spameri\ElasticQuery\Query\QueryCollection $query = NULL
+		\Spameri\ElasticQuery\Query\QueryCollection|null $query = NULL,
 	) {
 		$this->path = $path;
 

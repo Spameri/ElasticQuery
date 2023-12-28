@@ -7,7 +7,7 @@ class ResultMapper
 {
 
 	public function map(
-		array $elasticSearchResponse
+		array $elasticSearchResponse,
 	): ResultInterface
 	{
 		if (isset($elasticSearchResponse['found'])) {
@@ -31,29 +31,29 @@ class ResultMapper
 
 
 	public function mapSingleResult(
-		array $elasticSearchResponse
+		array $elasticSearchResponse,
 	): ResultSingle
 	{
 		return new ResultSingle(
 			$this->mapHit($elasticSearchResponse, 0),
-			$this->mapSingleStats($elasticSearchResponse)
+			$this->mapSingleStats($elasticSearchResponse),
 		);
 	}
 
 
 	public function mapBulkResult(
-		array $elasticSearchResponse
+		array $elasticSearchResponse,
 	): ResultBulk
 	{
 		return new ResultBulk(
 			$this->mapStats($elasticSearchResponse),
-			$this->mapBulkActions($elasticSearchResponse['items'])
+			$this->mapBulkActions($elasticSearchResponse['items']),
 		);
 	}
 
 
 	public function mapVersionResults(
-		array $elasticSearchResponse
+		array $elasticSearchResponse,
 	): ResultVersion
 	{
 		return new ResultVersion(
@@ -69,28 +69,28 @@ class ResultMapper
 				$elasticSearchResponse['version']['build_snapshot'],
 				$elasticSearchResponse['version']['lucene_version'],
 				$elasticSearchResponse['version']['minimum_wire_compatibility_version'] ?? NULL,
-				$elasticSearchResponse['version']['minimum_index_compatibility_version'] ?? NULL
+				$elasticSearchResponse['version']['minimum_index_compatibility_version'] ?? NULL,
 			),
-			$elasticSearchResponse['tagline']
+			$elasticSearchResponse['tagline'],
 		);
 	}
 
 
 	public function mapSearchResults(
-		array $elasticSearchResponse
+		array $elasticSearchResponse,
 	): ResultSearch
 	{
 		return new ResultSearch(
 			$this->mapStats($elasticSearchResponse),
 			$this->mapShards($elasticSearchResponse),
 			$this->mapHits($elasticSearchResponse),
-			$this->mapAggregations($elasticSearchResponse)
+			$this->mapAggregations($elasticSearchResponse),
 		);
 	}
 
 
 	public function mapHits(
-		array $elasticSearchResponse
+		array $elasticSearchResponse,
 	): \Spameri\ElasticQuery\Response\Result\HitCollection
 	{
 		$hits = [];
@@ -99,14 +99,14 @@ class ResultMapper
 		}
 
 		return new \Spameri\ElasticQuery\Response\Result\HitCollection(
-			... $hits
+			... $hits,
 		);
 	}
 
 
 	private function mapHit(
 		array $hit
-		, int $position
+		, int $position,
 	): \Spameri\ElasticQuery\Response\Result\Hit
 	{
 		return new \Spameri\ElasticQuery\Response\Result\Hit(
@@ -116,13 +116,13 @@ class ResultMapper
 			$hit['_type'],
 			$hit['_id'],
 			$hit['_score'] ?? 1,
-			$hit['version'] ?? 0
+			$hit['version'] ?? 0,
 		);
 	}
 
 
 	public function mapBulkActions(
-		array $elasticSearchResponse
+		array $elasticSearchResponse,
 	): \Spameri\ElasticQuery\Response\Result\BulkActionCollection
 	{
 		$bulkActions = [];
@@ -131,14 +131,14 @@ class ResultMapper
 		}
 
 		return new \Spameri\ElasticQuery\Response\Result\BulkActionCollection(
-			... $bulkActions
+			... $bulkActions,
 		);
 	}
 
 
 	public function mapBulkAction(
 		array $bulkAction,
-		string $actionType
+		string $actionType,
 	): \Spameri\ElasticQuery\Response\Result\BulkAction
 	{
 		return new \Spameri\ElasticQuery\Response\Result\BulkAction(
@@ -151,13 +151,13 @@ class ResultMapper
 			$this->mapShards($bulkAction),
 			$bulkAction['status'],
 			$bulkAction['_seq_no'],
-			$bulkAction['_primary_term']
+			$bulkAction['_primary_term'],
 		);
 	}
 
 
 	public function mapAggregations(
-		array $elasticSearchResponse
+		array $elasticSearchResponse,
 	): \Spameri\ElasticQuery\Response\Result\AggregationCollection
 	{
 		$aggregationArray = [];
@@ -171,7 +171,7 @@ class ResultMapper
 		}
 
 		return new \Spameri\ElasticQuery\Response\Result\AggregationCollection(
-			... $aggregationArray
+			... $aggregationArray,
 		);
 	}
 
@@ -179,7 +179,7 @@ class ResultMapper
 	private function mapAggregation(
 		string $name
 		, int $position
-		, array $aggregationArray
+		, array $aggregationArray,
 	): \Spameri\ElasticQuery\Response\Result\Aggregation
 	{
 		$i = 0;
@@ -233,18 +233,18 @@ class ResultMapper
 			$name,
 			$position,
 			new \Spameri\ElasticQuery\Response\Result\Aggregation\BucketCollection(
-				... $buckets
+				... $buckets,
 			),
 			new \Spameri\ElasticQuery\Response\Result\AggregationCollection(
-				... $aggregations
-			)
+				... $aggregations,
+			),
 		);
 	}
 
 
 	private function mapBucket(
-		?int $bucketPosition
-		, array $bucketArray
+		int|null $bucketPosition
+		, array $bucketArray,
 	): \Spameri\ElasticQuery\Response\Result\Aggregation\Bucket
 	{
 		return new \Spameri\ElasticQuery\Response\Result\Aggregation\Bucket(
@@ -252,13 +252,13 @@ class ResultMapper
 			$bucketArray['doc_count'],
 			\is_int($bucketPosition) ? $bucketPosition : NULL,
 			$bucketArray['from'] ?? NULL,
-			$bucketArray['to'] ?? NULL
+			$bucketArray['to'] ?? NULL,
 		);
 	}
 
 
 	public function mapStats(
-		array $elasticSearchResponse
+		array $elasticSearchResponse,
 	): Stats
 	{
 		$total = 0;
@@ -272,31 +272,31 @@ class ResultMapper
 		return new Stats(
 			$elasticSearchResponse['took'],
 			$elasticSearchResponse['timed_out'],
-			$total
+			$total,
 		);
 	}
 
 
 	public function mapSingleStats(
-		array $elasticSearchResponse
+		array $elasticSearchResponse,
 	): StatsSingle
 	{
 		return new StatsSingle(
 			$elasticSearchResponse['version'] ?? 0,
-			$elasticSearchResponse['found']
+			$elasticSearchResponse['found'],
 		);
 	}
 
 
 	public function mapShards(
-		array $elasticSearchResponse
+		array $elasticSearchResponse,
 	): Shards
 	{
 		return new Shards(
 			$elasticSearchResponse['_shards']['total'],
 			$elasticSearchResponse['_shards']['successful'],
 			$elasticSearchResponse['_shards']['skipped'] ?? 0,
-			$elasticSearchResponse['_shards']['failed']
+			$elasticSearchResponse['_shards']['failed'],
 		);
 	}
 

@@ -18,7 +18,7 @@ class ResultSingle implements ResultInterface
 
 	public function __construct(
 		\Spameri\ElasticQuery\Response\Result\Hit $hit
-		, StatsSingle $stats
+		, StatsSingle $stats,
 	)
 	{
 		$this->hit = $hit;

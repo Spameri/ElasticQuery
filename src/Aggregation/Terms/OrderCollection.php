@@ -14,7 +14,7 @@ class OrderCollection implements
 
 
 	public function __construct(
-		\Spameri\ElasticQuery\Aggregation\Terms\Order ... $collection
+		\Spameri\ElasticQuery\Aggregation\Terms\Order ... $collection,
 	) {
 		$this->collection = [];
 		foreach ($collection as $item) {
@@ -35,7 +35,7 @@ class OrderCollection implements
 	}
 
 
-	public function get(string $key): ?\Spameri\ElasticQuery\Aggregation\Terms\Order
+	public function get(string $key): \Spameri\ElasticQuery\Aggregation\Terms\Order|null
 	{
 		return $this->collection[$key] ?? NULL;
 	}

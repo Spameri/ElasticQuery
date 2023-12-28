@@ -12,7 +12,7 @@ class FunctionScoreCollection implements \Spameri\ElasticQuery\Collection\Simple
 
 
 	public function __construct(
-		\Spameri\ElasticQuery\FunctionScore\FunctionScoreInterface ... $collection
+		\Spameri\ElasticQuery\FunctionScore\FunctionScoreInterface ... $collection,
 	)
 	{
 		$this->collection = [];
@@ -26,7 +26,7 @@ class FunctionScoreCollection implements \Spameri\ElasticQuery\Collection\Simple
 	 * @param \Spameri\ElasticQuery\FunctionScore\FunctionScoreInterface $item
 	 */
 	public function add(
-		$item
+		$item,
 	): void
 	{
 		$this->collection[$item->key()] = $item;
@@ -34,7 +34,7 @@ class FunctionScoreCollection implements \Spameri\ElasticQuery\Collection\Simple
 
 
 	public function remove(
-		string $key
+		string $key,
 	): bool
 	{
 		if (isset($this->collection[$key])) {
@@ -48,15 +48,15 @@ class FunctionScoreCollection implements \Spameri\ElasticQuery\Collection\Simple
 
 
 	public function get(
-		string $key
-	): ?\Spameri\ElasticQuery\FunctionScore\FunctionScoreInterface
+		string $key,
+	): \Spameri\ElasticQuery\FunctionScore\FunctionScoreInterface|null
 	{
 		return $this->collection[$key] ?? NULL;
 	}
 
 
 	public function isValue(
-		string $key
+		string $key,
 	): bool
 	{
 		if (isset($this->collection[$key])) {

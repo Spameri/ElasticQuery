@@ -19,7 +19,7 @@ class FieldObject
 
 	public function __construct(
 		string $name,
-		\Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldCollection $fields
+		\Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldCollection $fields,
 	)
 	{
 		$this->name = $name;

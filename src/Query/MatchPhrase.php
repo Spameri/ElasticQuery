@@ -43,7 +43,7 @@ class MatchPhrase implements LeafQueryInterface
 		, $query
 		, float $boost = 1.0
 		, int $slop = 0
-		, ?string $analyzer = NULL
+		, string|null $analyzer = NULL,
 	)
 	{
 		$this->field = $field;

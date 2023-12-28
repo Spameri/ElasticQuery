@@ -12,7 +12,7 @@ class FieldCollection implements \Spameri\ElasticQuery\Collection\SimpleCollecti
 
 
 	public function __construct(
-		\Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldInterface ... $collection
+		\Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldInterface ... $collection,
 	)
 	{
 		$this->collection = [];
@@ -26,7 +26,7 @@ class FieldCollection implements \Spameri\ElasticQuery\Collection\SimpleCollecti
 	 * @param \Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldInterface $item
 	 */
 	public function add(
-		$item
+		$item,
 	): void
 	{
 		$this->collection[$item->key()] = $item;
@@ -34,7 +34,7 @@ class FieldCollection implements \Spameri\ElasticQuery\Collection\SimpleCollecti
 
 
 	public function remove(
-		string $key
+		string $key,
 	): bool
 	{
 		if (isset($this->collection[$key])) {
@@ -48,8 +48,8 @@ class FieldCollection implements \Spameri\ElasticQuery\Collection\SimpleCollecti
 
 
 	public function get(
-		string $key
-	): ?\Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldInterface
+		string $key,
+	): \Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldInterface|null
 	{
 		if (isset($this->collection[$key])) {
 			return $this->collection[$key];
@@ -60,7 +60,7 @@ class FieldCollection implements \Spameri\ElasticQuery\Collection\SimpleCollecti
 
 
 	public function isValue(
-		string $key
+		string $key,
 	): bool
 	{
 		if (isset($this->collection[$key])) {

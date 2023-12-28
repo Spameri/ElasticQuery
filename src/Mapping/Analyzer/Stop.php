@@ -15,7 +15,7 @@ class Stop implements \Spameri\ElasticQuery\Mapping\AnalyzerInterface
 
 
 	public function __construct(
-		array $stopWords = []
+		array $stopWords = [],
 	)
 	{
 		$this->stopWords = $stopWords;

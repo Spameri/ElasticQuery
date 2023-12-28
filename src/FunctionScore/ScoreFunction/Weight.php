@@ -12,7 +12,7 @@ class Weight implements \Spameri\ElasticQuery\FunctionScore\FunctionScoreInterfa
 
 	public function __construct(
 		float $weight,
-		\Spameri\ElasticQuery\Query\LeafQueryInterface $leafQuery
+		\Spameri\ElasticQuery\Query\LeafQueryInterface $leafQuery,
 	) {
 		$this->weight = $weight;
 		$this->leafQuery = $leafQuery;

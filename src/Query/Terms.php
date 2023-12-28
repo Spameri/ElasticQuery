@@ -22,12 +22,12 @@ class Terms implements LeafQueryInterface
 	public function __construct(
 		string $field
 		, array $query
-		, float $boost = 1.0
+		, float $boost = 1.0,
 	)
 	{
 		if ( ! \count($query)) {
 			throw new \Spameri\ElasticQuery\Exception\InvalidArgumentException(
-				'Terms query must contain values, empty array given.'
+				'Terms query must contain values, empty array given.',
 			);
 		}
 

@@ -18,7 +18,7 @@ class NestedObject implements \Spameri\ElasticQuery\Mapping\Settings\Mapping\Fie
 
 	public function __construct(
 		string $name,
-		\Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldCollection $fields
+		\Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldCollection $fields,
 	)
 	{
 		$this->name = $name;

@@ -13,7 +13,7 @@ abstract class AbstractCollection implements CollectionInterface
 
 
 	public function __construct(
-		\Spameri\ElasticQuery\Entity\EntityInterface ... $collection
+		\Spameri\ElasticQuery\Entity\EntityInterface ... $collection,
 	)
 	{
 		$this->collection = [];
@@ -24,7 +24,7 @@ abstract class AbstractCollection implements CollectionInterface
 
 
 	public function add(
-		\Spameri\ElasticQuery\Entity\EntityInterface $item
+		\Spameri\ElasticQuery\Entity\EntityInterface $item,
 	): void
 	{
 		$this->collection[$item->key()] = $item;
@@ -32,7 +32,7 @@ abstract class AbstractCollection implements CollectionInterface
 
 
 	public function remove(
-		string $key
+		string $key,
 	): bool
 	{
 		if (isset($this->collection[$key])) {
@@ -46,15 +46,15 @@ abstract class AbstractCollection implements CollectionInterface
 
 
 	public function get(
-		string $key
-	): ?\Spameri\ElasticQuery\Entity\EntityInterface
+		string $key,
+	): \Spameri\ElasticQuery\Entity\EntityInterface|null
 	{
 		return $this->collection[$key] ?? NULL;
 	}
 
 
 	public function isValue(
-		string $key
+		string $key,
 	): bool
 	{
 		if (isset($this->collection[$key])) {

@@ -7,22 +7,22 @@ interface CollectionInterface extends \IteratorAggregate
 {
 
 	public function add(
-		\Spameri\ElasticQuery\Entity\EntityInterface $item
+		\Spameri\ElasticQuery\Entity\EntityInterface $item,
 	): void;
 
 
 	public function remove(
-		string $key
+		string $key,
 	): bool;
 
 
 	public function get(
-		string $key
-	): ?\Spameri\ElasticQuery\Entity\EntityInterface;
+		string $key,
+	): \Spameri\ElasticQuery\Entity\EntityInterface|null;
 
 
 	public function isValue(
-		string $key
+		string $key,
 	): bool;
 
 

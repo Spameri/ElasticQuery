@@ -29,7 +29,7 @@ class FieldValueFactor implements \Spameri\ElasticQuery\FunctionScore\FunctionSc
 		string $field,
 		float $factor = 1.0,
 		string $modifier = self::MODIFIER_NONE,
-		float $missing = 1.0
+		float $missing = 1.0,
 	) {
 		$this->field = $field;
 		$this->factor = $factor;

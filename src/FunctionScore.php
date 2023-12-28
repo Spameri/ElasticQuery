@@ -14,12 +14,12 @@ class FunctionScore
 
 	private \Spameri\ElasticQuery\FunctionScore\FunctionScoreCollection $function;
 
-	private ?string $scoreMode;
+	private string|null $scoreMode;
 
 
 	public function __construct(
-		?\Spameri\ElasticQuery\FunctionScore\FunctionScoreCollection $function = NULL,
-		?string $scoreMode = NULL
+		\Spameri\ElasticQuery\FunctionScore\FunctionScoreCollection|null $function = NULL,
+		string|null $scoreMode = NULL,
 	) {
 		$this->function = $function ?? new \Spameri\ElasticQuery\FunctionScore\FunctionScoreCollection();
 		$this->scoreMode = $scoreMode;
@@ -32,7 +32,7 @@ class FunctionScore
 	}
 
 
-	public function scoreMode(): ?string
+	public function scoreMode(): string|null
 	{
 		return $this->scoreMode;
 	}

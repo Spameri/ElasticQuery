@@ -13,25 +13,25 @@ class Term implements LeafAggregationInterface
 
 	private int $size;
 
-	private ?int $missing;
+	private int|null $missing;
 
-	private ?string $key;
+	private string|null $key;
 
 	private \Spameri\ElasticQuery\Aggregation\Terms\OrderCollection $order;
 
-	private ?string $include;
+	private string|null $include;
 
-	private ?string $exclude;
+	private string|null $exclude;
 
 
 	public function __construct(
 		string $field,
 		int $size = 0,
 		int $missing = NULL,
-		?\Spameri\ElasticQuery\Aggregation\Terms\OrderCollection $order = NULL,
-		?string $include = NULL,
-		?string $exclude = NULL,
-		?string $key = NULL
+		\Spameri\ElasticQuery\Aggregation\Terms\OrderCollection|null $order = NULL,
+		string|null $include = NULL,
+		string|null $exclude = NULL,
+		string|null $key = NULL,
 	)
 	{
 		$this->field = $field;

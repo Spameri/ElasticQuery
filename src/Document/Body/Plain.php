@@ -13,7 +13,7 @@ class Plain implements \Spameri\ElasticQuery\Document\BodyInterface
 
 
 	public function __construct(
-		array $parameters
+		array $parameters,
 	)
 	{
 		$this->parameters = $parameters;

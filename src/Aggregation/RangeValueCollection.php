@@ -13,7 +13,7 @@ class RangeValueCollection implements \IteratorAggregate
 
 
 	public function __construct(
-		RangeValue ... $collection
+		RangeValue ... $collection,
 	)
 	{
 		$this->collection = $collection;
@@ -27,7 +27,7 @@ class RangeValueCollection implements \IteratorAggregate
 
 
 	public function add(
-		\Spameri\ElasticQuery\Aggregation\RangeValue $rangeValue
+		\Spameri\ElasticQuery\Aggregation\RangeValue $rangeValue,
 	): void
 	{
 		$this->collection[] = $rangeValue;

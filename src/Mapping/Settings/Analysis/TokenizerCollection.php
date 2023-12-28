@@ -12,7 +12,7 @@ class TokenizerCollection implements \Spameri\ElasticQuery\Collection\SimpleColl
 
 
 	public function __construct(
-		\Spameri\ElasticQuery\Mapping\TokenizerInterface ... $collection
+		\Spameri\ElasticQuery\Mapping\TokenizerInterface ... $collection,
 	)
 	{
 		$this->collection = [];
@@ -26,7 +26,7 @@ class TokenizerCollection implements \Spameri\ElasticQuery\Collection\SimpleColl
 	 * @param \Spameri\ElasticQuery\Mapping\TokenizerInterface $item
 	 */
 	public function add(
-		$item
+		$item,
 	): void
 	{
 		$this->collection[$item->key()] = $item;
@@ -34,7 +34,7 @@ class TokenizerCollection implements \Spameri\ElasticQuery\Collection\SimpleColl
 
 
 	public function remove(
-		string $key
+		string $key,
 	): bool
 	{
 		if (isset($this->collection[$key])) {
@@ -48,8 +48,8 @@ class TokenizerCollection implements \Spameri\ElasticQuery\Collection\SimpleColl
 
 
 	public function get(
-		string $key
-	): ?\Spameri\ElasticQuery\Mapping\TokenizerInterface
+		string $key,
+	): \Spameri\ElasticQuery\Mapping\TokenizerInterface|null
 	{
 		if (isset($this->collection[$key])) {
 			return $this->collection[$key];
@@ -60,7 +60,7 @@ class TokenizerCollection implements \Spameri\ElasticQuery\Collection\SimpleColl
 
 
 	public function isValue(
-		string $key
+		string $key,
 	): bool
 	{
 		if (isset($this->collection[$key])) {

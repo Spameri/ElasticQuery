@@ -9,7 +9,7 @@ class TopHits implements \Spameri\ElasticQuery\Aggregation\LeafAggregationInterf
 
 
 	public function __construct(
-		int $size
+		int $size,
 	) {
 		$this->size = $size;
 	}

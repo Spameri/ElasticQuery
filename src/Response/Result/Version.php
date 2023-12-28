@@ -70,14 +70,14 @@ class Version
 
 	public function __construct(
 		string $number
-		, ?string $buildFlavor
-		, ?string $buildType
+		, string|null $buildFlavor
+		, string|null $buildType
 		, string $buildHash
-		, ?string $buildDate
+		, string|null $buildDate
 		, bool $buildSnapshot
 		, string $luceneVersion
-		, ?string $minimumWireCompatibility
-		, ?string $minimumIndexCompatibility
+		, string|null $minimumWireCompatibility
+		, string|null $minimumIndexCompatibility,
 	)
 	{
 		$this->number = $number;
@@ -94,7 +94,7 @@ class Version
 
 
 	public function convertVersionNumber(
-		string $number
+		string $number,
 	): int
 	{
 		$exploded = \explode('.', $number);
@@ -125,13 +125,13 @@ class Version
 	}
 
 
-	public function buildFlavor(): ?string
+	public function buildFlavor(): string|null
 	{
 		return $this->buildFlavor;
 	}
 
 
-	public function buildType(): ?string
+	public function buildType(): string|null
 	{
 		return $this->buildType;
 	}
@@ -143,7 +143,7 @@ class Version
 	}
 
 
-	public function buildDate(): ?string
+	public function buildDate(): string|null
 	{
 		return $this->buildDate;
 	}
@@ -161,13 +161,13 @@ class Version
 	}
 
 
-	public function minimumWireCompatibility(): ?string
+	public function minimumWireCompatibility(): string|null
 	{
 		return $this->minimumWireCompatibility;
 	}
 
 
-	public function minimumIndexCompatibility(): ?string
+	public function minimumIndexCompatibility(): string|null
 	{
 		return $this->minimumIndexCompatibility;
 	}

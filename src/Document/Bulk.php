@@ -13,7 +13,7 @@ class Bulk implements \Spameri\ElasticQuery\Entity\ArrayInterface
 
 
 	public function __construct(
-		array $data
+		array $data,
 	)
 	{
 		$this->data = $data;

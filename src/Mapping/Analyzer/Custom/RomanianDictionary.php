@@ -18,7 +18,7 @@ class RomanianDictionary extends \Spameri\ElasticQuery\Mapping\Analyzer\Abstract
 		if ( ! $this->filter instanceof \Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection) {
 			$this->filter = new \Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection();
 			$this->filter->add(
-				new \Spameri\ElasticQuery\Mapping\Filter\Lowercase()
+				new \Spameri\ElasticQuery\Mapping\Filter\Lowercase(),
 			);
 
 			if ($this->stopFilter) {
@@ -26,14 +26,14 @@ class RomanianDictionary extends \Spameri\ElasticQuery\Mapping\Analyzer\Abstract
 
 			} else {
 				$this->filter->add(
-					new \Spameri\ElasticQuery\Mapping\Filter\Stop\Romanian()
+					new \Spameri\ElasticQuery\Mapping\Filter\Stop\Romanian(),
 				);
 			}
 			$this->filter->add(
-				new \Spameri\ElasticQuery\Mapping\Filter\Hunspell\Romanian()
+				new \Spameri\ElasticQuery\Mapping\Filter\Hunspell\Romanian(),
 			);
 			$this->filter->add(
-				new \Spameri\ElasticQuery\Mapping\Filter\Lowercase()
+				new \Spameri\ElasticQuery\Mapping\Filter\Lowercase(),
 			);
 
 			if ($this->stopFilter) {
@@ -41,14 +41,14 @@ class RomanianDictionary extends \Spameri\ElasticQuery\Mapping\Analyzer\Abstract
 
 			} else {
 				$this->filter->add(
-					new \Spameri\ElasticQuery\Mapping\Filter\Stop\Romanian()
+					new \Spameri\ElasticQuery\Mapping\Filter\Stop\Romanian(),
 				);
 			}
 			$this->filter->add(
-				new \Spameri\ElasticQuery\Mapping\Filter\Unique()
+				new \Spameri\ElasticQuery\Mapping\Filter\Unique(),
 			);
 			$this->filter->add(
-				new \Spameri\ElasticQuery\Mapping\Filter\ASCIIFolding()
+				new \Spameri\ElasticQuery\Mapping\Filter\ASCIIFolding(),
 			);
 		}
 

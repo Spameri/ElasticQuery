@@ -10,12 +10,12 @@ interface SimpleCollectionInterface extends \IteratorAggregate
 	 * @phpstan-param mixed $item
 	 */
 	public function add(
-		$item
+		$item,
 	): void;
 
 
 	public function remove(
-		string $key
+		string $key,
 	): bool;
 
 
@@ -23,12 +23,12 @@ interface SimpleCollectionInterface extends \IteratorAggregate
 	 * @phpstan-return mixed
 	 */
 	public function get(
-		string $key
+		string $key,
 	);
 
 
 	public function isValue(
-		string $key
+		string $key,
 	): bool;
 
 

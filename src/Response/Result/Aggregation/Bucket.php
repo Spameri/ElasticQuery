@@ -37,9 +37,9 @@ class Bucket
 	public function __construct(
 		string $key
 		, int $docCount
-		, ?int $position = NULL
+		, int|null $position = NULL
 		, $from = NULL
-		, $to = NULL
+		, $to = NULL,
 	)
 	{
 		$this->key = $key;
@@ -62,7 +62,7 @@ class Bucket
 	}
 
 
-	public function position(): ?int
+	public function position(): int|null
 	{
 		return $this->position;
 	}

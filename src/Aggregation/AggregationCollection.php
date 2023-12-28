@@ -18,8 +18,8 @@ class AggregationCollection implements LeafAggregationInterface
 
 
 	public function __construct(
-		?\Spameri\ElasticQuery\Filter\FilterCollection $filter = NULL
-		, \Spameri\ElasticQuery\Aggregation\LeafAggregationCollection ... $aggregations
+		\Spameri\ElasticQuery\Filter\FilterCollection|null $filter = NULL
+		, \Spameri\ElasticQuery\Aggregation\LeafAggregationCollection ... $aggregations,
 	)
 	{
 		if ( ! $filter) {
@@ -44,7 +44,7 @@ class AggregationCollection implements LeafAggregationInterface
 
 
 	public function add(
-		LeafAggregationCollection $leafAggregation
+		LeafAggregationCollection $leafAggregation,
 	): void
 	{
 		$this->aggregations[$leafAggregation->key()] = $leafAggregation;
@@ -58,7 +58,7 @@ class AggregationCollection implements LeafAggregationInterface
 
 
 	public function isKey(
-		string $key
+		string $key,
 	): bool
 	{
 		return \array_key_exists($key, \array_map('\strval', \array_keys($this->aggregations)));

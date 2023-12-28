@@ -33,7 +33,7 @@ class Pattern implements \Spameri\ElasticQuery\Mapping\AnalyzerInterface
 		string $pattern,
 		array $stopWords = [],
 		bool $lowerCase = TRUE,
-		string $flags = NULL
+		string $flags = NULL,
 	)
 	{
 		$this->pattern = $pattern;

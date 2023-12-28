@@ -33,11 +33,11 @@ class Document implements \Spameri\ElasticQuery\Entity\ArrayInterface
 
 
 	public function __construct(
-		?string $index
-		, ?\Spameri\ElasticQuery\Document\BodyInterface $body = NULL
-		, ?string $type = NULL
-		, ?string $id = NULL
-		, array $options = []
+		string|null $index
+		, \Spameri\ElasticQuery\Document\BodyInterface|null $body = NULL
+		, string|null $type = NULL
+		, string|null $id = NULL
+		, array $options = [],
 	)
 	{
 		$this->index = $index;
@@ -48,13 +48,13 @@ class Document implements \Spameri\ElasticQuery\Entity\ArrayInterface
 	}
 
 
-	public function index(): ?string
+	public function index(): string|null
 	{
 		return $this->index;
 	}
 
 
-	public function type(): ?string
+	public function type(): string|null
 	{
 		return $this->type;
 	}

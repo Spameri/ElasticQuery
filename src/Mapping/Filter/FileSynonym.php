@@ -15,7 +15,7 @@ class FileSynonym implements \Spameri\ElasticQuery\Mapping\FilterInterface
 
 
 	public function __construct(
-		string $path
+		string $path,
 	)
 	{
 		$this->path = $path;

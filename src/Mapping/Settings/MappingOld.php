@@ -18,7 +18,7 @@ class MappingOld implements \Spameri\ElasticQuery\Entity\ArrayInterface
 
 	public function __construct(
 		string $indexName,
-		?\Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldCollection $fields = NULL
+		\Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldCollection|null $fields = NULL,
 	)
 	{
 		$this->indexName = $indexName;

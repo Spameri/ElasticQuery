@@ -24,7 +24,7 @@ class Term implements LeafQueryInterface
 	public function __construct(
 		string $field
 		, $query
-		, float $boost = 1.0
+		, float $boost = 1.0,
 	)
 	{
 		$this->field = $field;

@@ -9,7 +9,7 @@ class Nested implements \Spameri\ElasticQuery\Aggregation\LeafAggregationInterfa
 
 
 	public function __construct(
-		string $path
+		string $path,
 	) {
 		$this->path = $path;
 	}

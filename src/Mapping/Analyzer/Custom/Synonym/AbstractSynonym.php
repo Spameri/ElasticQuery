@@ -29,9 +29,9 @@ abstract class AbstractSynonym
 
 
 	public function __construct(
-		?\Spameri\ElasticQuery\Mapping\Filter\AbstractStop $stopFilter = NULL,
+		\Spameri\ElasticQuery\Mapping\Filter\AbstractStop|null $stopFilter = NULL,
 		array $synonyms= [],
-		?string $filePath = NULL
+		string|null $filePath = NULL,
 	)
 	{
 		$this->stopFilter = $stopFilter;
