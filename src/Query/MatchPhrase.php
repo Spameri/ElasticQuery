@@ -41,11 +41,11 @@ class MatchPhrase implements LeafQueryInterface
 	 * @param string|int|bool|null $query
 	 */
 	public function __construct(
-		string $field
-		, $query
-		, float $boost = 1.0
-		, int $slop = 0
-		, string|null $analyzer = NULL,
+		string $field,
+		$query,
+		float $boost = 1.0,
+		int $slop = 0,
+		string|null $analyzer = NULL,
 	)
 	{
 		$this->field = $field;

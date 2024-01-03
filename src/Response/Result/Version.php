@@ -71,15 +71,15 @@ class Version
 
 
 	public function __construct(
-		string $number
-		, string|null $buildFlavor
-		, string|null $buildType
-		, string $buildHash
-		, string|null $buildDate
-		, bool $buildSnapshot
-		, string $luceneVersion
-		, string|null $minimumWireCompatibility
-		, string|null $minimumIndexCompatibility,
+		string $number,
+		string|null $buildFlavor,
+		string|null $buildType,
+		string $buildHash,
+		string|null $buildDate,
+		bool $buildSnapshot,
+		string $luceneVersion,
+		string|null $minimumWireCompatibility,
+		string|null $minimumIndexCompatibility,
 	)
 	{
 		$this->number = $number;

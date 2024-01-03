@@ -35,11 +35,11 @@ class Document implements \Spameri\ElasticQuery\Entity\ArrayInterface
 
 
 	public function __construct(
-		string|null $index
-		, \Spameri\ElasticQuery\Document\BodyInterface|null $body = NULL
-		, string|null $type = NULL
-		, string|null $id = NULL
-		, array $options = [],
+		string|null $index,
+		\Spameri\ElasticQuery\Document\BodyInterface|null $body = NULL,
+		string|null $type = NULL,
+		string|null $id = NULL,
+		array $options = [],
 	)
 	{
 		$this->index = $index;

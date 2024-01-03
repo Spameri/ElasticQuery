@@ -37,11 +37,11 @@ class Bucket
 	 * @phpstan-param int|float|null $to
 	 */
 	public function __construct(
-		string $key
-		, int $docCount
-		, int|null $position = NULL
-		, $from = NULL
-		, $to = NULL,
+		string $key,
+		int $docCount,
+		int|null $position = NULL,
+		$from = NULL,
+		$to = NULL,
 	)
 	{
 		$this->key = $key;
