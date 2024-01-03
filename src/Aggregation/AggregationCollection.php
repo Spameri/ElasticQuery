@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types = 1);
 
 namespace Spameri\ElasticQuery\Aggregation;
 
@@ -18,8 +20,8 @@ class AggregationCollection implements LeafAggregationInterface
 
 
 	public function __construct(
-		\Spameri\ElasticQuery\Filter\FilterCollection|null $filter = NULL
-		, \Spameri\ElasticQuery\Aggregation\LeafAggregationCollection ... $aggregations,
+		\Spameri\ElasticQuery\Filter\FilterCollection|null $filter = NULL,
+		\Spameri\ElasticQuery\Aggregation\LeafAggregationCollection ... $aggregations,
 	)
 	{
 		if ( ! $filter) {

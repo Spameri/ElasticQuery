@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types = 1);
 
 namespace Spameri\ElasticQuery\Response;
 
@@ -17,8 +19,8 @@ class ResultSingle implements ResultInterface
 
 
 	public function __construct(
-		\Spameri\ElasticQuery\Response\Result\Hit $hit
-		, StatsSingle $stats,
+		\Spameri\ElasticQuery\Response\Result\Hit $hit,
+		StatsSingle $stats,
 	)
 	{
 		$this->hit = $hit;

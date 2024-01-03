@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types = 1);
 
 namespace Spameri\ElasticQuery\Response\Result;
 
@@ -58,16 +60,16 @@ class BulkAction
 
 
 	public function __construct(
-		string $action
-		, string $index
-		, string $type
-		, string $id
-		, int $version
-		, string $result
-		, \Spameri\ElasticQuery\Response\Shards $shards
-		, int $status
-		, int $seqNo
-		, int $primaryTerm,
+		string $action,
+		string $index,
+		string $type,
+		string $id,
+		int $version,
+		string $result,
+		\Spameri\ElasticQuery\Response\Shards $shards,
+		int $status,
+		int $seqNo,
+		int $primaryTerm,
 	)
 	{
 		$this->action = $action;

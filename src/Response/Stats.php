@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types = 1);
 
 namespace Spameri\ElasticQuery\Response;
 
@@ -21,9 +23,9 @@ class Stats
 
 
 	public function __construct(
-		int $took
-		, bool $timedOut
-		, int $total,
+		int $took,
+		bool $timedOut,
+		int $total,
 	)
 	{
 		$this->took = $took;

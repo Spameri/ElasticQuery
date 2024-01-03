@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types = 1);
 
 namespace Spameri\ElasticQuery\Query;
 
@@ -44,12 +46,12 @@ class Fuzzy implements LeafQueryInterface
 	 * @param string|int|bool|null $query
 	 */
 	public function __construct(
-		string $field
-		, $query
-		, float $boost = 1.0
-		, int $fuzziness = 2
-		, int $prefixLength = 0
-		, int $maxExpansion = 100,
+		string $field,
+		$query,
+		float $boost = 1.0,
+		int $fuzziness = 2,
+		int $prefixLength = 0,
+		int $maxExpansion = 100,
 	)
 	{
 		$this->field = $field;

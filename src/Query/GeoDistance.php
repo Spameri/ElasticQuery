@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types = 1);
 
 namespace Spameri\ElasticQuery\Query;
 
@@ -26,9 +28,9 @@ class GeoDistance implements LeafQueryInterface
 
 
 	public function __construct(
-		string $field
-		, float $lat
-		, float $lon,
+		string $field,
+		float $lat,
+		float $lon,
 	)
 	{
 

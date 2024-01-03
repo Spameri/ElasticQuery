@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types = 1);
 
 namespace Spameri\ElasticQuery\Response;
 
@@ -18,8 +20,8 @@ class ResultBulk implements ResultInterface
 
 
 	public function __construct(
-		Stats $stats
-		, \Spameri\ElasticQuery\Response\Result\BulkActionCollection $bulkActionCollection,
+		Stats $stats,
+		\Spameri\ElasticQuery\Response\Result\BulkActionCollection $bulkActionCollection,
 	)
 	{
 		$this->stats = $stats;

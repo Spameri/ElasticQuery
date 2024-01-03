@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types = 1);
 
 namespace Spameri\ElasticQuery\Options;
 
@@ -31,9 +33,9 @@ class Sort implements \Spameri\ElasticQuery\Entity\EntityInterface
 
 
 	public function __construct(
-		string $field
-		, string $type = self::DESC
-		, string $missing = self::MISSING_LAST,
+		string $field,
+		string $type = self::DESC,
+		string $missing = self::MISSING_LAST,
 	)
 	{
 		if ( ! \in_array($type, [self::ASC, self::DESC], TRUE)) {

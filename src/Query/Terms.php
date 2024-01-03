@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types = 1);
 
 namespace Spameri\ElasticQuery\Query;
 
@@ -20,9 +22,9 @@ class Terms implements LeafQueryInterface
 
 
 	public function __construct(
-		string $field
-		, array $query
-		, float $boost = 1.0,
+		string $field,
+		array $query,
+		float $boost = 1.0,
 	)
 	{
 		if ( ! \count($query)) {

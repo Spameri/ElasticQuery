@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types = 1);
 
 namespace Spameri\ElasticQuery\Response\Result;
 
@@ -25,10 +27,10 @@ class Aggregation
 
 
 	public function __construct(
-		string $name
-		, int $position
-		, \Spameri\ElasticQuery\Response\Result\Aggregation\BucketCollection $bucketCollection
-		, \Spameri\ElasticQuery\Response\Result\AggregationCollection $subAggregations,
+		string $name,
+		int $position,
+		\Spameri\ElasticQuery\Response\Result\Aggregation\BucketCollection $bucketCollection,
+		\Spameri\ElasticQuery\Response\Result\AggregationCollection $subAggregations,
 	)
 	{
 		$this->name = $name;

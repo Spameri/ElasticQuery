@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types = 1);
 
 namespace Spameri\ElasticQuery\Response;
 
@@ -105,8 +107,8 @@ class ResultMapper
 
 
 	private function mapHit(
-		array $hit
-		, int $position,
+		array $hit,
+		int $position,
 	): \Spameri\ElasticQuery\Response\Result\Hit
 	{
 		return new \Spameri\ElasticQuery\Response\Result\Hit(
@@ -177,9 +179,9 @@ class ResultMapper
 
 
 	private function mapAggregation(
-		string $name
-		, int $position
-		, array $aggregationArray,
+		string $name,
+		int $position,
+		array $aggregationArray,
 	): \Spameri\ElasticQuery\Response\Result\Aggregation
 	{
 		$i = 0;
@@ -243,8 +245,8 @@ class ResultMapper
 
 
 	private function mapBucket(
-		int|null $bucketPosition
-		, array $bucketArray,
+		int|null $bucketPosition,
+		array $bucketArray,
 	): \Spameri\ElasticQuery\Response\Result\Aggregation\Bucket
 	{
 		return new \Spameri\ElasticQuery\Response\Result\Aggregation\Bucket(

@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types = 1);
 
 namespace Spameri\ElasticQuery\Response;
 
@@ -25,10 +27,10 @@ class Shards
 
 
 	public function __construct(
-		int $total
-		, int $successful
-		, int $skipped
-		, int $failed,
+		int $total,
+		int $successful,
+		int $skipped,
+		int $failed,
 	)
 	{
 		$this->total = $total;

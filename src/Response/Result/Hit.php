@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types = 1);
 
 namespace Spameri\ElasticQuery\Response\Result;
 
@@ -37,13 +39,13 @@ class Hit
 
 
 	public function __construct(
-		array $source
-		, int $position
-		, string $index
-		, string $type
-		, string $id
-		, float $score
-		, int $version,
+		array $source,
+		int $position,
+		string $index,
+		string $type,
+		string $id,
+		float $score,
+		int $version,
 	)
 	{
 		$this->source = $source;

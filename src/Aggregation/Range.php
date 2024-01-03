@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types = 1);
 
 namespace Spameri\ElasticQuery\Aggregation;
 
@@ -26,9 +28,9 @@ class Range implements LeafAggregationInterface
 
 
 	public function __construct(
-		string $field
-		, bool $keyed = FALSE
-		, \Spameri\ElasticQuery\Aggregation\RangeValueCollection $rangeValueCollection = NULL,
+		string $field,
+		bool $keyed = FALSE,
+		\Spameri\ElasticQuery\Aggregation\RangeValueCollection $rangeValueCollection = NULL,
 	)
 	{
 		$this->field = $field;

@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types = 1);
 
 namespace Spameri\ElasticQuery\Response;
 
@@ -17,8 +19,8 @@ class StatsSingle
 
 
 	public function __construct(
-		int $version
-		, bool $found,
+		int $version,
+		bool $found,
 	)
 	{
 		$this->version = $version;

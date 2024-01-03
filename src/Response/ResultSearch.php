@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types = 1);
 
 namespace Spameri\ElasticQuery\Response;
 
@@ -28,10 +30,10 @@ class ResultSearch implements ResultInterface
 
 
 	public function __construct(
-		Stats $stats
-		, Shards $shards
-		, \Spameri\ElasticQuery\Response\Result\HitCollection $hitCollection
-		, \Spameri\ElasticQuery\Response\Result\AggregationCollection $aggregationCollection,
+		Stats $stats,
+		Shards $shards,
+		\Spameri\ElasticQuery\Response\Result\HitCollection $hitCollection,
+		\Spameri\ElasticQuery\Response\Result\AggregationCollection $aggregationCollection,
 	)
 	{
 		$this->stats = $stats;

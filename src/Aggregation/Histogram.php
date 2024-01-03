@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types = 1);
 
 namespace Spameri\ElasticQuery\Aggregation;
 
@@ -15,8 +17,8 @@ class Histogram implements LeafAggregationInterface
 
 
 	public function __construct(
-		string $field
-		, int $interval,
+		string $field,
+		int $interval,
 	)
 	{
 		$this->field = $field;
