@@ -10,24 +10,11 @@ namespace Spameri\ElasticQuery\Mapping\Analyzer;
 class Standard implements \Spameri\ElasticQuery\Mapping\AnalyzerInterface
 {
 
-	/**
-	 * @var array
-	 */
-	private $stopWords;
-
-	/**
-	 * @var int
-	 */
-	private $maxTokenLength;
-
-
 	public function __construct(
-		array $stopWords = [],
-		int $maxTokenLength = 5,
+		private array $stopWords = [],
+		private int $maxTokenLength = 5,
 	)
 	{
-		$this->stopWords = $stopWords;
-		$this->maxTokenLength = $maxTokenLength;
 	}
 
 

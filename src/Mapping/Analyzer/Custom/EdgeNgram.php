@@ -9,35 +9,17 @@ class EdgeNgram implements \Spameri\ElasticQuery\Mapping\CustomAnalyzerInterface
 
 	public const NAME = 'customEdgeNgram';
 
-	/**
-	 * @var \Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection
-	 */
-	private $filter;
+	private \Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection $filter;
 
-	/**
-	 * @var int
-	 */
-	private $minGram;
-
-	/**
-	 * @var int
-	 */
-	private $maxGram;
-
-	/**
-	 * @var \Spameri\ElasticQuery\Mapping\Filter\AbstractStop
-	 */
-	private $stopFilter;
+	private \Spameri\ElasticQuery\Mapping\Filter\AbstractStop $stopFilter;
 
 
 	public function __construct(
-		int $minGram = 2,
-		int $maxGram = 6,
+		private int $minGram = 2,
+		private int $maxGram = 6,
 		\Spameri\ElasticQuery\Mapping\Filter\AbstractStop|null $stopFilter = NULL,
 	)
 	{
-		$this->minGram = $minGram;
-		$this->maxGram = $maxGram;
 		if ($stopFilter === NULL) {
 			$stopFilter = new \Spameri\ElasticQuery\Mapping\Filter\Stop\Czech();
 		}

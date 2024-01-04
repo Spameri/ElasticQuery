@@ -8,29 +8,15 @@ class SubFields
 	implements \Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldInterface
 {
 
-	/**
-	 * @var string
-	 */
-	private $name;
-
-	/**
-	 * @var string
-	 */
-	private $type;
-
-	/**
-	 * @var \Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldCollection
-	 */
-	private $fields;
+	private \Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldCollection $fields;
 
 
 	public function __construct(
-		string $name,
-		string $type = \Spameri\ElasticQuery\Mapping\AllowedValues::TYPE_KEYWORD,
+		private string $name,
+		private string $type = \Spameri\ElasticQuery\Mapping\AllowedValues::TYPE_KEYWORD,
 		\Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldCollection|null $fields = NULL,
 	)
 	{
-		$this->name = $name;
 		if ($fields === NULL) {
 			$fields = new \Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldCollection();
 		}
@@ -40,7 +26,6 @@ class SubFields
 				'Not allowed type see \Spameri\ElasticQuery\Mapping\AllowedValues::TYPES',
 			);
 		}
-		$this->type = $type;
 		$this->fields = $fields;
 	}
 

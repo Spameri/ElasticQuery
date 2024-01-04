@@ -9,28 +9,16 @@ class CommonGrams implements \Spameri\ElasticQuery\Mapping\CustomAnalyzerInterfa
 
 	public const NAME = 'customCommonGrams';
 
-	/**
-	 * @var \Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection
-	 */
-	private $filter;
+	private \Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection $filter;
 
-	/**
-	 * @var array<string>
-	 */
-	private $commonGramWords;
-
-	/**
-	 * @var \Spameri\ElasticQuery\Mapping\Filter\AbstractStop
-	 */
-	private $stopFilter;
+	private \Spameri\ElasticQuery\Mapping\Filter\AbstractStop $stopFilter;
 
 
 	public function __construct(
-		array $commonGramWords,
+		private array $commonGramWords,
 		\Spameri\ElasticQuery\Mapping\Filter\AbstractStop|null $stopFilter = NULL,
 	)
 	{
-		$this->commonGramWords = $commonGramWords;
 		if ($stopFilter === NULL) {
 			$stopFilter = new \Spameri\ElasticQuery\Mapping\Filter\Stop\Czech();
 		}

@@ -11,17 +11,10 @@ abstract class AbstractStop implements \Spameri\ElasticQuery\Mapping\FilterInter
 {
 
 
-	/**
-	 * @var array<string>
-	 */
-	private $extraWords;
-
-
 	public function __construct(
-		array $extraWords = [],
+		private array $extraWords = [],
 	)
 	{
-		$this->extraWords = $extraWords;
 	}
 
 

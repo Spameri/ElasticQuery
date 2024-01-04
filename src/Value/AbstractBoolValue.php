@@ -8,17 +8,10 @@ namespace Spameri\ElasticQuery\Value;
 abstract class AbstractBoolValue implements \Spameri\ElasticQuery\Value\ValueInterface
 {
 
-	/**
-	 * @var bool
-	 */
-	private $value;
-
-
 	public function __construct(
-		bool $value,
+		private bool $value,
 	)
 	{
-		$this->value = $value;
 	}
 
 

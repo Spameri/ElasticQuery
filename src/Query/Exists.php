@@ -11,14 +11,10 @@ namespace Spameri\ElasticQuery\Query;
 class Exists implements LeafQueryInterface
 {
 
-	private string $field;
-
-
 	public function __construct(
-		string $field,
+		private string $field,
 	)
 	{
-		$this->field = $field;
 	}
 
 

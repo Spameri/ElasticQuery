@@ -7,10 +7,7 @@ namespace SpameriTests\ElasticQuery;
 class VersionCheck
 {
 
-	/**
-	 * @var \Spameri\ElasticQuery\Response\ResultMapper
-	 */
-	private static $resultMapper;
+	private static \Spameri\ElasticQuery\Response\ResultMapper $resultMapper;
 
 
 	public static function check(): \Spameri\ElasticQuery\Response\ResultVersion

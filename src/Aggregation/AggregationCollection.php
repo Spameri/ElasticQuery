@@ -8,15 +8,12 @@ namespace Spameri\ElasticQuery\Aggregation;
 class AggregationCollection implements LeafAggregationInterface
 {
 
-	/**
-	 * @var \Spameri\ElasticQuery\Filter\FilterCollection
-	 */
-	private $filter;
+	private \Spameri\ElasticQuery\Filter\FilterCollection $filter;
 
 	/**
 	 * @var array<\Spameri\ElasticQuery\Aggregation\LeafAggregationCollection>
 	 */
-	private $aggregations;
+	private array $aggregations;
 
 
 	public function __construct(

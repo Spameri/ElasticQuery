@@ -10,31 +10,12 @@ namespace Spameri\ElasticQuery\Mapping\Analyzer;
 class Fingerprint implements \Spameri\ElasticQuery\Mapping\AnalyzerInterface
 {
 
-	/**
-	 * @var array
-	 */
-	private $stopWords;
-
-	/**
-	 * @var string
-	 */
-	private $separator;
-
-	/**
-	 * @var int
-	 */
-	private $maxOutputSize;
-
-
 	public function __construct(
-		array $stopWords = [],
-		string $separator = ' ',
-		int $maxOutputSize = 255,
+		private array $stopWords = [],
+		private string $separator = ' ',
+		private int $maxOutputSize = 255,
 	)
 	{
-		$this->stopWords = $stopWords;
-		$this->separator = $separator;
-		$this->maxOutputSize = $maxOutputSize;
 	}
 
 

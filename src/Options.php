@@ -8,34 +8,12 @@ namespace Spameri\ElasticQuery;
 class Options
 {
 
-	/**
-	 * @var ?int
-	 */
-	private $size;
-	/**
-	 * @var ?int
-	 */
-	private $from;
-	/**
-	 * @var \Spameri\ElasticQuery\Options\SortCollection
-	 */
-	private $sort;
-	/**
-	 * @var ?float
-	 */
-	private $minScore;
-	/**
-	 * @var bool
-	 */
-	private $includeVersion;
-	/**
-	 * @var string|null
-	 */
-	private $scroll;
-	/**
-	 * @var string|null
-	 */
-	private $scrollId;
+	private ?int $size = NULL;
+	private ?int $from = NULL;
+	private \Spameri\ElasticQuery\Options\SortCollection $sort;
+	private ?float $minScore = NULL;
+	private ?string $scroll = NULL;
+	private ?string $scrollId = NULL;
 
 
 	public function __construct(
@@ -43,7 +21,7 @@ class Options
 		int|null $from = NULL,
 		\Spameri\ElasticQuery\Options\SortCollection|null $sort = NULL,
 		float|null $minScore = NULL,
-		bool $includeVersion = FALSE,
+		private bool $includeVersion = FALSE,
 		string|null $scroll = NULL,
 		string|null $scrollId = NULL,
 	)
@@ -52,7 +30,6 @@ class Options
 		$this->from = $from;
 		$this->sort = $sort ?: new \Spameri\ElasticQuery\Options\SortCollection();
 		$this->minScore = $minScore;
-		$this->includeVersion = $includeVersion;
 		$this->scroll = $scroll;
 		$this->scrollId = $scrollId;
 	}

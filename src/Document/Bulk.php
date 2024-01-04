@@ -8,17 +8,10 @@ namespace Spameri\ElasticQuery\Document;
 class Bulk implements \Spameri\ElasticQuery\Entity\ArrayInterface
 {
 
-	/**
-	 * @var array
-	 */
-	private $data;
-
-
 	public function __construct(
-		array $data,
+		private array $data,
 	)
 	{
-		$this->data = $data;
 	}
 
 

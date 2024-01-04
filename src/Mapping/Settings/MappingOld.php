@@ -7,23 +7,14 @@ namespace Spameri\ElasticQuery\Mapping\Settings;
 class MappingOld implements \Spameri\ElasticQuery\Entity\ArrayInterface
 {
 
-	/**
-	 * @var string
-	 */
-	private $indexName;
-
-	/**
-	 * @var \Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldCollection
-	 */
-	private $fields;
+	private \Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldCollection $fields;
 
 
 	public function __construct(
-		string $indexName,
+		private string $indexName,
 		\Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldCollection|null $fields = NULL,
 	)
 	{
-		$this->indexName = $indexName;
 
 		if ($fields === NULL) {
 			$fields = new \Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldCollection();

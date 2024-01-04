@@ -10,28 +10,15 @@ namespace Spameri\ElasticQuery\Query;
 class Term implements LeafQueryInterface
 {
 
-	private string $field;
-
-	/**
-	 * @var string|int|bool|float
-	 */
-	private $query;
-
-	private float $boost;
-
-
 	/**
 	 * @param string|int|bool|float $query
 	 */
 	public function __construct(
-		string $field,
-		$query,
-		float $boost = 1.0,
+		private string $field,
+		private $query,
+		private float $boost = 1.0,
 	)
 	{
-		$this->field = $field;
-		$this->query = $query;
-		$this->boost = $boost;
 	}
 
 

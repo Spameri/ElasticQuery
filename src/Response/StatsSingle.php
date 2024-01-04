@@ -8,23 +8,11 @@ namespace Spameri\ElasticQuery\Response;
 class StatsSingle
 {
 
-	/**
-	 * @var int
-	 */
-	private $version;
-	/**
-	 * @var bool
-	 */
-	private $found;
-
-
 	public function __construct(
-		int $version,
-		bool $found,
+		private int $version,
+		private bool $found,
 	)
 	{
-		$this->version = $version;
-		$this->found = $found;
 	}
 
 

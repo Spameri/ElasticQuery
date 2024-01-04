@@ -8,34 +8,16 @@ namespace Spameri\ElasticQuery\Response\Result;
 class Aggregation
 {
 
-	/**
-	 * @var string
-	 */
-	private $name;
-	/**
-	 * @var int
-	 */
-	private $position;
-	/**
-	 * @var \Spameri\ElasticQuery\Response\Result\Aggregation\BucketCollection
-	 */
-	private $bucketCollection;
-	/**
-	 * @var \Spameri\ElasticQuery\Response\Result\AggregationCollection
-	 */
-	private $aggregations;
+	private \Spameri\ElasticQuery\Response\Result\AggregationCollection $aggregations;
 
 
 	public function __construct(
-		string $name,
-		int $position,
-		\Spameri\ElasticQuery\Response\Result\Aggregation\BucketCollection $bucketCollection,
+		private string $name,
+		private int $position,
+		private \Spameri\ElasticQuery\Response\Result\Aggregation\BucketCollection $bucketCollection,
 		\Spameri\ElasticQuery\Response\Result\AggregationCollection $subAggregations,
 	)
 	{
-		$this->name = $name;
-		$this->position = $position;
-		$this->bucketCollection = $bucketCollection;
 		$this->aggregations = $subAggregations;
 	}
 

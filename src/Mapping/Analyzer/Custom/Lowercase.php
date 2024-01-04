@@ -7,10 +7,7 @@ namespace Spameri\ElasticQuery\Mapping\Analyzer\Custom;
 class Lowercase implements \Spameri\ElasticQuery\Mapping\CustomAnalyzerInterface, \Spameri\ElasticQuery\Collection\Item
 {
 
-	/**
-	 * @var \Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection
-	 */
-	private $filter;
+	private \Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection $filter;
 
 
 	public function key(): string

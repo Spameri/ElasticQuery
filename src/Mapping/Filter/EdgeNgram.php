@@ -10,24 +10,11 @@ namespace Spameri\ElasticQuery\Mapping\Filter;
 class EdgeNgram implements \Spameri\ElasticQuery\Mapping\FilterInterface
 {
 
-	/**
-	 * @var int
-	 */
-	private $minGram;
-
-	/**
-	 * @var int
-	 */
-	private $maxGram;
-
-
 	public function __construct(
-		int $minGram = 2,
-		int $maxGram = 6,
+		private int $minGram = 2,
+		private int $maxGram = 6,
 	)
 	{
-		$this->minGram = $minGram;
-		$this->maxGram = $maxGram;
 	}
 
 

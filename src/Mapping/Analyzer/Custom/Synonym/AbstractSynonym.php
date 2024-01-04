@@ -9,35 +9,20 @@ abstract class AbstractSynonym
 	\Spameri\ElasticQuery\Collection\Item
 {
 
-	/**
-	 * @var \Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection
-	 */
-	protected $filter;
+	protected \Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection $filter;
 
-	/**
-	 * @var ?\Spameri\ElasticQuery\Mapping\Filter\AbstractStop
-	 */
-	protected $stopFilter;
+	protected ?\Spameri\ElasticQuery\Mapping\Filter\AbstractStop $stopFilter = NULL;
 
-	/**
-	 * @var array
-	 */
-	protected $synonyms;
-
-	/**
-	 * @var ?string
-	 */
-	protected $filePath;
+	protected ?string $filePath = NULL;
 
 
 	public function __construct(
 		\Spameri\ElasticQuery\Mapping\Filter\AbstractStop|null $stopFilter = NULL,
-		array $synonyms= [],
+		protected array $synonyms= [],
 		string|null $filePath = NULL,
 	)
 	{
 		$this->stopFilter = $stopFilter;
-		$this->synonyms = $synonyms;
 		$this->filePath = $filePath;
 	}
 

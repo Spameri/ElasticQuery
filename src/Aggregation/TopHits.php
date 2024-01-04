@@ -7,13 +7,9 @@ namespace Spameri\ElasticQuery\Aggregation;
 class TopHits implements \Spameri\ElasticQuery\Aggregation\LeafAggregationInterface
 {
 
-	private int $size;
-
-
 	public function __construct(
-		int $size,
+		private int $size,
 	) {
-		$this->size = $size;
 	}
 
 

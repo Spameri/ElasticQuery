@@ -10,7 +10,7 @@ class AnalyzerCollection implements \Spameri\ElasticQuery\Collection\SimpleColle
 	/**
 	 * @var array<\Spameri\ElasticQuery\Mapping\AnalyzerInterface>
 	 */
-	protected $collection;
+	protected array $collection;
 
 
 	public function __construct(

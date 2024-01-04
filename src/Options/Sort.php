@@ -16,26 +16,10 @@ class Sort implements \Spameri\ElasticQuery\Entity\EntityInterface
 	public const MISSING_LAST = '_last';
 	public const MISSING_FIRST = '_first';
 
-	/**
-	 * @var string
-	 */
-	private $field;
-
-	/**
-	 * @var string
-	 */
-	private $type;
-
-	/**
-	 * @var string
-	 */
-	private $missing;
-
-
 	public function __construct(
-		string $field,
-		string $type = self::DESC,
-		string $missing = self::MISSING_LAST,
+		private string $field,
+		private string $type = self::DESC,
+		private string $missing = self::MISSING_LAST,
 	)
 	{
 		if ( ! \in_array($type, [self::ASC, self::DESC], TRUE)) {
@@ -49,9 +33,6 @@ class Sort implements \Spameri\ElasticQuery\Entity\EntityInterface
 			);
 		}
 
-		$this->field = $field;
-		$this->type = $type;
-		$this->missing = $missing;
 	}
 
 

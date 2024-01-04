@@ -8,29 +8,12 @@ namespace Spameri\ElasticQuery\Response;
 class Stats
 {
 
-	/**
-	 * @var int
-	 */
-	private $took;
-	/**
-	 * @var bool
-	 */
-	private $timedOut;
-	/**
-	 * @var int
-	 */
-	private $total;
-
-
 	public function __construct(
-		int $took,
-		bool $timedOut,
-		int $total,
+		private int $took,
+		private bool $timedOut,
+		private int $total,
 	)
 	{
-		$this->took = $took;
-		$this->timedOut = $timedOut;
-		$this->total = $total;
 	}
 
 

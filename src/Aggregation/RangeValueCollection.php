@@ -11,7 +11,7 @@ class RangeValueCollection implements \IteratorAggregate
 	/**
 	 * @var array<\Spameri\ElasticQuery\Aggregation\RangeValue>
 	 */
-	private $collection;
+	private array $collection;
 
 
 	public function __construct(

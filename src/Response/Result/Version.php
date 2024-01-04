@@ -28,68 +28,45 @@ class Version
 	public const ELASTIC_VERSION_ID_7 	= 70000;
 	public const ELASTIC_VERSION_ID_8 	= 80000;
 
-	/**
-	 * @var string
-	 */
-	private $number;
-	/**
-	 * @var int
-	 */
-	private $id;
+	private int $id;
 	/**
 	 * @var string|NULL
 	 */
-	private $buildFlavor;
+	private ?string $buildFlavor = NULL;
 	/**
 	 * @var string|NULL
 	 */
-	private $buildType;
-	/**
-	 * @var string
-	 */
-	private $buildHash;
+	private ?string $buildType = NULL;
 	/**
 	 * @var string|NULL
 	 */
-	private $buildDate;
-	/**
-	 * @var bool
-	 */
-	private $buildSnapshot;
-	/**
-	 * @var string
-	 */
-	private $luceneVersion;
+	private ?string $buildDate = NULL;
 	/**
 	 * @var string|NULL
 	 */
-	private $minimumWireCompatibility;
+	private ?string $minimumWireCompatibility = NULL;
 	/**
 	 * @var string|NULL
 	 */
-	private $minimumIndexCompatibility;
+	private ?string $minimumIndexCompatibility = NULL;
 
 
 	public function __construct(
-		string $number,
+		private string $number,
 		string|null $buildFlavor,
 		string|null $buildType,
-		string $buildHash,
+		private string $buildHash,
 		string|null $buildDate,
-		bool $buildSnapshot,
-		string $luceneVersion,
+		private bool $buildSnapshot,
+		private string $luceneVersion,
 		string|null $minimumWireCompatibility,
 		string|null $minimumIndexCompatibility,
 	)
 	{
-		$this->number = $number;
 		$this->id = $this->convertVersionNumber($number);
 		$this->buildFlavor = $buildFlavor;
 		$this->buildType = $buildType;
-		$this->buildHash = $buildHash;
 		$this->buildDate = $buildDate;
-		$this->buildSnapshot = $buildSnapshot;
-		$this->luceneVersion = $luceneVersion;
 		$this->minimumWireCompatibility = $minimumWireCompatibility;
 		$this->minimumIndexCompatibility = $minimumIndexCompatibility;
 	}

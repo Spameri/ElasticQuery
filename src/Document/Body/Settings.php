@@ -8,23 +8,11 @@ namespace Spameri\ElasticQuery\Document\Body;
 class Settings implements \Spameri\ElasticQuery\Document\BodyInterface
 {
 
-	/**
-	 * @var \Spameri\ElasticQuery\Mapping\Settings\Analysis\AnalyzerCollection
-	 */
-	private $analyzer;
-	/**
-	 * @var \Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection
-	 */
-	private $filter;
-
-
 	public function __construct(
-		\Spameri\ElasticQuery\Mapping\Settings\Analysis\AnalyzerCollection $analyzer,
-		\Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection $filter,
+		private \Spameri\ElasticQuery\Mapping\Settings\Analysis\AnalyzerCollection $analyzer,
+		private \Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection $filter,
 	)
 	{
-		$this->analyzer = $analyzer;
-		$this->filter = $filter;
 	}
 
 

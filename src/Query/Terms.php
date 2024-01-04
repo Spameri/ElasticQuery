@@ -11,20 +11,10 @@ namespace Spameri\ElasticQuery\Query;
 class Terms implements LeafQueryInterface
 {
 
-	private string $field;
-
-	/**
-	 * @var array<string|int|bool|float>
-	 */
-	private array $query;
-
-	private float $boost;
-
-
 	public function __construct(
-		string $field,
-		array $query,
-		float $boost = 1.0,
+		private string $field,
+		private array $query,
+		private float $boost = 1.0,
 	)
 	{
 		if ( ! \count($query)) {
@@ -33,9 +23,6 @@ class Terms implements LeafQueryInterface
 			);
 		}
 
-		$this->field = $field;
-		$this->query = $query;
-		$this->boost = $boost;
 	}
 
 

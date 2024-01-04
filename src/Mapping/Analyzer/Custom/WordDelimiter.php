@@ -9,15 +9,9 @@ class WordDelimiter implements \Spameri\ElasticQuery\Mapping\CustomAnalyzerInter
 
 	public const NAME = 'customWordDelimiter';
 
-	/**
-	 * @var \Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection
-	 */
-	private $filter;
+	private \Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection $filter;
 
-	/**
-	 * @var \Spameri\ElasticQuery\Mapping\Filter\AbstractStop
-	 */
-	private $stopFilter;
+	private \Spameri\ElasticQuery\Mapping\Filter\AbstractStop $stopFilter;
 
 
 	public function __construct(

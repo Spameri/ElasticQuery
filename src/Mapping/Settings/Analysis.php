@@ -7,20 +7,11 @@ namespace Spameri\ElasticQuery\Mapping\Settings;
 class Analysis implements \Spameri\ElasticQuery\Entity\ArrayInterface
 {
 
-	/**
-	 * @var \Spameri\ElasticQuery\Mapping\Settings\Analysis\AnalyzerCollection
-	 */
-	private $analyzer;
+	private \Spameri\ElasticQuery\Mapping\Settings\Analysis\AnalyzerCollection $analyzer;
 
-	/**
-	 * @var \Spameri\ElasticQuery\Mapping\Settings\Analysis\TokenizerCollection
-	 */
-	private $tokenizer;
+	private \Spameri\ElasticQuery\Mapping\Settings\Analysis\TokenizerCollection $tokenizer;
 
-	/**
-	 * @var \Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection
-	 */
-	private $filter;
+	private \Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection $filter;
 
 
 	public function __construct(

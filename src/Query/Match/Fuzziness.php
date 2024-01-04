@@ -13,14 +13,8 @@ class Fuzziness
 
 	public const AUTO = 'AUTO';
 
-	/**
-	 * @var string
-	 */
-	private $fuzziness;
-
-
 	public function __construct(
-		string $fuzziness,
+		private string $fuzziness,
 	)
 	{
 		if ( ! (\strpos($fuzziness, self::AUTO) === 0 || \is_numeric($fuzziness))) {
@@ -29,7 +23,6 @@ class Fuzziness
 			);
 		}
 
-		$this->fuzziness = $fuzziness;
 	}
 
 

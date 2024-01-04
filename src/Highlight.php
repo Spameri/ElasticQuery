@@ -7,21 +7,11 @@ namespace Spameri\ElasticQuery;
 class Highlight implements \Spameri\ElasticQuery\Entity\ArrayInterface
 {
 
-	private array $preTags;
-
-	private array $postTags;
-
-	private array $fields;
-
-
 	public function __construct(
-		array $preTags,
-		array $postTags,
-		array $fields,
+		private array $preTags,
+		private array $postTags,
+		private array $fields,
 	) {
-		$this->preTags = $preTags;
-		$this->postTags = $postTags;
-		$this->fields = $fields;
 	}
 
 

@@ -18,25 +18,12 @@ class FieldValueFactor implements \Spameri\ElasticQuery\FunctionScore\FunctionSc
 	public const MODIFIER_SQRT = 'sqrt';
 	public const MODIFIER_RECIPROCAL = 'reciprocal';
 
-	private string $field;
-
-	private float $factor;
-
-	private string $modifier;
-
-	private float $missing;
-
-
 	public function __construct(
-		string $field,
-		float $factor = 1.0,
-		string $modifier = self::MODIFIER_NONE,
-		float $missing = 1.0,
+		private string $field,
+		private float $factor = 1.0,
+		private string $modifier = self::MODIFIER_NONE,
+		private float $missing = 1.0,
 	) {
-		$this->field = $field;
-		$this->factor = $factor;
-		$this->modifier = $modifier;
-		$this->missing = $missing;
 	}
 
 

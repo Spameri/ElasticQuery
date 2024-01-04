@@ -8,32 +8,17 @@ namespace Spameri\ElasticQuery\Query;
 class QueryCollection implements LeafQueryInterface
 {
 
-	/**
-	 * @var \Spameri\ElasticQuery\Query\MustCollection
-	 */
-	private $mustCollection;
+	private \Spameri\ElasticQuery\Query\MustCollection $mustCollection;
 
-	/**
-	 * @var \Spameri\ElasticQuery\Query\ShouldCollection
-	 */
-	private $shouldCollection;
+	private \Spameri\ElasticQuery\Query\ShouldCollection $shouldCollection;
 
-	/**
-	 * @var \Spameri\ElasticQuery\Query\MustNotCollection
-	 */
-	private $mustNotCollection;
-
-	/**
-	 * @var int|string|null
-	 */
-	private $key;
-
+	private \Spameri\ElasticQuery\Query\MustNotCollection $mustNotCollection;
 
 	/**
 	 * @param int|string|null $key
 	 */
 	public function __construct(
-		$key = NULL,
+		private $key = NULL,
 		\Spameri\ElasticQuery\Query\MustCollection|null $mustCollection = NULL,
 		\Spameri\ElasticQuery\Query\ShouldCollection|null $shouldCollection = NULL,
 		\Spameri\ElasticQuery\Query\MustNotCollection|null $mustNotCollection = NULL,
@@ -54,7 +39,6 @@ class QueryCollection implements LeafQueryInterface
 		$this->mustCollection = $mustCollection;
 		$this->shouldCollection = $shouldCollection;
 		$this->mustNotCollection = $mustNotCollection;
-		$this->key = $key;
 	}
 
 

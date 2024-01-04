@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types = 1);
 
 namespace Spameri\ElasticQuery\Response;
 
@@ -6,41 +8,14 @@ namespace Spameri\ElasticQuery\Response;
 class ResultVersion implements ResultInterface
 {
 
-	/**
-	 * @var string
-	 */
-	private $name;
-	/**
-	 * @var string
-	 */
-	private $clusterName;
-	/**
-	 * @var string
-	 */
-	private $clusterUUID;
-	/**
-	 * @var \Spameri\ElasticQuery\Response\Result\Version
-	 */
-	private $version;
-	/**
-	 * @var string
-	 */
-	private $tagLine;
-
-
 	public function __construct(
-		string $name,
-		string $clusterName,
-		string $clusterUUID,
-		\Spameri\ElasticQuery\Response\Result\Version $version,
-		string $tagLine,
+		private string $name,
+		private string $clusterName,
+		private string $clusterUUID,
+		private \Spameri\ElasticQuery\Response\Result\Version $version,
+		private string $tagLine,
 	)
 	{
-		$this->name = $name;
-		$this->clusterName = $clusterName;
-		$this->clusterUUID = $clusterUUID;
-		$this->version = $version;
-		$this->tagLine = $tagLine;
 	}
 
 

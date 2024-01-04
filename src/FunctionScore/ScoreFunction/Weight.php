@@ -7,17 +7,10 @@ namespace Spameri\ElasticQuery\FunctionScore\ScoreFunction;
 class Weight implements \Spameri\ElasticQuery\FunctionScore\FunctionScoreInterface
 {
 
-	private float $weight;
-
-	private \Spameri\ElasticQuery\Query\LeafQueryInterface $leafQuery;
-
-
 	public function __construct(
-		float $weight,
-		\Spameri\ElasticQuery\Query\LeafQueryInterface $leafQuery,
+		private float $weight,
+		private \Spameri\ElasticQuery\Query\LeafQueryInterface $leafQuery,
 	) {
-		$this->weight = $weight;
-		$this->leafQuery = $leafQuery;
 	}
 
 

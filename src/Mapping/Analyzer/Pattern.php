@@ -10,38 +10,13 @@ namespace Spameri\ElasticQuery\Mapping\Analyzer;
 class Pattern implements \Spameri\ElasticQuery\Mapping\AnalyzerInterface
 {
 
-	/**
-	 * @var string
-	 */
-	private $pattern;
-
-	/**
-	 * @var array
-	 */
-	private $stopWords;
-
-	/**
-	 * @var bool
-	 */
-	private $lowerCase;
-
-	/**
-	 * @var string
-	 */
-	private $flags;
-
-
 	public function __construct(
-		string $pattern,
-		array $stopWords = [],
-		bool $lowerCase = TRUE,
-		string $flags = NULL,
+		private string $pattern,
+		private array $stopWords = [],
+		private bool $lowerCase = TRUE,
+		private string $flags = NULL,
 	)
 	{
-		$this->pattern = $pattern;
-		$this->stopWords = $stopWords;
-		$this->lowerCase = $lowerCase;
-		$this->flags = $flags;
 	}
 
 

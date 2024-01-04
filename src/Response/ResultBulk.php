@@ -8,24 +8,14 @@ namespace Spameri\ElasticQuery\Response;
 class ResultBulk implements ResultInterface
 {
 
-	/**
-	 * @var \Spameri\ElasticQuery\Response\Stats
-	 */
-	private $stats;
-
-	/**
-	 * @var \Spameri\ElasticQuery\Response\Result\BulkActionCollection
-	 */
-	private $bulkActionCollection;
-
+	private \Spameri\ElasticQuery\Response\Stats $stats;
 
 	public function __construct(
 		Stats $stats,
-		\Spameri\ElasticQuery\Response\Result\BulkActionCollection $bulkActionCollection,
+		private \Spameri\ElasticQuery\Response\Result\BulkActionCollection $bulkActionCollection,
 	)
 	{
 		$this->stats = $stats;
-		$this->bulkActionCollection = $bulkActionCollection;
 	}
 
 

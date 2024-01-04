@@ -8,17 +8,10 @@ namespace Spameri\ElasticQuery\Value;
 abstract class AbstractNumberValue implements \Spameri\ElasticQuery\Value\ValueInterface
 {
 
-	/**
-	 * @var int
-	 */
-	private $value;
-
-
 	public function __construct(
-		int $value,
+		private int $value,
 	)
 	{
-		$this->value = $value;
 	}
 
 

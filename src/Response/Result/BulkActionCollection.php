@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types = 1);
 
 namespace Spameri\ElasticQuery\Response\Result;
 
@@ -7,9 +9,15 @@ class BulkActionCollection implements \IteratorAggregate
 {
 
 	/**
+
+
+	 *
 	 * @var array<\Spameri\ElasticQuery\Response\Result\BulkAction>
+	
+
+
 	 */
-	private $bulkActions;
+	private array $bulkActions;
 
 
 	public function __construct(

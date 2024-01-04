@@ -8,53 +8,16 @@ namespace Spameri\ElasticQuery\Response\Result;
 class Hit
 {
 
-	/**
-	 * @var array
-	 */
-	private $source;
-	/**
-	 * @var int
-	 */
-	private $position;
-	/**
-	 * @var string
-	 */
-	private $index;
-	/**
-	 * @var string
-	 */
-	private $type;
-	/**
-	 * @var string
-	 */
-	private $id;
-	/**
-	 * @var float
-	 */
-	private $score;
-	/**
-	 * @var int
-	 */
-	private $version;
-
-
 	public function __construct(
-		array $source,
-		int $position,
-		string $index,
-		string $type,
-		string $id,
-		float $score,
-		int $version,
+		private array $source,
+		private int $position,
+		private string $index,
+		private string $type,
+		private string $id,
+		private float $score,
+		private int $version,
 	)
 	{
-		$this->source = $source;
-		$this->position = $position;
-		$this->index = $index;
-		$this->type = $type;
-		$this->id = $id;
-		$this->score = $score;
-		$this->version = $version;
 	}
 
 

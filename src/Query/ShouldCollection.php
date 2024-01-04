@@ -11,7 +11,7 @@ class ShouldCollection implements \Spameri\ElasticQuery\Collection\QueryCollecti
 	/**
 	 * @var array<\Spameri\ElasticQuery\Query\LeafQueryInterface>
 	 */
-	private $collection;
+	private array $collection;
 
 
 	public function __construct(

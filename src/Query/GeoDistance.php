@@ -11,32 +11,13 @@ namespace Spameri\ElasticQuery\Query;
 class GeoDistance implements LeafQueryInterface
 {
 
-	/**
-	 * @var string
-	 */
-	private $field;
-
-	/**
-	 * @var float
-	 */
-	private $lat;
-
-	/**
-	 * @var float
-	 */
-	private $lon;
-
-
 	public function __construct(
-		string $field,
-		float $lat,
-		float $lon,
+		private string $field,
+		private float $lat,
+		private float $lon,
 	)
 	{
 
-		$this->field = $field;
-		$this->lat = $lat;
-		$this->lon = $lon;
 	}
 
 

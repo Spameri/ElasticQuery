@@ -10,7 +10,7 @@ class AliasCollection implements \Spameri\ElasticQuery\Collection\SimpleCollecti
 	/**
 	 * @var array<\Spameri\ElasticQuery\Mapping\Settings\Alias>
 	 */
-	protected $collection;
+	protected array $collection;
 
 
 	public function __construct(

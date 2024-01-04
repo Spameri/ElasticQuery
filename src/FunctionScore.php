@@ -16,15 +16,11 @@ class FunctionScore
 
 	private \Spameri\ElasticQuery\FunctionScore\FunctionScoreCollection $function;
 
-	private string|null $scoreMode;
-
-
 	public function __construct(
 		\Spameri\ElasticQuery\FunctionScore\FunctionScoreCollection|null $function = NULL,
-		string|null $scoreMode = NULL,
+		private string|null $scoreMode = NULL,
 	) {
 		$this->function = $function ?? new \Spameri\ElasticQuery\FunctionScore\FunctionScoreCollection();
-		$this->scoreMode = $scoreMode;
 	}
 
 

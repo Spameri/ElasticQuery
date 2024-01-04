@@ -7,38 +7,25 @@ namespace Spameri\ElasticQuery\Mapping\Settings;
 class Mapping implements \Spameri\ElasticQuery\Entity\ArrayInterface
 {
 
-	/**
-	 * @var string
-	 */
-	private $indexName;
-
-	/**
-	 * @var \Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldCollection
-	 */
-	private $fields;
-
-	private bool $dynamic;
-
+	private \Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldCollection $fields;
 
 	public function __construct(
-		string $indexName,
+		private string $indexName,
 		\Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldCollection|null $fields = NULL,
-		bool $dynamic = true,
+		private bool $dynamic = TRUE,
 	)
 	{
-		$this->indexName = $indexName;
 
 		if ($fields === NULL) {
 			$fields = new \Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldCollection();
 		}
 
 		$this->fields = $fields;
-		$this->dynamic = $dynamic;
 	}
 
 	public function enableStrictMapping(): void
 	{
-		$this->dynamic = false;
+		$this->dynamic = FALSE;
 	}
 
 	public function getIndexName(): string

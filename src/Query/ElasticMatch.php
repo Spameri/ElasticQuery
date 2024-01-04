@@ -11,35 +11,17 @@ namespace Spameri\ElasticQuery\Query;
 class ElasticMatch implements \Spameri\ElasticQuery\Query\LeafQueryInterface
 {
 
-	private string $field;
-
-	/**
-	 * @var string|int|bool|null
-	 */
-	private $query;
-
-	private string $operator;
-
-	private \Spameri\ElasticQuery\Query\Match\Fuzziness|null $fuzziness;
-
-	private float $boost;
-
-	private string|null $analyzer;
-
-	private int|null $minimumShouldMatch;
-
-
 	/**
 	 * @param string|int|bool|null $query
 	 */
 	public function __construct(
-		string $field,
-		$query,
-		float $boost = 1.0,
-		\Spameri\ElasticQuery\Query\Match\Fuzziness|null $fuzziness = NULL,
-		int|null $minimumShouldMatch = NULL,
-		string $operator = \Spameri\ElasticQuery\Query\Match\Operator::OR,
-		string|null $analyzer = NULL,
+		private string $field,
+		private $query,
+		private float $boost = 1.0,
+		private \Spameri\ElasticQuery\Query\Match\Fuzziness|null $fuzziness = NULL,
+		private int|null $minimumShouldMatch = NULL,
+		private string $operator = \Spameri\ElasticQuery\Query\Match\Operator::OR,
+		private string|null $analyzer = NULL,
 	)
 	{
 		if ( ! \in_array($operator, \Spameri\ElasticQuery\Query\Match\Operator::OPERATORS, TRUE)) {
@@ -48,13 +30,6 @@ class ElasticMatch implements \Spameri\ElasticQuery\Query\LeafQueryInterface
 			);
 		}
 
-		$this->field = $field;
-		$this->query = $query;
-		$this->operator = $operator;
-		$this->fuzziness = $fuzziness;
-		$this->boost = $boost;
-		$this->analyzer = $analyzer;
-		$this->minimumShouldMatch = $minimumShouldMatch;
 	}
 
 

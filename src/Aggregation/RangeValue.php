@@ -8,39 +8,18 @@ namespace Spameri\ElasticQuery\Aggregation;
 class RangeValue implements \Spameri\ElasticQuery\Entity\EntityInterface
 {
 
-	private string $key;
-
-	/**
-	 * @var int|float|string|\DateTimeInterface|null
-	 */
-	private $from;
-
-	/**
-	 * @var int|float|string|\DateTimeInterface|null
-	 */
-	private $to;
-
-	private bool $fromEqual;
-
-	private bool $toEqual;
-
 	/**
 	 * @param int|float|string|\DateTimeInterface|null $from
 	 * @param int|float|string|\DateTimeInterface|null $to
 	 */
 	public function __construct(
-		string $key,
-		$from,
-		$to,
-		bool $fromEqual = TRUE,
-		bool $toEqual = TRUE,
+		private string $key,
+		private $from,
+		private $to,
+		private bool $fromEqual = TRUE,
+		private bool $toEqual = TRUE,
 	)
 	{
-		$this->key = $key;
-		$this->from = $from;
-		$this->to = $to;
-		$this->fromEqual = $fromEqual;
-		$this->toEqual = $toEqual;
 	}
 
 

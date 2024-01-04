@@ -7,29 +7,15 @@ namespace Spameri\ElasticQuery\Mapping;
 class Settings implements \Spameri\ElasticQuery\Entity\ArrayInterface
 {
 
-	/**
-	 * @var \Spameri\ElasticQuery\Mapping\Settings\Analysis
-	 */
-	private $analysis;
+	private \Spameri\ElasticQuery\Mapping\Settings\Analysis $analysis;
 
-	/**
-	 * @var string
-	 */
-	private $indexName;
+	private \Spameri\ElasticQuery\Mapping\Settings\Mapping $mapping;
 
-	/**
-	 * @var \Spameri\ElasticQuery\Mapping\Settings\Mapping
-	 */
-	private $mapping;
-
-	/**
-	 * @var \Spameri\ElasticQuery\Mapping\Settings\AliasCollection
-	 */
-	private $alias;
+	private \Spameri\ElasticQuery\Mapping\Settings\AliasCollection $alias;
 
 
 	public function __construct(
-		string $indexName,
+		private string $indexName,
 		\Spameri\ElasticQuery\Mapping\Settings\Analysis|null $analysis = NULL,
 		\Spameri\ElasticQuery\Mapping\Settings\Mapping|null $mapping = NULL,
 		\Spameri\ElasticQuery\Mapping\Settings\AliasCollection|null $alias = NULL,
@@ -46,7 +32,6 @@ class Settings implements \Spameri\ElasticQuery\Entity\ArrayInterface
 		}
 
 		$this->analysis = $analysis;
-		$this->indexName = $indexName;
 		$this->mapping = $mapping;
 		$this->alias = $alias;
 	}

@@ -7,17 +7,10 @@ namespace Spameri\ElasticQuery\Aggregation\Terms;
 class Order implements \Spameri\ElasticQuery\Collection\Item
 {
 
-	private string $field;
-
-	private string $type;
-
-
 	public function __construct(
-		string $field,
-		string $type,
+		private string $field,
+		private string $type,
 	) {
-		$this->field = $field;
-		$this->type = $type;
 	}
 
 

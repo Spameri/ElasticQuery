@@ -18,18 +18,13 @@ class ElasticQuery implements \Spameri\ElasticQuery\Entity\ArrayInterface
 
 	private \Spameri\ElasticQuery\Options $options;
 
-	private \Spameri\ElasticQuery\Highlight|null $highlight;
-
-	private \Spameri\ElasticQuery\FunctionScore|null $functionScore;
-
-
 	public function __construct(
 		\Spameri\ElasticQuery\Query\QueryCollection|null $query = NULL,
 		\Spameri\ElasticQuery\Filter\FilterCollection|null $filter = NULL,
 		\Spameri\ElasticQuery\Options\SortCollection|null $sort = NULL,
 		\Spameri\ElasticQuery\Aggregation\AggregationCollection|null $aggregation = NULL,
-		\Spameri\ElasticQuery\Highlight|null $highlight = NULL,
-		\Spameri\ElasticQuery\FunctionScore|null $functionScore = NULL,
+		private \Spameri\ElasticQuery\Highlight|null $highlight = NULL,
+		private \Spameri\ElasticQuery\FunctionScore|null $functionScore = NULL,
 		\Spameri\ElasticQuery\Options|null $options = NULL,
 	)
 	{
@@ -54,8 +49,6 @@ class ElasticQuery implements \Spameri\ElasticQuery\Entity\ArrayInterface
 		$this->sort = $sort;
 		$this->aggregation = $aggregation;
 		$this->options = $options;
-		$this->highlight = $highlight;
-		$this->functionScore = $functionScore;
 	}
 
 

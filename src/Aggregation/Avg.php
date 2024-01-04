@@ -10,14 +10,10 @@ namespace Spameri\ElasticQuery\Aggregation;
 class Avg implements \Spameri\ElasticQuery\Aggregation\LeafAggregationInterface
 {
 
-	private string $field;
-
-
 	public function __construct(
-		string $field,
+		private string $field,
 	)
 	{
-		$this->field = $field;
 	}
 
 

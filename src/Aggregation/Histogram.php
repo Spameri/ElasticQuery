@@ -11,18 +11,11 @@ namespace Spameri\ElasticQuery\Aggregation;
 class Histogram implements LeafAggregationInterface
 {
 
-	private string $field;
-
-	private int $interval;
-
-
 	public function __construct(
-		string $field,
-		int $interval,
+		private string $field,
+		private int $interval,
 	)
 	{
-		$this->field = $field;
-		$this->interval = $interval;
 	}
 
 

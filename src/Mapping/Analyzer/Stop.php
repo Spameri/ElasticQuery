@@ -10,17 +10,10 @@ namespace Spameri\ElasticQuery\Mapping\Analyzer;
 class Stop implements \Spameri\ElasticQuery\Mapping\AnalyzerInterface
 {
 
-	/**
-	 * @var array
-	 */
-	private $stopWords;
-
-
 	public function __construct(
-		array $stopWords = [],
+		private array $stopWords = [],
 	)
 	{
-		$this->stopWords = $stopWords;
 	}
 
 	public function name(): string

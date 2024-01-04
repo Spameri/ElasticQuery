@@ -10,22 +10,12 @@ namespace Spameri\ElasticQuery\Query;
 class WildCard implements LeafQueryInterface
 {
 
-	private string $field;
-
-	private string $query;
-
-	private float $boost;
-
-
 	public function __construct(
-		string $field,
-		string $query,
-		float $boost = 1.0,
+		private string $field,
+		private string $query,
+		private float $boost = 1.0,
 	)
 	{
-		$this->field = $field;
-		$this->query = $query;
-		$this->boost = $boost;
 	}
 
 

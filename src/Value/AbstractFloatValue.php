@@ -8,17 +8,10 @@ namespace Spameri\ElasticQuery\Value;
 abstract class AbstractFloatValue implements \Spameri\ElasticQuery\Value\ValueInterface
 {
 
-	/**
-	 * @var float
-	 */
-	private $value;
-
-
 	public function __construct(
-		float $value,
+		private float $value,
 	)
 	{
-		$this->value = $value;
 	}
 
 

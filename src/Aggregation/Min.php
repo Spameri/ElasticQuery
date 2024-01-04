@@ -7,13 +7,9 @@ namespace Spameri\ElasticQuery\Aggregation;
 class Min implements \Spameri\ElasticQuery\Aggregation\LeafAggregationInterface
 {
 
-	private string $field;
-
-
 	public function __construct(
-		string $field,
+		private string $field,
 	) {
-		$this->field = $field;
 	}
 
 

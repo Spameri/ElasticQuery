@@ -10,17 +10,10 @@ namespace Spameri\ElasticQuery\Mapping\Filter;
 class FileSynonym implements \Spameri\ElasticQuery\Mapping\FilterInterface
 {
 
-	/**
-	 * @var string
-	 */
-	private $path;
-
-
 	public function __construct(
-		string $path,
+		private string $path,
 	)
 	{
-		$this->path = $path;
 	}
 
 

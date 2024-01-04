@@ -10,7 +10,7 @@ class FilterCollection implements \Spameri\ElasticQuery\Collection\SimpleCollect
 	/**
 	 * @var array<\Spameri\ElasticQuery\Mapping\FilterInterface>
 	 */
-	protected $collection;
+	protected array $collection;
 
 
 	public function __construct(

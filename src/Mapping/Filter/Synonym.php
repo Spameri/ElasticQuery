@@ -10,17 +10,10 @@ namespace Spameri\ElasticQuery\Mapping\Filter;
 class Synonym implements \Spameri\ElasticQuery\Mapping\FilterInterface
 {
 
-	/**
-	 * @var array<string>
-	 */
-	private $synonyms;
-
-
 	public function __construct(
-		array $synonyms = [],
+		private array $synonyms = [],
 	)
 	{
-		$this->synonyms = $synonyms;
 	}
 
 

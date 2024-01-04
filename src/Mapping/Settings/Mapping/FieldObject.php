@@ -8,24 +8,11 @@ class FieldObject
 	implements \Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldInterface
 {
 
-	/**
-	 * @var string
-	 */
-	private $name;
-
-	/**
-	 * @var \Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldCollection
-	 */
-	private $fields;
-
-
 	public function __construct(
-		string $name,
-		\Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldCollection $fields,
+		private string $name,
+		private \Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldCollection $fields,
 	)
 	{
-		$this->name = $name;
-		$this->fields = $fields;
 	}
 
 

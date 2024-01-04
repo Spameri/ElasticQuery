@@ -8,80 +8,19 @@ namespace Spameri\ElasticQuery\Response\Result;
 class BulkAction
 {
 
-	/**
-	 * @var string
-	 */
-	private $action;
-
-	/**
-	 * @var string
-	 */
-	private $index;
-
-	/**
-	 * @var string
-	 */
-	private $type;
-
-	/**
-	 * @var string
-	 */
-	private $id;
-
-	/**
-	 * @var int
-	 */
-	private $version;
-
-	/**
-	 * @var string
-	 */
-	private $result;
-
-	/**
-	 * @var \Spameri\ElasticQuery\Response\Shards
-	 */
-	private $shards;
-
-	/**
-	 * @var int
-	 */
-	private $status;
-
-	/**
-	 * @var int
-	 */
-	private $seqNo;
-
-	/**
-	 * @var int
-	 */
-	private $primaryTerm;
-
-
 	public function __construct(
-		string $action,
-		string $index,
-		string $type,
-		string $id,
-		int $version,
-		string $result,
-		\Spameri\ElasticQuery\Response\Shards $shards,
-		int $status,
-		int $seqNo,
-		int $primaryTerm,
+		private string $action,
+		private string $index,
+		private string $type,
+		private string $id,
+		private int $version,
+		private string $result,
+		private \Spameri\ElasticQuery\Response\Shards $shards,
+		private int $status,
+		private int $seqNo,
+		private int $primaryTerm,
 	)
 	{
-		$this->action = $action;
-		$this->index = $index;
-		$this->type = $type;
-		$this->id = $id;
-		$this->version = $version;
-		$this->result = $result;
-		$this->shards = $shards;
-		$this->status = $status;
-		$this->seqNo = $seqNo;
-		$this->primaryTerm = $primaryTerm;
 	}
 
 

@@ -8,47 +8,21 @@ namespace Spameri\ElasticQuery\Response\Result\Aggregation;
 class Bucket
 {
 
-	/**
-	 * @var string
-	 */
-	private $key;
-	/**
-	 * @var int
-	 */
-	private $docCount;
-	/**
-	 * @var int|null
-	 */
-	private $position;
-
-	/**
-	 * @var int|float|null
-	 */
-	private $from;
-
-	/**
-	 * @var int|float|null
-	 */
-	private $to;
-
+	private ?int $position = NULL;
 
 	/**
 	 * @phpstan-param int|float|null $from
 	 * @phpstan-param int|float|null $to
 	 */
 	public function __construct(
-		string $key,
-		int $docCount,
+		private string $key,
+		private int $docCount,
 		int|null $position = NULL,
-		$from = NULL,
-		$to = NULL,
+		private $from = NULL,
+		private $to = NULL,
 	)
 	{
-		$this->key = $key;
-		$this->docCount = $docCount;
 		$this->position = $position;
-		$this->from = $from;
-		$this->to = $to;
 	}
 
 

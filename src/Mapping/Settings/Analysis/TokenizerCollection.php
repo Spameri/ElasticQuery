@@ -10,7 +10,7 @@ class TokenizerCollection implements \Spameri\ElasticQuery\Collection\SimpleColl
 	/**
 	 * @var array<\Spameri\ElasticQuery\Mapping\TokenizerInterface>
 	 */
-	protected $collection;
+	protected array $collection;
 
 
 	public function __construct(

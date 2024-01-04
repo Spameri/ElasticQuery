@@ -8,17 +8,10 @@ namespace Spameri\ElasticQuery\Document\Body;
 class Plain implements \Spameri\ElasticQuery\Document\BodyInterface
 {
 
-	/**
-	 * @var array
-	 */
-	private $parameters;
-
-
 	public function __construct(
-		array $parameters,
+		private array $parameters,
 	)
 	{
-		$this->parameters = $parameters;
 	}
 
 

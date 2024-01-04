@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types = 1);
 
 namespace Spameri\ElasticQuery\Response\Result;
 
@@ -7,9 +9,15 @@ class AggregationCollection implements \IteratorAggregate
 {
 
 	/**
+
+
+	 *
 	 * @var array<\Spameri\ElasticQuery\Response\Result\Aggregation>
+	
+
+
 	 */
-	private $aggregations;
+	private array $aggregations;
 
 
 	public function __construct(
@@ -31,8 +39,8 @@ class AggregationCollection implements \IteratorAggregate
 	): \Spameri\ElasticQuery\Response\Result\Aggregation|null
 	{
 		foreach ($this->aggregations as $aggregation) {
-			if ($aggregation->name() === $name) {
-				return $aggregation;
+if ($aggregation->name() === $name) {
+return $aggregation;
 			}
 		}
 

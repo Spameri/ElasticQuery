@@ -10,7 +10,7 @@ class FieldCollection implements \Spameri\ElasticQuery\Collection\SimpleCollecti
 	/**
 	 * @var array<\Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldInterface>
 	 */
-	protected $collection;
+	protected array $collection;
 
 
 	public function __construct(

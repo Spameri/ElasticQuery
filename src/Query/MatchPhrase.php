@@ -11,48 +11,20 @@ namespace Spameri\ElasticQuery\Query;
 class MatchPhrase implements LeafQueryInterface
 {
 
-	/**
-	 * @var string
-	 */
-	private $field;
-
-	/**
-	 * @var string|int|bool|null
-	 */
-	private $query;
-
-	/**
-	 * @var float
-	 */
-	private $boost;
-
-	/**
-	 * @var null|string
-	 */
-	private $analyzer;
-
-	/**
-	 * @var int
-	 */
-	private $slop;
-
+	private ?string $analyzer = NULL;
 
 	/**
 	 * @param string|int|bool|null $query
 	 */
 	public function __construct(
-		string $field,
-		$query,
-		float $boost = 1.0,
-		int $slop = 0,
+		private string $field,
+		private $query,
+		private float $boost = 1.0,
+		private int $slop = 0,
 		string|null $analyzer = NULL,
 	)
 	{
-		$this->field = $field;
-		$this->query = $query;
-		$this->boost = $boost;
 		$this->analyzer = $analyzer;
-		$this->slop = $slop;
 	}
 
 

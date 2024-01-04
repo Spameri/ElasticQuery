@@ -11,38 +11,22 @@ namespace Spameri\ElasticQuery\Aggregation;
 class Term implements LeafAggregationInterface
 {
 
-	private string $field;
-
-	private int $size;
-
 	private int|null $missing;
-
-	private string|null $key;
 
 	private \Spameri\ElasticQuery\Aggregation\Terms\OrderCollection $order;
 
-	private string|null $include;
-
-	private string|null $exclude;
-
-
 	public function __construct(
-		string $field,
-		int $size = 0,
+		private string $field,
+		private int $size = 0,
 		int $missing = NULL,
 		\Spameri\ElasticQuery\Aggregation\Terms\OrderCollection|null $order = NULL,
-		string|null $include = NULL,
-		string|null $exclude = NULL,
-		string|null $key = NULL,
+		private string|null $include = NULL,
+		private string|null $exclude = NULL,
+		private string|null $key = NULL,
 	)
 	{
-		$this->field = $field;
-		$this->size = $size;
 		$this->missing = $missing;
-		$this->key = $key;
 		$this->order = $order ?? new \Spameri\ElasticQuery\Aggregation\Terms\OrderCollection();
-		$this->include = $include;
-		$this->exclude = $exclude;
 	}
 
 

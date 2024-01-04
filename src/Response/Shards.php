@@ -8,35 +8,13 @@ namespace Spameri\ElasticQuery\Response;
 class Shards
 {
 
-	/**
-	 * @var int
-	 */
-	private $total;
-	/**
-	 * @var int
-	 */
-	private $successful;
-	/**
-	 * @var int
-	 */
-	private $skipped;
-	/**
-	 * @var int
-	 */
-	private $failed;
-
-
 	public function __construct(
-		int $total,
-		int $successful,
-		int $skipped,
-		int $failed,
+		private int $total,
+		private int $successful,
+		private int $skipped,
+		private int $failed,
 	)
 	{
-		$this->total = $total;
-		$this->successful = $successful;
-		$this->skipped = $skipped;
-		$this->failed = $failed;
 	}
 
 

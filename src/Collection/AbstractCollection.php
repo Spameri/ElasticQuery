@@ -11,7 +11,7 @@ abstract class AbstractCollection implements CollectionInterface
 	/**
 	 * @var array<\Spameri\ElasticQuery\Entity\EntityInterface>
 	 */
-	protected $collection;
+	protected array $collection;
 
 
 	public function __construct(

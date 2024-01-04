@@ -11,38 +11,18 @@ namespace Spameri\ElasticQuery\Query;
 class MultiMatch implements LeafQueryInterface
 {
 
-	private array $fields;
-
-	/**
-	 * @var string|int|bool|null
-	 */
-	private $query;
-
-	private string $type;
-
-	private string $operator;
-
-	private \Spameri\ElasticQuery\Query\Match\Fuzziness|null $fuzziness;
-
-	private float $boost;
-
-	private string|null $analyzer;
-
-	private int|null $minimumShouldMatch;
-
-
 	/**
 	 * @param string|int|bool|null $query
 	 */
 	public function __construct(
-		array $fields,
-		$query,
-		float $boost = 1.0,
-		\Spameri\ElasticQuery\Query\Match\Fuzziness|null $fuzziness = NULL,
-		string $type = \Spameri\ElasticQuery\Query\Match\MultiMatchType::BEST_FIELDS,
-		int|null $minimumShouldMatch = NULL,
-		string $operator = \Spameri\ElasticQuery\Query\Match\Operator::OR,
-		string|null $analyzer = NULL,
+		private array $fields,
+		private $query,
+		private float $boost = 1.0,
+		private \Spameri\ElasticQuery\Query\Match\Fuzziness|null $fuzziness = NULL,
+		private string $type = \Spameri\ElasticQuery\Query\Match\MultiMatchType::BEST_FIELDS,
+		private int|null $minimumShouldMatch = NULL,
+		private string $operator = \Spameri\ElasticQuery\Query\Match\Operator::OR,
+		private string|null $analyzer = NULL,
 	)
 	{
 		if ( ! \in_array($operator, \Spameri\ElasticQuery\Query\Match\Operator::OPERATORS, TRUE)) {
@@ -56,14 +36,6 @@ class MultiMatch implements LeafQueryInterface
 			);
 		}
 
-		$this->fields = $fields;
-		$this->query = $query;
-		$this->type = $type;
-		$this->operator = $operator;
-		$this->fuzziness = $fuzziness;
-		$this->boost = $boost;
-		$this->analyzer = $analyzer;
-		$this->minimumShouldMatch = $minimumShouldMatch;
 	}
 
 

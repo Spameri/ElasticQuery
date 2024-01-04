@@ -11,7 +11,7 @@ class MustCollection implements \Spameri\ElasticQuery\Collection\QueryCollection
 	/**
 	 * @var array<\Spameri\ElasticQuery\Query\LeafQueryInterface>
 	 */
-	private $collection;
+	private array $collection;
 
 
 	public function __construct(

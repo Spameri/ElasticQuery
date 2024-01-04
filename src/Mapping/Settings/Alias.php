@@ -7,17 +7,10 @@ namespace Spameri\ElasticQuery\Mapping\Settings;
 class Alias implements \Spameri\ElasticQuery\Entity\ArrayInterface, \Spameri\ElasticQuery\Collection\Item
 {
 
-	/**
-	 * @var string
-	 */
-	private $name;
-
-
 	public function __construct(
-		string $name,
+		private string $name,
 	)
 	{
-		$this->name = $name;
 	}
 
 

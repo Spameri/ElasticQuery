@@ -9,15 +9,9 @@ abstract class AbstractDictionary
 			   \Spameri\ElasticQuery\Collection\Item
 {
 
-	/**
-	 * @var \Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection
-	 */
-	protected $filter;
+	protected \Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection $filter;
 
-	/**
-	 * @var ?\Spameri\ElasticQuery\Mapping\Filter\AbstractStop
-	 */
-	protected $stopFilter;
+	protected ?\Spameri\ElasticQuery\Mapping\Filter\AbstractStop $stopFilter = NULL;
 
 
 	public function __construct(
