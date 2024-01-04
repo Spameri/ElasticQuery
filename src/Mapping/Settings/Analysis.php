@@ -15,18 +15,18 @@ class Analysis implements \Spameri\ElasticQuery\Entity\ArrayInterface
 
 
 	public function __construct(
-		\Spameri\ElasticQuery\Mapping\Settings\Analysis\AnalyzerCollection|null $analyzer = NULL,
-		\Spameri\ElasticQuery\Mapping\Settings\Analysis\TokenizerCollection|null $tokenizer = NULL,
-		\Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection|null $filter = NULL,
+		\Spameri\ElasticQuery\Mapping\Settings\Analysis\AnalyzerCollection|null $analyzer = null,
+		\Spameri\ElasticQuery\Mapping\Settings\Analysis\TokenizerCollection|null $tokenizer = null,
+		\Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection|null $filter = null,
 	)
 	{
-		if ($analyzer === NULL) {
+		if ($analyzer === null) {
 			$analyzer = new \Spameri\ElasticQuery\Mapping\Settings\Analysis\AnalyzerCollection();
 		}
-		if ($tokenizer === NULL) {
+		if ($tokenizer === null) {
 			$tokenizer = new \Spameri\ElasticQuery\Mapping\Settings\Analysis\TokenizerCollection();
 		}
-		if ($filter === NULL) {
+		if ($filter === null) {
 			$filter = new \Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection();
 		}
 

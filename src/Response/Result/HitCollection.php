@@ -9,19 +9,14 @@ class HitCollection implements \IteratorAggregate, \Countable
 {
 
 	/**
-
-
 	 *
 	 * @var array<\Spameri\ElasticQuery\Response\Result\Hit>
-	
-
-
 	 */
 	private array $hits;
 
 
 	public function __construct(
-		\Spameri\ElasticQuery\Response\Result\Hit ... $hits,
+		\Spameri\ElasticQuery\Response\Result\Hit ...$hits,
 	)
 	{
 		$this->hits = $hits;

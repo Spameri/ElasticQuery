@@ -11,21 +11,18 @@ namespace Spameri\ElasticQuery\Aggregation;
 class Term implements LeafAggregationInterface
 {
 
-	private int|null $missing;
-
 	private \Spameri\ElasticQuery\Aggregation\Terms\OrderCollection $order;
 
 	public function __construct(
 		private string $field,
 		private int $size = 0,
-		int $missing = NULL,
-		\Spameri\ElasticQuery\Aggregation\Terms\OrderCollection|null $order = NULL,
-		private string|null $include = NULL,
-		private string|null $exclude = NULL,
-		private string|null $key = NULL,
+		private int|null $missing = null,
+		\Spameri\ElasticQuery\Aggregation\Terms\OrderCollection|null $order = null,
+		private string|null $include = null,
+		private string|null $exclude = null,
+		private string|null $key = null,
 	)
 	{
-		$this->missing = $missing;
 		$this->order = $order ?? new \Spameri\ElasticQuery\Aggregation\Terms\OrderCollection();
 	}
 
@@ -43,10 +40,10 @@ class Term implements LeafAggregationInterface
 		];
 
 		if ($this->size > 0) {
-			$array['size']  = $this->size;
+			$array['size'] = $this->size;
 		}
 
-		if ($this->missing !== NULL) {
+		if ($this->missing !== null) {
 			$array['missing'] = $this->missing;
 		}
 
@@ -54,11 +51,11 @@ class Term implements LeafAggregationInterface
 			$array['order'] = $this->order->toArray();
 		}
 
-		if ($this->include !== NULL) {
+		if ($this->include !== null) {
 			$array['include'] = $this->include;
 		}
 
-		if ($this->exclude !== NULL) {
+		if ($this->exclude !== null) {
 			$array['exclude'] = $this->exclude;
 		}
 

@@ -61,7 +61,7 @@
 	<!-- PHP -->
 	<rule ref="Generic.PHP.DeprecatedFunctions"/>
 	<rule ref="Generic.PHP.ForbiddenFunctions"/>
-	<rule ref="Generic.PHP.UpperCaseConstant"/>
+	<rule ref="Generic.PHP.LowerCaseConstant"/>
 	<rule ref="SlevomatCodingStandard.PHP.OptimizedFunctionsWithoutUnpacking"/>
 
 	<!-- NewLines -->

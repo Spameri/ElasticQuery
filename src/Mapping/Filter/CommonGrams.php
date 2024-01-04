@@ -10,7 +10,9 @@ namespace Spameri\ElasticQuery\Mapping\Filter;
 class CommonGrams implements \Spameri\ElasticQuery\Mapping\FilterInterface
 {
 
-	public function __construct(private array $words)
+	public function __construct(
+		private array $words,
+	)
 	{
 	}
 
@@ -36,4 +38,5 @@ class CommonGrams implements \Spameri\ElasticQuery\Mapping\FilterInterface
 			],
 		];
 	}
+
 }

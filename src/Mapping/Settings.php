@@ -16,18 +16,18 @@ class Settings implements \Spameri\ElasticQuery\Entity\ArrayInterface
 
 	public function __construct(
 		private string $indexName,
-		\Spameri\ElasticQuery\Mapping\Settings\Analysis|null $analysis = NULL,
-		\Spameri\ElasticQuery\Mapping\Settings\Mapping|null $mapping = NULL,
-		\Spameri\ElasticQuery\Mapping\Settings\AliasCollection|null $alias = NULL,
+		\Spameri\ElasticQuery\Mapping\Settings\Analysis|null $analysis = null,
+		\Spameri\ElasticQuery\Mapping\Settings\Mapping|null $mapping = null,
+		\Spameri\ElasticQuery\Mapping\Settings\AliasCollection|null $alias = null,
 	)
 	{
-		if ($analysis === NULL) {
+		if ($analysis === null) {
 			$analysis = new \Spameri\ElasticQuery\Mapping\Settings\Analysis();
 		}
-		if ($mapping === NULL) {
+		if ($mapping === null) {
 			$mapping = new \Spameri\ElasticQuery\Mapping\Settings\Mapping($indexName);
 		}
-		if ($alias === NULL) {
+		if ($alias === null) {
 			$alias = new \Spameri\ElasticQuery\Mapping\Settings\AliasCollection();
 		}
 

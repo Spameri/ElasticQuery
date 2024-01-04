@@ -15,7 +15,7 @@ abstract class AbstractCollection implements CollectionInterface
 
 
 	public function __construct(
-		\Spameri\ElasticQuery\Entity\EntityInterface ... $collection,
+		\Spameri\ElasticQuery\Entity\EntityInterface ...$collection,
 	)
 	{
 		$this->collection = [];
@@ -40,10 +40,10 @@ abstract class AbstractCollection implements CollectionInterface
 		if (isset($this->collection[$key])) {
 			unset($this->collection[$key]);
 
-			return TRUE;
+			return true;
 		}
 
-		return FALSE;
+		return false;
 	}
 
 
@@ -51,7 +51,7 @@ abstract class AbstractCollection implements CollectionInterface
 		string $key,
 	): \Spameri\ElasticQuery\Entity\EntityInterface|null
 	{
-		return $this->collection[$key] ?? NULL;
+		return $this->collection[$key] ?? null;
 	}
 
 
@@ -60,10 +60,10 @@ abstract class AbstractCollection implements CollectionInterface
 	): bool
 	{
 		if (isset($this->collection[$key])) {
-			return TRUE;
+			return true;
 		}
 
-		return FALSE;
+		return false;
 	}
 
 

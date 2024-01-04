@@ -13,8 +13,8 @@ class Pattern implements \Spameri\ElasticQuery\Mapping\AnalyzerInterface
 	public function __construct(
 		private string $pattern,
 		private array $stopWords = [],
-		private bool $lowerCase = TRUE,
-		private string $flags = NULL,
+		private bool $lowerCase = true,
+		private string|null $flags = null,
 	)
 	{
 	}

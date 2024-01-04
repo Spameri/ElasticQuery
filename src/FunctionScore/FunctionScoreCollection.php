@@ -14,7 +14,7 @@ class FunctionScoreCollection implements \Spameri\ElasticQuery\Collection\Simple
 
 
 	public function __construct(
-		\Spameri\ElasticQuery\FunctionScore\FunctionScoreInterface ... $collection,
+		\Spameri\ElasticQuery\FunctionScore\FunctionScoreInterface ...$collection,
 	)
 	{
 		$this->collection = [];
@@ -42,10 +42,10 @@ class FunctionScoreCollection implements \Spameri\ElasticQuery\Collection\Simple
 		if (isset($this->collection[$key])) {
 			unset($this->collection[$key]);
 
-			return TRUE;
+			return true;
 		}
 
-		return FALSE;
+		return false;
 	}
 
 
@@ -53,7 +53,7 @@ class FunctionScoreCollection implements \Spameri\ElasticQuery\Collection\Simple
 		string $key,
 	): \Spameri\ElasticQuery\FunctionScore\FunctionScoreInterface|null
 	{
-		return $this->collection[$key] ?? NULL;
+		return $this->collection[$key] ?? null;
 	}
 
 
@@ -62,10 +62,10 @@ class FunctionScoreCollection implements \Spameri\ElasticQuery\Collection\Simple
 	): bool
 	{
 		if (isset($this->collection[$key])) {
-			return TRUE;
+			return true;
 		}
 
-		return FALSE;
+		return false;
 	}
 
 

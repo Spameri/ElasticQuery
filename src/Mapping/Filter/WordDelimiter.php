@@ -27,7 +27,7 @@ class WordDelimiter implements \Spameri\ElasticQuery\Mapping\FilterInterface
 		return [
 			$this->key() => [
 				'type' => $this->getType(),
-				'catenate_all' => TRUE,
+				'catenate_all' => true,
 			],
 		];
 	}

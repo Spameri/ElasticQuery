@@ -8,17 +8,13 @@ namespace Spameri\ElasticQuery\Response\Result;
 class Aggregation
 {
 
-	private \Spameri\ElasticQuery\Response\Result\AggregationCollection $aggregations;
-
-
 	public function __construct(
 		private string $name,
 		private int $position,
 		private \Spameri\ElasticQuery\Response\Result\Aggregation\BucketCollection $bucketCollection,
-		\Spameri\ElasticQuery\Response\Result\AggregationCollection $subAggregations,
+		private \Spameri\ElasticQuery\Response\Result\AggregationCollection $aggregations,
 	)
 	{
-		$this->aggregations = $subAggregations;
 	}
 
 

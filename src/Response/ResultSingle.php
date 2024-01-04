@@ -8,15 +8,12 @@ namespace Spameri\ElasticQuery\Response;
 class ResultSingle implements ResultInterface
 {
 
-	private \Spameri\ElasticQuery\Response\StatsSingle $stats;
-
 
 	public function __construct(
 		private \Spameri\ElasticQuery\Response\Result\Hit $hit,
-		StatsSingle $stats,
+		private StatsSingle $stats,
 	)
 	{
-		$this->stats = $stats;
 	}
 
 

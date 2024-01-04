@@ -16,8 +16,8 @@ class Range implements LeafAggregationInterface
 
 	public function __construct(
 		private string $field,
-		private bool $keyed = FALSE,
-		\Spameri\ElasticQuery\Aggregation\RangeValueCollection $rangeValueCollection = NULL,
+		private bool $keyed = false,
+		\Spameri\ElasticQuery\Aggregation\RangeValueCollection $rangeValueCollection = null,
 	)
 	{
 		$this->ranges = $rangeValueCollection ?: new \Spameri\ElasticQuery\Aggregation\RangeValueCollection();
@@ -36,8 +36,8 @@ class Range implements LeafAggregationInterface
 			'field' => $this->field,
 		];
 
-		if ($this->keyed === TRUE) {
-			$array['keyed'] = TRUE;
+		if ($this->keyed === true) {
+			$array['keyed'] = true;
 		}
 
 		foreach ($this->ranges as $range) {

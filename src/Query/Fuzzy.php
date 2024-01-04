@@ -11,12 +11,9 @@ namespace Spameri\ElasticQuery\Query;
 class Fuzzy implements LeafQueryInterface
 {
 
-	/**
-	 * @param string|int|bool|null $query
-	 */
 	public function __construct(
 		private string $field,
-		private $query,
+		private bool|int|string|null $query,
 		private float $boost = 1.0,
 		private int $fuzziness = 2,
 		private int $prefixLength = 0,
@@ -38,15 +35,16 @@ class Fuzzy implements LeafQueryInterface
 		$array = [
 			'fuzzy' => [
 				$this->field => [
-					'value' 			=> $this->query,
-					'boost' 			=> $this->boost,
-					'fuzziness' 		=> $this->fuzziness,
-					'prefix_length' 	=> $this->prefixLength,
-					'max_expansions' 	=> $this->maxExpansion,
+					'value' => $this->query,
+					'boost' => $this->boost,
+					'fuzziness' => $this->fuzziness,
+					'prefix_length' => $this->prefixLength,
+					'max_expansions' => $this->maxExpansion,
 				],
 			],
 		];
 
 		return $array;
 	}
+
 }

@@ -14,7 +14,7 @@ class AliasCollection implements \Spameri\ElasticQuery\Collection\SimpleCollecti
 
 
 	public function __construct(
-		\Spameri\ElasticQuery\Mapping\Settings\Alias ... $collection,
+		\Spameri\ElasticQuery\Mapping\Settings\Alias ...$collection,
 	)
 	{
 		$this->collection = [];
@@ -42,10 +42,10 @@ class AliasCollection implements \Spameri\ElasticQuery\Collection\SimpleCollecti
 		if (isset($this->collection[$key])) {
 			unset($this->collection[$key]);
 
-			return TRUE;
+			return true;
 		}
 
-		return FALSE;
+		return false;
 	}
 
 
@@ -53,11 +53,7 @@ class AliasCollection implements \Spameri\ElasticQuery\Collection\SimpleCollecti
 		string $key,
 	): \Spameri\ElasticQuery\Mapping\Settings\Alias|null
 	{
-		if (isset($this->collection[$key])) {
-			return $this->collection[$key];
-		}
-
-		return NULL;
+		return $this->collection[$key] ?? null;
 	}
 
 
@@ -66,10 +62,10 @@ class AliasCollection implements \Spameri\ElasticQuery\Collection\SimpleCollecti
 	): bool
 	{
 		if (isset($this->collection[$key])) {
-			return TRUE;
+			return true;
 		}
 
-		return FALSE;
+		return false;
 	}
 
 

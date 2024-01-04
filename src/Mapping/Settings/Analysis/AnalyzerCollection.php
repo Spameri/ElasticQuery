@@ -14,7 +14,7 @@ class AnalyzerCollection implements \Spameri\ElasticQuery\Collection\SimpleColle
 
 
 	public function __construct(
-		\Spameri\ElasticQuery\Mapping\AnalyzerInterface ... $collection,
+		\Spameri\ElasticQuery\Mapping\AnalyzerInterface ...$collection,
 	)
 	{
 		$this->collection = [];
@@ -45,10 +45,10 @@ class AnalyzerCollection implements \Spameri\ElasticQuery\Collection\SimpleColle
 		if (isset($this->collection[$key])) {
 			unset($this->collection[$key]);
 
-			return TRUE;
+			return true;
 		}
 
-		return FALSE;
+		return false;
 	}
 
 
@@ -56,11 +56,7 @@ class AnalyzerCollection implements \Spameri\ElasticQuery\Collection\SimpleColle
 		string $key,
 	): \Spameri\ElasticQuery\Mapping\AnalyzerInterface|null
 	{
-		if (isset($this->collection[$key])) {
-			return $this->collection[$key];
-		}
-
-		return NULL;
+		return $this->collection[$key] ?? null;
 	}
 
 
@@ -69,10 +65,10 @@ class AnalyzerCollection implements \Spameri\ElasticQuery\Collection\SimpleColle
 	): bool
 	{
 		if (isset($this->collection[$key])) {
-			return TRUE;
+			return true;
 		}
 
-		return FALSE;
+		return false;
 	}
 
 

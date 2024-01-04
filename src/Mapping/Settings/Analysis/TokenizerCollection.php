@@ -14,7 +14,7 @@ class TokenizerCollection implements \Spameri\ElasticQuery\Collection\SimpleColl
 
 
 	public function __construct(
-		\Spameri\ElasticQuery\Mapping\TokenizerInterface ... $collection,
+		\Spameri\ElasticQuery\Mapping\TokenizerInterface ...$collection,
 	)
 	{
 		$this->collection = [];
@@ -42,10 +42,10 @@ class TokenizerCollection implements \Spameri\ElasticQuery\Collection\SimpleColl
 		if (isset($this->collection[$key])) {
 			unset($this->collection[$key]);
 
-			return TRUE;
+			return true;
 		}
 
-		return FALSE;
+		return false;
 	}
 
 
@@ -53,11 +53,7 @@ class TokenizerCollection implements \Spameri\ElasticQuery\Collection\SimpleColl
 		string $key,
 	): \Spameri\ElasticQuery\Mapping\TokenizerInterface|null
 	{
-		if (isset($this->collection[$key])) {
-			return $this->collection[$key];
-		}
-
-		return NULL;
+		return $this->collection[$key] ?? null;
 	}
 
 
@@ -66,10 +62,10 @@ class TokenizerCollection implements \Spameri\ElasticQuery\Collection\SimpleColl
 	): bool
 	{
 		if (isset($this->collection[$key])) {
-			return TRUE;
+			return true;
 		}
 
-		return FALSE;
+		return false;
 	}
 
 

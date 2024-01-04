@@ -10,7 +10,8 @@ class Order implements \Spameri\ElasticQuery\Collection\Item
 	public function __construct(
 		private string $field,
 		private string $type,
-	) {
+	)
+	{
 	}
 
 

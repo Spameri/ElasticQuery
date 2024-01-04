@@ -16,8 +16,9 @@ class OrderCollection implements
 
 
 	public function __construct(
-		\Spameri\ElasticQuery\Aggregation\Terms\Order ... $collection,
-	) {
+		\Spameri\ElasticQuery\Aggregation\Terms\Order ...$collection,
+	)
+	{
 		$this->collection = [];
 		foreach ($collection as $item) {
 			$this->add($item);
@@ -30,16 +31,16 @@ class OrderCollection implements
 		if (isset($this->collection[$key])) {
 			unset($this->collection[$key]);
 
-			return TRUE;
+			return true;
 		}
 
-		return FALSE;
+		return false;
 	}
 
 
 	public function get(string $key): \Spameri\ElasticQuery\Aggregation\Terms\Order|null
 	{
-		return $this->collection[$key] ?? NULL;
+		return $this->collection[$key] ?? null;
 	}
 
 

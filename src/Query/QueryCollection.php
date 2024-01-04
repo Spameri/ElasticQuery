@@ -14,14 +14,11 @@ class QueryCollection implements LeafQueryInterface
 
 	private \Spameri\ElasticQuery\Query\MustNotCollection $mustNotCollection;
 
-	/**
-	 * @param int|string|null $key
-	 */
 	public function __construct(
-		private $key = NULL,
-		\Spameri\ElasticQuery\Query\MustCollection|null $mustCollection = NULL,
-		\Spameri\ElasticQuery\Query\ShouldCollection|null $shouldCollection = NULL,
-		\Spameri\ElasticQuery\Query\MustNotCollection|null $mustNotCollection = NULL,
+		private int|string|null $key = null,
+		\Spameri\ElasticQuery\Query\MustCollection|null $mustCollection = null,
+		\Spameri\ElasticQuery\Query\ShouldCollection|null $shouldCollection = null,
+		\Spameri\ElasticQuery\Query\MustNotCollection|null $mustNotCollection = null,
 	)
 	{
 		if ( ! $mustCollection) {

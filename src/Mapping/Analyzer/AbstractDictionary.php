@@ -6,19 +6,15 @@ namespace Spameri\ElasticQuery\Mapping\Analyzer;
 
 abstract class AbstractDictionary
 	implements \Spameri\ElasticQuery\Mapping\CustomAnalyzerInterface,
-			   \Spameri\ElasticQuery\Collection\Item
+	\Spameri\ElasticQuery\Collection\Item
 {
 
-	protected \Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection $filter;
-
-	protected ?\Spameri\ElasticQuery\Mapping\Filter\AbstractStop $stopFilter = NULL;
-
+	protected \Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection|null $filter = null;
 
 	public function __construct(
-		\Spameri\ElasticQuery\Mapping\Filter\AbstractStop|null $stopFilter = NULL,
+		protected \Spameri\ElasticQuery\Mapping\Filter\AbstractStop|null $stopFilter = null,
 	)
 	{
-		$this->stopFilter = $stopFilter;
 	}
 
 
@@ -62,9 +58,9 @@ abstract class AbstractDictionary
 
 		return [
 			$this->name() => [
-				'type'      => $this->getType(),
+				'type' => $this->getType(),
 				'tokenizer' => $this->tokenizer(),
-				'filter'    => $filterArray,
+				'filter' => $filterArray,
 			],
 		];
 	}

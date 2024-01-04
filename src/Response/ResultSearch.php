@@ -11,17 +11,13 @@ namespace Spameri\ElasticQuery\Response;
 class ResultSearch implements ResultInterface
 {
 
-	private \Spameri\ElasticQuery\Response\Stats $stats;
-	private \Spameri\ElasticQuery\Response\Shards $shards;
 	public function __construct(
-		Stats $stats,
-		Shards $shards,
+		private \Spameri\ElasticQuery\Response\Stats $stats,
+		private \Spameri\ElasticQuery\Response\Shards $shards,
 		private \Spameri\ElasticQuery\Response\Result\HitCollection $hitCollection,
 		private \Spameri\ElasticQuery\Response\Result\AggregationCollection $aggregationCollection,
 	)
 	{
-		$this->stats = $stats;
-		$this->shards = $shards;
 	}
 
 

@@ -48,7 +48,7 @@ abstract class AbstractStop implements \Spameri\ElasticQuery\Mapping\FilterInter
 
 		return [
 			$this->getName() => [
-				'type'      => $this->getType(),
+				'type' => $this->getType(),
 				'stopwords' => $stopWords,
 			],
 		];

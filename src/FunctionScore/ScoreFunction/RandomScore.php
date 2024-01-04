@@ -7,7 +7,9 @@ namespace Spameri\ElasticQuery\FunctionScore\ScoreFunction;
 class RandomScore implements \Spameri\ElasticQuery\FunctionScore\FunctionScoreInterface
 {
 
-	public function __construct(private string|null $seed = NULL)
+	public function __construct(
+		private string|null $seed = null,
+	)
 	{
 	}
 

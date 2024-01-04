@@ -12,10 +12,11 @@ class Nested implements \Spameri\ElasticQuery\Query\LeafQueryInterface
 
 	public function __construct(
 		private string $path,
-		\Spameri\ElasticQuery\Query\QueryCollection|null $query = NULL,
-	) {
+		\Spameri\ElasticQuery\Query\QueryCollection|null $query = null,
+	)
+	{
 
-		if ($query === NULL) {
+		if ($query === null) {
 			$query = new \Spameri\ElasticQuery\Query\QueryCollection();
 		}
 

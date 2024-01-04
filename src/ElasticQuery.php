@@ -19,28 +19,28 @@ class ElasticQuery implements \Spameri\ElasticQuery\Entity\ArrayInterface
 	private \Spameri\ElasticQuery\Options $options;
 
 	public function __construct(
-		\Spameri\ElasticQuery\Query\QueryCollection|null $query = NULL,
-		\Spameri\ElasticQuery\Filter\FilterCollection|null $filter = NULL,
-		\Spameri\ElasticQuery\Options\SortCollection|null $sort = NULL,
-		\Spameri\ElasticQuery\Aggregation\AggregationCollection|null $aggregation = NULL,
-		private \Spameri\ElasticQuery\Highlight|null $highlight = NULL,
-		private \Spameri\ElasticQuery\FunctionScore|null $functionScore = NULL,
-		\Spameri\ElasticQuery\Options|null $options = NULL,
+		\Spameri\ElasticQuery\Query\QueryCollection|null $query = null,
+		\Spameri\ElasticQuery\Filter\FilterCollection|null $filter = null,
+		\Spameri\ElasticQuery\Options\SortCollection|null $sort = null,
+		\Spameri\ElasticQuery\Aggregation\AggregationCollection|null $aggregation = null,
+		private \Spameri\ElasticQuery\Highlight|null $highlight = null,
+		private \Spameri\ElasticQuery\FunctionScore|null $functionScore = null,
+		\Spameri\ElasticQuery\Options|null $options = null,
 	)
 	{
-		if ($query === NULL) {
+		if ($query === null) {
 			$query = new \Spameri\ElasticQuery\Query\QueryCollection();
 		}
-		if ($filter === NULL) {
+		if ($filter === null) {
 			$filter = new \Spameri\ElasticQuery\Filter\FilterCollection();
 		}
-		if ($sort === NULL) {
+		if ($sort === null) {
 			$sort = new \Spameri\ElasticQuery\Options\SortCollection();
 		}
-		if ($aggregation === NULL) {
+		if ($aggregation === null) {
 			$aggregation = new \Spameri\ElasticQuery\Aggregation\AggregationCollection();
 		}
-		if ($options === NULL) {
+		if ($options === null) {
 			$options = new \Spameri\ElasticQuery\Options();
 		}
 
@@ -127,7 +127,7 @@ class ElasticQuery implements \Spameri\ElasticQuery\Entity\ArrayInterface
 			$array['query'] = $queryArray;
 		}
 
-		if ($this->functionScore !== NULL) {
+		if ($this->functionScore !== null) {
 			$array['query'] = $this->functionScore->toArray($array['query']);
 		}
 
@@ -146,7 +146,7 @@ class ElasticQuery implements \Spameri\ElasticQuery\Entity\ArrayInterface
 			$array['aggs'] = $aggregation;
 		}
 
-		if ($this->highlight !== NULL) {
+		if ($this->highlight !== null) {
 			$array['highlight'] = $this->highlight->toArray();
 		}
 

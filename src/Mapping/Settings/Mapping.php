@@ -11,12 +11,12 @@ class Mapping implements \Spameri\ElasticQuery\Entity\ArrayInterface
 
 	public function __construct(
 		private string $indexName,
-		\Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldCollection|null $fields = NULL,
-		private bool $dynamic = TRUE,
+		\Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldCollection|null $fields = null,
+		private bool $dynamic = true,
 	)
 	{
 
-		if ($fields === NULL) {
+		if ($fields === null) {
 			$fields = new \Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldCollection();
 		}
 
@@ -25,7 +25,7 @@ class Mapping implements \Spameri\ElasticQuery\Entity\ArrayInterface
 
 	public function enableStrictMapping(): void
 	{
-		$this->dynamic = FALSE;
+		$this->dynamic = false;
 	}
 
 	public function getIndexName(): string

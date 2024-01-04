@@ -7,12 +7,12 @@ namespace SpameriTests\ElasticQuery;
 class VersionCheck
 {
 
-	private static \Spameri\ElasticQuery\Response\ResultMapper $resultMapper;
+	private static \Spameri\ElasticQuery\Response\ResultMapper|null $resultMapper = null;
 
 
 	public static function check(): \Spameri\ElasticQuery\Response\ResultVersion
 	{
-		if (self::$resultMapper === NULL) {
+		if (self::$resultMapper === null) {
 			self::$resultMapper = new \Spameri\ElasticQuery\Response\ResultMapper();
 		}
 
@@ -20,7 +20,7 @@ class VersionCheck
 		$resultObject = self::$resultMapper->map(
 			\json_decode(
 				(string) \file_get_contents('http://127.0.0.1:9200'),
-				TRUE,
+				true,
 			),
 		);
 

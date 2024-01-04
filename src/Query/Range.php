@@ -11,18 +11,14 @@ namespace Spameri\ElasticQuery\Query;
 class Range implements LeafQueryInterface
 {
 
-	/**
-	 * @param int|float|string|\DateTimeInterface|null $gte
-	 * @param int|float|string|\DateTimeInterface|null $lte
-	 */
 	public function __construct(
 		private string $field,
-		private $gte = NULL,
-		private $lte = NULL,
+		private float|\DateTimeInterface|int|string|null $gte = null,
+		private float|\DateTimeInterface|int|string|null $lte = null,
 		private float $boost = 1.0,
 	)
 	{
-		if ($gte === NULL && $lte === NULL) {
+		if ($gte === null && $lte === null) {
 			throw new \Spameri\ElasticQuery\Exception\InvalidArgumentException(
 				'Range must have at least one border value.',
 			);
@@ -70,14 +66,14 @@ class Range implements LeafQueryInterface
 			],
 		];
 
-		if ($this->gte !== NULL) {
+		if ($this->gte !== null) {
 			$array['range'][$this->field]['gte'] =
 				$this->gte instanceof \DateTimeInterface
 					? $this->gte->format('Y-m-d H:i:s')
 					: $this->gte;
 		}
 
-		if ($this->lte !== NULL) {
+		if ($this->lte !== null) {
 			$array['range'][$this->field]['lte'] =
 				$this->lte instanceof \DateTimeInterface
 					? $this->lte->format('Y-m-d H:i:s')

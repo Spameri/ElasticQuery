@@ -27,20 +27,13 @@ class Hit
 	}
 
 
-	/**
-	 * @phpstan-return mixed
-	 */
 	public function getValue(
 		string $key,
-	)
+	): mixed
 	{
 		$value = $this->getSubValue($key);
 
-		if ($value !== NULL) {
-			return $value;
-		}
-
-		return $this->source[$key] ?? NULL;
+		return $value ?? $this->source[$key] ?? null;
 	}
 
 
@@ -48,7 +41,7 @@ class Hit
 	{
 		if (
 			isset($this->source[$key])
-			&& \is_string($this->source[$key]) === TRUE
+			&& \is_string($this->source[$key]) === true
 		) {
 			return $this->source[$key];
 		}
@@ -63,7 +56,7 @@ class Hit
 			return $this->getStringValue($key);
 
 		} catch (\Spameri\ElasticQuery\Exception\InvalidArgumentException $exception) {
-			return NULL;
+			return null;
 		}
 	}
 
@@ -72,7 +65,7 @@ class Hit
 	{
 		if (
 			isset($this->source[$key])
-			&& \is_array($this->source[$key]) === TRUE
+			&& \is_array($this->source[$key]) === true
 		) {
 			return $this->source[$key];
 		}
@@ -87,7 +80,7 @@ class Hit
 			return $this->getArrayValue($key);
 
 		} catch (\Spameri\ElasticQuery\Exception\InvalidArgumentException $exception) {
-			return NULL;
+			return null;
 		}
 	}
 
@@ -96,7 +89,7 @@ class Hit
 	{
 		if (
 			isset($this->source[$key])
-			&& \is_bool($this->source[$key]) === TRUE
+			&& \is_bool($this->source[$key]) === true
 		) {
 			return $this->source[$key];
 		}
@@ -111,7 +104,7 @@ class Hit
 			return $this->getBoolValue($key);
 
 		} catch (\Spameri\ElasticQuery\Exception\InvalidArgumentException $exception) {
-			return NULL;
+			return null;
 		}
 	}
 
@@ -120,7 +113,7 @@ class Hit
 	{
 		if (
 			isset($this->source[$key])
-			&& \is_int($this->source[$key]) === TRUE
+			&& \is_int($this->source[$key]) === true
 		) {
 			return $this->source[$key];
 		}
@@ -135,7 +128,7 @@ class Hit
 			return $this->getIntegerValue($key);
 
 		} catch (\Spameri\ElasticQuery\Exception\InvalidArgumentException $exception) {
-			return NULL;
+			return null;
 		}
 	}
 
@@ -144,7 +137,7 @@ class Hit
 	{
 		if (
 			isset($this->source[$key])
-			&& \is_float($this->source[$key]) === TRUE
+			&& \is_float($this->source[$key]) === true
 		) {
 			return $this->source[$key];
 		}
@@ -159,32 +152,29 @@ class Hit
 			return $this->getFloatValue($key);
 
 		} catch (\Spameri\ElasticQuery\Exception\InvalidArgumentException $exception) {
-			return NULL;
+			return null;
 		}
 	}
 
 
-	/**
-	 * @phpstan-return mixed
-	 */
-	public function getSubValue($key)
+	public function getSubValue(string $key): mixed
 	{
-		if (\str_contains($key, \Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldSeparator::FIELD_SEPARATOR) === TRUE) {
+		if (\str_contains($key, \Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldSeparator::FIELD_SEPARATOR) === true) {
 			$levels = \explode(\Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldSeparator::FIELD_SEPARATOR, $key);
 
-			$value = $this->source[$levels[0]] ?? NULL;
+			$value = $this->source[$levels[0]] ?? null;
 			unset($levels[0]);
 
 			foreach ($levels as $subKey) {
-				$value = $value[$subKey] ?? NULL;
+				$value = $value[$subKey] ?? null;
 
-				if ($value !== NULL) {
+				if ($value !== null) {
 					return $value;
 				}
 			}
 		}
 
-		return NULL;
+		return null;
 	}
 
 

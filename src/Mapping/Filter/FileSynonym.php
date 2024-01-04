@@ -45,7 +45,7 @@ class FileSynonym implements \Spameri\ElasticQuery\Mapping\FilterInterface
 	{
 		return [
 			$this->getName() => [
-				'type'      => $this->getType(),
+				'type' => $this->getType(),
 				'synonyms_path' => $this->path,
 			],
 		];

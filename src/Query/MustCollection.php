@@ -15,7 +15,7 @@ class MustCollection implements \Spameri\ElasticQuery\Collection\QueryCollection
 
 
 	public function __construct(
-		\Spameri\ElasticQuery\Query\LeafQueryInterface ... $collection,
+		\Spameri\ElasticQuery\Query\LeafQueryInterface ...$collection,
 	)
 	{
 		$this->collection = [];
@@ -40,10 +40,10 @@ class MustCollection implements \Spameri\ElasticQuery\Collection\QueryCollection
 		if (isset($this->collection[$key])) {
 			unset($this->collection[$key]);
 
-			return TRUE;
+			return true;
 		}
 
-		return FALSE;
+		return false;
 	}
 
 
@@ -51,11 +51,7 @@ class MustCollection implements \Spameri\ElasticQuery\Collection\QueryCollection
 		string $key,
 	): \Spameri\ElasticQuery\Query\LeafQueryInterface|null
 	{
-		if (isset($this->collection[$key])) {
-			return $this->collection[$key];
-		}
-
-		return NULL;
+		return $this->collection[$key] ?? null;
 	}
 
 
@@ -64,10 +60,10 @@ class MustCollection implements \Spameri\ElasticQuery\Collection\QueryCollection
 	): bool
 	{
 		if (isset($this->collection[$key])) {
-			return TRUE;
+			return true;
 		}
 
-		return FALSE;
+		return false;
 	}
 
 

@@ -36,8 +36,8 @@ class Terms implements LeafQueryInterface
 	{
 		return [
 			'terms' => [
-				$this->field 	=> $this->query,
-				'boost' 		=> $this->boost,
+				$this->field => $this->query,
+				'boost' => $this->boost,
 			],
 		];
 	}

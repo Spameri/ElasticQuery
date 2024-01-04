@@ -9,7 +9,8 @@ class Min implements \Spameri\ElasticQuery\Aggregation\LeafAggregationInterface
 
 	public function __construct(
 		private string $field,
-	) {
+	)
+	{
 	}
 
 

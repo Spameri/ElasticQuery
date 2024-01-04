@@ -9,7 +9,8 @@ class TopHits implements \Spameri\ElasticQuery\Aggregation\LeafAggregationInterf
 
 	public function __construct(
 		private int $size,
-	) {
+	)
+	{
 	}
 
 

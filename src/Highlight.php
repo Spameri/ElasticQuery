@@ -11,7 +11,8 @@ class Highlight implements \Spameri\ElasticQuery\Entity\ArrayInterface
 		private array $preTags,
 		private array $postTags,
 		private array $fields,
-	) {
+	)
+	{
 	}
 
 

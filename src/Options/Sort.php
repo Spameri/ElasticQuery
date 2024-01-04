@@ -22,12 +22,12 @@ class Sort implements \Spameri\ElasticQuery\Entity\EntityInterface
 		private string $missing = self::MISSING_LAST,
 	)
 	{
-		if ( ! \in_array($type, [self::ASC, self::DESC], TRUE)) {
+		if ( ! \in_array($type, [self::ASC, self::DESC], true)) {
 			throw new \Spameri\ElasticQuery\Exception\InvalidArgumentException(
 				'Sorting type ' . $type . ' is out of allowed range. See \Spameri\ElasticQuery\Options\Sort for reference.',
 			);
 		}
-		if ( ! \in_array($missing, [self::MISSING_FIRST, self::MISSING_LAST], TRUE)) {
+		if ( ! \in_array($missing, [self::MISSING_FIRST, self::MISSING_LAST], true)) {
 			throw new \Spameri\ElasticQuery\Exception\InvalidArgumentException(
 				'Sorting by missing value on filed ' . $field . ' is out of allowed range. See \Spameri\ElasticQuery\Options\Sort for reference.',
 			);

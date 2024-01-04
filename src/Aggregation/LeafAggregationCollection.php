@@ -8,8 +8,6 @@ namespace Spameri\ElasticQuery\Aggregation;
 class LeafAggregationCollection implements LeafAggregationInterface, \IteratorAggregate
 {
 
-	private \Spameri\ElasticQuery\Filter\FilterCollection $filter;
-
 	/**
 	 * @var array<\Spameri\ElasticQuery\Aggregation\LeafAggregationInterface>
 	 */
@@ -18,8 +16,8 @@ class LeafAggregationCollection implements LeafAggregationInterface, \IteratorAg
 
 	public function __construct(
 		private string $name,
-		\Spameri\ElasticQuery\Filter\FilterCollection|null $filter,
-		\Spameri\ElasticQuery\Aggregation\LeafAggregationInterface ... $aggregations,
+		private \Spameri\ElasticQuery\Filter\FilterCollection|null $filter,
+		\Spameri\ElasticQuery\Aggregation\LeafAggregationInterface ...$aggregations,
 	)
 	{
 		if ( ! $filter) {

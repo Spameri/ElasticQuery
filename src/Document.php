@@ -8,26 +8,14 @@ namespace Spameri\ElasticQuery;
 class Document implements \Spameri\ElasticQuery\Entity\ArrayInterface
 {
 
-	private ?string $index = NULL;
-
-	private ?\Spameri\ElasticQuery\Document\BodyInterface $body = NULL;
-
-	private ?string $type = NULL;
-
-	private ?string $id = NULL;
-
 	public function __construct(
-		string|null $index,
-		\Spameri\ElasticQuery\Document\BodyInterface|null $body = NULL,
-		string|null $type = NULL,
-		string|null $id = NULL,
+		private string|null $index,
+		private \Spameri\ElasticQuery\Document\BodyInterface|null $body = null,
+		private string|null $type = null,
+		private string|null $id = null,
 		private array $options = [],
 	)
 	{
-		$this->index = $index;
-		$this->body = $body;
-		$this->type = $type;
-		$this->id = $id;
 	}
 
 

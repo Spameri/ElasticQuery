@@ -6,8 +6,8 @@ namespace Spameri\ElasticQuery\FunctionScore;
 
 interface FunctionScoreInterface
 	extends
-		\Spameri\ElasticQuery\Entity\ArrayInterface,
-		\Spameri\ElasticQuery\Collection\Item
+	\Spameri\ElasticQuery\Entity\ArrayInterface,
+	\Spameri\ElasticQuery\Collection\Item
 {
 
 }

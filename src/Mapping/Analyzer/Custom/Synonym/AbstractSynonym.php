@@ -11,19 +11,13 @@ abstract class AbstractSynonym
 
 	protected \Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection $filter;
 
-	protected ?\Spameri\ElasticQuery\Mapping\Filter\AbstractStop $stopFilter = NULL;
-
-	protected ?string $filePath = NULL;
-
 
 	public function __construct(
-		\Spameri\ElasticQuery\Mapping\Filter\AbstractStop|null $stopFilter = NULL,
-		protected array $synonyms= [],
-		string|null $filePath = NULL,
+		protected \Spameri\ElasticQuery\Mapping\Filter\AbstractStop|null $stopFilter = null,
+		protected array $synonyms = [],
+		protected string|null $filePath = null,
 	)
 	{
-		$this->stopFilter = $stopFilter;
-		$this->filePath = $filePath;
 	}
 
 
@@ -66,9 +60,9 @@ abstract class AbstractSynonym
 
 		return [
 			$this->name() => [
-				'type'      => $this->getType(),
+				'type' => $this->getType(),
 				'tokenizer' => $this->tokenizer(),
-				'filter'    => $filterArray,
+				'filter' => $filterArray,
 			],
 		];
 	}

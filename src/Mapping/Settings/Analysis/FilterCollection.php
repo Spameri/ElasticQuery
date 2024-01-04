@@ -14,7 +14,7 @@ class FilterCollection implements \Spameri\ElasticQuery\Collection\SimpleCollect
 
 
 	public function __construct(
-		\Spameri\ElasticQuery\Mapping\FilterInterface ... $collection,
+		\Spameri\ElasticQuery\Mapping\FilterInterface ...$collection,
 	)
 	{
 		$this->collection = [];
@@ -42,10 +42,10 @@ class FilterCollection implements \Spameri\ElasticQuery\Collection\SimpleCollect
 		if (isset($this->collection[$key])) {
 			unset($this->collection[$key]);
 
-			return TRUE;
+			return true;
 		}
 
-		return FALSE;
+		return false;
 	}
 
 
@@ -53,11 +53,7 @@ class FilterCollection implements \Spameri\ElasticQuery\Collection\SimpleCollect
 		string $key,
 	): \Spameri\ElasticQuery\Mapping\FilterInterface|null
 	{
-		if (isset($this->collection[$key])) {
-			return $this->collection[$key];
-		}
-
-		return NULL;
+		return $this->collection[$key] ?? null;
 	}
 
 
@@ -66,10 +62,10 @@ class FilterCollection implements \Spameri\ElasticQuery\Collection\SimpleCollect
 	): bool
 	{
 		if (isset($this->collection[$key])) {
-			return TRUE;
+			return true;
 		}
 
-		return FALSE;
+		return false;
 	}
 
 

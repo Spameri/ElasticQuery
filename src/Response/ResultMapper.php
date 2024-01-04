@@ -59,21 +59,21 @@ class ResultMapper
 	): ResultVersion
 	{
 		return new ResultVersion(
-			$elasticSearchResponse['name'],
-			$elasticSearchResponse['cluster_name'],
-			$elasticSearchResponse['cluster_uuid'],
-			new \Spameri\ElasticQuery\Response\Result\Version(
-				$elasticSearchResponse['version']['number'],
-				$elasticSearchResponse['version']['build_flavor'] ?? NULL,
-				$elasticSearchResponse['version']['build_type'] ?? NULL,
-				$elasticSearchResponse['version']['build_hash'],
-				$elasticSearchResponse['version']['build_date'] ?? NULL,
-				$elasticSearchResponse['version']['build_snapshot'],
-				$elasticSearchResponse['version']['lucene_version'],
-				$elasticSearchResponse['version']['minimum_wire_compatibility_version'] ?? NULL,
-				$elasticSearchResponse['version']['minimum_index_compatibility_version'] ?? NULL,
+			name: $elasticSearchResponse['name'],
+			clusterName: $elasticSearchResponse['cluster_name'],
+			clusterUUID: $elasticSearchResponse['cluster_uuid'],
+			version: new \Spameri\ElasticQuery\Response\Result\Version(
+				number: $elasticSearchResponse['version']['number'],
+				buildHash: $elasticSearchResponse['version']['build_hash'],
+				buildSnapshot: $elasticSearchResponse['version']['build_snapshot'],
+				luceneVersion: $elasticSearchResponse['version']['lucene_version'],
+				buildFlavor: $elasticSearchResponse['version']['build_flavor'] ?? null,
+				buildType: $elasticSearchResponse['version']['build_type'] ?? null,
+				buildDate: $elasticSearchResponse['version']['build_date'] ?? null,
+				minimumWireCompatibility: $elasticSearchResponse['version']['minimum_wire_compatibility_version'] ?? null,
+				minimumIndexCompatibility: $elasticSearchResponse['version']['minimum_index_compatibility_version'] ?? null,
 			),
-			$elasticSearchResponse['tagline'],
+			tagLine: $elasticSearchResponse['tagline'],
 		);
 	}
 
@@ -205,9 +205,11 @@ class ResultMapper
 			&& ! isset($aggregationArray[$name]['buckets'])
 			&& isset($aggregationArray['value'])
 		) {
-			$buckets[] = $this->mapBucket(0, [
+			$buckets[] = $this->mapBucket(
+				0, [
 				'doc_count' => $aggregationArray['value'],
-			]);
+			],
+			);
 		}
 
 		if (isset($aggregationArray['doc_count']) && $aggregationArray['doc_count'] > 0) {
@@ -252,9 +254,9 @@ class ResultMapper
 		return new \Spameri\ElasticQuery\Response\Result\Aggregation\Bucket(
 			$bucketArray['key'] ?? (string) $bucketPosition,
 			$bucketArray['doc_count'],
-			\is_int($bucketPosition) ? $bucketPosition : NULL,
-			$bucketArray['from'] ?? NULL,
-			$bucketArray['to'] ?? NULL,
+			\is_int($bucketPosition) ? $bucketPosition : null,
+			$bucketArray['from'] ?? null,
+			$bucketArray['to'] ?? null,
 		);
 	}
 

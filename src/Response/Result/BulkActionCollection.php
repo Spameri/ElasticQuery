@@ -9,19 +9,14 @@ class BulkActionCollection implements \IteratorAggregate
 {
 
 	/**
-
-
 	 *
 	 * @var array<\Spameri\ElasticQuery\Response\Result\BulkAction>
-	
-
-
 	 */
 	private array $bulkActions;
 
 
 	public function __construct(
-		BulkAction ... $bulkActions,
+		BulkAction ...$bulkActions,
 	)
 	{
 		$this->bulkActions = $bulkActions;

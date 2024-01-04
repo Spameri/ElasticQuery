@@ -15,7 +15,7 @@ class RangeValueCollection implements \IteratorAggregate
 
 
 	public function __construct(
-		RangeValue ... $collection,
+		RangeValue ...$collection,
 	)
 	{
 		$this->collection = $collection;

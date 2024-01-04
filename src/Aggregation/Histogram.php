@@ -29,7 +29,7 @@ class Histogram implements LeafAggregationInterface
 	{
 		return [
 			'histogram' => [
-				'field'    => $this->field,
+				'field' => $this->field,
 				'interval' => $this->interval,
 			],
 		];

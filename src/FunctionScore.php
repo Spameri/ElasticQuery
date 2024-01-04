@@ -17,9 +17,10 @@ class FunctionScore
 	private \Spameri\ElasticQuery\FunctionScore\FunctionScoreCollection $function;
 
 	public function __construct(
-		\Spameri\ElasticQuery\FunctionScore\FunctionScoreCollection|null $function = NULL,
-		private string|null $scoreMode = NULL,
-	) {
+		\Spameri\ElasticQuery\FunctionScore\FunctionScoreCollection|null $function = null,
+		private string|null $scoreMode = null,
+	)
+	{
 		$this->function = $function ?? new \Spameri\ElasticQuery\FunctionScore\FunctionScoreCollection();
 	}
 
@@ -50,7 +51,7 @@ class FunctionScore
 			],
 		];
 
-		if ($this->scoreMode !== NULL) {
+		if ($this->scoreMode !== null) {
 			$array['function_score']['score_mode'] = $this->scoreMode;
 		}
 

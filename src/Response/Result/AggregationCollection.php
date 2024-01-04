@@ -9,19 +9,14 @@ class AggregationCollection implements \IteratorAggregate
 {
 
 	/**
-
-
 	 *
 	 * @var array<\Spameri\ElasticQuery\Response\Result\Aggregation>
-	
-
-
 	 */
 	private array $aggregations;
 
 
 	public function __construct(
-		\Spameri\ElasticQuery\Response\Result\Aggregation ... $aggregations,
+		\Spameri\ElasticQuery\Response\Result\Aggregation ...$aggregations,
 	)
 	{
 		$this->aggregations = $aggregations;
@@ -39,12 +34,12 @@ class AggregationCollection implements \IteratorAggregate
 	): \Spameri\ElasticQuery\Response\Result\Aggregation|null
 	{
 		foreach ($this->aggregations as $aggregation) {
-if ($aggregation->name() === $name) {
-return $aggregation;
+			if ($aggregation->name() === $name) {
+				return $aggregation;
 			}
 		}
 
-		return NULL;
+		return null;
 	}
 
 }

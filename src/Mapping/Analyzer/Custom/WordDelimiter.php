@@ -15,10 +15,10 @@ class WordDelimiter implements \Spameri\ElasticQuery\Mapping\CustomAnalyzerInter
 
 
 	public function __construct(
-		\Spameri\ElasticQuery\Mapping\Filter\AbstractStop|null $stopFilter = NULL,
+		\Spameri\ElasticQuery\Mapping\Filter\AbstractStop|null $stopFilter = null,
 	)
 	{
-		if ($stopFilter === NULL) {
+		if ($stopFilter === null) {
 			$stopFilter = new \Spameri\ElasticQuery\Mapping\Filter\Stop\Czech();
 		}
 		$this->stopFilter = $stopFilter;

@@ -17,10 +17,10 @@ class EdgeNgram implements \Spameri\ElasticQuery\Mapping\CustomAnalyzerInterface
 	public function __construct(
 		private int $minGram = 2,
 		private int $maxGram = 6,
-		\Spameri\ElasticQuery\Mapping\Filter\AbstractStop|null $stopFilter = NULL,
+		\Spameri\ElasticQuery\Mapping\Filter\AbstractStop|null $stopFilter = null,
 	)
 	{
-		if ($stopFilter === NULL) {
+		if ($stopFilter === null) {
 			$stopFilter = new \Spameri\ElasticQuery\Mapping\Filter\Stop\Czech();
 		}
 		$this->stopFilter = $stopFilter;

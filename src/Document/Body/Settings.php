@@ -27,7 +27,7 @@ class Settings implements \Spameri\ElasticQuery\Document\BodyInterface
 		$filters = [];
 		/** @var \Spameri\ElasticQuery\Mapping\FilterInterface $filter */
 		foreach ($this->filter as $filter) {
-			if ($filter->toArray() === [] ) {
+			if ($filter->toArray() === []) {
 				continue;
 			}
 			$filters[$filter->key()] = $filter->toArray()[$filter->key()];

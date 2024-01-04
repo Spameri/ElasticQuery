@@ -12,7 +12,8 @@ class PhrasePrefix implements \Spameri\ElasticQuery\Query\LeafQueryInterface
 		private string $queryString,
 		private int $boost = 1,
 		private int $slop = 1,
-	) {
+	)
+	{
 	}
 
 

@@ -39,7 +39,7 @@ class EnglishSynonym extends \Spameri\ElasticQuery\Mapping\Analyzer\Custom\Synon
 				);
 			}
 
-			if ($this->filePath !== NULL) {
+			if ($this->filePath !== null) {
 				$this->filter->add(
 					new \Spameri\ElasticQuery\Mapping\Filter\FileSynonym(
 						$this->filePath,

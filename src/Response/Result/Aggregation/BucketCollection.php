@@ -9,19 +9,14 @@ class BucketCollection implements \IteratorAggregate
 {
 
 	/**
-
-
 	 *
 	 * @var array<\Spameri\ElasticQuery\Response\Result\Aggregation\Bucket>
-	
-
-
 	 */
 	private array $buckets;
 
 
 	public function __construct(
-		\Spameri\ElasticQuery\Response\Result\Aggregation\Bucket ... $buckets,
+		\Spameri\ElasticQuery\Response\Result\Aggregation\Bucket ...$buckets,
 	)
 	{
 		$this->buckets = $buckets;

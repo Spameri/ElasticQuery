@@ -8,18 +8,13 @@ namespace Spameri\ElasticQuery\Filter;
 class FilterCollection implements FilterInterface
 {
 
-	private \Spameri\ElasticQuery\Query\MustCollection $mustCollection;
-
-
 	public function __construct(
-		\Spameri\ElasticQuery\Query\MustCollection|null $mustCollection = NULL,
+		private \Spameri\ElasticQuery\Query\MustCollection|null $mustCollection = null,
 	)
 	{
-		if ( ! $mustCollection) {
-			$mustCollection = new \Spameri\ElasticQuery\Query\MustCollection();
+		if ($this->mustCollection === null) {
+			$this->mustCollection = new \Spameri\ElasticQuery\Query\MustCollection();
 		}
-
-		$this->mustCollection = $mustCollection;
 	}
 
 
