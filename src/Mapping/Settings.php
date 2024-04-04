@@ -16,6 +16,7 @@ class Settings implements \Spameri\ElasticQuery\Entity\ArrayInterface
 
 	public function __construct(
 		private string $indexName,
+		private bool $hasSti = false,
 		\Spameri\ElasticQuery\Mapping\Settings\Analysis|null $analysis = null,
 		\Spameri\ElasticQuery\Mapping\Settings\Mapping|null $mapping = null,
 		\Spameri\ElasticQuery\Mapping\Settings\AliasCollection|null $alias = null,
@@ -42,6 +43,10 @@ class Settings implements \Spameri\ElasticQuery\Entity\ArrayInterface
 		return $this->indexName;
 	}
 
+	public function hasSti(): bool
+	{
+		return $this->hasSti;
+	}
 
 	public function changeIndexName(string $index): void
 	{
