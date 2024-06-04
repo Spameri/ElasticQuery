@@ -26,7 +26,7 @@ class Result extends \Tester\TestCase
 				'hits' => [
 					0 => [
 						'_index' => 'spameri_guessed-2018-11-29_21-25-34',
-						'_type' => 'spameri_guessed',
+						'_type' => '_doc',
 						'_id' => 'EWhVcWcBhsjlL-GzEP8i',
 						'_score' => 1.0,
 						'_source' => [
@@ -40,7 +40,7 @@ class Result extends \Tester\TestCase
 					],
 					1 => [
 						'_index' => 'spameri_guessed-2018-11-29_21-25-34',
-						'_type' => 'spameri_guessed',
+						'_type' => '_doc',
 						'_id' => 'yQ8Bi2cBx3V83AUUwx3m',
 						'_score' => 1.0,
 						'_source' => [

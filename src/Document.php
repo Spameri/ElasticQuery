@@ -9,25 +9,12 @@ class Document implements \Spameri\ElasticQuery\Entity\ArrayInterface
 {
 
 	public function __construct(
-		private string|null $index,
-		private \Spameri\ElasticQuery\Document\BodyInterface|null $body = null,
-		private string|null $type = null,
-		private string|null $id = null,
-		private array $options = [],
+		public string|null $index,
+		public \Spameri\ElasticQuery\Document\BodyInterface|null $body = null,
+		public string|null $id = null,
+		public array $options = [],
 	)
 	{
-	}
-
-
-	public function index(): string|null
-	{
-		return $this->index;
-	}
-
-
-	public function type(): string|null
-	{
-		return $this->type;
 	}
 
 
@@ -41,10 +28,6 @@ class Document implements \Spameri\ElasticQuery\Entity\ArrayInterface
 
 		if ($this->body) {
 			$array['body'] = $this->body->toArray();
-		}
-
-		if ($this->type) {
-			$array['type'] = $this->type;
 		}
 
 		if ($this->id) {

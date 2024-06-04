@@ -53,12 +53,11 @@ class Range extends \Tester\TestCase
 					)
 				)
 				)->toArray()
-			),
-			self::INDEX
+			)
 		);
 
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, 'localhost:9200/' . $document->index() . '/_search');
+		curl_setopt($ch, CURLOPT_URL, 'localhost:9200/' . $document->index . '/_search');
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
 		curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
