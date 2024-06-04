@@ -159,22 +159,22 @@ class Hit
 
 	public function getSubValue(string $key): mixed
 	{
-		if (\str_contains($key, \Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldSeparator::FIELD_SEPARATOR) === TRUE) {
+		if (\str_contains($key, \Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldSeparator::FIELD_SEPARATOR) === true) {
 			$levels = \explode(\Spameri\ElasticQuery\Mapping\Settings\Mapping\FieldSeparator::FIELD_SEPARATOR, $key);
 
-			$value = $this->source[$levels[0]] ?? NULL;
+			$value = $this->source[$levels[0]] ?? null;
 			unset($levels[0]);
 
 			foreach ($levels as $subKey) {
-				$value = $value[$subKey] ?? NULL;
+				$value = $value[$subKey] ?? null;
 			}
 
-			if ($value !== NULL) {
+			if ($value !== null) {
 				return $value;
 			}
 		}
 
-		return NULL;
+		return null;
 	}
 
 
