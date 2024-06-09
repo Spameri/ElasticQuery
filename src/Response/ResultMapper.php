@@ -115,7 +115,7 @@ class ResultMapper
 			$hit['_source'] ?? [],
 			$position,
 			$hit['_index'],
-			$hit['_type'],
+			$hit['_type'] ?? '_doc',
 			$hit['_id'],
 			$hit['_score'] ?? 1,
 			$hit['version'] ?? 0,
@@ -146,7 +146,7 @@ class ResultMapper
 		return new \Spameri\ElasticQuery\Response\Result\BulkAction(
 			$actionType,
 			$bulkAction['_index'],
-			$bulkAction['_type'],
+			$bulkAction['_type'] ?? '_doc',
 			$bulkAction['_id'],
 			$bulkAction['_version'],
 			$bulkAction['result'],
