@@ -186,6 +186,7 @@ class ResultMapper
 	{
 		$i = 0;
 		$buckets = [];
+		$hits = [];
 		$aggregations = [];
 
 		if (isset($aggregationArray['buckets'])) {
@@ -197,6 +198,12 @@ class ResultMapper
 		if (isset($aggregationArray[$name]['buckets'])) {
 			foreach ($aggregationArray[$name]['buckets'] as $bucketPosition => $bucket) {
 				$buckets[] = $this->mapBucket($bucketPosition, $bucket);
+			}
+		}
+
+		if (isset($aggregationArray[$name]['hits'])) {
+			foreach ($aggregationArray[$name]['hits'] as $hitPosition => $hit) {
+				$hits[] = $this->mapHit($hit, $hitPosition);
 			}
 		}
 
@@ -241,6 +248,9 @@ class ResultMapper
 			),
 			new \Spameri\ElasticQuery\Response\Result\AggregationCollection(
 				... $aggregations,
+			),
+			new \Spameri\ElasticQuery\Response\Result\HitCollection(
+				... $hits,
 			),
 		);
 	}

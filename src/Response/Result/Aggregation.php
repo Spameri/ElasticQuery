@@ -13,6 +13,7 @@ class Aggregation
 		private int $position,
 		private \Spameri\ElasticQuery\Response\Result\Aggregation\BucketCollection $bucketCollection,
 		private \Spameri\ElasticQuery\Response\Result\AggregationCollection $aggregations,
+		private \Spameri\ElasticQuery\Response\Result\HitCollection $hits,
 	)
 	{
 	}
@@ -33,6 +34,12 @@ class Aggregation
 	public function buckets(): \Spameri\ElasticQuery\Response\Result\Aggregation\BucketCollection
 	{
 		return $this->bucketCollection;
+	}
+
+
+	public function hits(): \Spameri\ElasticQuery\Response\Result\HitCollection
+	{
+		return $this->hits;
 	}
 
 

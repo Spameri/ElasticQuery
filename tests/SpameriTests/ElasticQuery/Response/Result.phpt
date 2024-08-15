@@ -101,6 +101,9 @@ class Result extends \Tester\TestCase
 			}
 		}
 
+		// HITS tests
+		\Tester\Assert::count(0, $aggregation->hits());
+
 		// STATS tests
 		\Tester\Assert::same(FALSE, $resultObject->stats()->timedOut());
 		\Tester\Assert::same(37, $resultObject->stats()->took());
