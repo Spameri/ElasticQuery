@@ -201,9 +201,9 @@ class ResultMapper
 			}
 		}
 
-		if (isset($aggregationArray[$name]['hits'])) {
-			foreach ($aggregationArray[$name]['hits'] as $hitPosition => $hit) {
-				$hits[] = $this->mapHit($hit, $hitPosition);
+		if (isset($aggregationArray['hits']['hits'])) {
+			foreach ($aggregationArray['hits']['hits'] as $hitPosition => $hit) {
+				$hits[] = $this->mapHit($hit, (int) $hitPosition);
 			}
 		}
 
