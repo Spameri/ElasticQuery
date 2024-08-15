@@ -34,4 +34,18 @@ class HitCollection implements \IteratorAggregate, \Countable
 		return \count($this->hits);
 	}
 
+
+	/**
+	 * @return array<string>
+	 */
+	public function ids(): array
+	{
+		$ids = [];
+		foreach ($this->hits as $hit) {
+			$ids[] = $hit->id();
+		}
+
+		return $ids;
+	}
+
 }
