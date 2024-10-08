@@ -40,10 +40,9 @@ class Hit
 	public function getStringValue(string $key): string
 	{
 		if (
-			isset($this->source[$key])
-			&& \is_string($this->source[$key]) === true
+			\is_string($this->getValue($key)) === true
 		) {
-			return $this->source[$key];
+			return $this->getValue($key);
 		}
 
 		throw new \Spameri\ElasticQuery\Exception\InvalidArgumentException(\sprintf('Value for key %s is not string.', $key));
@@ -64,10 +63,9 @@ class Hit
 	public function getArrayValue(string $key): array
 	{
 		if (
-			isset($this->source[$key])
-			&& \is_array($this->source[$key]) === true
+			\is_array($this->getValue($key)) === true
 		) {
-			return $this->source[$key];
+			return $this->getValue($key);
 		}
 
 		throw new \Spameri\ElasticQuery\Exception\InvalidArgumentException(\sprintf('Value for key %s is not array.', $key));
@@ -88,10 +86,9 @@ class Hit
 	public function getBoolValue(string $key): bool
 	{
 		if (
-			isset($this->source[$key])
-			&& \is_bool($this->source[$key]) === true
+			\is_bool($this->getValue($key)) === true
 		) {
-			return $this->source[$key];
+			return $this->getValue($key);
 		}
 
 		throw new \Spameri\ElasticQuery\Exception\InvalidArgumentException(\sprintf('Value for key %s is not bool.', $key));
@@ -112,10 +109,9 @@ class Hit
 	public function getIntegerValue(string $key): int
 	{
 		if (
-			isset($this->source[$key])
-			&& \is_int($this->source[$key]) === true
+			\is_int($this->getValue($key)) === true
 		) {
-			return $this->source[$key];
+			return $this->getValue($key);
 		}
 
 		throw new \Spameri\ElasticQuery\Exception\InvalidArgumentException(\sprintf('Value for key %s is not integer.', $key));
@@ -136,10 +132,9 @@ class Hit
 	public function getFloatValue(string $key): float
 	{
 		if (
-			isset($this->source[$key])
-			&& \is_float($this->source[$key]) === true
+			\is_float($this->getValue($key)) === true
 		) {
-			return $this->source[$key];
+			return $this->getValue($key);
 		}
 
 		throw new \Spameri\ElasticQuery\Exception\InvalidArgumentException(\sprintf('Value for key %s is not float.', $key));
