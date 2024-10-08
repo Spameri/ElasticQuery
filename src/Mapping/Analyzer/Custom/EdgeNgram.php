@@ -9,7 +9,7 @@ class EdgeNgram implements \Spameri\ElasticQuery\Mapping\CustomAnalyzerInterface
 
 	public const NAME = 'customEdgeNgram';
 
-	private \Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection $filter;
+	protected \Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection|null $filter = null;
 
 	private \Spameri\ElasticQuery\Mapping\Filter\AbstractStop $stopFilter;
 

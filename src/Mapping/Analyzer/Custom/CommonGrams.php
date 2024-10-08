@@ -9,7 +9,7 @@ class CommonGrams implements \Spameri\ElasticQuery\Mapping\CustomAnalyzerInterfa
 
 	public const NAME = 'customCommonGrams';
 
-	private \Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection $filter;
+	protected \Spameri\ElasticQuery\Mapping\Settings\Analysis\FilterCollection|null $filter = null;
 
 	private \Spameri\ElasticQuery\Mapping\Filter\AbstractStop $stopFilter;
 
