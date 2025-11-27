@@ -1,79 +1,183 @@
-# Using with [ElasticSearch/ElasticSearch](https://github.com/elastic/elasticsearch-php)
-First we need to prepare query for what we want to search.
+# Usage
 
+This guide shows how to use ElasticQuery with different Elasticsearch clients.
+
+## Basic Concepts
+
+`\Spameri\ElasticQuery\ElasticQuery` is the main entry point for building queries. It composes:
+
+- **query()** - Boolean query context (must, should, mustNot) - affects scoring
+- **filter()** - Filter context - cached queries that don't affect scoring
+- **aggregation()** - Aggregation definitions
+- **options()** - Pagination, sorting, scroll settings
+- **highlight()** - Search result highlighting
+- **functionScore()** - Custom scoring functions
+
+Every query object implements `\Spameri\ElasticQuery\Query\LeafQueryInterface` and can be nested. Collections (MustCollection, ShouldCollection, MustNotCollection) also implement this interface, enabling complex nested boolean logic.
+
+## Building Queries
+
+### Simple Query
 ```php
 $query = new \Spameri\ElasticQuery\ElasticQuery();
-$query->query()->must()->add(
-	new \Spameri\ElasticQuery\Query\ElasticMatch(
-		'name',
-		'Avengers'
+$query->addMustQuery(
+	new \Spameri\ElasticQuery\Query\ElasticMatch('name', 'Avengers')
+);
+```
+
+### Boolean Query with Multiple Conditions
+```php
+$query = new \Spameri\ElasticQuery\ElasticQuery();
+
+// Must match (AND)
+$query->addMustQuery(new \Spameri\ElasticQuery\Query\ElasticMatch('title', 'elasticsearch'));
+
+// Should match (OR) - boosts score if matched
+$query->addShouldQuery(new \Spameri\ElasticQuery\Query\Term('category', 'tutorial'));
+
+// Must not match (NOT)
+$query->addMustNotQuery(new \Spameri\ElasticQuery\Query\Term('status', 'draft'));
+```
+
+### Using Filters (No Scoring, Cached)
+```php
+$query = new \Spameri\ElasticQuery\ElasticQuery();
+
+// Filters don't affect scoring and are cached
+$query->addFilter(new \Spameri\ElasticQuery\Query\Term('status', 'published'));
+$query->addFilter(new \Spameri\ElasticQuery\Query\Range('date', gte: '2024-01-01'));
+```
+
+### Nested Boolean Logic
+```php
+$query = new \Spameri\ElasticQuery\ElasticQuery();
+
+// Create a nested should collection
+$shouldCollection = new \Spameri\ElasticQuery\Query\ShouldCollection();
+$shouldCollection->add(new \Spameri\ElasticQuery\Query\Term('category', 'books'));
+$shouldCollection->add(new \Spameri\ElasticQuery\Query\Term('category', 'movies'));
+
+// Add the nested collection as a must condition
+$query->query()->must()->add($shouldCollection);
+```
+
+### With Aggregations
+```php
+$query = new \Spameri\ElasticQuery\ElasticQuery();
+$query->addMustQuery(new \Spameri\ElasticQuery\Query\ElasticMatch('content', 'search'));
+
+// Add term aggregation
+$query->addAggregation(
+	new \Spameri\ElasticQuery\Aggregation\LeafAggregationCollection(
+		'categories',
+		new \Spameri\ElasticQuery\Aggregation\Term('category')
 	)
 );
 ```
 
-`\Spameri\ElasticQuery\ElasticQuery` is base for every query you want to perform. 
-- It has must, should sections.
-- Every must, should section is collection of `\Spameri\ElasticQuery\Query\LeafQueryInterface` 
-item and should, must collection are also implementations of **LeafQueryInterface** so it allows you to nest them as you need.
+### With Pagination and Sorting
+```php
+$query = new \Spameri\ElasticQuery\ElasticQuery();
 
-Next we need to set up document to send to elasticsearch library.
+// Set pagination
+$query->options()->changeSize(20);
+$query->options()->changeFrom(40); // Skip first 40 results
+
+// Add sorting
+$query->options()->sort()->add(
+	new \Spameri\ElasticQuery\Options\Sort('date', \Spameri\ElasticQuery\Options\Sort::DESC)
+);
+```
+
+---
+
+# Using with [Elasticsearch/Elasticsearch](https://github.com/elastic/elasticsearch-php)
+
+Set up the document to send to the Elasticsearch library:
 ```php
 $document = new \Spameri\ElasticQuery\Document(
 	'spameri_video',
-	new \Spameri\ElasticQuery\Document\Body\Plain($elasticQuery->toArray())
+	new \Spameri\ElasticQuery\Document\Body\Plain($query->toArray())
 );
 ```
-- Document is very straightforward, you need to specify index in first argument and document body in second argument
-third argument is type if needed by you ElasticSearch version, also fourth is ID.
 
-Last you need to send document to ElasticSearch client.
+The Document constructor accepts:
+1. Index name (required)
+2. Body object (required)
+3. Type (optional, for older Elasticsearch versions)
+4. ID (optional, for single document operations)
+
+Send the document to the Elasticsearch client:
 ```php
-$response = \Elasticsearch\Client::search(
-	$document->toArray()
-);
+$response = $client->search($document->toArray());
 ```
 
-Elasticsearch library will return array as response. You can map this response to object like this:
+---
+
+# Response Mapping
+
+Elasticsearch returns array responses. Map them to typed objects:
+
+### Automatic Mapping
 ```php
 $resultMapper = new \Spameri\ElasticQuery\Response\ResultMapper();
 $resultObject = $resultMapper->map($response);
 ```
-Object is implementation of `\Spameri\ElasticQuery\Response\ResultInterface` depending on your type of query.
 
-Or you can map result to specific object by calling direct mapping methods.
-- For single result you get by searching by ID. (as parameter in document object)
+The mapper auto-detects the response type and returns the appropriate `ResultInterface` implementation.
+
+### Specific Mapping Methods
+
+For single document retrieval (by ID):
 ```php
-\Spameri\ElasticQuery\Response\ResultMapper::mapSingleResult($response);
+$result = \Spameri\ElasticQuery\Response\ResultMapper::mapSingleResult($response);
+// Returns: ResultSingle
 ```
-- For search response with multiple hits.
+
+For search responses with multiple hits:
 ```php
-\Spameri\ElasticQuery\Response\ResultMapper::mapSearchResults($response);
+$result = \Spameri\ElasticQuery\Response\ResultMapper::mapSearchResults($response);
+// Returns: ResultSearch with hits and aggregations
 ```
-- For bulk result, where you have information about bulk actions.
+
+For bulk operation results:
 ```php
-\Spameri\ElasticQuery\Response\ResultMapper::mapBulkResult($response);
+$result = \Spameri\ElasticQuery\Response\ResultMapper::mapBulkResult($response);
+// Returns: ResultBulk with action statuses
 ```
+
+For cluster version info:
+```php
+$result = \Spameri\ElasticQuery\Response\ResultMapper::mapVersionResult($response);
+// Returns: ResultVersion
+```
+
+---
 
 # Using with Spameri/Elastic
-This is implementation for Nette framework, so you need to register it to your application accordingly.
-[How to here](https://github.com/Spameri/Elastic/blob/master/doc/01_intro.md#1-config-elasticsearch)
 
-Then you inject client provider where you need and do query like this.
+This is an implementation for Nette framework. [Setup guide](https://github.com/Spameri/Elastic/blob/master/doc/01_intro.md#1-config-elasticsearch)
+
 ```php
 $response = $this->clientProvider->client()->search(
 	$document->toArray()
 );
 ```
-Response mapping is same, so is constructing query.
 
-For more advanced use see Spameri/Elastic [documentation](https://github.com/Spameri/Elastic/blob/master/doc/01_intro.md)
+Query construction and response mapping are the same. For advanced usage, see the [Spameri/Elastic documentation](https://github.com/Spameri/Elastic/blob/master/doc/01_intro.md).
+
+---
 
 # Using with Guzzle
-Difference is you dont need document object. You have to specify index and type in requested url by yourself. 
+
+With Guzzle, specify the index in the URL directly:
 ```php
 $client = new \GuzzleHttp\Client();
 $response = $client->request('GET', 'https://localhost:9200/spameri_video/_search', [
-	'body' => \json_encode($elasticQuery->toArray())
+	'body' => \json_encode($query->toArray()),
+	'headers' => ['Content-Type' => 'application/json'],
 ]);
+
+$data = \json_decode($response->getBody()->getContents(), true);
+$result = \Spameri\ElasticQuery\Response\ResultMapper::mapSearchResults($data);
 ```
-Rest is same. Setting up query and mapping to result object.
