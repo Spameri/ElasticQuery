@@ -20,7 +20,6 @@ class Terms extends \Tester\TestCase
 		\curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
 
 		\curl_exec($ch);
-		\curl_close($ch);
 	}
 
 	public function testCreate() : void
@@ -84,7 +83,6 @@ class Terms extends \Tester\TestCase
 		\curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
 
 		\curl_exec($ch);
-		\curl_close($ch);
 	}
 
 }

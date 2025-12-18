@@ -84,8 +84,6 @@ class CzechDictionary extends \Tester\TestCase
 		\Tester\Assert::same('lepsi', $responseAnalyzer['tokens'][2]['token']);
 		\Tester\Assert::same('drink', $responseAnalyzer['tokens'][4]['token']);
 		\Tester\Assert::same('kousek', $responseAnalyzer['tokens'][5]['token']);
-
-		\curl_close($ch);
 	}
 
 
@@ -98,8 +96,6 @@ class CzechDictionary extends \Tester\TestCase
 		\curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
 
 		\curl_exec($ch);
-
-		\curl_close($ch);
 	}
 
 }

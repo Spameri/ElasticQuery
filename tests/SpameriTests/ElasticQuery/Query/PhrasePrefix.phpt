@@ -20,7 +20,6 @@ class PhrasePrefix extends \Tester\TestCase
 		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
 
 		\curl_exec($ch);
-		\curl_close($ch);
 	}
 
 
@@ -110,8 +109,6 @@ class PhrasePrefix extends \Tester\TestCase
 			$result = $resultMapper->map(\json_decode($response, true));
 			\Tester\Assert::type('int', $result->stats()->total());
 		});
-
-		\curl_close($ch);
 	}
 
 
@@ -124,7 +121,6 @@ class PhrasePrefix extends \Tester\TestCase
 		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
 
 		\curl_exec($ch);
-		\curl_close($ch);
 	}
 
 }

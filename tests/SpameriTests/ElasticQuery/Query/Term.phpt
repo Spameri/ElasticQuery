@@ -20,7 +20,6 @@ class Term extends \Tester\TestCase
 		\curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
 
 		\curl_exec($ch);
-		\curl_close($ch);
 	}
 
 
@@ -85,7 +84,6 @@ class Term extends \Tester\TestCase
 		\curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
 
 		\curl_exec($ch);
-		\curl_close($ch);
 	}
 
 }
