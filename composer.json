@@ -17,7 +17,7 @@
 	"require-dev": {
 		"ext-curl": "*",
 		"phpstan/phpstan": "^1.11.3",
-		"nette/tester": "v2.3.1",
+		"nette/tester": "v2.5.7",
 		"elasticsearch/elasticsearch": "^9.0.0",
 		"guzzlehttp/guzzle": "^7.0",
 		"slevomat/coding-standard": "^8.0"
