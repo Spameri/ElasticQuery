@@ -14,13 +14,12 @@ class Nested extends \Tester\TestCase
 	public function setUp(): void
 	{
 		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, 'localhost:9200/' . self::INDEX);
+		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
 		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
 		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'PUT');
 		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
 
 		\curl_exec($ch);
-		\curl_close($ch);
 	}
 
 
@@ -126,13 +125,12 @@ class Nested extends \Tester\TestCase
 	public function tearDown(): void
 	{
 		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, 'localhost:9200/' . self::INDEX);
+		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
 		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
 		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'DELETE');
 		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
 
 		\curl_exec($ch);
-		\curl_close($ch);
 	}
 
 }

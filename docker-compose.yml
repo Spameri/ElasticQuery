@@ -1,0 +1,25 @@
+services:
+  php:
+    build: .
+    volumes:
+      - .:/app
+    environment:
+      - ELASTICSEARCH_HOST=elasticsearch:9200
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+
+  elasticsearch:
+    image: elasticsearch:9.2.2
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - xpack.security.enrollment.enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    ports:
+      - "9202:9200"
+    healthcheck:
+      test: curl -s http://localhost:9200 >/dev/null || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 10

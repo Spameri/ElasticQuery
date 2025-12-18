@@ -17,9 +17,9 @@
 	"require-dev": {
 		"ext-curl": "*",
 		"phpstan/phpstan": "^1.11.3",
-		"nette/tester": "v2.3.1",
-		"elasticsearch/elasticsearch": "^7",
-		"guzzlehttp/guzzle": "^6.3",
+		"nette/tester": "v2.5.7",
+		"elasticsearch/elasticsearch": "^9.0.0",
+		"guzzlehttp/guzzle": "^7.0",
 		"slevomat/coding-standard": "^8.0"
 	},
 	"autoload": {
@@ -34,10 +34,11 @@
 	},
 	"config": {
 		"allow-plugins": {
-			"dealerdirect/phpcodesniffer-composer-installer": true
+			"dealerdirect/phpcodesniffer-composer-installer": true,
+			"php-http/discovery": true
 		}
 	},
 	"brach-alias": {
-		"dev-master": "2.0.x-dev"
+		"dev-master": "2.0.0"
 	}
 }

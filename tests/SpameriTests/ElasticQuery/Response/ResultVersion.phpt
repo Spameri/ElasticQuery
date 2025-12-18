@@ -13,13 +13,29 @@ class ResultVersion extends \Tester\TestCase
 	{
 		$resultMapper = new \Spameri\ElasticQuery\Response\ResultMapper();
 		/** @var \Spameri\ElasticQuery\Response\ResultVersion $resultObject */
-		$resultObject = $resultMapper->map(\json_decode(\file_get_contents('http://127.0.0.1:9200'), TRUE));
+		$resultObject = $resultMapper->map(\json_decode(\file_get_contents(\ELASTICSEARCH_HOST), TRUE));
 
 		\Tester\Assert::true($resultObject instanceof \Spameri\ElasticQuery\Response\ResultVersion);
 
-		if (\Spameri\ElasticQuery\Response\Result\Version::ELASTIC_VERSION_ID_7 <= $resultObject->version()->id()) {
+		if (\Spameri\ElasticQuery\Response\Result\Version::ELASTIC_VERSION_ID_9 <= $resultObject->version()->id()) {
 			\Tester\Assert::true(
-				\Spameri\ElasticQuery\Response\Result\Version::ELASTIC_VERSION_ID_7 < $resultObject->version()->id()
+				\Spameri\ElasticQuery\Response\Result\Version::ELASTIC_VERSION_ID_9 <= $resultObject->version()->id()
+			);
+			\Tester\Assert::true(
+				\Spameri\ElasticQuery\Response\Result\Version::ELASTIC_VERSION_ID_10 > $resultObject->version()->id()
+			);
+
+		} elseif (\Spameri\ElasticQuery\Response\Result\Version::ELASTIC_VERSION_ID_8 <= $resultObject->version()->id()) {
+			\Tester\Assert::true(
+				\Spameri\ElasticQuery\Response\Result\Version::ELASTIC_VERSION_ID_8 <= $resultObject->version()->id()
+			);
+			\Tester\Assert::true(
+				\Spameri\ElasticQuery\Response\Result\Version::ELASTIC_VERSION_ID_9 > $resultObject->version()->id()
+			);
+
+		} elseif (\Spameri\ElasticQuery\Response\Result\Version::ELASTIC_VERSION_ID_7 <= $resultObject->version()->id()) {
+			\Tester\Assert::true(
+				\Spameri\ElasticQuery\Response\Result\Version::ELASTIC_VERSION_ID_7 <= $resultObject->version()->id()
 			);
 			\Tester\Assert::true(
 				\Spameri\ElasticQuery\Response\Result\Version::ELASTIC_VERSION_ID_8 > $resultObject->version()->id()

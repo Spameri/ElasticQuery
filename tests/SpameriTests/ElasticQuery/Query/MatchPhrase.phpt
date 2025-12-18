@@ -14,13 +14,12 @@ class MatchPhrase extends \Tester\TestCase
 	public function setUp() : void
 	{
 		$ch = \curl_init();
-		\curl_setopt($ch, CURLOPT_URL, 'localhost:9200/' . self::INDEX);
+		\curl_setopt($ch, CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
 		\curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		\curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
 		\curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
 
 		\curl_exec($ch);
-		\curl_close($ch);
 	}
 
 
@@ -59,7 +58,7 @@ class MatchPhrase extends \Tester\TestCase
 		);
 
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, 'localhost:9200/' . $document->index . '/_search');
+		curl_setopt($ch, CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . $document->index . '/_search');
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
 		curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
@@ -75,21 +74,18 @@ class MatchPhrase extends \Tester\TestCase
 			$result = $resultMapper->map(\json_decode($response, TRUE));
 			\Tester\Assert::type('int', $result->stats()->total());
 		});
-
-		curl_close($ch);
 	}
 
 
 	public function tearDown() : void
 	{
 		$ch = \curl_init();
-		\curl_setopt($ch, CURLOPT_URL, 'localhost:9200/' . self::INDEX);
+		\curl_setopt($ch, CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
 		\curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		\curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
 		\curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
 
 		\curl_exec($ch);
-		\curl_close($ch);
 	}
 
 }

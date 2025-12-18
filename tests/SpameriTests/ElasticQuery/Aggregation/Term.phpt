@@ -14,13 +14,12 @@ class Term extends \Tester\TestCase
 	public function setUp(): void
 	{
 		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, 'localhost:9200/' . self::INDEX);
+		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
 		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
 		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'PUT');
 		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
 
 		\curl_exec($ch);
-		\curl_close($ch);
 	}
 
 
@@ -136,7 +135,7 @@ class Term extends \Tester\TestCase
 		);
 
 		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, 'localhost:9200/' . $document->index . '/_search');
+		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . $document->index . '/_search');
 		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
 		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'GET');
 		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
@@ -153,21 +152,18 @@ class Term extends \Tester\TestCase
 			$result = $resultMapper->map(\json_decode($response, true));
 			\Tester\Assert::type(\Spameri\ElasticQuery\Response\ResultSearch::class, $result);
 		});
-
-		\curl_close($ch);
 	}
 
 
 	public function tearDown(): void
 	{
 		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, 'localhost:9200/' . self::INDEX);
+		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
 		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
 		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'DELETE');
 		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
 
 		\curl_exec($ch);
-		\curl_close($ch);
 	}
 
 }
