@@ -28,6 +28,8 @@ class Version
 	public const ELASTIC_VERSION_ID_67 = 60700;
 	public const ELASTIC_VERSION_ID_7 = 70000;
 	public const ELASTIC_VERSION_ID_8 = 80000;
+	public const ELASTIC_VERSION_ID_9 = 90000;
+	public const ELASTIC_VERSION_ID_10 = 100000;
 
 	private int $id;
 

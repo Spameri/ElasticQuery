@@ -14,7 +14,7 @@ class AggregationCollection extends \Tester\TestCase
 	public function setUp(): void
 	{
 		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, 'localhost:9200/' . self::INDEX);
+		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
 		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
 		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'PUT');
 		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
@@ -161,7 +161,7 @@ class AggregationCollection extends \Tester\TestCase
 		);
 
 		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, 'localhost:9200/' . $document->index . '/_search');
+		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . $document->index . '/_search');
 		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
 		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'GET');
 		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
@@ -186,7 +186,7 @@ class AggregationCollection extends \Tester\TestCase
 	public function tearDown(): void
 	{
 		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, 'localhost:9200/' . self::INDEX);
+		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
 		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
 		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'DELETE');
 		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);

@@ -29,7 +29,7 @@ class CzechDictionary extends \Tester\TestCase
 		// Set up index and analyzer
 
 		$ch = \curl_init();
-		\curl_setopt($ch, CURLOPT_URL, 'localhost:9200/' . $document->index . '/');
+		\curl_setopt($ch, CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . $document->index . '/');
 		\curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		\curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
 		\curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
@@ -44,7 +44,7 @@ class CzechDictionary extends \Tester\TestCase
 
 		// Fetch settings and test if analyzer is configured
 
-		\curl_setopt($ch, CURLOPT_URL, 'localhost:9200/' . $document->index . '/_settings');
+		\curl_setopt($ch, CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . $document->index . '/_settings');
 		\curl_setopt($ch, CURLOPT_POSTFIELDS, []);
 		\curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
 
@@ -66,7 +66,7 @@ class CzechDictionary extends \Tester\TestCase
 
 		$text = 'Playstation 4 je nejlepší se SodaStream drinkem a kouskem GS-condro!';
 
-		\curl_setopt($ch, CURLOPT_URL, 'localhost:9200/' . $document->index . '/_analyze');
+		\curl_setopt($ch, CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . $document->index . '/_analyze');
 		\curl_setopt($ch, CURLOPT_POSTFIELDS, \json_encode([
 			'text' => $text,
 			'analyzer' => 'czechDictionary',
@@ -92,7 +92,7 @@ class CzechDictionary extends \Tester\TestCase
 	protected function tearDown(): void
 	{
 		$ch = \curl_init();
-		\curl_setopt($ch, CURLOPT_URL, 'localhost:9200/' . self::INDEX);
+		\curl_setopt($ch, CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
 		\curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		\curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
 		\curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
