@@ -85,7 +85,7 @@ class Result extends \Tester\TestCase
 		\Tester\Assert::same('spameri_guessed-2018-11-29_21-25-34', $hit->index());
 		\Tester\Assert::same(0, $hit->position());
 		\Tester\Assert::same(1.0, $hit->score());
-		\Tester\Assert::same('spameri_guessed', $hit->type());
+		\Tester\Assert::same('_doc', $hit->type());
 		\Tester\Assert::same('xyC3UmcBeqWWbOzi4uKU', $hit->getValue('user'));
 
 		// AGGREGATION tests
