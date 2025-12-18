@@ -44,4 +44,4 @@ jobs:
       - name: Tests
         run: make tests
         env:
-          ELASTICSEARCH_HOST: localhost:9200
+          ELASTICSEARCH_HOST: http://localhost:9200

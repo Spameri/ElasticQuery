@@ -20,6 +20,6 @@ if ( ! $loader) {
 \date_default_timezone_set('Europe/Prague');
 
 // Elasticsearch host configuration (can be overridden via environment variable)
-\define('ELASTICSEARCH_HOST', \getenv('ELASTICSEARCH_HOST') ?: 'localhost:9200');
+\define('ELASTICSEARCH_HOST', \getenv('ELASTICSEARCH_HOST') ?: 'http://localhost:9200');
 
 return $loader;
