@@ -69,8 +69,6 @@ class Terms extends \Tester\TestCase
 			$result = $resultMapper->map(\json_decode($response, TRUE));
 			\Tester\Assert::type('int', $result->stats()->total());
 		});
-
-		curl_close($ch);
 	}
 
 
