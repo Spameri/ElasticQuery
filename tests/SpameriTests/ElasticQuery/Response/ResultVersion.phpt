@@ -13,7 +13,7 @@ class ResultVersion extends \Tester\TestCase
 	{
 		$resultMapper = new \Spameri\ElasticQuery\Response\ResultMapper();
 		/** @var \Spameri\ElasticQuery\Response\ResultVersion $resultObject */
-		$resultObject = $resultMapper->map(\json_decode(\file_get_contents('http://' . \ELASTICSEARCH_HOST), TRUE));
+		$resultObject = $resultMapper->map(\json_decode(\file_get_contents(\ELASTICSEARCH_HOST), TRUE));
 
 		\Tester\Assert::true($resultObject instanceof \Spameri\ElasticQuery\Response\ResultVersion);
 

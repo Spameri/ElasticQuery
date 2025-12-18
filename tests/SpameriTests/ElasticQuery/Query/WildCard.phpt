@@ -65,10 +65,13 @@ class WildCard extends \Tester\TestCase
 		);
 
 		\Tester\Assert::noError(static function () use ($ch) {
-			$response = curl_exec($ch);
+			$response = \curl_exec($ch);
+			if ($response === false) {
+				throw new \RuntimeException('Curl request failed: ' . \curl_error($ch));
+			}
 			$resultMapper = new \Spameri\ElasticQuery\Response\ResultMapper();
 			/** @var \Spameri\ElasticQuery\Response\ResultSearch $result */
-			$result = $resultMapper->map(\json_decode($response, TRUE));
+			$result = $resultMapper->map(\json_decode($response, true));
 			\Tester\Assert::type('int', $result->stats()->total());
 		});
 
