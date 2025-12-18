@@ -11,16 +11,12 @@ namespace Spameri\ElasticQuery\Aggregation;
 class Range implements LeafAggregationInterface
 {
 
-	private \Spameri\ElasticQuery\Aggregation\RangeValueCollection $ranges;
-
-
 	public function __construct(
 		private string $field,
 		private bool $keyed = false,
-		\Spameri\ElasticQuery\Aggregation\RangeValueCollection $rangeValueCollection = null,
+		private \Spameri\ElasticQuery\Aggregation\RangeValueCollection $ranges = new \Spameri\ElasticQuery\Aggregation\RangeValueCollection(),
 	)
 	{
-		$this->ranges = $rangeValueCollection ?: new \Spameri\ElasticQuery\Aggregation\RangeValueCollection();
 	}
 
 
