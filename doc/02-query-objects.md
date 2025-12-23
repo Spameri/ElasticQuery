@@ -170,6 +170,20 @@ new \Spameri\ElasticQuery\Query\WildCard(
 
 ## Specialized Queries
 
+##### MatchAll Query
+Matches all documents in the index. Useful as a base query for filtering or function scoring.
+- Class: `\Spameri\ElasticQuery\Query\MatchAll`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-all-query.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Query/MatchAll.php)
+
+```php
+// Match all documents
+new \Spameri\ElasticQuery\Query\MatchAll();
+
+// Match all with custom boost
+new \Spameri\ElasticQuery\Query\MatchAll(boost: 1.5);
+```
+
 ##### Nested Query
 Query nested objects with their own scope.
 - Class: `\Spameri\ElasticQuery\Query\Nested`
