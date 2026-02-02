@@ -84,6 +84,11 @@ class Options
 		}
 
 		foreach ($this->sort as $item) {
+			if ($item->field === '_score') {
+				$array['sort'][] = $item->field;
+				continue;
+			}
+
 			$array['sort'][] = $item->toArray();
 		}
 

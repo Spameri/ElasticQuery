@@ -17,9 +17,9 @@ class Sort implements \Spameri\ElasticQuery\Entity\EntityInterface
 	public const MISSING_FIRST = '_first';
 
 	public function __construct(
-		private string $field,
-		private string $type = self::DESC,
-		private string $missing = self::MISSING_LAST,
+		public string $field,
+		public string $type = self::DESC,
+		public string $missing = self::MISSING_LAST,
 	)
 	{
 		if ( ! \in_array($type, [self::ASC, self::DESC], true)) {
