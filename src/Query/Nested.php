@@ -32,11 +32,19 @@ class Nested implements \Spameri\ElasticQuery\Query\LeafQueryInterface
 
 	public function toArray(): array
 	{
+		$queryArray = $this->query->toArray();
+
+		if (count($queryArray) === 0) {
+			$queryArray = [
+				'bool' => [],
+			];
+		}
+
 		return [
 			'nested' => [
 				'path' => $this->path,
 				'query' => [
-					'bool' => $this->query->toArray(),
+					$queryArray,
 				],
 			],
 		];
