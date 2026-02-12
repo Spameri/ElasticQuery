@@ -30,7 +30,7 @@ class Document implements \Spameri\ElasticQuery\Entity\ArrayInterface
 			$array['body'] = $this->body->toArray();
 		}
 
-		if ($this->id) {
+		if ($this->id instanceof \Spameri\Elastic\Entity\Property\ElasticId) {
 			$array['id'] = $this->id;
 		}
 
