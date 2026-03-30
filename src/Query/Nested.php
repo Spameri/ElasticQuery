@@ -34,7 +34,7 @@ class Nested implements \Spameri\ElasticQuery\Query\LeafQueryInterface
 	{
 		$queryArray = $this->query->toArray();
 
-		if (count($queryArray) === 0) {
+		if (\count($queryArray) === 0) {
 			$queryArray = [
 				'bool' => [],
 			];

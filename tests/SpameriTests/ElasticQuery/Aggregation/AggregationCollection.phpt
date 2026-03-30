@@ -149,6 +149,7 @@ class AggregationCollection extends \Tester\TestCase
 			null,
 			null,
 			null,
+			null,
 			$collection,
 		);
 

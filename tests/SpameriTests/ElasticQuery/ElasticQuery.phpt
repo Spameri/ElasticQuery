@@ -79,6 +79,7 @@ class ElasticQuery extends \Tester\TestCase
 								$term
 							)
 						),
+						NULL,
 						new \Spameri\ElasticQuery\Options\SortCollection(
 							new \Spameri\ElasticQuery\Options\Sort(
 								'year',

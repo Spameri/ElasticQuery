@@ -31,7 +31,7 @@ class Nested extends \Tester\TestCase
 
 		\Tester\Assert::true(isset($array['nested']));
 		\Tester\Assert::same('comments', $array['nested']['path']);
-		\Tester\Assert::true(isset($array['nested']['query']['bool']));
+		\Tester\Assert::true(isset($array['nested']['query'][0]['bool']));
 	}
 
 
@@ -47,8 +47,8 @@ class Nested extends \Tester\TestCase
 		$array = $nested->toArray();
 
 		\Tester\Assert::same('comments', $array['nested']['path']);
-		\Tester\Assert::true(isset($array['nested']['query']['bool']['bool']['must']));
-		\Tester\Assert::count(1, $array['nested']['query']['bool']['bool']['must']);
+		\Tester\Assert::true(isset($array['nested']['query'][0]['bool']['must']));
+		\Tester\Assert::count(1, $array['nested']['query'][0]['bool']['must']);
 	}
 
 
@@ -74,8 +74,8 @@ class Nested extends \Tester\TestCase
 
 		$array = $nested->toArray();
 
-		\Tester\Assert::true(isset($array['nested']['query']['bool']['bool']['must']));
-		\Tester\Assert::true(isset($array['nested']['query']['bool']['bool']['should']));
+		\Tester\Assert::true(isset($array['nested']['query'][0]['bool']['must']));
+		\Tester\Assert::true(isset($array['nested']['query'][0]['bool']['should']));
 	}
 
 

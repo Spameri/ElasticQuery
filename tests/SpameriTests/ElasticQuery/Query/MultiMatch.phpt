@@ -154,6 +154,57 @@ class MultiMatch extends \Tester\TestCase
 	}
 
 
+	public function testMinimumShouldMatchString(): void
+	{
+		$multiMatch = new \Spameri\ElasticQuery\Query\MultiMatch(
+			['title', 'description'],
+			'search term',
+			1.0,
+			null,
+			\Spameri\ElasticQuery\Query\Match\MultiMatchType::BEST_FIELDS,
+			'75%',
+		);
+
+		$array = $multiMatch->toArray();
+
+		\Tester\Assert::same('75%', $array['multi_match']['minimum_should_match']);
+	}
+
+
+	public function testMinimumShouldMatchCombinationString(): void
+	{
+		$multiMatch = new \Spameri\ElasticQuery\Query\MultiMatch(
+			['title', 'description'],
+			'search term query',
+			1.0,
+			null,
+			\Spameri\ElasticQuery\Query\Match\MultiMatchType::BEST_FIELDS,
+			'2<90%',
+		);
+
+		$array = $multiMatch->toArray();
+
+		\Tester\Assert::same('2<90%', $array['multi_match']['minimum_should_match']);
+	}
+
+
+	public function testMinimumShouldMatchInt(): void
+	{
+		$multiMatch = new \Spameri\ElasticQuery\Query\MultiMatch(
+			['title', 'description'],
+			'search term',
+			1.0,
+			null,
+			\Spameri\ElasticQuery\Query\Match\MultiMatchType::BEST_FIELDS,
+			2,
+		);
+
+		$array = $multiMatch->toArray();
+
+		\Tester\Assert::same(2, $array['multi_match']['minimum_should_match']);
+	}
+
+
 	public function testCreate(): void
 	{
 		$multiMatch = new \Spameri\ElasticQuery\Query\MultiMatch(
