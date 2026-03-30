@@ -30,7 +30,10 @@ class Document implements \Spameri\ElasticQuery\Entity\ArrayInterface
 			$array['body'] = $this->body->toArray();
 		}
 
-		if ($this->id) {
+		if (
+			\is_string($this->id)
+			&& $this->id !== ''
+		) {
 			$array['id'] = $this->id;
 		}
 

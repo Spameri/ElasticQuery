@@ -12,6 +12,8 @@ class ElasticQuery implements \Spameri\ElasticQuery\Entity\ArrayInterface
 
 	private \Spameri\ElasticQuery\Filter\FilterCollection $filter;
 
+	private \Spameri\ElasticQuery\Query\QueryCollection $postFilter;
+
 	private \Spameri\ElasticQuery\Options\SortCollection $sort;
 
 	private \Spameri\ElasticQuery\Aggregation\AggregationCollection $aggregation;
@@ -21,6 +23,7 @@ class ElasticQuery implements \Spameri\ElasticQuery\Entity\ArrayInterface
 	public function __construct(
 		\Spameri\ElasticQuery\Query\QueryCollection|null $query = null,
 		\Spameri\ElasticQuery\Filter\FilterCollection|null $filter = null,
+		\Spameri\ElasticQuery\Query\QueryCollection|null $postFilter = null,
 		\Spameri\ElasticQuery\Options\SortCollection|null $sort = null,
 		\Spameri\ElasticQuery\Aggregation\AggregationCollection|null $aggregation = null,
 		private \Spameri\ElasticQuery\Highlight|null $highlight = null,
@@ -34,6 +37,9 @@ class ElasticQuery implements \Spameri\ElasticQuery\Entity\ArrayInterface
 		if ($filter === null) {
 			$filter = new \Spameri\ElasticQuery\Filter\FilterCollection();
 		}
+		if ($postFilter === null) {
+			$postFilter = new \Spameri\ElasticQuery\Query\QueryCollection();
+		}
 		if ($sort === null) {
 			$sort = new \Spameri\ElasticQuery\Options\SortCollection();
 		}
@@ -46,6 +52,7 @@ class ElasticQuery implements \Spameri\ElasticQuery\Entity\ArrayInterface
 
 		$this->query = $query;
 		$this->filter = $filter;
+		$this->postFilter = $postFilter;
 		$this->sort = $sort;
 		$this->aggregation = $aggregation;
 		$this->options = $options;
@@ -106,6 +113,18 @@ class ElasticQuery implements \Spameri\ElasticQuery\Entity\ArrayInterface
 	}
 
 
+	public function postFilter(): \Spameri\ElasticQuery\Query\QueryCollection
+	{
+		return $this->postFilter;
+	}
+
+
+	public function addPostFilterMustQuery(\Spameri\ElasticQuery\Query\LeafQueryInterface $leafQuery): void
+	{
+		$this->postFilter->must()->add($leafQuery);
+	}
+
+
 	public function addFilter(\Spameri\ElasticQuery\Query\LeafQueryInterface $leafQuery): void
 	{
 		$this->filter->must()->add($leafQuery);
@@ -134,6 +153,11 @@ class ElasticQuery implements \Spameri\ElasticQuery\Entity\ArrayInterface
 		$filterArray = $this->filter->toArray();
 		if ($filterArray) {
 			$array['query']['bool']['filter'] = $filterArray;
+		}
+
+		$postFilterArray = $this->postFilter->toArray();
+		if ($postFilterArray) {
+			$array['post_filter'] = $postFilterArray;
 		}
 
 		$sortArray = $this->sort->toArray();
