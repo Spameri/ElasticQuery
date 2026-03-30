@@ -16,7 +16,7 @@ class ElasticMatch implements \Spameri\ElasticQuery\Query\LeafQueryInterface
 		private bool|int|string|null $query,
 		private float $boost = 1.0,
 		private \Spameri\ElasticQuery\Query\Match\Fuzziness|null $fuzziness = null,
-		private int|null $minimumShouldMatch = null,
+		private int|string|null $minimumShouldMatch = null,
 		private string $operator = \Spameri\ElasticQuery\Query\Match\Operator::OR,
 		private string|null $analyzer = null,
 	)

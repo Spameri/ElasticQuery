@@ -83,6 +83,54 @@ class ElasticMatch extends \Tester\TestCase
 	}
 
 
+	public function testMinimumShouldMatchString() : void
+	{
+		$match = new \Spameri\ElasticQuery\Query\ElasticMatch(
+			'name',
+			'Avengers Endgame',
+			1.0,
+			null,
+			'75%',
+		);
+
+		$array = $match->toArray();
+
+		\Tester\Assert::same('75%', $array['match']['name']['minimum_should_match']);
+	}
+
+
+	public function testMinimumShouldMatchCombinationString() : void
+	{
+		$match = new \Spameri\ElasticQuery\Query\ElasticMatch(
+			'name',
+			'Avengers Endgame Infinity War',
+			1.0,
+			null,
+			'2<90%',
+		);
+
+		$array = $match->toArray();
+
+		\Tester\Assert::same('2<90%', $array['match']['name']['minimum_should_match']);
+	}
+
+
+	public function testMinimumShouldMatchInt() : void
+	{
+		$match = new \Spameri\ElasticQuery\Query\ElasticMatch(
+			'name',
+			'Avengers Endgame',
+			1.0,
+			null,
+			2,
+		);
+
+		$array = $match->toArray();
+
+		\Tester\Assert::same(2, $array['match']['name']['minimum_should_match']);
+	}
+
+
 	public function tearDown() : void
 	{
 		$ch = \curl_init();
