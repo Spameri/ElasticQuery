@@ -630,6 +630,19 @@ new \Spameri\ElasticQuery\Aggregation\PercentilesBucket(
 );
 ```
 
+##### Derivative Aggregation
+Difference between successive bucket values.
+- Class: `\Spameri\ElasticQuery\Aggregation\Derivative`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-pipeline-derivative-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/Derivative.php)
+
+```php
+new \Spameri\ElasticQuery\Aggregation\Derivative(
+	bucketsPath: 'sales',
+	unit: 'day', // For date histogram parents
+);
+```
+
 ---
 
 ## Aggregation Collections
