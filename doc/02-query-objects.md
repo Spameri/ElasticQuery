@@ -153,6 +153,16 @@ Match documents where a field has a value.
 new \Spameri\ElasticQuery\Query\Exists(field: 'description');
 ```
 
+##### Ids Query
+Fetch documents by their `_id`.
+- Class: `\Spameri\ElasticQuery\Query\Ids`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-ids-query.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Query/Ids.php)
+
+```php
+new \Spameri\ElasticQuery\Query\Ids(values: ['1', '2', '3']);
+```
+
 ##### WildCard Query
 Match using wildcard patterns (* and ?).
 - Class: `\Spameri\ElasticQuery\Query\WildCard`
