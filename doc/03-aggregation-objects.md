@@ -78,6 +78,16 @@ Returns the average value of a numeric field.
 new \Spameri\ElasticQuery\Aggregation\Avg(field: 'price');
 ```
 
+##### Sum Aggregation
+Returns the sum of values of a numeric field.
+- Class: `\Spameri\ElasticQuery\Aggregation\Sum`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-metrics-sum-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/Sum.php)
+
+```php
+new \Spameri\ElasticQuery\Aggregation\Sum(field: 'price');
+```
+
 ##### ValueCount Aggregation
 Counts the number of values extracted from a field.
 - Class: `\Spameri\ElasticQuery\Aggregation\ValueCount`
@@ -86,6 +96,19 @@ Counts the number of values extracted from a field.
 
 ```php
 new \Spameri\ElasticQuery\Aggregation\ValueCount(field: 'price');
+```
+
+##### Cardinality Aggregation
+Approximate count of distinct values using HyperLogLog++.
+- Class: `\Spameri\ElasticQuery\Aggregation\Cardinality`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-metrics-cardinality-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/Cardinality.php)
+
+```php
+new \Spameri\ElasticQuery\Aggregation\Cardinality(
+	field: 'user_id',
+	precisionThreshold: 3000, // Optional, default 3000, max 40000
+);
 ```
 
 ##### TopHits Aggregation
