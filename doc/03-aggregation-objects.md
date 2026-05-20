@@ -346,6 +346,16 @@ Single bucket containing documents missing a field value.
 new \Spameri\ElasticQuery\Aggregation\Missing(field: 'price');
 ```
 
+##### Global Aggregation
+Single bucket containing all documents, ignoring the current query.
+- Class: `\Spameri\ElasticQuery\Aggregation\GlobalAggregation`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-global-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/GlobalAggregation.php)
+
+```php
+new \Spameri\ElasticQuery\Aggregation\GlobalAggregation();
+```
+
 ##### Nested Aggregation
 Aggregates on nested documents.
 - Class: `\Spameri\ElasticQuery\Aggregation\Nested`
