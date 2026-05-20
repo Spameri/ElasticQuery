@@ -177,6 +177,21 @@ new \Spameri\ElasticQuery\Query\Prefix(
 );
 ```
 
+##### Regexp Query
+Match terms against a regular expression (Lucene syntax).
+- Class: `\Spameri\ElasticQuery\Query\Regexp`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-regexp-query.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Query/Regexp.php)
+
+```php
+new \Spameri\ElasticQuery\Query\Regexp(
+	field: 'user',
+	query: 'k.*y',
+	flags: 'ALL',
+	caseInsensitive: true,
+);
+```
+
 ##### WildCard Query
 Match using wildcard patterns (* and ?).
 - Class: `\Spameri\ElasticQuery\Query\WildCard`
