@@ -642,6 +642,21 @@ $span = new \Spameri\ElasticQuery\Query\SpanOr(
 $span->addClause(new \Spameri\ElasticQuery\Query\SpanTerm('field', 'value2'));
 ```
 
+##### SpanNot Query
+Match `include` spans not overlapping `exclude` spans.
+- Class: `\Spameri\ElasticQuery\Query\SpanNot`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-span-not-query.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Query/SpanNot.php)
+
+```php
+new \Spameri\ElasticQuery\Query\SpanNot(
+	include: new \Spameri\ElasticQuery\Query\SpanTerm('field', 'hot'),
+	exclude: new \Spameri\ElasticQuery\Query\SpanTerm('field', 'dog'),
+	pre: 0,
+	post: 1,
+);
+```
+
 ##### SpanTerm Query
 Match a single term in a span-aware way.
 - Class: `\Spameri\ElasticQuery\Query\SpanTerm`
