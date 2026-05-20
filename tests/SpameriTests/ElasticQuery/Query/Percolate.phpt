@@ -5,21 +5,22 @@ namespace SpameriTests\ElasticQuery\Query;
 require_once __DIR__ . '/../../bootstrap.php';
 
 
-class Percolate extends \Tester\TestCase
+class Percolate extends \SpameriTests\ElasticQuery\AbstractElasticTestCase
 {
 
-	private const INDEX = 'spameri_test_query_percolate';
+	protected const INDEX = 'spameri_test_query_percolate';
 
 
-	public function setUp(): void
+	protected function mapping(): array|null
 	{
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'PUT');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-
-		\curl_exec($ch);
+		return [
+			'mappings' => [
+				'properties' => [
+					'query' => ['type' => 'percolator'],
+					'message' => ['type' => 'text'],
+				],
+			],
+		];
 	}
 
 
@@ -30,9 +31,25 @@ class Percolate extends \Tester\TestCase
 			document: ['message' => 'A new bonsai tree'],
 		);
 
+		\Tester\Assert::same(['message' => 'A new bonsai tree'], $percolate->toArray()['percolate']['document']);
+	}
+
+
+	public function testToArrayDocuments(): void
+	{
+		$percolate = new \Spameri\ElasticQuery\Query\Percolate(
+			field: 'query',
+			documents: [
+				['message' => 'hello'],
+				['message' => 'world'],
+			],
+			name: 'docs',
+		);
+
 		$array = $percolate->toArray();
 
-		\Tester\Assert::same(['message' => 'A new bonsai tree'], $array['percolate']['document']);
+		\Tester\Assert::count(2, $array['percolate']['documents']);
+		\Tester\Assert::same('docs', $array['percolate']['name']);
 	}
 
 
@@ -42,12 +59,18 @@ class Percolate extends \Tester\TestCase
 			field: 'query',
 			index: 'my-index',
 			id: '1',
+			routing: 'r',
+			preference: 'p',
+			version: 7,
 		);
 
 		$array = $percolate->toArray();
 
 		\Tester\Assert::same('my-index', $array['percolate']['index']);
 		\Tester\Assert::same('1', $array['percolate']['id']);
+		\Tester\Assert::same('r', $array['percolate']['routing']);
+		\Tester\Assert::same('p', $array['percolate']['preference']);
+		\Tester\Assert::same(7, $array['percolate']['version']);
 	}
 
 
@@ -62,26 +85,29 @@ class Percolate extends \Tester\TestCase
 	}
 
 
-	public function testKey(): void
+	public function testCreate(): void
 	{
-		$percolate = new \Spameri\ElasticQuery\Query\Percolate(
-			field: 'query',
-			document: ['m' => 'hello'],
+		$this->request(
+			'PUT',
+			self::INDEX . '/_doc/1?refresh=true',
+			['query' => ['match' => ['message' => 'bonsai']]],
 		);
 
-		\Tester\Assert::same('percolate_query', $percolate->key());
-	}
+		$query = new \Spameri\ElasticQuery\ElasticQuery(
+			new \Spameri\ElasticQuery\Query\QueryCollection(
+				null,
+				new \Spameri\ElasticQuery\Query\MustCollection(
+					new \Spameri\ElasticQuery\Query\Percolate(
+						field: 'query',
+						document: ['message' => 'A new bonsai tree in the garden'],
+					),
+				),
+			),
+		);
 
+		$result = $this->search($query);
 
-	public function tearDown(): void
-	{
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'DELETE');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-
-		\curl_exec($ch);
+		\Tester\Assert::same(1, $result->stats()->total());
 	}
 
 }
