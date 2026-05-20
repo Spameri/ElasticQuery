@@ -293,6 +293,26 @@ new \Spameri\ElasticQuery\Query\WildCard(
 
 ---
 
+## Compound Queries
+
+Wrap other queries to combine, filter, or modify their scoring.
+
+##### Boosting Query
+Match `positive` docs but lower the score of `negative` matches.
+- Class: `\Spameri\ElasticQuery\Query\Boosting`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-boosting-query.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Query/Boosting.php)
+
+```php
+new \Spameri\ElasticQuery\Query\Boosting(
+	positive: new \Spameri\ElasticQuery\Query\Term('text', 'apple'),
+	negative: new \Spameri\ElasticQuery\Query\Term('text', 'pie'),
+	negativeBoost: 0.5,
+);
+```
+
+---
+
 ## Specialized Queries
 
 ##### MatchAll Query
