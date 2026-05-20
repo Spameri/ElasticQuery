@@ -441,6 +441,22 @@ new \Spameri\ElasticQuery\Query\GeoDistance(
 );
 ```
 
+##### GeoBoundingBox Query
+Match documents whose geo_point falls inside a top-left/bottom-right rectangle.
+- Class: `\Spameri\ElasticQuery\Query\GeoBoundingBox`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-geo-bounding-box-query.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Query/GeoBoundingBox.php)
+
+```php
+new \Spameri\ElasticQuery\Query\GeoBoundingBox(
+	field: 'location',
+	topLeftLat: 40.73,
+	topLeftLon: -74.1,
+	bottomRightLat: 40.01,
+	bottomRightLon: -71.12,
+);
+```
+
 ---
 
 ## Boolean Query Collections
