@@ -301,6 +301,22 @@ $filterAgg = new \Spameri\ElasticQuery\Aggregation\Filter();
 $filterAgg->must()->add(new \Spameri\ElasticQuery\Query\Term('status', 'published'));
 ```
 
+##### DateHistogram Aggregation
+Groups documents into date-based intervals (calendar or fixed).
+- Class: `\Spameri\ElasticQuery\Aggregation\DateHistogram`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-datehistogram-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/DateHistogram.php)
+
+```php
+new \Spameri\ElasticQuery\Aggregation\DateHistogram(
+	field: 'created_at',
+	calendarInterval: 'month', // or fixedInterval: '7d'
+	format: 'yyyy-MM-dd',
+	timeZone: 'Europe/Prague',
+	minDocCount: 1,
+);
+```
+
 ##### Nested Aggregation
 Aggregates on nested documents.
 - Class: `\Spameri\ElasticQuery\Aggregation\Nested`
