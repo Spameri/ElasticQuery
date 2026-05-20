@@ -88,6 +88,25 @@ new \Spameri\ElasticQuery\Query\Fuzzy(
 );
 ```
 
+##### Intervals Query
+Rule-based proximity / ordered-term matching (match, prefix, wildcard, fuzzy, all_of, any_of, with `max_gaps`, `ordered`, filters).
+- Class: `\Spameri\ElasticQuery\Query\Intervals`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-intervals-query.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Query/Intervals.php)
+
+```php
+new \Spameri\ElasticQuery\Query\Intervals(
+	field: 'my_text',
+	rule: [
+		'match' => [
+			'query' => 'my favorite food',
+			'max_gaps' => 0,
+			'ordered' => true,
+		],
+	],
+);
+```
+
 ##### SimpleQueryString Query
 User-safe Lucene-lite syntax (does not error on invalid input).
 - Class: `\Spameri\ElasticQuery\Query\SimpleQueryString`
