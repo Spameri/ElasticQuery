@@ -108,6 +108,19 @@ Returns count, min, max, avg and sum in one call.
 new \Spameri\ElasticQuery\Aggregation\Stats(field: 'price');
 ```
 
+##### ExtendedStats Aggregation
+Stats plus variance, standard deviation and bounds.
+- Class: `\Spameri\ElasticQuery\Aggregation\ExtendedStats`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-metrics-extendedstats-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/ExtendedStats.php)
+
+```php
+new \Spameri\ElasticQuery\Aggregation\ExtendedStats(
+	field: 'price',
+	sigma: 3.0, // Optional, default 2.0
+);
+```
+
 ##### Cardinality Aggregation
 Approximate count of distinct values using HyperLogLog++.
 - Class: `\Spameri\ElasticQuery\Aggregation\Cardinality`
