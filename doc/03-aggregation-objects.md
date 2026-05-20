@@ -493,6 +493,20 @@ Limits sub-aggregations to top-N highest-scoring documents per shard.
 new \Spameri\ElasticQuery\Aggregation\Sampler(shardSize: 200);
 ```
 
+##### DiversifiedSampler Aggregation
+Like sampler but limits documents-per-distinct-value to avoid skew.
+- Class: `\Spameri\ElasticQuery\Aggregation\DiversifiedSampler`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-diversified-sampler-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/DiversifiedSampler.php)
+
+```php
+new \Spameri\ElasticQuery\Aggregation\DiversifiedSampler(
+	field: 'author.keyword',
+	shardSize: 200,
+	maxDocsPerValue: 3,
+);
+```
+
 ##### ReverseNested Aggregation
 Moves back from a nested context to the parent (or an ancestor at `path`).
 - Class: `\Spameri\ElasticQuery\Aggregation\ReverseNested`
