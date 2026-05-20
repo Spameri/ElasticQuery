@@ -160,6 +160,16 @@ new \Spameri\ElasticQuery\Aggregation\WeightedAvg(
 );
 ```
 
+##### MedianAbsoluteDeviation Aggregation
+Computes a robust measure of variability via the median of absolute deviations from the median.
+- Class: `\Spameri\ElasticQuery\Aggregation\MedianAbsoluteDeviation`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-metrics-median-absolute-deviation-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/MedianAbsoluteDeviation.php)
+
+```php
+new \Spameri\ElasticQuery\Aggregation\MedianAbsoluteDeviation(field: 'rating');
+```
+
 ##### Cardinality Aggregation
 Approximate count of distinct values using HyperLogLog++.
 - Class: `\Spameri\ElasticQuery\Aggregation\Cardinality`
