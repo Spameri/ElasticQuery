@@ -470,6 +470,19 @@ new \Spameri\ElasticQuery\Aggregation\MultiTerms(
 );
 ```
 
+##### RareTerms Aggregation
+Finds terms that occur infrequently (the opposite of a terms-with-large-min-doc-count search).
+- Class: `\Spameri\ElasticQuery\Aggregation\RareTerms`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-rare-terms-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/RareTerms.php)
+
+```php
+new \Spameri\ElasticQuery\Aggregation\RareTerms(
+	field: 'genre',
+	maxDocCount: 2,
+);
+```
+
 ##### ReverseNested Aggregation
 Moves back from a nested context to the parent (or an ancestor at `path`).
 - Class: `\Spameri\ElasticQuery\Aggregation\ReverseNested`
