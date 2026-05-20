@@ -174,6 +174,33 @@ class ElasticQuery implements \Spameri\ElasticQuery\Entity\ArrayInterface
 			$array['highlight'] = $this->highlight->toArray();
 		}
 
+		$collapse = $this->options->collapse();
+		if ($collapse !== null) {
+			$array['collapse'] = $collapse->toArray();
+		}
+
+		$rescore = $this->options->rescore();
+		if ($rescore !== null && $rescore !== []) {
+			$rescoreArray = [];
+			foreach ($rescore as $r) {
+				$rescoreArray[] = $r->toArray();
+			}
+			$array['rescore'] = $rescoreArray;
+		}
+
+		$suggesters = $this->options->suggesters();
+		if ($suggesters !== null && $suggesters !== []) {
+			$suggest = [];
+			$text = $this->options->suggestText();
+			if ($text !== null) {
+				$suggest['text'] = $text;
+			}
+			foreach ($suggesters as $suggester) {
+				$suggest[$suggester->key()] = $suggester->toArray();
+			}
+			$array['suggest'] = $suggest;
+		}
+
 		return $array;
 	}
 
