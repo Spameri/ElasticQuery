@@ -721,6 +721,19 @@ new \Spameri\ElasticQuery\Aggregation\BucketSort(
 );
 ```
 
+##### Normalize Aggregation
+Rescales bucket values (e.g. `percent_of_sum`, `rescale_0_1`, `mean`, `z-score`, `softmax`).
+- Class: `\Spameri\ElasticQuery\Aggregation\Normalize`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-pipeline-normalize-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/Normalize.php)
+
+```php
+new \Spameri\ElasticQuery\Aggregation\Normalize(
+	bucketsPath: 'sales',
+	method: 'percent_of_sum',
+);
+```
+
 ---
 
 ## Aggregation Collections
