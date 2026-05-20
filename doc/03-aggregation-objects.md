@@ -418,6 +418,19 @@ new \Spameri\ElasticQuery\Aggregation\GeoHashGrid(
 );
 ```
 
+##### GeoTileGrid Aggregation
+Groups geo points into map-tile cells (zoom levels 0–29).
+- Class: `\Spameri\ElasticQuery\Aggregation\GeoTileGrid`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-geotilegrid-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/GeoTileGrid.php)
+
+```php
+new \Spameri\ElasticQuery\Aggregation\GeoTileGrid(
+	field: 'location',
+	precision: 8,
+);
+```
+
 ##### Nested Aggregation
 Aggregates on nested documents.
 - Class: `\Spameri\ElasticQuery\Aggregation\Nested`
