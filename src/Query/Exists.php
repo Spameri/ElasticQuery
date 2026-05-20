@@ -13,6 +13,7 @@ class Exists implements LeafQueryInterface
 
 	public function __construct(
 		private string $field,
+		private float $boost = 1.0,
 	)
 	{
 	}
@@ -24,11 +25,15 @@ class Exists implements LeafQueryInterface
 	}
 
 
+	/**
+	 * @return array<string, array<string, mixed>>
+	 */
 	public function toArray(): array
 	{
 		return [
 			'exists' => [
 				'field' => $this->field,
+				'boost' => $this->boost,
 			],
 		];
 	}

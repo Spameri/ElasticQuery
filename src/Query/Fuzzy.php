@@ -18,6 +18,8 @@ class Fuzzy implements LeafQueryInterface
 		private int $fuzziness = 2,
 		private int $prefixLength = 0,
 		private int $maxExpansion = 100,
+		private bool|null $transpositions = null,
+		private string|null $rewrite = null,
 	)
 	{
 	}
@@ -29,22 +31,32 @@ class Fuzzy implements LeafQueryInterface
 	}
 
 
+	/**
+	 * @return array<string, array<string, array<string, mixed>>>
+	 */
 	public function toArray(): array
 	{
-		// phpcs:ignore SlevomatCodingStandard.Variables.UselessVariable
-		$array = [
-			'fuzzy' => [
-				$this->field => [
-					'value' => $this->query,
-					'boost' => $this->boost,
-					'fuzziness' => $this->fuzziness,
-					'prefix_length' => $this->prefixLength,
-					'max_expansions' => $this->maxExpansion,
-				],
-			],
+		$body = [
+			'value' => $this->query,
+			'boost' => $this->boost,
+			'fuzziness' => $this->fuzziness,
+			'prefix_length' => $this->prefixLength,
+			'max_expansions' => $this->maxExpansion,
 		];
 
-		return $array;
+		if ($this->transpositions !== null) {
+			$body['transpositions'] = $this->transpositions;
+		}
+
+		if ($this->rewrite !== null) {
+			$body['rewrite'] = $this->rewrite;
+		}
+
+		return [
+			'fuzzy' => [
+				$this->field => $body,
+			],
+		];
 	}
 
 }

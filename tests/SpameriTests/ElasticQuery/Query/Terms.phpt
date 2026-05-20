@@ -5,82 +5,99 @@ namespace SpameriTests\ElasticQuery\Query;
 require_once __DIR__ . '/../../bootstrap.php';
 
 
-class Terms extends \Tester\TestCase
+class Terms extends \SpameriTests\ElasticQuery\AbstractElasticTestCase
 {
 
-	private const INDEX = 'spameri_test_video_terms';
+	protected const INDEX = 'spameri_test_query_terms';
+	private const LOOKUP_INDEX = 'spameri_test_query_terms_lookup';
 
 
-	public function setUp() : void
+	protected function mapping(): array|null
 	{
-		$ch = \curl_init();
-		\curl_setopt($ch, CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
-		\curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-
-		\curl_exec($ch);
+		return [
+			'mappings' => [
+				'properties' => [
+					'name' => ['type' => 'keyword'],
+				],
+			],
+		];
 	}
 
-	public function testCreate() : void
+
+	public function testToArray(): void
 	{
-		$terms = new \Spameri\ElasticQuery\Query\Terms(
-			'name',
-			['Avengers'],
-			1.0
-		);
+		$terms = new \Spameri\ElasticQuery\Query\Terms('name', ['Avengers'], 1.0);
 
 		$array = $terms->toArray();
 
-		\Tester\Assert::true(isset($array['terms']['name'][0]));
 		\Tester\Assert::same('Avengers', $array['terms']['name'][0]);
 		\Tester\Assert::same(1.0, $array['terms']['boost']);
-
-		$document = new \Spameri\ElasticQuery\Document(
-			self::INDEX,
-			new \Spameri\ElasticQuery\Document\Body\Plain(
-				(
-				new \Spameri\ElasticQuery\ElasticQuery(
-					new \Spameri\ElasticQuery\Query\QueryCollection(
-						NULL,
-						new \Spameri\ElasticQuery\Query\MustCollection(
-							$terms
-						)
-					)
-				)
-				)->toArray()
-			)
-		);
-
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . $document->index . '/_search');
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
-		curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-		curl_setopt(
-			$ch, CURLOPT_POSTFIELDS,
-			\json_encode($document->toArray()['body'])
-		);
-
-		\Tester\Assert::noError(static function () use ($ch) {
-			$response = curl_exec($ch);
-			$resultMapper = new \Spameri\ElasticQuery\Response\ResultMapper();
-			/** @var \Spameri\ElasticQuery\Response\ResultSearch $result */
-			$result = $resultMapper->map(\json_decode($response, TRUE));
-			\Tester\Assert::type('int', $result->stats()->total());
-		});
 	}
 
 
-	public function tearDown() : void
+	public function testToArrayWithLookup(): void
 	{
-		$ch = \curl_init();
-		\curl_setopt($ch, CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
-		\curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+		$lookup = new \Spameri\ElasticQuery\Query\TermsLookup(
+			index: 'users',
+			id: '42',
+			path: 'friends',
+		);
+		$terms = new \Spameri\ElasticQuery\Query\Terms('user_id', $lookup);
 
-		\curl_exec($ch);
+		$array = $terms->toArray();
+
+		\Tester\Assert::same('users', $array['terms']['user_id']['index']);
+		\Tester\Assert::same('42', $array['terms']['user_id']['id']);
+		\Tester\Assert::same('friends', $array['terms']['user_id']['path']);
+	}
+
+
+	public function testCreate(): void
+	{
+		$this->indexDocument(['name' => 'Avengers']);
+
+		$query = new \Spameri\ElasticQuery\ElasticQuery(
+			new \Spameri\ElasticQuery\Query\QueryCollection(
+				null,
+				new \Spameri\ElasticQuery\Query\MustCollection(
+					new \Spameri\ElasticQuery\Query\Terms('name', ['Avengers']),
+				),
+			),
+		);
+
+		$result = $this->search($query);
+
+		\Tester\Assert::same(1, $result->stats()->total());
+	}
+
+
+	public function testCreateWithLookup(): void
+	{
+		$this->request('PUT', self::LOOKUP_INDEX, ['mappings' => ['properties' => ['ids' => ['type' => 'keyword']]]]);
+		$this->request('PUT', self::LOOKUP_INDEX . '/_doc/list?refresh=true', ['ids' => ['Avengers', 'Endgame']]);
+
+		$this->indexDocument(['name' => 'Avengers']);
+		$this->indexDocument(['name' => 'Other']);
+
+		$lookup = new \Spameri\ElasticQuery\Query\TermsLookup(
+			index: self::LOOKUP_INDEX,
+			id: 'list',
+			path: 'ids',
+		);
+		$query = new \Spameri\ElasticQuery\ElasticQuery(
+			new \Spameri\ElasticQuery\Query\QueryCollection(
+				null,
+				new \Spameri\ElasticQuery\Query\MustCollection(
+					new \Spameri\ElasticQuery\Query\Terms('name', $lookup),
+				),
+			),
+		);
+
+		$result = $this->search($query);
+
+		$this->request('DELETE', self::LOOKUP_INDEX);
+
+		\Tester\Assert::same(1, $result->stats()->total());
 	}
 
 }

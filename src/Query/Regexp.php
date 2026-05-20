@@ -17,6 +17,7 @@ class Regexp implements \Spameri\ElasticQuery\Query\LeafQueryInterface
 		private string|null $flags = null,
 		private bool|null $caseInsensitive = null,
 		private int|null $maxDeterminizedStates = null,
+		private string|null $rewrite = null,
 	)
 	{
 	}
@@ -48,6 +49,10 @@ class Regexp implements \Spameri\ElasticQuery\Query\LeafQueryInterface
 
 		if ($this->maxDeterminizedStates !== null) {
 			$body['max_determinized_states'] = $this->maxDeterminizedStates;
+		}
+
+		if ($this->rewrite !== null) {
+			$body['rewrite'] = $this->rewrite;
 		}
 
 		return [

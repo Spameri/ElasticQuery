@@ -18,6 +18,7 @@ class TermSet implements \Spameri\ElasticQuery\Query\LeafQueryInterface
 		private array $terms,
 		private string|null $minimumShouldMatchField = null,
 		private string|null $minimumShouldMatchScript = null,
+		private float $boost = 1.0,
 	)
 	{
 		if ($terms === []) {
@@ -47,6 +48,7 @@ class TermSet implements \Spameri\ElasticQuery\Query\LeafQueryInterface
 	{
 		$body = [
 			'terms' => $this->terms,
+			'boost' => $this->boost,
 		];
 
 		if ($this->minimumShouldMatchField !== null) {

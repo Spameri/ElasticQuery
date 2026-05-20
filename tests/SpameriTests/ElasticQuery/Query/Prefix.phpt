@@ -5,31 +5,17 @@ namespace SpameriTests\ElasticQuery\Query;
 require_once __DIR__ . '/../../bootstrap.php';
 
 
-class Prefix extends \Tester\TestCase
+class Prefix extends \SpameriTests\ElasticQuery\AbstractElasticTestCase
 {
 
-	private const INDEX = 'spameri_test_query_prefix';
-
-
-	public function setUp(): void
-	{
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'PUT');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-
-		\curl_exec($ch);
-	}
+	protected const INDEX = 'spameri_test_query_prefix';
 
 
 	public function testToArray(): void
 	{
 		$prefix = new \Spameri\ElasticQuery\Query\Prefix('user', 'ki');
 
-		$array = $prefix->toArray();
-
-		\Tester\Assert::same('ki', $array['prefix']['user']['value']);
+		\Tester\Assert::same('ki', $prefix->toArray()['prefix']['user']['value']);
 	}
 
 
@@ -39,66 +25,62 @@ class Prefix extends \Tester\TestCase
 			field: 'user',
 			query: 'ki',
 			caseInsensitive: true,
+			rewrite: 'constant_score',
 		);
 
 		\Tester\Assert::true($prefix->toArray()['prefix']['user']['case_insensitive']);
+		\Tester\Assert::same('constant_score', $prefix->toArray()['prefix']['user']['rewrite']);
 	}
 
 
 	public function testKey(): void
 	{
 		$prefix = new \Spameri\ElasticQuery\Query\Prefix('user', 'ki');
-
 		\Tester\Assert::same('prefix_user_ki', $prefix->key());
 	}
 
 
 	public function testCreate(): void
 	{
-		$prefix = new \Spameri\ElasticQuery\Query\Prefix('user', 'ki');
+		$this->indexDocument(['user' => 'kimchy']);
 
-		$document = new \Spameri\ElasticQuery\Document(
-			self::INDEX,
-			new \Spameri\ElasticQuery\Document\Body\Plain(
-				(new \Spameri\ElasticQuery\ElasticQuery(
-					new \Spameri\ElasticQuery\Query\QueryCollection(
-						null,
-						new \Spameri\ElasticQuery\Query\MustCollection($prefix),
-					),
-				))->toArray(),
+		$query = new \Spameri\ElasticQuery\ElasticQuery(
+			new \Spameri\ElasticQuery\Query\QueryCollection(
+				null,
+				new \Spameri\ElasticQuery\Query\MustCollection(
+					new \Spameri\ElasticQuery\Query\Prefix('user', 'ki'),
+				),
 			),
 		);
 
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . $document->index . '/_search');
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'GET');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-		\curl_setopt(
-			$ch,
-			\CURLOPT_POSTFIELDS,
-			\json_encode($document->toArray()['body']),
-		);
+		$result = $this->search($query);
 
-		\Tester\Assert::noError(static function () use ($ch): void {
-			$response = \curl_exec($ch);
-			$resultMapper = new \Spameri\ElasticQuery\Response\ResultMapper();
-			/** @var \Spameri\ElasticQuery\Response\ResultSearch $result */
-			$result = $resultMapper->map(\json_decode($response, true));
-			\Tester\Assert::type('int', $result->stats()->total());
-		});
+		\Tester\Assert::same(1, $result->stats()->total());
 	}
 
 
-	public function tearDown(): void
+	public function testCreateWithAllOptions(): void
 	{
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'DELETE');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+		$this->indexDocument(['user' => 'kimchy']);
 
-		\curl_exec($ch);
+		$query = new \Spameri\ElasticQuery\ElasticQuery(
+			new \Spameri\ElasticQuery\Query\QueryCollection(
+				null,
+				new \Spameri\ElasticQuery\Query\MustCollection(
+					new \Spameri\ElasticQuery\Query\Prefix(
+						field: 'user',
+						query: 'ki',
+						boost: 2.0,
+						caseInsensitive: false,
+						rewrite: 'constant_score',
+					),
+				),
+			),
+		);
+
+		$result = $this->search($query);
+
+		\Tester\Assert::same(1, $result->stats()->total());
 	}
 
 }

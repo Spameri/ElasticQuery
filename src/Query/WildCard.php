@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Spameri\ElasticQuery\Query;
 
+
 /**
  * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-wildcard-query.html
  */
@@ -14,6 +15,8 @@ class WildCard implements LeafQueryInterface
 		private string $field,
 		private string $query,
 		private float $boost = 1.0,
+		private bool|null $caseInsensitive = null,
+		private string|null $rewrite = null,
 	)
 	{
 	}
@@ -25,14 +28,27 @@ class WildCard implements LeafQueryInterface
 	}
 
 
+	/**
+	 * @return array<string, array<string, array<string, mixed>>>
+	 */
 	public function toArray(): array
 	{
+		$body = [
+			'value' => $this->query,
+			'boost' => $this->boost,
+		];
+
+		if ($this->caseInsensitive !== null) {
+			$body['case_insensitive'] = $this->caseInsensitive;
+		}
+
+		if ($this->rewrite !== null) {
+			$body['rewrite'] = $this->rewrite;
+		}
+
 		return [
 			'wildcard' => [
-				$this->field => [
-					'value' => $this->query,
-					'boost' => $this->boost,
-				],
+				$this->field => $body,
 			],
 		];
 	}
