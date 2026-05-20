@@ -2,30 +2,26 @@
 
 declare(strict_types = 1);
 
-namespace Spameri\ElasticQuery;
+namespace Spameri\ElasticQuery\Highlight;
 
 
 /**
+ * Per-field highlight configuration.
+ *
  * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/highlighting.html
  */
-class Highlight implements \Spameri\ElasticQuery\Entity\ArrayInterface
+class HighlightField implements \Spameri\ElasticQuery\Entity\EntityInterface
 {
 
-	private \Spameri\ElasticQuery\Highlight\HighlightFieldCollection $fields;
-
-
 	/**
-	 * @param array<int, string> $preTags
-	 * @param array<int, string> $postTags
-	 * @param \Spameri\ElasticQuery\Highlight\HighlightFieldCollection|array<int, string> $fields Either a typed collection or simple field-name list.
+	 * @param array<int, string>|null $preTags
+	 * @param array<int, string>|null $postTags
 	 * @param array<int, string>|null $matchedFields
 	 */
 	public function __construct(
-		private array $preTags,
-		private array $postTags,
-		\Spameri\ElasticQuery\Highlight\HighlightFieldCollection|array $fields,
+		private string $field,
 		private string|null $type = null,
-		int|null $numberOfFragments = 0,
+		private int|null $numberOfFragments = null,
 		private int|null $fragmentSize = null,
 		private string|null $boundaryScanner = null,
 		private string|null $boundaryChars = null,
@@ -41,25 +37,16 @@ class Highlight implements \Spameri\ElasticQuery\Entity\ArrayInterface
 		private int|null $phraseLimit = null,
 		private bool|null $requireFieldMatch = null,
 		private string|null $tagsSchema = null,
+		private array|null $preTags = null,
+		private array|null $postTags = null,
 	)
 	{
-		if ($fields instanceof \Spameri\ElasticQuery\Highlight\HighlightFieldCollection) {
-			$this->fields = $fields;
-		} else {
-			$this->fields = new \Spameri\ElasticQuery\Highlight\HighlightFieldCollection();
-			foreach ($fields as $fieldName) {
-				$this->fields->add(new \Spameri\ElasticQuery\Highlight\HighlightField(
-					field: $fieldName,
-					numberOfFragments: $numberOfFragments,
-				));
-			}
-		}
 	}
 
 
-	public function fields(): \Spameri\ElasticQuery\Highlight\HighlightFieldCollection
+	public function key(): string
 	{
-		return $this->fields;
+		return $this->field;
 	}
 
 
@@ -68,21 +55,15 @@ class Highlight implements \Spameri\ElasticQuery\Entity\ArrayInterface
 	 */
 	public function toArray(): array
 	{
-		$array = [
-			'pre_tags' => $this->preTags,
-			'post_tags' => $this->postTags,
-		];
-
-		$fieldsArray = $this->fields->toArray();
-		if ($fieldsArray !== []) {
-			$array['fields'] = $fieldsArray;
-		}
+		$array = [];
 
 		if ($this->type !== null) {
 			$array['type'] = $this->type;
 		}
 
-		// global number_of_fragments is mirrored into each field above; we don't emit it twice
+		if ($this->numberOfFragments !== null) {
+			$array['number_of_fragments'] = $this->numberOfFragments;
+		}
 
 		if ($this->fragmentSize !== null) {
 			$array['fragment_size'] = $this->fragmentSize;
@@ -142,6 +123,14 @@ class Highlight implements \Spameri\ElasticQuery\Entity\ArrayInterface
 
 		if ($this->tagsSchema !== null) {
 			$array['tags_schema'] = $this->tagsSchema;
+		}
+
+		if ($this->preTags !== null) {
+			$array['pre_tags'] = $this->preTags;
+		}
+
+		if ($this->postTags !== null) {
+			$array['post_tags'] = $this->postTags;
 		}
 
 		return $array;
