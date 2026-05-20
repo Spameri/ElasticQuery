@@ -521,6 +521,24 @@ $matrix = new \Spameri\ElasticQuery\Aggregation\AdjacencyMatrix();
 $matrix->addFilter('group_a', $filterA);
 ```
 
+##### IpRange Aggregation
+Groups IP-typed fields into ranges (accepts plain IPs or CIDR masks).
+- Class: `\Spameri\ElasticQuery\Aggregation\IpRange`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-iprange-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/IpRange.php)
+
+```php
+$ranges = new \Spameri\ElasticQuery\Aggregation\RangeValueCollection(
+	new \Spameri\ElasticQuery\Aggregation\RangeValue('low', null, '10.0.0.5'),
+	new \Spameri\ElasticQuery\Aggregation\RangeValue('high', '10.0.0.5', null),
+);
+
+new \Spameri\ElasticQuery\Aggregation\IpRange(
+	field: 'ip',
+	ranges: $ranges,
+);
+```
+
 ##### ReverseNested Aggregation
 Moves back from a nested context to the parent (or an ancestor at `path`).
 - Class: `\Spameri\ElasticQuery\Aggregation\ReverseNested`
