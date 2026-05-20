@@ -643,6 +643,18 @@ new \Spameri\ElasticQuery\Aggregation\Derivative(
 );
 ```
 
+##### CumulativeSum Aggregation
+Running total of values across buckets.
+- Class: `\Spameri\ElasticQuery\Aggregation\CumulativeSum`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-pipeline-cumulative-sum-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/CumulativeSum.php)
+
+```php
+new \Spameri\ElasticQuery\Aggregation\CumulativeSum(
+	bucketsPath: 'sales',
+);
+```
+
 ---
 
 ## Aggregation Collections
