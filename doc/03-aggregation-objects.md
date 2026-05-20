@@ -98,6 +98,16 @@ Counts the number of values extracted from a field.
 new \Spameri\ElasticQuery\Aggregation\ValueCount(field: 'price');
 ```
 
+##### Stats Aggregation
+Returns count, min, max, avg and sum in one call.
+- Class: `\Spameri\ElasticQuery\Aggregation\Stats`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-metrics-stats-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/Stats.php)
+
+```php
+new \Spameri\ElasticQuery\Aggregation\Stats(field: 'price');
+```
+
 ##### Cardinality Aggregation
 Approximate count of distinct values using HyperLogLog++.
 - Class: `\Spameri\ElasticQuery\Aggregation\Cardinality`
