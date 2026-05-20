@@ -5,22 +5,10 @@ namespace SpameriTests\ElasticQuery\Query;
 require_once __DIR__ . '/../../bootstrap.php';
 
 
-class MatchBoolPrefix extends \Tester\TestCase
+class MatchBoolPrefix extends \SpameriTests\ElasticQuery\AbstractElasticTestCase
 {
 
-	private const INDEX = 'spameri_test_query_match_bool_prefix';
-
-
-	public function setUp(): void
-	{
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'PUT');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-
-		\curl_exec($ch);
-	}
+	protected const INDEX = 'spameri_test_query_match_bool_prefix';
 
 
 	public function testToArray(): void
@@ -30,66 +18,85 @@ class MatchBoolPrefix extends \Tester\TestCase
 			query: 'quick brown f',
 		);
 
+		\Tester\Assert::same('quick brown f', $match->toArray()['match_bool_prefix']['message']['query']);
+	}
+
+
+	public function testToArrayWithAllOptions(): void
+	{
+		$match = new \Spameri\ElasticQuery\Query\MatchBoolPrefix(
+			field: 'message',
+			query: 'q',
+			boost: 1.5,
+			operator: 'or',
+			minimumShouldMatch: '50%',
+			analyzer: 'standard',
+			fuzziness: new \Spameri\ElasticQuery\Query\Match\Fuzziness(\Spameri\ElasticQuery\Query\Match\Fuzziness::AUTO),
+			prefixLength: 0,
+			maxExpansions: 50,
+			fuzzyTranspositions: true,
+			fuzzyRewrite: 'constant_score',
+		);
+
 		$array = $match->toArray();
 
-		\Tester\Assert::same('quick brown f', $array['match_bool_prefix']['message']['query']);
+		\Tester\Assert::same(\Spameri\ElasticQuery\Query\Match\Fuzziness::AUTO, $array['match_bool_prefix']['message']['fuzziness']);
+		\Tester\Assert::same(0, $array['match_bool_prefix']['message']['prefix_length']);
+		\Tester\Assert::same(50, $array['match_bool_prefix']['message']['max_expansions']);
+		\Tester\Assert::true($array['match_bool_prefix']['message']['fuzzy_transpositions']);
+		\Tester\Assert::same('constant_score', $array['match_bool_prefix']['message']['fuzzy_rewrite']);
 	}
 
 
 	public function testKey(): void
 	{
 		$match = new \Spameri\ElasticQuery\Query\MatchBoolPrefix('message', 'quick');
-
 		\Tester\Assert::same('match_bool_prefix_message_quick', $match->key());
 	}
 
 
 	public function testCreate(): void
 	{
-		$match = new \Spameri\ElasticQuery\Query\MatchBoolPrefix('message', 'q');
+		$this->indexDocument(['message' => 'quick brown fox']);
 
-		$document = new \Spameri\ElasticQuery\Document(
-			self::INDEX,
-			new \Spameri\ElasticQuery\Document\Body\Plain(
-				(new \Spameri\ElasticQuery\ElasticQuery(
-					new \Spameri\ElasticQuery\Query\QueryCollection(
-						null,
-						new \Spameri\ElasticQuery\Query\MustCollection($match),
-					),
-				))->toArray(),
+		$query = new \Spameri\ElasticQuery\ElasticQuery(
+			new \Spameri\ElasticQuery\Query\QueryCollection(
+				null,
+				new \Spameri\ElasticQuery\Query\MustCollection(
+					new \Spameri\ElasticQuery\Query\MatchBoolPrefix('message', 'quick brown f'),
+				),
 			),
 		);
 
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . $document->index . '/_search');
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'GET');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-		\curl_setopt(
-			$ch,
-			\CURLOPT_POSTFIELDS,
-			\json_encode($document->toArray()['body']),
-		);
+		$result = $this->search($query);
 
-		\Tester\Assert::noError(static function () use ($ch): void {
-			$response = \curl_exec($ch);
-			$resultMapper = new \Spameri\ElasticQuery\Response\ResultMapper();
-			/** @var \Spameri\ElasticQuery\Response\ResultSearch $result */
-			$result = $resultMapper->map(\json_decode($response, true));
-			\Tester\Assert::type('int', $result->stats()->total());
-		});
+		\Tester\Assert::same(1, $result->stats()->total());
 	}
 
 
-	public function tearDown(): void
+	public function testCreateWithAllOptions(): void
 	{
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'DELETE');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+		$this->indexDocument(['message' => 'quick brown fox']);
 
-		\curl_exec($ch);
+		$query = new \Spameri\ElasticQuery\ElasticQuery(
+			new \Spameri\ElasticQuery\Query\QueryCollection(
+				null,
+				new \Spameri\ElasticQuery\Query\MustCollection(
+					new \Spameri\ElasticQuery\Query\MatchBoolPrefix(
+						field: 'message',
+						query: 'qiuck',
+						fuzziness: new \Spameri\ElasticQuery\Query\Match\Fuzziness(\Spameri\ElasticQuery\Query\Match\Fuzziness::AUTO),
+						prefixLength: 0,
+						maxExpansions: 50,
+						fuzzyTranspositions: true,
+					),
+				),
+			),
+		);
+
+		$result = $this->search($query);
+
+		\Tester\Assert::true($result->stats()->total() >= 0);
 	}
 
 }

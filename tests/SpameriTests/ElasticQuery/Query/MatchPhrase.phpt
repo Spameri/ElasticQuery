@@ -5,87 +5,79 @@ namespace SpameriTests\ElasticQuery\Query;
 require_once __DIR__ . '/../../bootstrap.php';
 
 
-class MatchPhrase extends \Tester\TestCase
+class MatchPhrase extends \SpameriTests\ElasticQuery\AbstractElasticTestCase
 {
 
-	private const INDEX = 'spameri_test_video_match_phrase';
+	protected const INDEX = 'spameri_test_query_match_phrase';
 
 
-	public function setUp() : void
+	public function testToArray(): void
 	{
-		$ch = \curl_init();
-		\curl_setopt($ch, CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
-		\curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-
-		\curl_exec($ch);
-	}
-
-
-	public function testCreate() : void
-	{
-		$match = new \Spameri\ElasticQuery\Query\MatchPhrase(
-			'name',
-			'Avengers',
-			1.0,
-			1,
-			'standard'
-		);
+		$match = new \Spameri\ElasticQuery\Query\MatchPhrase('name', 'Avengers', 1.0, 1, 'standard');
 
 		$array = $match->toArray();
 
-		\Tester\Assert::true(isset($array['match_phrase']['name']['query']));
 		\Tester\Assert::same('Avengers', $array['match_phrase']['name']['query']);
 		\Tester\Assert::same(1.0, $array['match_phrase']['name']['boost']);
 		\Tester\Assert::same(1, $array['match_phrase']['name']['slop']);
 		\Tester\Assert::same('standard', $array['match_phrase']['name']['analyzer']);
-
-		$document = new \Spameri\ElasticQuery\Document(
-			self::INDEX,
-			new \Spameri\ElasticQuery\Document\Body\Plain(
-				(
-				new \Spameri\ElasticQuery\ElasticQuery(
-					new \Spameri\ElasticQuery\Query\QueryCollection(
-						NULL,
-						new \Spameri\ElasticQuery\Query\MustCollection(
-							$match
-						)
-					)
-				)
-				)->toArray()
-			)
-		);
-
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . $document->index . '/_search');
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
-		curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-		curl_setopt(
-			$ch, CURLOPT_POSTFIELDS,
-			\json_encode($document->toArray()['body'])
-		);
-
-		\Tester\Assert::noError(static function () use ($ch) {
-			$response = curl_exec($ch);
-			$resultMapper = new \Spameri\ElasticQuery\Response\ResultMapper();
-			/** @var \Spameri\ElasticQuery\Response\ResultSearch $result */
-			$result = $resultMapper->map(\json_decode($response, TRUE));
-			\Tester\Assert::type('int', $result->stats()->total());
-		});
 	}
 
 
-	public function tearDown() : void
+	public function testZeroTermsQuery(): void
 	{
-		$ch = \curl_init();
-		\curl_setopt($ch, CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
-		\curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+		$match = new \Spameri\ElasticQuery\Query\MatchPhrase(
+			field: 'name',
+			query: 'foo',
+			zeroTermsQuery: 'all',
+		);
 
-		\curl_exec($ch);
+		\Tester\Assert::same('all', $match->toArray()['match_phrase']['name']['zero_terms_query']);
+	}
+
+
+	public function testCreate(): void
+	{
+		$this->indexDocument(['name' => 'Avengers Endgame']);
+
+		$query = new \Spameri\ElasticQuery\ElasticQuery(
+			new \Spameri\ElasticQuery\Query\QueryCollection(
+				null,
+				new \Spameri\ElasticQuery\Query\MustCollection(
+					new \Spameri\ElasticQuery\Query\MatchPhrase('name', 'Avengers Endgame'),
+				),
+			),
+		);
+
+		$result = $this->search($query);
+
+		\Tester\Assert::same(1, $result->stats()->total());
+	}
+
+
+	public function testCreateWithAllOptions(): void
+	{
+		$this->indexDocument(['name' => 'Avengers Endgame']);
+
+		$query = new \Spameri\ElasticQuery\ElasticQuery(
+			new \Spameri\ElasticQuery\Query\QueryCollection(
+				null,
+				new \Spameri\ElasticQuery\Query\MustCollection(
+					new \Spameri\ElasticQuery\Query\MatchPhrase(
+						field: 'name',
+						query: 'Avengers Endgame',
+						boost: 1.5,
+						slop: 1,
+						analyzer: 'standard',
+						zeroTermsQuery: 'none',
+					),
+				),
+			),
+		);
+
+		$result = $this->search($query);
+
+		\Tester\Assert::same(1, $result->stats()->total());
 	}
 
 }

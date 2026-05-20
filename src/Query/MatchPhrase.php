@@ -17,6 +17,7 @@ class MatchPhrase implements LeafQueryInterface
 		private float $boost = 1.0,
 		private int $slop = 0,
 		private string|null $analyzer = null,
+		private string|null $zeroTermsQuery = null,
 	)
 	{
 	}
@@ -51,6 +52,10 @@ class MatchPhrase implements LeafQueryInterface
 
 		if ($this->slop) {
 			$array['match_phrase'][$this->field]['slop'] = $this->slop;
+		}
+
+		if ($this->zeroTermsQuery !== null) {
+			$array['match_phrase'][$this->field]['zero_terms_query'] = $this->zeroTermsQuery;
 		}
 
 		return $array;

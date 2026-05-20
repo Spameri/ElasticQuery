@@ -5,22 +5,10 @@ namespace SpameriTests\ElasticQuery\Query;
 require_once __DIR__ . '/../../bootstrap.php';
 
 
-class PhrasePrefix extends \Tester\TestCase
+class PhrasePrefix extends \SpameriTests\ElasticQuery\AbstractElasticTestCase
 {
 
-	private const INDEX = 'spameri_test_video_phrase_prefix';
-
-
-	public function setUp(): void
-	{
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'PUT');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-
-		\curl_exec($ch);
-	}
+	protected const INDEX = 'spameri_test_query_phrase_prefix';
 
 
 	public function testToArrayBasic(): void
@@ -32,95 +20,83 @@ class PhrasePrefix extends \Tester\TestCase
 
 		$array = $phrasePrefix->toArray();
 
-		\Tester\Assert::true(isset($array['match_phrase_prefix']));
-		\Tester\Assert::true(isset($array['match_phrase_prefix']['title']));
 		\Tester\Assert::same('quick brown f', $array['match_phrase_prefix']['title']['query']);
 		\Tester\Assert::same(1.0, $array['match_phrase_prefix']['title']['boost']);
 		\Tester\Assert::same(1, $array['match_phrase_prefix']['title']['slop']);
 	}
 
 
-	public function testToArrayWithCustomBoostAndSlop(): void
+	public function testToArrayWithAllOptions(): void
 	{
 		$phrasePrefix = new \Spameri\ElasticQuery\Query\PhrasePrefix(
-			'description',
-			'search phrase',
-			2.0,
-			3,
+			field: 'description',
+			queryString: 'search phrase',
+			boost: 2.0,
+			slop: 3,
+			analyzer: 'standard',
+			maxExpansions: 50,
+			zeroTermsQuery: 'none',
 		);
 
 		$array = $phrasePrefix->toArray();
 
-		\Tester\Assert::same('search phrase', $array['match_phrase_prefix']['description']['query']);
 		\Tester\Assert::same(2.0, $array['match_phrase_prefix']['description']['boost']);
 		\Tester\Assert::same(3, $array['match_phrase_prefix']['description']['slop']);
+		\Tester\Assert::same('standard', $array['match_phrase_prefix']['description']['analyzer']);
+		\Tester\Assert::same(50, $array['match_phrase_prefix']['description']['max_expansions']);
+		\Tester\Assert::same('none', $array['match_phrase_prefix']['description']['zero_terms_query']);
 	}
 
 
 	public function testKey(): void
 	{
-		$phrasePrefix = new \Spameri\ElasticQuery\Query\PhrasePrefix(
-			'title',
-			'test query',
-		);
-
+		$phrasePrefix = new \Spameri\ElasticQuery\Query\PhrasePrefix('title', 'test query');
 		\Tester\Assert::same('phrase_prefix_title_test query', $phrasePrefix->key());
 	}
 
 
 	public function testCreate(): void
 	{
-		$phrasePrefix = new \Spameri\ElasticQuery\Query\PhrasePrefix(
-			'title',
-			'Aveng',
-		);
+		$this->indexDocument(['title' => 'Avengers Endgame']);
 
-		$document = new \Spameri\ElasticQuery\Document(
-			self::INDEX,
-			new \Spameri\ElasticQuery\Document\Body\Plain(
-				(
-				new \Spameri\ElasticQuery\ElasticQuery(
-					new \Spameri\ElasticQuery\Query\QueryCollection(
-						null,
-						new \Spameri\ElasticQuery\Query\MustCollection(
-							$phrasePrefix,
-						),
-					),
-				)
-				)->toArray(),
+		$query = new \Spameri\ElasticQuery\ElasticQuery(
+			new \Spameri\ElasticQuery\Query\QueryCollection(
+				null,
+				new \Spameri\ElasticQuery\Query\MustCollection(
+					new \Spameri\ElasticQuery\Query\PhrasePrefix('title', 'Aveng'),
+				),
 			),
 		);
 
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . $document->index . '/_search');
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'GET');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-		\curl_setopt(
-			$ch,
-			\CURLOPT_POSTFIELDS,
-			\json_encode($document->toArray()['body']),
-		);
+		$result = $this->search($query);
 
-		\Tester\Assert::noError(static function () use ($ch): void {
-			$response = \curl_exec($ch);
-			$resultMapper = new \Spameri\ElasticQuery\Response\ResultMapper();
-			/** @var \Spameri\ElasticQuery\Response\ResultSearch $result */
-			$result = $resultMapper->map(\json_decode($response, true));
-			\Tester\Assert::type('int', $result->stats()->total());
-		});
+		\Tester\Assert::same(1, $result->stats()->total());
 	}
 
 
-	public function tearDown(): void
+	public function testCreateWithAllOptions(): void
 	{
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'DELETE');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+		$this->indexDocument(['title' => 'Avengers Endgame']);
 
-		\curl_exec($ch);
+		$query = new \Spameri\ElasticQuery\ElasticQuery(
+			new \Spameri\ElasticQuery\Query\QueryCollection(
+				null,
+				new \Spameri\ElasticQuery\Query\MustCollection(
+					new \Spameri\ElasticQuery\Query\PhrasePrefix(
+						field: 'title',
+						queryString: 'Aveng',
+						boost: 1.5,
+						slop: 1,
+						analyzer: 'standard',
+						maxExpansions: 50,
+					),
+				),
+			),
+		);
+
+		$result = $this->search($query);
+
+		\Tester\Assert::same(1, $result->stats()->total());
 	}
 
 }

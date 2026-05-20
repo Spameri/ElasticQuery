@@ -17,6 +17,11 @@ class MatchBoolPrefix implements \Spameri\ElasticQuery\Query\LeafQueryInterface
 		private string|null $operator = null,
 		private int|string|null $minimumShouldMatch = null,
 		private string|null $analyzer = null,
+		private \Spameri\ElasticQuery\Query\Match\Fuzziness|null $fuzziness = null,
+		private int|null $prefixLength = null,
+		private int|null $maxExpansions = null,
+		private bool|null $fuzzyTranspositions = null,
+		private string|null $fuzzyRewrite = null,
 	)
 	{
 	}
@@ -48,6 +53,26 @@ class MatchBoolPrefix implements \Spameri\ElasticQuery\Query\LeafQueryInterface
 
 		if ($this->analyzer !== null) {
 			$body['analyzer'] = $this->analyzer;
+		}
+
+		if ($this->fuzziness !== null) {
+			$body['fuzziness'] = $this->fuzziness->__toString();
+		}
+
+		if ($this->prefixLength !== null) {
+			$body['prefix_length'] = $this->prefixLength;
+		}
+
+		if ($this->maxExpansions !== null) {
+			$body['max_expansions'] = $this->maxExpansions;
+		}
+
+		if ($this->fuzzyTranspositions !== null) {
+			$body['fuzzy_transpositions'] = $this->fuzzyTranspositions;
+		}
+
+		if ($this->fuzzyRewrite !== null) {
+			$body['fuzzy_rewrite'] = $this->fuzzyRewrite;
 		}
 
 		return [

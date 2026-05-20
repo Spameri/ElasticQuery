@@ -5,22 +5,10 @@ namespace SpameriTests\ElasticQuery\Query;
 require_once __DIR__ . '/../../bootstrap.php';
 
 
-class CombinedFields extends \Tester\TestCase
+class CombinedFields extends \SpameriTests\ElasticQuery\AbstractElasticTestCase
 {
 
-	private const INDEX = 'spameri_test_query_combined_fields';
-
-
-	public function setUp(): void
-	{
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'PUT');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-
-		\curl_exec($ch);
-	}
+	protected const INDEX = 'spameri_test_query_combined_fields';
 
 
 	public function testToArray(): void
@@ -38,6 +26,18 @@ class CombinedFields extends \Tester\TestCase
 	}
 
 
+	public function testAutoGenerateSynonyms(): void
+	{
+		$cf = new \Spameri\ElasticQuery\Query\CombinedFields(
+			fields: ['body'],
+			query: 'x',
+			autoGenerateSynonymsPhraseQuery: false,
+		);
+
+		\Tester\Assert::false($cf->toArray()['combined_fields']['auto_generate_synonyms_phrase_query']);
+	}
+
+
 	public function testRequiresFields(): void
 	{
 		\Tester\Assert::exception(
@@ -52,20 +52,31 @@ class CombinedFields extends \Tester\TestCase
 	public function testKey(): void
 	{
 		$cf = new \Spameri\ElasticQuery\Query\CombinedFields(['title', 'body'], 'q');
-
 		\Tester\Assert::same('combined_fields_title-body_q', $cf->key());
 	}
 
 
-	public function tearDown(): void
+	public function testCreate(): void
 	{
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'DELETE');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+		$this->indexDocument(['title' => 'distributed search', 'body' => 'engine']);
 
-		\curl_exec($ch);
+		$query = new \Spameri\ElasticQuery\ElasticQuery(
+			new \Spameri\ElasticQuery\Query\QueryCollection(
+				null,
+				new \Spameri\ElasticQuery\Query\MustCollection(
+					new \Spameri\ElasticQuery\Query\CombinedFields(
+						fields: ['title', 'body'],
+						query: 'distributed search',
+						operator: 'and',
+						autoGenerateSynonymsPhraseQuery: true,
+					),
+				),
+			),
+		);
+
+		$result = $this->search($query);
+
+		\Tester\Assert::same(1, $result->stats()->total());
 	}
 
 }
