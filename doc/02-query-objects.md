@@ -309,6 +309,16 @@ new \Spameri\ElasticQuery\Query\MatchAll();
 new \Spameri\ElasticQuery\Query\MatchAll(boost: 1.5);
 ```
 
+##### MatchNone Query
+Matches zero documents — useful as a placeholder.
+- Class: `\Spameri\ElasticQuery\Query\MatchNone`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-all-query.html#query-dsl-match-none-query)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Query/MatchNone.php)
+
+```php
+new \Spameri\ElasticQuery\Query\MatchNone();
+```
+
 ##### Nested Query
 Query nested objects with their own scope.
 - Class: `\Spameri\ElasticQuery\Query\Nested`
