@@ -317,6 +317,25 @@ new \Spameri\ElasticQuery\Aggregation\DateHistogram(
 );
 ```
 
+##### DateRange Aggregation
+Groups documents into date ranges (accepts relative dates like `now-1M/M`).
+- Class: `\Spameri\ElasticQuery\Aggregation\DateRange`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-daterange-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/DateRange.php)
+
+```php
+$ranges = new \Spameri\ElasticQuery\Aggregation\RangeValueCollection(
+	new \Spameri\ElasticQuery\Aggregation\RangeValue('past', null, 'now-1M/M'),
+	new \Spameri\ElasticQuery\Aggregation\RangeValue('recent', 'now-1M/M', null),
+);
+
+new \Spameri\ElasticQuery\Aggregation\DateRange(
+	field: 'created_at',
+	ranges: $ranges,
+	format: 'MM-yyyy',
+);
+```
+
 ##### Nested Aggregation
 Aggregates on nested documents.
 - Class: `\Spameri\ElasticQuery\Aggregation\Nested`
