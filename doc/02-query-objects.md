@@ -163,6 +163,20 @@ Fetch documents by their `_id`.
 new \Spameri\ElasticQuery\Query\Ids(values: ['1', '2', '3']);
 ```
 
+##### Prefix Query
+Match terms that start with a given prefix.
+- Class: `\Spameri\ElasticQuery\Query\Prefix`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-prefix-query.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Query/Prefix.php)
+
+```php
+new \Spameri\ElasticQuery\Query\Prefix(
+	field: 'user',
+	query: 'ki',
+	caseInsensitive: true,
+);
+```
+
 ##### WildCard Query
 Match using wildcard patterns (* and ?).
 - Class: `\Spameri\ElasticQuery\Query\WildCard`
