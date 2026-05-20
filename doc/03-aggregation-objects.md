@@ -78,6 +78,16 @@ Returns the average value of a numeric field.
 new \Spameri\ElasticQuery\Aggregation\Avg(field: 'price');
 ```
 
+##### ValueCount Aggregation
+Counts the number of values extracted from a field.
+- Class: `\Spameri\ElasticQuery\Aggregation\ValueCount`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-metrics-valuecount-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/ValueCount.php)
+
+```php
+new \Spameri\ElasticQuery\Aggregation\ValueCount(field: 'price');
+```
+
 ##### TopHits Aggregation
 Returns the top matching documents per bucket.
 - Class: `\Spameri\ElasticQuery\Aggregation\TopHits`
