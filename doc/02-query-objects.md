@@ -572,6 +572,16 @@ new \Spameri\ElasticQuery\Query\Percolate(
 );
 ```
 
+##### Wrapper Query
+Embed a raw JSON query string (auto-base64-encoded) — escape hatch for unsupported syntax.
+- Class: `\Spameri\ElasticQuery\Query\Wrapper`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-wrapper-query.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Query/Wrapper.php)
+
+```php
+new \Spameri\ElasticQuery\Query\Wrapper('{"term":{"user":{"value":"kimchy"}}}');
+```
+
 ##### Script Query
 Filter documents with a Painless boolean script.
 - Class: `\Spameri\ElasticQuery\Query\Script`
