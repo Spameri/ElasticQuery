@@ -441,6 +441,20 @@ new \Spameri\ElasticQuery\Query\GeoDistance(
 );
 ```
 
+##### Shape Query
+Same as `geo_shape` but for Cartesian `shape` fields (non-geographic plane).
+- Class: `\Spameri\ElasticQuery\Query\Shape`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-shape-query.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Query/Shape.php)
+
+```php
+new \Spameri\ElasticQuery\Query\Shape(
+	field: 'geometry',
+	shape: ['type' => 'envelope', 'coordinates' => [[0, 100], [100, 0]]],
+	relation: 'intersects',
+);
+```
+
 ##### GeoShape Query
 Match `geo_shape`-indexed documents against an arbitrary geometry.
 - Class: `\Spameri\ElasticQuery\Query\GeoShape`
