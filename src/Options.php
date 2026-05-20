@@ -11,6 +11,19 @@ class Options
 	private \Spameri\ElasticQuery\Options\SortCollection $sort;
 
 
+	/**
+	 * @param array<int|string, mixed>|null $searchAfter
+	 * @param array<int, string>|null $storedFields
+	 * @param array<int, string>|null $docvalueFields
+	 * @param array<int, array<string, mixed>>|null $fields
+	 * @param array<string, array<string, mixed>>|null $scriptFields
+	 * @param array<string, mixed>|null $runtimeMappings
+	 * @param array<int, \Spameri\ElasticQuery\Options\Suggest\SuggesterInterface>|null $suggesters
+	 * @param array<int, \Spameri\ElasticQuery\Options\Rescore>|null $rescore
+	 * @param array<int, array<string, float>>|null $indicesBoost
+	 * @param array<int, string>|null $stats
+	 * @param array<string, mixed>|null $ext
+	 */
 	public function __construct(
 		private int|null $size = null,
 		private int|null $from = null,
@@ -19,6 +32,28 @@ class Options
 		private bool $includeVersion = false,
 		private string|null $scroll = null,
 		private string|null $scrollId = null,
+		private \Spameri\ElasticQuery\Options\Source|null $source = null,
+		private bool|int|null $trackTotalHits = null,
+		private bool|null $trackScores = null,
+		private bool|null $explain = null,
+		private int|null $terminateAfter = null,
+		private string|null $timeout = null,
+		private array|null $searchAfter = null,
+		private \Spameri\ElasticQuery\Options\Pit|null $pit = null,
+		private array|null $storedFields = null,
+		private array|null $docvalueFields = null,
+		private array|null $fields = null,
+		private array|null $scriptFields = null,
+		private array|null $runtimeMappings = null,
+		private bool|null $seqNoPrimaryTerm = null,
+		private array|null $indicesBoost = null,
+		private \Spameri\ElasticQuery\Options\Collapse|null $collapse = null,
+		private array|null $rescore = null,
+		private array|null $suggesters = null,
+		private string|null $suggestText = null,
+		private bool|null $profile = null,
+		private array|null $stats = null,
+		private array|null $ext = null,
 	)
 	{
 		$this->sort = $sort ?: new \Spameri\ElasticQuery\Options\SortCollection();
@@ -71,6 +106,39 @@ class Options
 	}
 
 
+	public function collapse(): \Spameri\ElasticQuery\Options\Collapse|null
+	{
+		return $this->collapse;
+	}
+
+
+	/**
+	 * @return array<int, \Spameri\ElasticQuery\Options\Rescore>|null
+	 */
+	public function rescore(): array|null
+	{
+		return $this->rescore;
+	}
+
+
+	/**
+	 * @return array<int, \Spameri\ElasticQuery\Options\Suggest\SuggesterInterface>|null
+	 */
+	public function suggesters(): array|null
+	{
+		return $this->suggesters;
+	}
+
+
+	public function suggestText(): string|null
+	{
+		return $this->suggestText;
+	}
+
+
+	/**
+	 * @return array<string, mixed>
+	 */
 	public function toArray(): array
 	{
 		$array = [];
@@ -92,7 +160,7 @@ class Options
 			$array['sort'][] = $item->toArray();
 		}
 
-		if ($this->minScore) {
+		if ($this->minScore !== null) {
 			$array['min_score'] = $this->minScore;
 		}
 
@@ -103,6 +171,78 @@ class Options
 		if ($this->scrollId !== null) {
 			$array['scroll_id'] = $this->scrollId;
 			$array['scroll'] = $this->scroll;
+		}
+
+		if ($this->source !== null) {
+			$array['_source'] = $this->source->value();
+		}
+
+		if ($this->trackTotalHits !== null) {
+			$array['track_total_hits'] = $this->trackTotalHits;
+		}
+
+		if ($this->trackScores !== null) {
+			$array['track_scores'] = $this->trackScores;
+		}
+
+		if ($this->explain !== null) {
+			$array['explain'] = $this->explain;
+		}
+
+		if ($this->terminateAfter !== null) {
+			$array['terminate_after'] = $this->terminateAfter;
+		}
+
+		if ($this->timeout !== null) {
+			$array['timeout'] = $this->timeout;
+		}
+
+		if ($this->searchAfter !== null) {
+			$array['search_after'] = $this->searchAfter;
+		}
+
+		if ($this->pit !== null) {
+			$array['pit'] = $this->pit->toArray();
+		}
+
+		if ($this->storedFields !== null) {
+			$array['stored_fields'] = $this->storedFields;
+		}
+
+		if ($this->docvalueFields !== null) {
+			$array['docvalue_fields'] = $this->docvalueFields;
+		}
+
+		if ($this->fields !== null) {
+			$array['fields'] = $this->fields;
+		}
+
+		if ($this->scriptFields !== null) {
+			$array['script_fields'] = $this->scriptFields;
+		}
+
+		if ($this->runtimeMappings !== null) {
+			$array['runtime_mappings'] = $this->runtimeMappings;
+		}
+
+		if ($this->seqNoPrimaryTerm !== null) {
+			$array['seq_no_primary_term'] = $this->seqNoPrimaryTerm;
+		}
+
+		if ($this->indicesBoost !== null) {
+			$array['indices_boost'] = $this->indicesBoost;
+		}
+
+		if ($this->profile !== null) {
+			$array['profile'] = $this->profile;
+		}
+
+		if ($this->stats !== null) {
+			$array['stats'] = $this->stats;
+		}
+
+		if ($this->ext !== null) {
+			$array['ext'] = $this->ext;
 		}
 
 		return $array;
