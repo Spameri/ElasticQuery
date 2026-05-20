@@ -670,6 +670,19 @@ new \Spameri\ElasticQuery\Query\SpanContaining(
 );
 ```
 
+##### SpanWithin Query
+Match `little` spans that are fully enclosed within `big` spans.
+- Class: `\Spameri\ElasticQuery\Query\SpanWithin`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-span-within-query.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Query/SpanWithin.php)
+
+```php
+new \Spameri\ElasticQuery\Query\SpanWithin(
+	big: $bigSpan,
+	little: $littleSpan,
+);
+```
+
 ##### SpanTerm Query
 Match a single term in a span-aware way.
 - Class: `\Spameri\ElasticQuery\Query\SpanTerm`
