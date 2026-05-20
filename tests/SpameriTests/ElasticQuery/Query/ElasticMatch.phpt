@@ -5,141 +5,116 @@ namespace SpameriTests\ElasticQuery\Query;
 require_once __DIR__ . '/../../bootstrap.php';
 
 
-class ElasticMatch extends \Tester\TestCase
+class ElasticMatch extends \SpameriTests\ElasticQuery\AbstractElasticTestCase
 {
 
-	private const INDEX = 'spameri_test_video_match';
+	protected const INDEX = 'spameri_test_query_match';
 
 
-	public function setUp() : void
-	{
-		$ch = \curl_init();
-		\curl_setopt($ch, CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
-		\curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-
-		\curl_exec($ch);
-	}
-
-
-	public function testCreate() : void
+	public function testToArray(): void
 	{
 		$match = new \Spameri\ElasticQuery\Query\ElasticMatch(
 			'name',
 			'Avengers',
 			1.0,
-			new \Spameri\ElasticQuery\Query\Match\Fuzziness(
-				\Spameri\ElasticQuery\Query\Match\Fuzziness::AUTO
-			),
+			new \Spameri\ElasticQuery\Query\Match\Fuzziness(\Spameri\ElasticQuery\Query\Match\Fuzziness::AUTO),
 			2,
 			\Spameri\ElasticQuery\Query\Match\Operator::OR,
-			'standard'
+			'standard',
 		);
 
 		$array = $match->toArray();
 
-		\Tester\Assert::true(isset($array['match']['name']['query']));
 		\Tester\Assert::same('Avengers', $array['match']['name']['query']);
 		\Tester\Assert::same(1.0, $array['match']['name']['boost']);
 		\Tester\Assert::same(\Spameri\ElasticQuery\Query\Match\Operator::OR, $array['match']['name']['operator']);
 		\Tester\Assert::same(\Spameri\ElasticQuery\Query\Match\Fuzziness::AUTO, $array['match']['name']['fuzziness']);
 		\Tester\Assert::same('standard', $array['match']['name']['analyzer']);
 		\Tester\Assert::same(2, $array['match']['name']['minimum_should_match']);
-
-		$document = new \Spameri\ElasticQuery\Document(
-			self::INDEX,
-			new \Spameri\ElasticQuery\Document\Body\Plain(
-				(
-				new \Spameri\ElasticQuery\ElasticQuery(
-					new \Spameri\ElasticQuery\Query\QueryCollection(
-						NULL,
-						new \Spameri\ElasticQuery\Query\MustCollection(
-							$match
-						)
-					)
-				)
-				)->toArray()
-			)
-		);
-
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . $document->index . '/_search');
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
-		curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-		curl_setopt(
-			$ch, CURLOPT_POSTFIELDS,
-			\json_encode($document->toArray()['body'])
-		);
-
-		\Tester\Assert::noError(static function () use ($ch) {
-			$response = curl_exec($ch);
-			$resultMapper = new \Spameri\ElasticQuery\Response\ResultMapper();
-			/** @var \Spameri\ElasticQuery\Response\ResultSearch $result */
-			$result = $resultMapper->map(\json_decode($response, TRUE));
-			\Tester\Assert::type('int', $result->stats()->total());
-		});
 	}
 
 
-	public function testMinimumShouldMatchString() : void
+	public function testToArrayWithAllNewOptions(): void
 	{
 		$match = new \Spameri\ElasticQuery\Query\ElasticMatch(
-			'name',
-			'Avengers Endgame',
-			1.0,
-			null,
-			'75%',
+			field: 'name',
+			query: 'Avengers',
+			zeroTermsQuery: 'all',
+			autoGenerateSynonymsPhraseQuery: false,
+			lenient: true,
+			prefixLength: 1,
+			maxExpansions: 50,
+			fuzzyTranspositions: false,
+			fuzzyRewrite: 'constant_score',
 		);
 
 		$array = $match->toArray();
 
-		\Tester\Assert::same('75%', $array['match']['name']['minimum_should_match']);
+		\Tester\Assert::same('all', $array['match']['name']['zero_terms_query']);
+		\Tester\Assert::false($array['match']['name']['auto_generate_synonyms_phrase_query']);
+		\Tester\Assert::true($array['match']['name']['lenient']);
+		\Tester\Assert::same(1, $array['match']['name']['prefix_length']);
+		\Tester\Assert::same(50, $array['match']['name']['max_expansions']);
+		\Tester\Assert::false($array['match']['name']['fuzzy_transpositions']);
+		\Tester\Assert::same('constant_score', $array['match']['name']['fuzzy_rewrite']);
 	}
 
 
-	public function testMinimumShouldMatchCombinationString() : void
+	public function testMinimumShouldMatchString(): void
 	{
-		$match = new \Spameri\ElasticQuery\Query\ElasticMatch(
-			'name',
-			'Avengers Endgame Infinity War',
-			1.0,
-			null,
-			'2<90%',
+		$match = new \Spameri\ElasticQuery\Query\ElasticMatch('name', 'Avengers Endgame', 1.0, null, '75%');
+		\Tester\Assert::same('75%', $match->toArray()['match']['name']['minimum_should_match']);
+	}
+
+
+	public function testCreate(): void
+	{
+		$this->indexDocument(['name' => 'Avengers Endgame']);
+
+		$query = new \Spameri\ElasticQuery\ElasticQuery(
+			new \Spameri\ElasticQuery\Query\QueryCollection(
+				null,
+				new \Spameri\ElasticQuery\Query\MustCollection(
+					new \Spameri\ElasticQuery\Query\ElasticMatch('name', 'Avengers'),
+				),
+			),
 		);
 
-		$array = $match->toArray();
+		$result = $this->search($query);
 
-		\Tester\Assert::same('2<90%', $array['match']['name']['minimum_should_match']);
+		\Tester\Assert::same(1, $result->stats()->total());
 	}
 
 
-	public function testMinimumShouldMatchInt() : void
+	public function testCreateWithAllOptions(): void
 	{
-		$match = new \Spameri\ElasticQuery\Query\ElasticMatch(
-			'name',
-			'Avengers Endgame',
-			1.0,
-			null,
-			2,
+		$this->indexDocument(['name' => 'Avengers Endgame Infinity']);
+
+		$query = new \Spameri\ElasticQuery\ElasticQuery(
+			new \Spameri\ElasticQuery\Query\QueryCollection(
+				null,
+				new \Spameri\ElasticQuery\Query\MustCollection(
+					new \Spameri\ElasticQuery\Query\ElasticMatch(
+						field: 'name',
+						query: 'Avengers',
+						boost: 2.0,
+						fuzziness: new \Spameri\ElasticQuery\Query\Match\Fuzziness(\Spameri\ElasticQuery\Query\Match\Fuzziness::AUTO),
+						operator: \Spameri\ElasticQuery\Query\Match\Operator::OR,
+						analyzer: 'standard',
+						zeroTermsQuery: 'none',
+						autoGenerateSynonymsPhraseQuery: true,
+						lenient: true,
+						prefixLength: 0,
+						maxExpansions: 50,
+						fuzzyTranspositions: true,
+					),
+				),
+			),
 		);
 
-		$array = $match->toArray();
+		$result = $this->search($query);
 
-		\Tester\Assert::same(2, $array['match']['name']['minimum_should_match']);
-	}
-
-
-	public function tearDown() : void
-	{
-		$ch = \curl_init();
-		\curl_setopt($ch, CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
-		\curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-
-		\curl_exec($ch);
+		\Tester\Assert::same(1, $result->stats()->total());
 	}
 
 }

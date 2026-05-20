@@ -205,6 +205,36 @@ class MultiMatch extends \Tester\TestCase
 	}
 
 
+	public function testToArrayWithNewOptions(): void
+	{
+		$multiMatch = new \Spameri\ElasticQuery\Query\MultiMatch(
+			fields: ['title'],
+			query: 'test',
+			tieBreaker: 0.3,
+			slop: 2,
+			prefixLength: 1,
+			maxExpansions: 50,
+			lenient: true,
+			zeroTermsQuery: 'all',
+			autoGenerateSynonymsPhraseQuery: false,
+			fuzzyTranspositions: false,
+			fuzzyRewrite: 'constant_score',
+		);
+
+		$array = $multiMatch->toArray();
+
+		\Tester\Assert::same(0.3, $array['multi_match']['tie_breaker']);
+		\Tester\Assert::same(2, $array['multi_match']['slop']);
+		\Tester\Assert::same(1, $array['multi_match']['prefix_length']);
+		\Tester\Assert::same(50, $array['multi_match']['max_expansions']);
+		\Tester\Assert::true($array['multi_match']['lenient']);
+		\Tester\Assert::same('all', $array['multi_match']['zero_terms_query']);
+		\Tester\Assert::false($array['multi_match']['auto_generate_synonyms_phrase_query']);
+		\Tester\Assert::false($array['multi_match']['fuzzy_transpositions']);
+		\Tester\Assert::same('constant_score', $array['multi_match']['fuzzy_rewrite']);
+	}
+
+
 	public function testCreate(): void
 	{
 		$multiMatch = new \Spameri\ElasticQuery\Query\MultiMatch(
@@ -246,6 +276,55 @@ class MultiMatch extends \Tester\TestCase
 			$result = $resultMapper->map(\json_decode($response, true));
 			\Tester\Assert::type('int', $result->stats()->total());
 		});
+	}
+
+
+	public function testCreateWithAllOptions(): void
+	{
+		$multiMatch = new \Spameri\ElasticQuery\Query\MultiMatch(
+			fields: ['title', 'description'],
+			query: 'Avengers',
+			boost: 2.0,
+			fuzziness: new \Spameri\ElasticQuery\Query\Match\Fuzziness(\Spameri\ElasticQuery\Query\Match\Fuzziness::AUTO),
+			type: \Spameri\ElasticQuery\Query\Match\MultiMatchType::BEST_FIELDS,
+			minimumShouldMatch: 1,
+			operator: \Spameri\ElasticQuery\Query\Match\Operator::OR,
+			analyzer: 'standard',
+			tieBreaker: 0.3,
+			slop: 2,
+			prefixLength: 0,
+			maxExpansions: 50,
+			lenient: true,
+			zeroTermsQuery: 'none',
+			autoGenerateSynonymsPhraseQuery: true,
+			fuzzyTranspositions: true,
+		);
+
+		$document = new \Spameri\ElasticQuery\Document(
+			self::INDEX,
+			new \Spameri\ElasticQuery\Document\Body\Plain(
+				(
+				new \Spameri\ElasticQuery\ElasticQuery(
+					new \Spameri\ElasticQuery\Query\QueryCollection(
+						null,
+						new \Spameri\ElasticQuery\Query\MustCollection($multiMatch),
+					),
+				)
+				)->toArray(),
+			),
+		);
+
+		$ch = \curl_init();
+		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . $document->index . '/_search');
+		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
+		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'POST');
+		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+		\curl_setopt($ch, \CURLOPT_POSTFIELDS, (string) \json_encode($document->toArray()['body']));
+
+		$response = (string) \curl_exec($ch);
+		$decoded = \json_decode($response, true);
+
+		\Tester\Assert::true(isset($decoded['hits']), 'ES rejected: ' . $response);
 	}
 
 

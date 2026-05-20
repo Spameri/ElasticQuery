@@ -19,6 +19,13 @@ class ElasticMatch implements \Spameri\ElasticQuery\Query\LeafQueryInterface
 		private int|string|null $minimumShouldMatch = null,
 		private string $operator = \Spameri\ElasticQuery\Query\Match\Operator::OR,
 		private string|null $analyzer = null,
+		private string|null $zeroTermsQuery = null,
+		private bool|null $autoGenerateSynonymsPhraseQuery = null,
+		private bool|null $lenient = null,
+		private int|null $prefixLength = null,
+		private int|null $maxExpansions = null,
+		private bool|null $fuzzyTranspositions = null,
+		private string|null $fuzzyRewrite = null,
 	)
 	{
 		if ( ! \in_array($operator, \Spameri\ElasticQuery\Query\Match\Operator::OPERATORS, true)) {
@@ -42,34 +49,62 @@ class ElasticMatch implements \Spameri\ElasticQuery\Query\LeafQueryInterface
 	}
 
 
+	/**
+	 * @return array<string, array<string, array<string, mixed>>>
+	 */
 	public function toArray(): array
 	{
-		$array = [
-			'match' => [
-				$this->field => [
-					'query' => $this->query,
-					'boost' => $this->boost,
-				],
-			],
+		$body = [
+			'query' => $this->query,
+			'boost' => $this->boost,
+			'operator' => $this->operator,
 		];
 
-		if ($this->operator) {
-			$array['match'][$this->field]['operator'] = $this->operator;
-		}
-
 		if ($this->fuzziness !== null) {
-			$array['match'][$this->field]['fuzziness'] = $this->fuzziness->__toString();
+			$body['fuzziness'] = $this->fuzziness->__toString();
 		}
 
 		if ($this->analyzer !== null) {
-			$array['match'][$this->field]['analyzer'] = $this->analyzer;
+			$body['analyzer'] = $this->analyzer;
 		}
 
 		if ($this->minimumShouldMatch !== null) {
-			$array['match'][$this->field]['minimum_should_match'] = $this->minimumShouldMatch;
+			$body['minimum_should_match'] = $this->minimumShouldMatch;
 		}
 
-		return $array;
+		if ($this->zeroTermsQuery !== null) {
+			$body['zero_terms_query'] = $this->zeroTermsQuery;
+		}
+
+		if ($this->autoGenerateSynonymsPhraseQuery !== null) {
+			$body['auto_generate_synonyms_phrase_query'] = $this->autoGenerateSynonymsPhraseQuery;
+		}
+
+		if ($this->lenient !== null) {
+			$body['lenient'] = $this->lenient;
+		}
+
+		if ($this->prefixLength !== null) {
+			$body['prefix_length'] = $this->prefixLength;
+		}
+
+		if ($this->maxExpansions !== null) {
+			$body['max_expansions'] = $this->maxExpansions;
+		}
+
+		if ($this->fuzzyTranspositions !== null) {
+			$body['fuzzy_transpositions'] = $this->fuzzyTranspositions;
+		}
+
+		if ($this->fuzzyRewrite !== null) {
+			$body['fuzzy_rewrite'] = $this->fuzzyRewrite;
+		}
+
+		return [
+			'match' => [
+				$this->field => $body,
+			],
+		];
 	}
 
 }

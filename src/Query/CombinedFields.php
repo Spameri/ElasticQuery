@@ -20,6 +20,7 @@ class CombinedFields implements \Spameri\ElasticQuery\Query\LeafQueryInterface
 		private string|null $operator = null,
 		private int|string|null $minimumShouldMatch = null,
 		private string|null $zeroTermsQuery = null,
+		private bool|null $autoGenerateSynonymsPhraseQuery = null,
 	)
 	{
 		if ($fields === []) {
@@ -57,6 +58,10 @@ class CombinedFields implements \Spameri\ElasticQuery\Query\LeafQueryInterface
 
 		if ($this->zeroTermsQuery !== null) {
 			$body['zero_terms_query'] = $this->zeroTermsQuery;
+		}
+
+		if ($this->autoGenerateSynonymsPhraseQuery !== null) {
+			$body['auto_generate_synonyms_phrase_query'] = $this->autoGenerateSynonymsPhraseQuery;
 		}
 
 		return [
