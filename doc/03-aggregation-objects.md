@@ -605,6 +605,18 @@ new \Spameri\ElasticQuery\Aggregation\MinBucket(
 );
 ```
 
+##### StatsBucket Aggregation
+Stats (count/min/max/avg/sum) across sibling buckets.
+- Class: `\Spameri\ElasticQuery\Aggregation\StatsBucket`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-pipeline-stats-bucket-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/StatsBucket.php)
+
+```php
+new \Spameri\ElasticQuery\Aggregation\StatsBucket(
+	bucketsPath: 'sales_per_month>sales',
+);
+```
+
 ---
 
 ## Aggregation Collections
