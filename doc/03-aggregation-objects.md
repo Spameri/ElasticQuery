@@ -655,6 +655,20 @@ new \Spameri\ElasticQuery\Aggregation\CumulativeSum(
 );
 ```
 
+##### MovingFunction Aggregation
+Applies a Painless script over a sliding window of bucket values.
+- Class: `\Spameri\ElasticQuery\Aggregation\MovingFunction`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-pipeline-movfn-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/MovingFunction.php)
+
+```php
+new \Spameri\ElasticQuery\Aggregation\MovingFunction(
+	bucketsPath: 'sales',
+	window: 5,
+	script: 'MovingFunctions.unweightedAvg(values)',
+);
+```
+
 ---
 
 ## Aggregation Collections
