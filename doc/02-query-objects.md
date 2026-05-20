@@ -344,6 +344,20 @@ new \Spameri\ElasticQuery\Query\Boosting(
 
 Queries that traverse parent/child or join relationships.
 
+##### HasParent Query
+Match children whose parent matches the inner query.
+- Class: `\Spameri\ElasticQuery\Query\HasParent`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-has-parent-query.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Query/HasParent.php)
+
+```php
+new \Spameri\ElasticQuery\Query\HasParent(
+	parentType: 'blog',
+	query: new \Spameri\ElasticQuery\Query\Term('tag', 'tech'),
+	score: true,
+);
+```
+
 ##### HasChild Query
 Match parents whose children match the inner query.
 - Class: `\Spameri\ElasticQuery\Query\HasChild`
