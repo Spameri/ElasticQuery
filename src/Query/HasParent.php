@@ -15,6 +15,7 @@ class HasParent implements \Spameri\ElasticQuery\Query\LeafQueryInterface
 		private \Spameri\ElasticQuery\Query\LeafQueryInterface $query,
 		private bool|null $score = null,
 		private bool|null $ignoreUnmapped = null,
+		private \Spameri\ElasticQuery\Query\InnerHits|null $innerHits = null,
 	)
 	{
 	}
@@ -42,6 +43,10 @@ class HasParent implements \Spameri\ElasticQuery\Query\LeafQueryInterface
 
 		if ($this->ignoreUnmapped !== null) {
 			$body['ignore_unmapped'] = $this->ignoreUnmapped;
+		}
+
+		if ($this->innerHits !== null) {
+			$body['inner_hits'] = $this->innerHits->toArray();
 		}
 
 		return [
