@@ -5,21 +5,15 @@ namespace SpameriTests\ElasticQuery\Query;
 require_once __DIR__ . '/../../bootstrap.php';
 
 
-class Regexp extends \Tester\TestCase
+class Regexp extends \SpameriTests\ElasticQuery\AbstractElasticTestCase
 {
 
-	private const INDEX = 'spameri_test_query_regexp';
+	protected const INDEX = 'spameri_test_query_regexp';
 
 
-	public function setUp(): void
+	protected function mapping(): array|null
 	{
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'PUT');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-
-		\curl_exec($ch);
+		return ['mappings' => ['properties' => ['user' => ['type' => 'keyword']]]];
 	}
 
 
@@ -27,66 +21,72 @@ class Regexp extends \Tester\TestCase
 	{
 		$regexp = new \Spameri\ElasticQuery\Query\Regexp('user', 'k.*y');
 
-		$array = $regexp->toArray();
+		\Tester\Assert::same('k.*y', $regexp->toArray()['regexp']['user']['value']);
+	}
 
-		\Tester\Assert::same('k.*y', $array['regexp']['user']['value']);
+
+	public function testRewriteOption(): void
+	{
+		$regexp = new \Spameri\ElasticQuery\Query\Regexp(
+			field: 'user',
+			query: 'k.*',
+			rewrite: 'constant_score',
+		);
+
+		\Tester\Assert::same('constant_score', $regexp->toArray()['regexp']['user']['rewrite']);
 	}
 
 
 	public function testKey(): void
 	{
 		$regexp = new \Spameri\ElasticQuery\Query\Regexp('user', 'k.*');
-
 		\Tester\Assert::same('regexp_user_k.*', $regexp->key());
 	}
 
 
 	public function testCreate(): void
 	{
-		$regexp = new \Spameri\ElasticQuery\Query\Regexp('user', 'k.*');
+		$this->indexDocument(['user' => 'kimchy']);
 
-		$document = new \Spameri\ElasticQuery\Document(
-			self::INDEX,
-			new \Spameri\ElasticQuery\Document\Body\Plain(
-				(new \Spameri\ElasticQuery\ElasticQuery(
-					new \Spameri\ElasticQuery\Query\QueryCollection(
-						null,
-						new \Spameri\ElasticQuery\Query\MustCollection($regexp),
-					),
-				))->toArray(),
+		$query = new \Spameri\ElasticQuery\ElasticQuery(
+			new \Spameri\ElasticQuery\Query\QueryCollection(
+				null,
+				new \Spameri\ElasticQuery\Query\MustCollection(
+					new \Spameri\ElasticQuery\Query\Regexp('user', 'k.*'),
+				),
 			),
 		);
 
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . $document->index . '/_search');
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'GET');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-		\curl_setopt(
-			$ch,
-			\CURLOPT_POSTFIELDS,
-			\json_encode($document->toArray()['body']),
-		);
+		$result = $this->search($query);
 
-		\Tester\Assert::noError(static function () use ($ch): void {
-			$response = \curl_exec($ch);
-			$resultMapper = new \Spameri\ElasticQuery\Response\ResultMapper();
-			/** @var \Spameri\ElasticQuery\Response\ResultSearch $result */
-			$result = $resultMapper->map(\json_decode($response, true));
-			\Tester\Assert::type('int', $result->stats()->total());
-		});
+		\Tester\Assert::same(1, $result->stats()->total());
 	}
 
 
-	public function tearDown(): void
+	public function testCreateWithAllOptions(): void
 	{
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'DELETE');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+		$this->indexDocument(['user' => 'kimchy']);
 
-		\curl_exec($ch);
+		$query = new \Spameri\ElasticQuery\ElasticQuery(
+			new \Spameri\ElasticQuery\Query\QueryCollection(
+				null,
+				new \Spameri\ElasticQuery\Query\MustCollection(
+					new \Spameri\ElasticQuery\Query\Regexp(
+						field: 'user',
+						query: 'k.*',
+						boost: 2.0,
+						flags: 'ALL',
+						caseInsensitive: false,
+						maxDeterminizedStates: 10000,
+						rewrite: 'constant_score',
+					),
+				),
+			),
+		);
+
+		$result = $this->search($query);
+
+		\Tester\Assert::same(1, $result->stats()->total());
 	}
 
 }

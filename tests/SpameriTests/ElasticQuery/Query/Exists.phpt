@@ -5,103 +5,40 @@ namespace SpameriTests\ElasticQuery\Query;
 require_once __DIR__ . '/../../bootstrap.php';
 
 
-class Exists extends \Tester\TestCase
+class Exists extends \SpameriTests\ElasticQuery\AbstractElasticTestCase
 {
 
-	private const INDEX = 'spameri_test_video_exists';
-
-
-	public function setUp(): void
-	{
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'PUT');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-
-		\curl_exec($ch);
-	}
+	protected const INDEX = 'spameri_test_query_exists';
 
 
 	public function testToArray(): void
 	{
-		$exists = new \Spameri\ElasticQuery\Query\Exists('user');
+		$exists = new \Spameri\ElasticQuery\Query\Exists('user', 2.0);
 
 		$array = $exists->toArray();
 
-		\Tester\Assert::true(isset($array['exists']));
 		\Tester\Assert::same('user', $array['exists']['field']);
-	}
-
-
-	public function testKey(): void
-	{
-		$exists = new \Spameri\ElasticQuery\Query\Exists('email');
-
-		\Tester\Assert::same('exits_email', $exists->key());
-	}
-
-
-	public function testNestedFieldPath(): void
-	{
-		$exists = new \Spameri\ElasticQuery\Query\Exists('user.profile.avatar');
-
-		$array = $exists->toArray();
-
-		\Tester\Assert::same('user.profile.avatar', $array['exists']['field']);
+		\Tester\Assert::same(2.0, $array['exists']['boost']);
 	}
 
 
 	public function testCreate(): void
 	{
-		$exists = new \Spameri\ElasticQuery\Query\Exists('title');
+		$this->indexDocument(['title' => 'foo']);
+		$this->indexDocument(['other' => 'bar']);
 
-		$document = new \Spameri\ElasticQuery\Document(
-			self::INDEX,
-			new \Spameri\ElasticQuery\Document\Body\Plain(
-				(
-				new \Spameri\ElasticQuery\ElasticQuery(
-					new \Spameri\ElasticQuery\Query\QueryCollection(
-						null,
-						new \Spameri\ElasticQuery\Query\MustCollection(
-							$exists,
-						),
-					),
-				)
-				)->toArray(),
+		$query = new \Spameri\ElasticQuery\ElasticQuery(
+			new \Spameri\ElasticQuery\Query\QueryCollection(
+				null,
+				new \Spameri\ElasticQuery\Query\MustCollection(
+					new \Spameri\ElasticQuery\Query\Exists('title'),
+				),
 			),
 		);
 
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . $document->index . '/_search');
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'GET');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-		\curl_setopt(
-			$ch,
-			\CURLOPT_POSTFIELDS,
-			\json_encode($document->toArray()['body']),
-		);
+		$result = $this->search($query);
 
-		\Tester\Assert::noError(static function () use ($ch): void {
-			$response = \curl_exec($ch);
-			$resultMapper = new \Spameri\ElasticQuery\Response\ResultMapper();
-			/** @var \Spameri\ElasticQuery\Response\ResultSearch $result */
-			$result = $resultMapper->map(\json_decode($response, true));
-			\Tester\Assert::type('int', $result->stats()->total());
-		});
-	}
-
-
-	public function tearDown(): void
-	{
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'DELETE');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-
-		\curl_exec($ch);
+		\Tester\Assert::same(1, $result->stats()->total());
 	}
 
 }

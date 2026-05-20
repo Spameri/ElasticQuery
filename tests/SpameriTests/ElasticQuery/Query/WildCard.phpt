@@ -5,86 +5,82 @@ namespace SpameriTests\ElasticQuery\Query;
 require_once __DIR__ . '/../../bootstrap.php';
 
 
-class WildCard extends \Tester\TestCase
+class WildCard extends \SpameriTests\ElasticQuery\AbstractElasticTestCase
 {
 
-	private const INDEX = 'spameri_test_video_wildcard';
+	protected const INDEX = 'spameri_test_query_wildcard';
 
 
-	public function setUp() : void
+	protected function mapping(): array|null
 	{
-		$ch = \curl_init();
-		\curl_setopt($ch, CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
-		\curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-
-		\curl_exec($ch);
+		return ['mappings' => ['properties' => ['name' => ['type' => 'keyword']]]];
 	}
 
 
-	public function testCreate() : void
+	public function testToArray(): void
 	{
-		$wildCard = new \Spameri\ElasticQuery\Query\WildCard(
-			'name',
-			'Avengers',
-			1.0
-		);
+		$wildCard = new \Spameri\ElasticQuery\Query\WildCard('name', 'Aveng*', 1.0);
 
 		$array = $wildCard->toArray();
 
-		\Tester\Assert::true(isset($array['wildcard']['name']['value']));
-		\Tester\Assert::same('Avengers', $array['wildcard']['name']['value']);
+		\Tester\Assert::same('Aveng*', $array['wildcard']['name']['value']);
 		\Tester\Assert::same(1.0, $array['wildcard']['name']['boost']);
-
-		$document = new \Spameri\ElasticQuery\Document(
-			self::INDEX,
-			new \Spameri\ElasticQuery\Document\Body\Plain(
-				(
-				new \Spameri\ElasticQuery\ElasticQuery(
-					new \Spameri\ElasticQuery\Query\QueryCollection(
-						NULL,
-						new \Spameri\ElasticQuery\Query\MustCollection(
-							$wildCard
-						)
-					)
-				)
-				)->toArray()
-			)
-		);
-
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . $document->index . '/_search');
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
-		curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-		curl_setopt(
-			$ch, CURLOPT_POSTFIELDS,
-			\json_encode($document->toArray()['body'])
-		);
-
-		\Tester\Assert::noError(static function () use ($ch) {
-			$response = \curl_exec($ch);
-			if ($response === false) {
-				throw new \RuntimeException('Curl request failed: ' . \curl_error($ch));
-			}
-			$resultMapper = new \Spameri\ElasticQuery\Response\ResultMapper();
-			/** @var \Spameri\ElasticQuery\Response\ResultSearch $result */
-			$result = $resultMapper->map(\json_decode($response, true));
-			\Tester\Assert::type('int', $result->stats()->total());
-		});
 	}
 
 
-	public function tearDown() : void
+	public function testToArrayWithCaseInsensitive(): void
 	{
-		$ch = \curl_init();
-		\curl_setopt($ch, CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX . '/');
-		\curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
-		\curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+		$wildCard = new \Spameri\ElasticQuery\Query\WildCard(
+			field: 'name',
+			query: 'aveng*',
+			caseInsensitive: true,
+			rewrite: 'constant_score',
+		);
 
-		\curl_exec($ch);
+		\Tester\Assert::true($wildCard->toArray()['wildcard']['name']['case_insensitive']);
+		\Tester\Assert::same('constant_score', $wildCard->toArray()['wildcard']['name']['rewrite']);
+	}
+
+
+	public function testCreate(): void
+	{
+		$this->indexDocument(['name' => 'Avengers']);
+
+		$query = new \Spameri\ElasticQuery\ElasticQuery(
+			new \Spameri\ElasticQuery\Query\QueryCollection(
+				null,
+				new \Spameri\ElasticQuery\Query\MustCollection(
+					new \Spameri\ElasticQuery\Query\WildCard('name', 'Aveng*'),
+				),
+			),
+		);
+
+		$result = $this->search($query);
+
+		\Tester\Assert::same(1, $result->stats()->total());
+	}
+
+
+	public function testCreateWithCaseInsensitive(): void
+	{
+		$this->indexDocument(['name' => 'Avengers']);
+
+		$query = new \Spameri\ElasticQuery\ElasticQuery(
+			new \Spameri\ElasticQuery\Query\QueryCollection(
+				null,
+				new \Spameri\ElasticQuery\Query\MustCollection(
+					new \Spameri\ElasticQuery\Query\WildCard(
+						field: 'name',
+						query: 'aveng*',
+						caseInsensitive: true,
+					),
+				),
+			),
+		);
+
+		$result = $this->search($query);
+
+		\Tester\Assert::same(1, $result->stats()->total());
 	}
 
 }

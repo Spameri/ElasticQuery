@@ -15,6 +15,7 @@ class Prefix implements \Spameri\ElasticQuery\Query\LeafQueryInterface
 		private string $query,
 		private float $boost = 1.0,
 		private bool|null $caseInsensitive = null,
+		private string|null $rewrite = null,
 	)
 	{
 	}
@@ -38,6 +39,10 @@ class Prefix implements \Spameri\ElasticQuery\Query\LeafQueryInterface
 
 		if ($this->caseInsensitive !== null) {
 			$body['case_insensitive'] = $this->caseInsensitive;
+		}
+
+		if ($this->rewrite !== null) {
+			$body['rewrite'] = $this->rewrite;
 		}
 
 		return [

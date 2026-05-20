@@ -5,21 +5,22 @@ namespace SpameriTests\ElasticQuery\Query;
 require_once __DIR__ . '/../../bootstrap.php';
 
 
-class TermSet extends \Tester\TestCase
+class TermSet extends \SpameriTests\ElasticQuery\AbstractElasticTestCase
 {
 
-	private const INDEX = 'spameri_test_query_term_set';
+	protected const INDEX = 'spameri_test_query_term_set';
 
 
-	public function setUp(): void
+	protected function mapping(): array|null
 	{
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'PUT');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-
-		\curl_exec($ch);
+		return [
+			'mappings' => [
+				'properties' => [
+					'programming_languages' => ['type' => 'keyword'],
+					'required_matches' => ['type' => 'long'],
+				],
+			],
+		];
 	}
 
 
@@ -29,6 +30,7 @@ class TermSet extends \Tester\TestCase
 			field: 'programming_languages',
 			terms: ['c++', 'java', 'php'],
 			minimumShouldMatchField: 'required_matches',
+			boost: 2.0,
 		);
 
 		$array = $termSet->toArray();
@@ -37,6 +39,7 @@ class TermSet extends \Tester\TestCase
 			['c++', 'java', 'php'],
 			$array['terms_set']['programming_languages']['terms'],
 		);
+		\Tester\Assert::same(2.0, $array['terms_set']['programming_languages']['boost']);
 		\Tester\Assert::same(
 			'required_matches',
 			$array['terms_set']['programming_languages']['minimum_should_match_field'],
@@ -66,27 +69,29 @@ class TermSet extends \Tester\TestCase
 	}
 
 
-	public function testKey(): void
+	public function testCreate(): void
 	{
-		$termSet = new \Spameri\ElasticQuery\Query\TermSet(
-			'tags',
-			['php', 'es'],
-			minimumShouldMatchField: 'min',
+		$this->indexDocument([
+			'programming_languages' => ['c++', 'java', 'php'],
+			'required_matches' => 2,
+		]);
+
+		$query = new \Spameri\ElasticQuery\ElasticQuery(
+			new \Spameri\ElasticQuery\Query\QueryCollection(
+				null,
+				new \Spameri\ElasticQuery\Query\MustCollection(
+					new \Spameri\ElasticQuery\Query\TermSet(
+						field: 'programming_languages',
+						terms: ['c++', 'java', 'php'],
+						minimumShouldMatchField: 'required_matches',
+					),
+				),
+			),
 		);
 
-		\Tester\Assert::same('terms_set_tags_php-es', $termSet->key());
-	}
+		$result = $this->search($query);
 
-
-	public function tearDown(): void
-	{
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'DELETE');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-
-		\curl_exec($ch);
+		\Tester\Assert::same(1, $result->stats()->total());
 	}
 
 }

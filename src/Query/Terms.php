@@ -11,13 +11,16 @@ namespace Spameri\ElasticQuery\Query;
 class Terms implements LeafQueryInterface
 {
 
+	/**
+	 * @param array<int, scalar>|\Spameri\ElasticQuery\Query\TermsLookup $query Either inline values or a terms_lookup.
+	 */
 	public function __construct(
 		private string $field,
-		private array $query,
+		private array|\Spameri\ElasticQuery\Query\TermsLookup $query,
 		private float $boost = 1.0,
 	)
 	{
-		if ( ! \count($query)) {
+		if (\is_array($query) && \count($query) === 0) {
 			throw new \Spameri\ElasticQuery\Exception\InvalidArgumentException(
 				'Terms query must contain values, empty array given.',
 			);
@@ -28,12 +31,28 @@ class Terms implements LeafQueryInterface
 
 	public function key(): string
 	{
-		return 'terms_' . $this->field . '_' . \implode('-', $this->query);
+		if ($this->query instanceof \Spameri\ElasticQuery\Query\TermsLookup) {
+			return 'terms_' . $this->field . '_lookup';
+		}
+
+		return 'terms_' . $this->field . '_' . \implode('-', \array_map('\strval', $this->query));
 	}
 
 
+	/**
+	 * @return array<string, array<string, mixed>>
+	 */
 	public function toArray(): array
 	{
+		if ($this->query instanceof \Spameri\ElasticQuery\Query\TermsLookup) {
+			return [
+				'terms' => [
+					$this->field => $this->query->toArray(),
+					'boost' => $this->boost,
+				],
+			];
+		}
+
 		return [
 			'terms' => [
 				$this->field => $this->query,

@@ -5,85 +5,124 @@ namespace SpameriTests\ElasticQuery\Query;
 require_once __DIR__ . '/../../bootstrap.php';
 
 
-class Range extends \Tester\TestCase
+class Range extends \SpameriTests\ElasticQuery\AbstractElasticTestCase
 {
 
-	private const INDEX = 'spameri_test_video_range';
+	protected const INDEX = 'spameri_test_query_range';
 
 
-	public function setUp() : void
+	protected function mapping(): array|null
 	{
-		$ch = \curl_init();
-		\curl_setopt($ch, CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
-		\curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-
-		\curl_exec($ch);
+		return [
+			'mappings' => [
+				'properties' => [
+					'id' => ['type' => 'long'],
+					'created' => ['type' => 'date'],
+				],
+			],
+		];
 	}
 
 
-	public function testCreate() : void
+	public function testToArray(): void
+	{
+		$range = new \Spameri\ElasticQuery\Query\Range('id', 1, 1000000, 1.0);
+
+		$array = $range->toArray();
+
+		\Tester\Assert::same(1, $array['range']['id']['gte']);
+		\Tester\Assert::same(1000000, $array['range']['id']['lte']);
+		\Tester\Assert::same(1.0, $array['range']['id']['boost']);
+	}
+
+
+	public function testToArrayWithGtLtRelationFormat(): void
 	{
 		$range = new \Spameri\ElasticQuery\Query\Range(
-			'id',
-			1,
-			1000000,
-			1.0
+			field: 'id',
+			boost: 1.0,
+			gt: 1,
+			lt: 10,
+			relation: \Spameri\ElasticQuery\Query\Range\Relation::WITHIN,
+			format: 'epoch_second',
+			timeZone: 'UTC',
 		);
 
 		$array = $range->toArray();
 
-		\Tester\Assert::true(isset($array['range']['id']));
-		\Tester\Assert::same(1, $array['range']['id']['gte']);
-		\Tester\Assert::same(1000000, $array['range']['id']['lte']);
-		\Tester\Assert::same(1.0, $array['range']['id']['boost']);
-
-		$document = new \Spameri\ElasticQuery\Document(
-			self::INDEX,
-			new \Spameri\ElasticQuery\Document\Body\Plain(
-				(
-				new \Spameri\ElasticQuery\ElasticQuery(
-					new \Spameri\ElasticQuery\Query\QueryCollection(
-						NULL,
-						new \Spameri\ElasticQuery\Query\MustCollection(
-							$range
-						)
-					)
-				)
-				)->toArray()
-			)
-		);
-
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . $document->index . '/_search');
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
-		curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-		curl_setopt(
-			$ch, CURLOPT_POSTFIELDS,
-			\json_encode($document->toArray()['body'])
-		);
-
-		\Tester\Assert::noError(static function () use ($ch) {
-			$response = curl_exec($ch);
-			$resultMapper = new \Spameri\ElasticQuery\Response\ResultMapper();
-			/** @var \Spameri\ElasticQuery\Response\ResultSearch $result */
-			$result = $resultMapper->map(\json_decode($response, TRUE));
-			\Tester\Assert::type('int', $result->stats()->total());
-		});
+		\Tester\Assert::same(1, $array['range']['id']['gt']);
+		\Tester\Assert::same(10, $array['range']['id']['lt']);
+		\Tester\Assert::same('WITHIN', $array['range']['id']['relation']);
+		\Tester\Assert::same('epoch_second', $array['range']['id']['format']);
+		\Tester\Assert::same('UTC', $array['range']['id']['time_zone']);
 	}
 
 
-	public function tearDown() : void
+	public function testRejectsEmptyRange(): void
 	{
-		$ch = \curl_init();
-		\curl_setopt($ch, CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
-		\curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+		\Tester\Assert::exception(
+			static function (): void {
+				new \Spameri\ElasticQuery\Query\Range('id');
+			},
+			\Spameri\ElasticQuery\Exception\InvalidArgumentException::class,
+		);
+	}
 
-		\curl_exec($ch);
+
+	public function testRejectsInvalidRelation(): void
+	{
+		\Tester\Assert::exception(
+			static function (): void {
+				new \Spameri\ElasticQuery\Query\Range('id', 1, 10, relation: 'OVERLAPS');
+			},
+			\Spameri\ElasticQuery\Exception\InvalidArgumentException::class,
+		);
+	}
+
+
+	public function testCreate(): void
+	{
+		$this->indexDocument(['id' => 5]);
+
+		$query = new \Spameri\ElasticQuery\ElasticQuery(
+			new \Spameri\ElasticQuery\Query\QueryCollection(
+				null,
+				new \Spameri\ElasticQuery\Query\MustCollection(
+					new \Spameri\ElasticQuery\Query\Range('id', 1, 10),
+				),
+			),
+		);
+
+		$result = $this->search($query);
+
+		\Tester\Assert::same(1, $result->stats()->total());
+	}
+
+
+	public function testCreateWithAllOptions(): void
+	{
+		$this->indexDocument(['id' => 5, 'created' => '2024-01-01']);
+
+		$query = new \Spameri\ElasticQuery\ElasticQuery(
+			new \Spameri\ElasticQuery\Query\QueryCollection(
+				null,
+				new \Spameri\ElasticQuery\Query\MustCollection(
+					new \Spameri\ElasticQuery\Query\Range(
+						field: 'created',
+						gte: '2023-01-01',
+						lte: '2025-01-01',
+						boost: 1.0,
+						format: 'yyyy-MM-dd',
+						relation: \Spameri\ElasticQuery\Query\Range\Relation::INTERSECTS,
+						timeZone: 'UTC',
+					),
+				),
+			),
+		);
+
+		$result = $this->search($query);
+
+		\Tester\Assert::same(1, $result->stats()->total());
 	}
 
 }
