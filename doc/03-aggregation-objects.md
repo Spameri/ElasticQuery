@@ -336,6 +336,16 @@ new \Spameri\ElasticQuery\Aggregation\DateRange(
 );
 ```
 
+##### Missing Aggregation
+Single bucket containing documents missing a field value.
+- Class: `\Spameri\ElasticQuery\Aggregation\Missing`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-missing-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/Missing.php)
+
+```php
+new \Spameri\ElasticQuery\Aggregation\Missing(field: 'price');
+```
+
 ##### Nested Aggregation
 Aggregates on nested documents.
 - Class: `\Spameri\ElasticQuery\Aggregation\Nested`
