@@ -191,7 +191,13 @@ class ResultMapper
 
 		if (isset($aggregationArray['buckets'])) {
 			foreach ($aggregationArray['buckets'] as $bucketPosition => $bucket) {
-				$buckets[] = $this->mapBucket($bucketPosition, $bucket);
+				$bucketArray = \is_array($bucket) ? $bucket : ['doc_count' => 0];
+				if (\is_string($bucketPosition)) {
+					$bucketArray['key'] = $bucketArray['key'] ?? $bucketPosition;
+					$buckets[] = $this->mapBucket(null, $bucketArray);
+				} else {
+					$buckets[] = $this->mapBucket($bucketPosition, $bucketArray);
+				}
 			}
 		}
 
