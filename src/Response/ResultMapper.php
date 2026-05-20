@@ -262,6 +262,9 @@ class ResultMapper
 	): \Spameri\ElasticQuery\Response\Result\Aggregation\Bucket
 	{
 		$bucketKey = $bucketArray['key'] ?? $bucketPosition;
+		if (\is_array($bucketKey)) {
+			$bucketKey = (string) \json_encode($bucketKey);
+		}
 
 		return new \Spameri\ElasticQuery\Response\Result\Aggregation\Bucket(
 			(string) $bucketKey,

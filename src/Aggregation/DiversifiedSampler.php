@@ -15,6 +15,8 @@ class DiversifiedSampler implements \Spameri\ElasticQuery\Aggregation\LeafAggreg
 		private int $shardSize = 100,
 		private int|null $maxDocsPerValue = null,
 		private string $key = 'diversified_sampler',
+		private string|null $executionHint = null,
+		private \Spameri\ElasticQuery\Script|null $script = null,
 	)
 	{
 	}
@@ -38,6 +40,14 @@ class DiversifiedSampler implements \Spameri\ElasticQuery\Aggregation\LeafAggreg
 
 		if ($this->maxDocsPerValue !== null) {
 			$array['max_docs_per_value'] = $this->maxDocsPerValue;
+		}
+
+		if ($this->executionHint !== null) {
+			$array['execution_hint'] = $this->executionHint;
+		}
+
+		if ($this->script !== null) {
+			$array['script'] = $this->script->toArray();
 		}
 
 		return [

@@ -12,8 +12,8 @@ class Bucket
 		private string $key,
 		private int $docCount,
 		private int|null $position = null,
-		private int|float|null $from = null,
-		private int|float|null $to = null,
+		private int|float|string|null $from = null,
+		private int|float|string|null $to = null,
 	)
 	{
 	}
@@ -37,13 +37,13 @@ class Bucket
 	}
 
 
-	public function from(): float|int|null
+	public function from(): float|int|string|null
 	{
 		return $this->from;
 	}
 
 
-	public function to(): float|int|null
+	public function to(): float|int|string|null
 	{
 		return $this->to;
 	}

@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Spameri\ElasticQuery\Aggregation;
 
+
 /**
  * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-composite-aggregation.html
  */
@@ -11,7 +12,7 @@ class Composite implements \Spameri\ElasticQuery\Aggregation\LeafAggregationInte
 {
 
 	/**
-	 * @var array<string, \Spameri\ElasticQuery\Aggregation\LeafAggregationInterface>
+	 * @var array<string, \Spameri\ElasticQuery\Aggregation\Composite\CompositeSourceInterface>
 	 */
 	private array $sources;
 
@@ -21,7 +22,7 @@ class Composite implements \Spameri\ElasticQuery\Aggregation\LeafAggregationInte
 	 */
 	public function __construct(
 		private string $key,
-		\Spameri\ElasticQuery\Aggregation\LeafAggregationInterface $source,
+		\Spameri\ElasticQuery\Aggregation\Composite\CompositeSourceInterface $source,
 		private int|null $size = null,
 		private array|null $after = null,
 	)
@@ -31,7 +32,7 @@ class Composite implements \Spameri\ElasticQuery\Aggregation\LeafAggregationInte
 
 
 	public function addSource(
-		\Spameri\ElasticQuery\Aggregation\LeafAggregationInterface $source,
+		\Spameri\ElasticQuery\Aggregation\Composite\CompositeSourceInterface $source,
 	): void
 	{
 		$this->sources[$source->key()] = $source;
@@ -54,9 +55,7 @@ class Composite implements \Spameri\ElasticQuery\Aggregation\LeafAggregationInte
 			$sources[] = [$name => $source->toArray()];
 		}
 
-		$array = [
-			'sources' => $sources,
-		];
+		$array = ['sources' => $sources];
 
 		if ($this->size !== null) {
 			$array['size'] = $this->size;
@@ -66,9 +65,7 @@ class Composite implements \Spameri\ElasticQuery\Aggregation\LeafAggregationInte
 			$array['after'] = $this->after;
 		}
 
-		return [
-			'composite' => $array,
-		];
+		return ['composite' => $array];
 	}
 
 }
