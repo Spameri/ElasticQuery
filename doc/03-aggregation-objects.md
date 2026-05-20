@@ -569,6 +569,18 @@ new \Spameri\ElasticQuery\Aggregation\AvgBucket(
 );
 ```
 
+##### SumBucket Aggregation
+Sum of values across sibling buckets.
+- Class: `\Spameri\ElasticQuery\Aggregation\SumBucket`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-pipeline-sum-bucket-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/SumBucket.php)
+
+```php
+new \Spameri\ElasticQuery\Aggregation\SumBucket(
+	bucketsPath: 'sales_per_month>sales',
+);
+```
+
 ---
 
 ## Aggregation Collections
