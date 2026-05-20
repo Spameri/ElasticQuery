@@ -5,83 +5,43 @@ namespace SpameriTests\ElasticQuery\Query;
 require_once __DIR__ . '/../../bootstrap.php';
 
 
-class Term extends \Tester\TestCase
+class Term extends \SpameriTests\ElasticQuery\AbstractElasticTestCase
 {
 
-	private const INDEX = 'spameri_test_video_term';
+	protected const INDEX = 'spameri_test_query_term';
 
 
-	public function setUp() : void
-	{
-		$ch = \curl_init();
-		\curl_setopt($ch, CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
-		\curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-
-		\curl_exec($ch);
-	}
-
-
-	public function testCreate() : void
+	public function testToArray(): void
 	{
 		$term = new \Spameri\ElasticQuery\Query\Term(
 			'name',
 			'Avengers',
-			1.0
+			1.0,
 		);
 
 		$array = $term->toArray();
 
-		\Tester\Assert::true(isset($array['term']['name']['value']));
 		\Tester\Assert::same('Avengers', $array['term']['name']['value']);
 		\Tester\Assert::same(1.0, $array['term']['name']['boost']);
-
-		$document = new \Spameri\ElasticQuery\Document(
-			self::INDEX,
-			new \Spameri\ElasticQuery\Document\Body\Plain(
-				(
-				new \Spameri\ElasticQuery\ElasticQuery(
-					new \Spameri\ElasticQuery\Query\QueryCollection(
-						NULL,
-						new \Spameri\ElasticQuery\Query\MustCollection(
-							$term
-						)
-					)
-				)
-				)->toArray()
-			)
-		);
-
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . $document->index . '/_search');
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
-		curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-		curl_setopt(
-			$ch, CURLOPT_POSTFIELDS,
-			\json_encode($document->toArray()['body'])
-		);
-
-		\Tester\Assert::noError(static function () use ($ch) {
-			$response = curl_exec($ch);
-			$resultMapper = new \Spameri\ElasticQuery\Response\ResultMapper();
-			/** @var \Spameri\ElasticQuery\Response\ResultSearch $result */
-			$result = $resultMapper->map(\json_decode($response, TRUE));
-			\Tester\Assert::type('int', $result->stats()->total());
-		});
 	}
 
 
-	public function tearDown() : void
+	public function testCreate(): void
 	{
-		$ch = \curl_init();
-		\curl_setopt($ch, CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
-		\curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+		$this->indexDocument(['name' => 'Avengers']);
 
-		\curl_exec($ch);
+		$query = new \Spameri\ElasticQuery\ElasticQuery(
+			new \Spameri\ElasticQuery\Query\QueryCollection(
+				null,
+				new \Spameri\ElasticQuery\Query\MustCollection(
+					new \Spameri\ElasticQuery\Query\Term('name.keyword', 'Avengers'),
+				),
+			),
+		);
+
+		$result = $this->search($query);
+
+		\Tester\Assert::same(1, $result->stats()->total());
 	}
 
 }
