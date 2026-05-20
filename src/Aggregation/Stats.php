@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Spameri\ElasticQuery\Aggregation;
 
+
 /**
  * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-metrics-stats-aggregation.html
  */
@@ -12,6 +13,9 @@ class Stats implements \Spameri\ElasticQuery\Aggregation\LeafAggregationInterfac
 
 	public function __construct(
 		private string $field,
+		private float|int|string|null $missing = null,
+		private \Spameri\ElasticQuery\Script|null $script = null,
+		private string|null $format = null,
 	)
 	{
 	}
@@ -24,15 +28,25 @@ class Stats implements \Spameri\ElasticQuery\Aggregation\LeafAggregationInterfac
 
 
 	/**
-	 * @return array<string, array<string, string>>
+	 * @return array<string, array<string, mixed>>
 	 */
 	public function toArray(): array
 	{
-		return [
-			'stats' => [
-				'field' => $this->field,
-			],
-		];
+		$array = ['field' => $this->field];
+
+		if ($this->missing !== null) {
+			$array['missing'] = $this->missing;
+		}
+
+		if ($this->script !== null) {
+			$array['script'] = $this->script->toArray();
+		}
+
+		if ($this->format !== null) {
+			$array['format'] = $this->format;
+		}
+
+		return ['stats' => $array];
 	}
 
 }

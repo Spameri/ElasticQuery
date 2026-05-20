@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Spameri\ElasticQuery\Aggregation;
 
+
 /**
  * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-metrics-weight-avg-aggregation.html
  */
@@ -11,8 +12,10 @@ class WeightedAvg implements \Spameri\ElasticQuery\Aggregation\LeafAggregationIn
 {
 
 	public function __construct(
-		private string $valueField,
-		private string $weightField,
+		private \Spameri\ElasticQuery\Aggregation\WeightedAvg\WeightedAvgValue $value,
+		private \Spameri\ElasticQuery\Aggregation\WeightedAvg\WeightedAvgValue $weight,
+		private string|null $format = null,
+		private string $key = 'weighted_avg',
 	)
 	{
 	}
@@ -20,25 +23,25 @@ class WeightedAvg implements \Spameri\ElasticQuery\Aggregation\LeafAggregationIn
 
 	public function key(): string
 	{
-		return 'weighted_avg_' . $this->valueField;
+		return $this->key;
 	}
 
 
 	/**
-	 * @return array<string, array<string, array<string, string>>>
+	 * @return array<string, array<string, mixed>>
 	 */
 	public function toArray(): array
 	{
-		return [
-			'weighted_avg' => [
-				'value' => [
-					'field' => $this->valueField,
-				],
-				'weight' => [
-					'field' => $this->weightField,
-				],
-			],
+		$array = [
+			'value' => $this->value->toArray(),
+			'weight' => $this->weight->toArray(),
 		];
+
+		if ($this->format !== null) {
+			$array['format'] = $this->format;
+		}
+
+		return ['weighted_avg' => $array];
 	}
 
 }
