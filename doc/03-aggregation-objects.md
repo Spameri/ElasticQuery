@@ -682,6 +682,19 @@ new \Spameri\ElasticQuery\Aggregation\SerialDiff(
 );
 ```
 
+##### BucketScript Aggregation
+Computes a per-bucket value via a Painless script over named sibling metrics.
+- Class: `\Spameri\ElasticQuery\Aggregation\BucketScript`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-pipeline-bucket-script-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/BucketScript.php)
+
+```php
+new \Spameri\ElasticQuery\Aggregation\BucketScript(
+	bucketsPath: ['tShirts' => 't-shirts', 'total' => 'total_sales'],
+	script: 'params.tShirts / params.total * 100',
+);
+```
+
 ---
 
 ## Aggregation Collections
