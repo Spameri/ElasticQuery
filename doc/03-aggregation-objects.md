@@ -147,6 +147,19 @@ new \Spameri\ElasticQuery\Aggregation\PercentileRanks(
 );
 ```
 
+##### WeightedAvg Aggregation
+Computes a weighted average over two fields (value and weight).
+- Class: `\Spameri\ElasticQuery\Aggregation\WeightedAvg`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-metrics-weight-avg-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/WeightedAvg.php)
+
+```php
+new \Spameri\ElasticQuery\Aggregation\WeightedAvg(
+	valueField: 'grade',
+	weightField: 'weight',
+);
+```
+
 ##### Cardinality Aggregation
 Approximate count of distinct values using HyperLogLog++.
 - Class: `\Spameri\ElasticQuery\Aggregation\Cardinality`
