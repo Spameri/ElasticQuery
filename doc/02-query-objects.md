@@ -344,6 +344,16 @@ new \Spameri\ElasticQuery\Query\Boosting(
 
 Queries that traverse parent/child or join relationships.
 
+##### ParentId Query
+Match children that belong to a parent with a known id.
+- Class: `\Spameri\ElasticQuery\Query\ParentId`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-parent-id-query.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Query/ParentId.php)
+
+```php
+new \Spameri\ElasticQuery\Query\ParentId(type: 'comment', id: '1');
+```
+
 ##### HasParent Query
 Match children whose parent matches the inner query.
 - Class: `\Spameri\ElasticQuery\Query\HasParent`
