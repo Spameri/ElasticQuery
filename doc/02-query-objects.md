@@ -88,6 +88,19 @@ new \Spameri\ElasticQuery\Query\Fuzzy(
 );
 ```
 
+##### QueryString Query
+Lucene-syntax query — supports boolean operators, wildcards, regex, fielded search.
+- Class: `\Spameri\ElasticQuery\Query\QueryString`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-query-string-query.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Query/QueryString.php)
+
+```php
+new \Spameri\ElasticQuery\Query\QueryString(
+	query: '(new york city) OR (big apple)',
+	defaultField: 'content',
+);
+```
+
 ##### CombinedFields Query
 BM25-aware multi-field full-text search that treats fields as one combined field.
 - Class: `\Spameri\ElasticQuery\Query\CombinedFields`
