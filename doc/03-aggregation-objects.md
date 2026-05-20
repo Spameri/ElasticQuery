@@ -441,6 +441,18 @@ Aggregates on nested documents.
 new \Spameri\ElasticQuery\Aggregation\Nested(path: 'comments');
 ```
 
+##### ReverseNested Aggregation
+Moves back from a nested context to the parent (or an ancestor at `path`).
+- Class: `\Spameri\ElasticQuery\Aggregation\ReverseNested`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-reverse-nested-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/ReverseNested.php)
+
+```php
+new \Spameri\ElasticQuery\Aggregation\ReverseNested();
+// Or back to a specific ancestor path:
+new \Spameri\ElasticQuery\Aggregation\ReverseNested(path: 'parent_field');
+```
+
 ---
 
 ## Aggregation Collections
