@@ -15,27 +15,50 @@ class GeoDistance implements LeafQueryInterface
 		private string $field,
 		private float $lat,
 		private float $lon,
+		private string $distance,
+		private string|null $distanceType = null,
+		private string|null $validationMethod = null,
+		private bool|null $ignoreUnmapped = null,
+		private float $boost = 1.0,
 	)
 	{
-
 	}
 
 
 	public function key(): string
 	{
-		return 'geo_distance_' . $this->field . '_' . $this->lat . '.' . $this->lon;
+		return 'geo_distance_' . $this->field . '_' . $this->lat . '.' . $this->lon . '_' . $this->distance;
 	}
 
 
+	/**
+	 * @return array<string, array<string, mixed>>
+	 */
 	public function toArray(): array
 	{
-		return [
-			'pin' => [
-				'location' => [
-					'lat' => $this->lat,
-					'lon' => $this->lon,
-				],
+		$body = [
+			'distance' => $this->distance,
+			$this->field => [
+				'lat' => $this->lat,
+				'lon' => $this->lon,
 			],
+			'boost' => $this->boost,
+		];
+
+		if ($this->distanceType !== null) {
+			$body['distance_type'] = $this->distanceType;
+		}
+
+		if ($this->validationMethod !== null) {
+			$body['validation_method'] = $this->validationMethod;
+		}
+
+		if ($this->ignoreUnmapped !== null) {
+			$body['ignore_unmapped'] = $this->ignoreUnmapped;
+		}
+
+		return [
+			'geo_distance' => $body,
 		];
 	}
 

@@ -5,21 +5,27 @@ namespace SpameriTests\ElasticQuery\Query;
 require_once __DIR__ . '/../../bootstrap.php';
 
 
-class Nested extends \Tester\TestCase
+class Nested extends \SpameriTests\ElasticQuery\AbstractElasticTestCase
 {
 
-	private const INDEX = 'spameri_test_video_nested';
+	protected const INDEX = 'spameri_test_query_nested';
 
 
-	public function setUp(): void
+	protected function mapping(): array|null
 	{
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'PUT');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-
-		\curl_exec($ch);
+		return [
+			'mappings' => [
+				'properties' => [
+					'comments' => [
+						'type' => 'nested',
+						'properties' => [
+							'author' => ['type' => 'keyword'],
+							'text' => ['type' => 'text'],
+						],
+					],
+				],
+			],
+		];
 	}
 
 
@@ -29,9 +35,8 @@ class Nested extends \Tester\TestCase
 
 		$array = $nested->toArray();
 
-		\Tester\Assert::true(isset($array['nested']));
 		\Tester\Assert::same('comments', $array['nested']['path']);
-		\Tester\Assert::true(isset($array['nested']['query'][0]['bool']));
+		\Tester\Assert::true(isset($array['nested']['query']['bool']));
 	}
 
 
@@ -47,8 +52,36 @@ class Nested extends \Tester\TestCase
 		$array = $nested->toArray();
 
 		\Tester\Assert::same('comments', $array['nested']['path']);
-		\Tester\Assert::true(isset($array['nested']['query'][0]['bool']['must']));
-		\Tester\Assert::count(1, $array['nested']['query'][0]['bool']['must']);
+		\Tester\Assert::count(1, $array['nested']['query']['bool']['must']);
+	}
+
+
+	public function testToArrayWithScoreModeAndIgnoreUnmapped(): void
+	{
+		$nested = new \Spameri\ElasticQuery\Query\Nested(
+			path: 'comments',
+			scoreMode: \Spameri\ElasticQuery\Query\Nested::SCORE_MODE_AVG,
+			ignoreUnmapped: true,
+		);
+
+		$array = $nested->toArray();
+
+		\Tester\Assert::same('avg', $array['nested']['score_mode']);
+		\Tester\Assert::true($array['nested']['ignore_unmapped']);
+	}
+
+
+	public function testToArrayWithInnerHits(): void
+	{
+		$nested = new \Spameri\ElasticQuery\Query\Nested(
+			path: 'comments',
+			innerHits: new \Spameri\ElasticQuery\Query\InnerHits(name: 'matched_comments', size: 5),
+		);
+
+		$array = $nested->toArray();
+
+		\Tester\Assert::same('matched_comments', $array['nested']['inner_hits']['name']);
+		\Tester\Assert::same(5, $array['nested']['inner_hits']['size']);
 	}
 
 
@@ -56,26 +89,7 @@ class Nested extends \Tester\TestCase
 	{
 		$nested = new \Spameri\ElasticQuery\Query\Nested('products');
 
-		$query = $nested->getQuery();
-
-		\Tester\Assert::type(\Spameri\ElasticQuery\Query\QueryCollection::class, $query);
-	}
-
-
-	public function testAddQueryToNested(): void
-	{
-		$nested = new \Spameri\ElasticQuery\Query\Nested('items');
-		$nested->getQuery()->addMustQuery(
-			new \Spameri\ElasticQuery\Query\Term('items.name', 'Widget'),
-		);
-		$nested->getQuery()->addShouldQuery(
-			new \Spameri\ElasticQuery\Query\Range('items.price', 10, 100),
-		);
-
-		$array = $nested->toArray();
-
-		\Tester\Assert::true(isset($array['nested']['query'][0]['bool']['must']));
-		\Tester\Assert::true(isset($array['nested']['query'][0]['bool']['should']));
+		\Tester\Assert::type(\Spameri\ElasticQuery\Query\QueryCollection::class, $nested->getQuery());
 	}
 
 
@@ -87,50 +101,32 @@ class Nested extends \Tester\TestCase
 	}
 
 
-	public function testDeepNestedPath(): void
+	public function testCreate(): void
 	{
-		$nested = new \Spameri\ElasticQuery\Query\Nested('products.variants.sizes');
+		$this->indexDocument([
+			'comments' => [
+				['author' => 'John', 'text' => 'great'],
+				['author' => 'Jane', 'text' => 'bad'],
+			],
+		]);
 
-		$array = $nested->toArray();
-
-		\Tester\Assert::same('products.variants.sizes', $array['nested']['path']);
-	}
-
-
-	public function testNestedInElasticQuery(): void
-	{
-		$nested = new \Spameri\ElasticQuery\Query\Nested('comments');
-		$nested->getQuery()->addMustQuery(
+		$queryCollection = new \Spameri\ElasticQuery\Query\QueryCollection();
+		$queryCollection->addMustQuery(
 			new \Spameri\ElasticQuery\Query\Term('comments.author', 'John'),
 		);
 
-		$elasticQuery = new \Spameri\ElasticQuery\ElasticQuery(
+		$query = new \Spameri\ElasticQuery\ElasticQuery(
 			new \Spameri\ElasticQuery\Query\QueryCollection(
 				null,
 				new \Spameri\ElasticQuery\Query\MustCollection(
-					$nested,
+					new \Spameri\ElasticQuery\Query\Nested('comments', $queryCollection),
 				),
 			),
 		);
 
-		$array = $elasticQuery->toArray();
+		$result = $this->search($query);
 
-		\Tester\Assert::true(isset($array['query']['bool']['must']));
-		\Tester\Assert::count(1, $array['query']['bool']['must']);
-		\Tester\Assert::true(isset($array['query']['bool']['must'][0]['nested']));
-		\Tester\Assert::same('comments', $array['query']['bool']['must'][0]['nested']['path']);
-	}
-
-
-	public function tearDown(): void
-	{
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'DELETE');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-
-		\curl_exec($ch);
+		\Tester\Assert::same(1, $result->stats()->total());
 	}
 
 }

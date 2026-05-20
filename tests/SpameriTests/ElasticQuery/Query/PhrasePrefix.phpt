@@ -35,7 +35,7 @@ class PhrasePrefix extends \Tester\TestCase
 		\Tester\Assert::true(isset($array['match_phrase_prefix']));
 		\Tester\Assert::true(isset($array['match_phrase_prefix']['title']));
 		\Tester\Assert::same('quick brown f', $array['match_phrase_prefix']['title']['query']);
-		\Tester\Assert::same(1, $array['match_phrase_prefix']['title']['boost']);
+		\Tester\Assert::same(1.0, $array['match_phrase_prefix']['title']['boost']);
 		\Tester\Assert::same(1, $array['match_phrase_prefix']['title']['slop']);
 	}
 
@@ -45,14 +45,14 @@ class PhrasePrefix extends \Tester\TestCase
 		$phrasePrefix = new \Spameri\ElasticQuery\Query\PhrasePrefix(
 			'description',
 			'search phrase',
-			2,
+			2.0,
 			3,
 		);
 
 		$array = $phrasePrefix->toArray();
 
 		\Tester\Assert::same('search phrase', $array['match_phrase_prefix']['description']['query']);
-		\Tester\Assert::same(2, $array['match_phrase_prefix']['description']['boost']);
+		\Tester\Assert::same(2.0, $array['match_phrase_prefix']['description']['boost']);
 		\Tester\Assert::same(3, $array['match_phrase_prefix']['description']['slop']);
 	}
 
