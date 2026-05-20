@@ -669,6 +669,19 @@ new \Spameri\ElasticQuery\Aggregation\MovingFunction(
 );
 ```
 
+##### SerialDiff Aggregation
+Difference between values N buckets apart — useful for removing seasonality.
+- Class: `\Spameri\ElasticQuery\Aggregation\SerialDiff`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-pipeline-serialdiff-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/SerialDiff.php)
+
+```php
+new \Spameri\ElasticQuery\Aggregation\SerialDiff(
+	bucketsPath: 'sales',
+	lag: 7, // Week-over-week diff
+);
+```
+
 ---
 
 ## Aggregation Collections
