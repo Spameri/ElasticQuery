@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Spameri\ElasticQuery\Aggregation;
 
+
 /**
  * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-adjacency-matrix-aggregation.html
  */
@@ -11,13 +12,14 @@ class AdjacencyMatrix implements \Spameri\ElasticQuery\Aggregation\LeafAggregati
 {
 
 	/**
-	 * @var array<string, \Spameri\ElasticQuery\Filter\FilterCollection>
+	 * @var array<string, \Spameri\ElasticQuery\Query\LeafQueryInterface>
 	 */
 	private array $filters;
 
 
 	public function __construct(
 		private string $key = 'adjacency_matrix',
+		private string|null $separator = null,
 	)
 	{
 		$this->filters = [];
@@ -26,7 +28,7 @@ class AdjacencyMatrix implements \Spameri\ElasticQuery\Aggregation\LeafAggregati
 
 	public function addFilter(
 		string $name,
-		\Spameri\ElasticQuery\Filter\FilterCollection $filter,
+		\Spameri\ElasticQuery\Query\LeafQueryInterface $filter,
 	): void
 	{
 		$this->filters[$name] = $filter;
@@ -46,18 +48,16 @@ class AdjacencyMatrix implements \Spameri\ElasticQuery\Aggregation\LeafAggregati
 	{
 		$filters = [];
 		foreach ($this->filters as $name => $filter) {
-			$filterArray = $filter->toArray();
-			if ($filterArray === []) {
-				$filterArray = ['must' => []];
-			}
-			$filters[$name] = ['bool' => $filterArray];
+			$filters[$name] = $filter->toArray();
 		}
 
-		return [
-			'adjacency_matrix' => [
-				'filters' => $filters,
-			],
-		];
+		$body = ['filters' => $filters];
+
+		if ($this->separator !== null) {
+			$body['separator'] = $this->separator;
+		}
+
+		return ['adjacency_matrix' => $body];
 	}
 
 }

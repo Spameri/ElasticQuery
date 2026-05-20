@@ -15,6 +15,9 @@ class Range implements LeafAggregationInterface
 		private string $field,
 		private bool $keyed = false,
 		private \Spameri\ElasticQuery\Aggregation\RangeValueCollection $ranges = new \Spameri\ElasticQuery\Aggregation\RangeValueCollection(),
+		private \Spameri\ElasticQuery\Script|null $script = null,
+		private float|int|string|null $missing = null,
+		private string|null $format = null,
 	)
 	{
 	}
@@ -26,11 +29,12 @@ class Range implements LeafAggregationInterface
 	}
 
 
+	/**
+	 * @return array<string, array<string, mixed>>
+	 */
 	public function toArray(): array
 	{
-		$array = [
-			'field' => $this->field,
-		];
+		$array = ['field' => $this->field];
 
 		if ($this->keyed === true) {
 			$array['keyed'] = true;
@@ -40,9 +44,19 @@ class Range implements LeafAggregationInterface
 			$array['ranges'][] = $range->toArray();
 		}
 
-		return [
-			'range' => $array,
-		];
+		if ($this->script !== null) {
+			$array['script'] = $this->script->toArray();
+		}
+
+		if ($this->missing !== null) {
+			$array['missing'] = $this->missing;
+		}
+
+		if ($this->format !== null) {
+			$array['format'] = $this->format;
+		}
+
+		return ['range' => $array];
 	}
 
 

@@ -4,15 +4,19 @@ declare(strict_types = 1);
 
 namespace Spameri\ElasticQuery\Aggregation;
 
+
 /**
  * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-iprange-aggregation.html
  */
 class IpRange implements \Spameri\ElasticQuery\Aggregation\LeafAggregationInterface
 {
 
+	/**
+	 * @param array<int, \Spameri\ElasticQuery\Aggregation\IpRange\IpRangeValue> $ranges
+	 */
 	public function __construct(
 		private string $field,
-		private \Spameri\ElasticQuery\Aggregation\RangeValueCollection $ranges = new \Spameri\ElasticQuery\Aggregation\RangeValueCollection(),
+		private array $ranges = [],
 		private bool $keyed = false,
 	)
 	{
@@ -25,20 +29,12 @@ class IpRange implements \Spameri\ElasticQuery\Aggregation\LeafAggregationInterf
 	}
 
 
-	public function ranges(): \Spameri\ElasticQuery\Aggregation\RangeValueCollection
-	{
-		return $this->ranges;
-	}
-
-
 	/**
 	 * @return array<string, array<string, mixed>>
 	 */
 	public function toArray(): array
 	{
-		$array = [
-			'field' => $this->field,
-		];
+		$array = ['field' => $this->field];
 
 		if ($this->keyed === true) {
 			$array['keyed'] = true;
@@ -48,9 +44,7 @@ class IpRange implements \Spameri\ElasticQuery\Aggregation\LeafAggregationInterf
 			$array['ranges'][] = $range->toArray();
 		}
 
-		return [
-			'ip_range' => $array,
-		];
+		return ['ip_range' => $array];
 	}
 
 }

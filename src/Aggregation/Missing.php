@@ -12,6 +12,7 @@ class Missing implements \Spameri\ElasticQuery\Aggregation\LeafAggregationInterf
 
 	public function __construct(
 		private string $field,
+		private \Spameri\ElasticQuery\Script|null $script = null,
 	)
 	{
 	}
@@ -24,15 +25,17 @@ class Missing implements \Spameri\ElasticQuery\Aggregation\LeafAggregationInterf
 
 
 	/**
-	 * @return array<string, array<string, string>>
+	 * @return array<string, array<string, mixed>>
 	 */
 	public function toArray(): array
 	{
-		return [
-			'missing' => [
-				'field' => $this->field,
-			],
-		];
+		$array = ['field' => $this->field];
+
+		if ($this->script !== null) {
+			$array['script'] = $this->script->toArray();
+		}
+
+		return ['missing' => $array];
 	}
 
 }

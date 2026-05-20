@@ -5,36 +5,37 @@ namespace SpameriTests\ElasticQuery\Aggregation;
 require_once __DIR__ . '/../../bootstrap.php';
 
 
-class AdjacencyMatrix extends \Tester\TestCase
+class AdjacencyMatrix extends \SpameriTests\ElasticQuery\AbstractElasticTestCase
 {
 
-	private const INDEX = 'spameri_test_aggregation_adjacency_matrix';
+	protected const INDEX = 'spameri_test_aggregation_adjacency_matrix';
 
 
-	public function setUp(): void
+	protected function mapping(): array|null
 	{
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'PUT');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-
-		\curl_exec($ch);
+		return ['mappings' => ['properties' => ['status' => ['type' => 'keyword']]]];
 	}
 
 
 	public function testToArray(): void
 	{
-		$filter = new \Spameri\ElasticQuery\Filter\FilterCollection();
-		$filter->must()->add(new \Spameri\ElasticQuery\Query\Term('status', 'active'));
-
 		$matrix = new \Spameri\ElasticQuery\Aggregation\AdjacencyMatrix();
-		$matrix->addFilter('active', $filter);
+		$matrix->addFilter('active', new \Spameri\ElasticQuery\Query\Term('status', 'active'));
 
 		$array = $matrix->toArray();
 
-		\Tester\Assert::true(isset($array['adjacency_matrix']['filters']['active']));
-		\Tester\Assert::true(isset($array['adjacency_matrix']['filters']['active']['bool']));
+		\Tester\Assert::same(
+			'active',
+			$array['adjacency_matrix']['filters']['active']['term']['status']['value'],
+		);
+	}
+
+
+	public function testToArrayWithSeparator(): void
+	{
+		$matrix = new \Spameri\ElasticQuery\Aggregation\AdjacencyMatrix(separator: '|');
+
+		\Tester\Assert::same('|', $matrix->toArray()['adjacency_matrix']['separator']);
 	}
 
 
@@ -49,58 +50,19 @@ class AdjacencyMatrix extends \Tester\TestCase
 
 	public function testCreate(): void
 	{
-		$filterA = new \Spameri\ElasticQuery\Filter\FilterCollection();
-		$filterA->must()->add(new \Spameri\ElasticQuery\Query\Term('status', 'active'));
+		$this->indexDocument(['status' => 'active']);
+		$this->indexDocument(['status' => 'inactive']);
 
 		$matrix = new \Spameri\ElasticQuery\Aggregation\AdjacencyMatrix();
-		$matrix->addFilter('group_a', $filterA);
+		$matrix->addFilter('group_active', new \Spameri\ElasticQuery\Query\Term('status', 'active'));
+		$matrix->addFilter('group_inactive', new \Spameri\ElasticQuery\Query\Term('status', 'inactive'));
 
 		$elasticQuery = new \Spameri\ElasticQuery\ElasticQuery();
-		$elasticQuery->aggregation()->add(
-			new \Spameri\ElasticQuery\Aggregation\LeafAggregationCollection(
-				'matrix',
-				null,
-				$matrix,
-			),
-		);
+		$elasticQuery->aggregation()->add(new \Spameri\ElasticQuery\Aggregation\LeafAggregationCollection(
+			'matrix', null, $matrix,
+		));
 
-		$document = new \Spameri\ElasticQuery\Document(
-			self::INDEX,
-			new \Spameri\ElasticQuery\Document\Body\Plain(
-				$elasticQuery->toArray(),
-			),
-		);
-
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . $document->index . '/_search');
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'GET');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-		\curl_setopt(
-			$ch,
-			\CURLOPT_POSTFIELDS,
-			\json_encode($document->toArray()['body']),
-		);
-
-		\Tester\Assert::noError(static function () use ($ch): void {
-			$response = \curl_exec($ch);
-			$resultMapper = new \Spameri\ElasticQuery\Response\ResultMapper();
-			/** @var \Spameri\ElasticQuery\Response\ResultSearch $result */
-			$result = $resultMapper->map(\json_decode($response, true));
-			\Tester\Assert::type(\Spameri\ElasticQuery\Response\ResultSearch::class, $result);
-		});
-	}
-
-
-	public function tearDown(): void
-	{
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'DELETE');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-
-		\curl_exec($ch);
+		\Tester\Assert::same(2, $this->search($elasticQuery)->stats()->total());
 	}
 
 }

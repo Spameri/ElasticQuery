@@ -10,11 +10,15 @@ namespace Spameri\ElasticQuery\Aggregation;
 class GeoTileGrid implements \Spameri\ElasticQuery\Aggregation\LeafAggregationInterface
 {
 
+	/**
+	 * @param array<string, array<string, float>>|null $bounds
+	 */
 	public function __construct(
 		private string $field,
 		private int|null $precision = null,
 		private int|null $size = null,
 		private int|null $shardSize = null,
+		private array|null $bounds = null,
 	)
 	{
 	}
@@ -45,6 +49,10 @@ class GeoTileGrid implements \Spameri\ElasticQuery\Aggregation\LeafAggregationIn
 
 		if ($this->shardSize !== null) {
 			$array['shard_size'] = $this->shardSize;
+		}
+
+		if ($this->bounds !== null) {
+			$array['bounds'] = $this->bounds;
 		}
 
 		return [

@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Spameri\ElasticQuery\Aggregation;
 
+
 /**
  * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-geodistance-aggregation.html
  */
@@ -17,6 +18,9 @@ class GeoDistance implements \Spameri\ElasticQuery\Aggregation\LeafAggregationIn
 		private \Spameri\ElasticQuery\Aggregation\RangeValueCollection $ranges = new \Spameri\ElasticQuery\Aggregation\RangeValueCollection(),
 		private string|null $unit = null,
 		private string|null $distanceType = null,
+		private bool|null $keyed = null,
+		private \Spameri\ElasticQuery\Script|null $script = null,
+		private string|null $missing = null,
 	)
 	{
 	}
@@ -55,13 +59,23 @@ class GeoDistance implements \Spameri\ElasticQuery\Aggregation\LeafAggregationIn
 			$array['distance_type'] = $this->distanceType;
 		}
 
+		if ($this->keyed !== null) {
+			$array['keyed'] = $this->keyed;
+		}
+
+		if ($this->script !== null) {
+			$array['script'] = $this->script->toArray();
+		}
+
+		if ($this->missing !== null) {
+			$array['missing'] = $this->missing;
+		}
+
 		foreach ($this->ranges as $range) {
 			$array['ranges'][] = $range->toArray();
 		}
 
-		return [
-			'geo_distance' => $array,
-		];
+		return ['geo_distance' => $array];
 	}
 
 }

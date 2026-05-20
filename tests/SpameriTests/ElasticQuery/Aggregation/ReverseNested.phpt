@@ -5,21 +5,27 @@ namespace SpameriTests\ElasticQuery\Aggregation;
 require_once __DIR__ . '/../../bootstrap.php';
 
 
-class ReverseNested extends \Tester\TestCase
+class ReverseNested extends \SpameriTests\ElasticQuery\AbstractElasticTestCase
 {
 
-	private const INDEX = 'spameri_test_aggregation_reverse_nested';
+	protected const INDEX = 'spameri_test_aggregation_reverse_nested';
 
 
-	public function setUp(): void
+	protected function mapping(): array|null
 	{
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'PUT');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-
-		\curl_exec($ch);
+		return [
+			'mappings' => [
+				'properties' => [
+					'name' => ['type' => 'keyword'],
+					'comments' => [
+						'type' => 'nested',
+						'properties' => [
+							'author' => ['type' => 'keyword'],
+						],
+					],
+				],
+			],
+		];
 	}
 
 
@@ -29,7 +35,6 @@ class ReverseNested extends \Tester\TestCase
 
 		$array = $reverseNested->toArray();
 
-		\Tester\Assert::true(isset($array['reverse_nested']));
 		\Tester\Assert::type(\stdClass::class, $array['reverse_nested']);
 	}
 
@@ -38,75 +43,43 @@ class ReverseNested extends \Tester\TestCase
 	{
 		$reverseNested = new \Spameri\ElasticQuery\Aggregation\ReverseNested('parent');
 
-		$array = $reverseNested->toArray();
-
-		\Tester\Assert::same('parent', $array['reverse_nested']['path']);
+		\Tester\Assert::same('parent', $reverseNested->toArray()['reverse_nested']['path']);
 	}
 
 
 	public function testKey(): void
 	{
-		\Tester\Assert::same(
-			'reverse_nested_root',
-			(new \Spameri\ElasticQuery\Aggregation\ReverseNested())->key(),
-		);
-		\Tester\Assert::same(
-			'reverse_nested_parent',
-			(new \Spameri\ElasticQuery\Aggregation\ReverseNested('parent'))->key(),
-		);
+		\Tester\Assert::same('reverse_nested_root', (new \Spameri\ElasticQuery\Aggregation\ReverseNested())->key());
+		\Tester\Assert::same('reverse_nested_parent', (new \Spameri\ElasticQuery\Aggregation\ReverseNested('parent'))->key());
 	}
 
 
 	public function testCreate(): void
 	{
-		$reverseNested = new \Spameri\ElasticQuery\Aggregation\ReverseNested();
+		$this->indexDocument([
+			'name' => 'post',
+			'comments' => [['author' => 'john']],
+		]);
 
 		$elasticQuery = new \Spameri\ElasticQuery\ElasticQuery();
-		$elasticQuery->aggregation()->add(
-			new \Spameri\ElasticQuery\Aggregation\LeafAggregationCollection(
-				'back',
-				null,
-				$reverseNested,
-			),
+
+		// reverse_nested must live inside a nested agg
+		$reverseNestedAgg = new \Spameri\ElasticQuery\Aggregation\LeafAggregationCollection(
+			'back_to_root',
+			null,
+			new \Spameri\ElasticQuery\Aggregation\ReverseNested(),
 		);
 
-		$document = new \Spameri\ElasticQuery\Document(
-			self::INDEX,
-			new \Spameri\ElasticQuery\Document\Body\Plain(
-				$elasticQuery->toArray(),
-			),
+		$nestedAgg = new \Spameri\ElasticQuery\Aggregation\LeafAggregationCollection(
+			'comments_nested',
+			null,
+			new \Spameri\ElasticQuery\Aggregation\Nested('comments'),
+			$reverseNestedAgg,
 		);
 
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . $document->index . '/_search');
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'GET');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-		\curl_setopt(
-			$ch,
-			\CURLOPT_POSTFIELDS,
-			\json_encode($document->toArray()['body']),
-		);
+		$elasticQuery->aggregation()->add($nestedAgg);
 
-		\Tester\Assert::noError(static function () use ($ch): void {
-			$response = \curl_exec($ch);
-			$resultMapper = new \Spameri\ElasticQuery\Response\ResultMapper();
-			/** @var \Spameri\ElasticQuery\Response\ResultSearch $result */
-			$result = $resultMapper->map(\json_decode($response, true));
-			\Tester\Assert::type(\Spameri\ElasticQuery\Response\ResultSearch::class, $result);
-		});
-	}
-
-
-	public function tearDown(): void
-	{
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'DELETE');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-
-		\curl_exec($ch);
+		\Tester\Assert::same(1, $this->search($elasticQuery)->stats()->total());
 	}
 
 }

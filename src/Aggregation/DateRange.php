@@ -16,6 +16,8 @@ class DateRange implements \Spameri\ElasticQuery\Aggregation\LeafAggregationInte
 		private string|null $format = null,
 		private string|null $timeZone = null,
 		private bool $keyed = false,
+		private \Spameri\ElasticQuery\Script|null $script = null,
+		private string|null $missing = null,
 	)
 	{
 	}
@@ -56,6 +58,14 @@ class DateRange implements \Spameri\ElasticQuery\Aggregation\LeafAggregationInte
 
 		foreach ($this->ranges as $range) {
 			$array['ranges'][] = $range->toArray();
+		}
+
+		if ($this->script !== null) {
+			$array['script'] = $this->script->toArray();
+		}
+
+		if ($this->missing !== null) {
+			$array['missing'] = $this->missing;
 		}
 
 		return [
