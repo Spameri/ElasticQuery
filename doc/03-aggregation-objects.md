@@ -134,6 +134,19 @@ new \Spameri\ElasticQuery\Aggregation\Percentiles(
 );
 ```
 
+##### PercentileRanks Aggregation
+Calculates the percentile rank for given values.
+- Class: `\Spameri\ElasticQuery\Aggregation\PercentileRanks`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-metrics-percentile-rank-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/PercentileRanks.php)
+
+```php
+new \Spameri\ElasticQuery\Aggregation\PercentileRanks(
+	field: 'load_time',
+	values: [500, 600],
+);
+```
+
 ##### Cardinality Aggregation
 Approximate count of distinct values using HyperLogLog++.
 - Class: `\Spameri\ElasticQuery\Aggregation\Cardinality`
