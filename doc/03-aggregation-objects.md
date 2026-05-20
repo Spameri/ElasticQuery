@@ -593,6 +593,18 @@ new \Spameri\ElasticQuery\Aggregation\MaxBucket(
 );
 ```
 
+##### MinBucket Aggregation
+Minimum value across sibling buckets.
+- Class: `\Spameri\ElasticQuery\Aggregation\MinBucket`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-pipeline-min-bucket-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/MinBucket.php)
+
+```php
+new \Spameri\ElasticQuery\Aggregation\MinBucket(
+	bucketsPath: 'sales_per_month>sales',
+);
+```
+
 ---
 
 ## Aggregation Collections
