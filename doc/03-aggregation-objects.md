@@ -708,6 +708,19 @@ new \Spameri\ElasticQuery\Aggregation\BucketSelector(
 );
 ```
 
+##### BucketSort Aggregation
+Sorts and truncates sibling buckets (also supports pagination).
+- Class: `\Spameri\ElasticQuery\Aggregation\BucketSort`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-pipeline-bucket-sort-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/BucketSort.php)
+
+```php
+new \Spameri\ElasticQuery\Aggregation\BucketSort(
+	sort: [['total_sales' => ['order' => 'desc']]],
+	size: 5,
+);
+```
+
 ---
 
 ## Aggregation Collections
