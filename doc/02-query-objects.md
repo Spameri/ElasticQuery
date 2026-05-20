@@ -629,6 +629,19 @@ $span = new \Spameri\ElasticQuery\Query\SpanNear(
 $span->addClause(new \Spameri\ElasticQuery\Query\SpanTerm('field', 'value2'));
 ```
 
+##### SpanOr Query
+Match any of several span clauses.
+- Class: `\Spameri\ElasticQuery\Query\SpanOr`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-span-or-query.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Query/SpanOr.php)
+
+```php
+$span = new \Spameri\ElasticQuery\Query\SpanOr(
+	new \Spameri\ElasticQuery\Query\SpanTerm('field', 'value1'),
+);
+$span->addClause(new \Spameri\ElasticQuery\Query\SpanTerm('field', 'value2'));
+```
+
 ##### SpanTerm Query
 Match a single term in a span-aware way.
 - Class: `\Spameri\ElasticQuery\Query\SpanTerm`
