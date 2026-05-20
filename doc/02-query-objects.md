@@ -490,6 +490,20 @@ new \Spameri\ElasticQuery\Query\GeoBoundingBox(
 
 ---
 
+##### ScriptScore Query
+Re-score matching documents using a Painless script.
+- Class: `\Spameri\ElasticQuery\Query\ScriptScore`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-script-score-query.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Query/ScriptScore.php)
+
+```php
+new \Spameri\ElasticQuery\Query\ScriptScore(
+	query: new \Spameri\ElasticQuery\Query\MatchAll(),
+	source: "doc['my_field'].value * 2",
+	minScore: 0.5,
+);
+```
+
 ##### Script Query
 Filter documents with a Painless boolean script.
 - Class: `\Spameri\ElasticQuery\Query\Script`
