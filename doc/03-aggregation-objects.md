@@ -170,6 +170,19 @@ Computes a robust measure of variability via the median of absolute deviations f
 new \Spameri\ElasticQuery\Aggregation\MedianAbsoluteDeviation(field: 'rating');
 ```
 
+##### StringStats Aggregation
+Computes statistics over string values (length, character distribution).
+- Class: `\Spameri\ElasticQuery\Aggregation\StringStats`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-metrics-string-stats-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/StringStats.php)
+
+```php
+new \Spameri\ElasticQuery\Aggregation\StringStats(
+	field: 'message.keyword',
+	showDistribution: true, // Optional, include per-character frequencies
+);
+```
+
 ##### Cardinality Aggregation
 Approximate count of distinct values using HyperLogLog++.
 - Class: `\Spameri\ElasticQuery\Aggregation\Cardinality`
