@@ -617,6 +617,19 @@ new \Spameri\ElasticQuery\Aggregation\StatsBucket(
 );
 ```
 
+##### PercentilesBucket Aggregation
+Percentile values across sibling buckets.
+- Class: `\Spameri\ElasticQuery\Aggregation\PercentilesBucket`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-pipeline-percentiles-bucket-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/PercentilesBucket.php)
+
+```php
+new \Spameri\ElasticQuery\Aggregation\PercentilesBucket(
+	bucketsPath: 'sales_per_month>sales',
+	percents: [50, 95, 99],
+);
+```
+
 ---
 
 ## Aggregation Collections
