@@ -340,6 +340,27 @@ new \Spameri\ElasticQuery\Query\Boosting(
 
 ---
 
+## Joining Queries
+
+Queries that traverse parent/child or join relationships.
+
+##### HasChild Query
+Match parents whose children match the inner query.
+- Class: `\Spameri\ElasticQuery\Query\HasChild`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-has-child-query.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Query/HasChild.php)
+
+```php
+new \Spameri\ElasticQuery\Query\HasChild(
+	type: 'comment',
+	query: new \Spameri\ElasticQuery\Query\Term('author', 'john'),
+	scoreMode: 'max',
+	minChildren: 1,
+);
+```
+
+---
+
 ## Specialized Queries
 
 ##### MatchAll Query
