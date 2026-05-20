@@ -310,6 +310,20 @@ new \Spameri\ElasticQuery\Query\ConstantScore(
 );
 ```
 
+##### DisMax Query
+Best-of-many — returns the highest-scoring sub-query per document, with `tie_breaker` for the rest.
+- Class: `\Spameri\ElasticQuery\Query\DisMax`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-dis-max-query.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Query/DisMax.php)
+
+```php
+$disMax = new \Spameri\ElasticQuery\Query\DisMax(
+	query: new \Spameri\ElasticQuery\Query\Term('title', 'foo'),
+	tieBreaker: 0.7,
+);
+$disMax->addQuery(new \Spameri\ElasticQuery\Query\Term('body', 'foo'));
+```
+
 ##### Boosting Query
 Match `positive` docs but lower the score of `negative` matches.
 - Class: `\Spameri\ElasticQuery\Query\Boosting`
