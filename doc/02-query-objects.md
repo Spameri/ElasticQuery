@@ -504,6 +504,21 @@ new \Spameri\ElasticQuery\Query\ScriptScore(
 );
 ```
 
+##### MoreLikeThis Query
+Find documents similar to provided text or document references.
+- Class: `\Spameri\ElasticQuery\Query\MoreLikeThis`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-mlt-query.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Query/MoreLikeThis.php)
+
+```php
+new \Spameri\ElasticQuery\Query\MoreLikeThis(
+	fields: ['title', 'body'],
+	like: ['quick brown fox', ['_index' => 'imdb', '_id' => '1']],
+	minTermFreq: 1,
+	maxQueryTerms: 12,
+);
+```
+
 ##### Script Query
 Filter documents with a Painless boolean script.
 - Class: `\Spameri\ElasticQuery\Query\Script`
