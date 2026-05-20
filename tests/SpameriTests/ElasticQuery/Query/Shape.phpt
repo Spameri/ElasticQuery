@@ -5,21 +5,15 @@ namespace SpameriTests\ElasticQuery\Query;
 require_once __DIR__ . '/../../bootstrap.php';
 
 
-class Shape extends \Tester\TestCase
+class Shape extends \SpameriTests\ElasticQuery\AbstractElasticTestCase
 {
 
-	private const INDEX = 'spameri_test_query_shape';
+	protected const INDEX = 'spameri_test_query_shape';
 
 
-	public function setUp(): void
+	protected function mapping(): array|null
 	{
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'PUT');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-
-		\curl_exec($ch);
+		return ['mappings' => ['properties' => ['geometry' => ['type' => 'shape']]]];
 	}
 
 
@@ -34,26 +28,47 @@ class Shape extends \Tester\TestCase
 		$array = $shape->toArray();
 
 		\Tester\Assert::same('envelope', $array['shape']['geometry']['shape']['type']);
+		\Tester\Assert::same('intersects', $array['shape']['geometry']['relation']);
 	}
 
 
-	public function testKey(): void
+	public function testToArrayWithIndexedShape(): void
 	{
-		$shape = new \Spameri\ElasticQuery\Query\Shape('geometry', ['type' => 'point', 'coordinates' => [0, 0]]);
+		$shape = new \Spameri\ElasticQuery\Query\Shape(
+			field: 'geometry',
+			indexedShape: new \Spameri\ElasticQuery\Query\IndexedShape(
+				id: 'box',
+				index: 'shapes',
+				path: 'geometry',
+			),
+			boost: 1.5,
+		);
 
-		\Tester\Assert::same('shape_geometry', $shape->key());
+		\Tester\Assert::same('box', $shape->toArray()['shape']['geometry']['indexed_shape']['id']);
+		\Tester\Assert::same(1.5, $shape->toArray()['shape']['boost']);
 	}
 
 
-	public function tearDown(): void
+	public function testCreate(): void
 	{
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'DELETE');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+		$this->indexDocument(['geometry' => ['type' => 'point', 'coordinates' => [10, 10]]]);
 
-		\curl_exec($ch);
+		$query = new \Spameri\ElasticQuery\ElasticQuery(
+			new \Spameri\ElasticQuery\Query\QueryCollection(
+				null,
+				new \Spameri\ElasticQuery\Query\MustCollection(
+					new \Spameri\ElasticQuery\Query\Shape(
+						field: 'geometry',
+						shape: ['type' => 'envelope', 'coordinates' => [[0, 100], [100, 0]]],
+						relation: 'intersects',
+					),
+				),
+			),
+		);
+
+		$result = $this->search($query);
+
+		\Tester\Assert::same(1, $result->stats()->total());
 	}
 
 }
