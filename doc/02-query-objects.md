@@ -559,6 +559,19 @@ new \Spameri\ElasticQuery\Query\Pinned(
 );
 ```
 
+##### Percolate Query
+Match a document against stored queries (reverse search).
+- Class: `\Spameri\ElasticQuery\Query\Percolate`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-percolate-query.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Query/Percolate.php)
+
+```php
+new \Spameri\ElasticQuery\Query\Percolate(
+	field: 'query',
+	document: ['message' => 'A new bonsai tree'],
+);
+```
+
 ##### Script Query
 Filter documents with a Painless boolean script.
 - Class: `\Spameri\ElasticQuery\Query\Script`
