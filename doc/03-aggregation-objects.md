@@ -193,6 +193,16 @@ Computes min, max, median and quartiles for plotting box-and-whisker diagrams.
 new \Spameri\ElasticQuery\Aggregation\BoxPlot(field: 'load_time');
 ```
 
+##### GeoCentroid Aggregation
+Computes the weighted centroid of a set of geo points.
+- Class: `\Spameri\ElasticQuery\Aggregation\GeoCentroid`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-metrics-geocentroid-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/GeoCentroid.php)
+
+```php
+new \Spameri\ElasticQuery\Aggregation\GeoCentroid(field: 'location');
+```
+
 ##### Cardinality Aggregation
 Approximate count of distinct values using HyperLogLog++.
 - Class: `\Spameri\ElasticQuery\Aggregation\Cardinality`
