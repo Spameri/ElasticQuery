@@ -581,6 +581,18 @@ new \Spameri\ElasticQuery\Aggregation\SumBucket(
 );
 ```
 
+##### MaxBucket Aggregation
+Maximum value across sibling buckets.
+- Class: `\Spameri\ElasticQuery\Aggregation\MaxBucket`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-pipeline-max-bucket-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/MaxBucket.php)
+
+```php
+new \Spameri\ElasticQuery\Aggregation\MaxBucket(
+	bucketsPath: 'sales_per_month>sales',
+);
+```
+
 ---
 
 ## Aggregation Collections
