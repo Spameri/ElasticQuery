@@ -356,6 +356,20 @@ Single bucket containing all documents, ignoring the current query.
 new \Spameri\ElasticQuery\Aggregation\GlobalAggregation();
 ```
 
+##### SignificantTerms Aggregation
+Finds terms that occur unusually often within the query context vs the index as a whole.
+- Class: `\Spameri\ElasticQuery\Aggregation\SignificantTerms`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-significantterms-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/SignificantTerms.php)
+
+```php
+new \Spameri\ElasticQuery\Aggregation\SignificantTerms(
+	field: 'crime_type',
+	size: 10,
+	minDocCount: 5,
+);
+```
+
 ##### Nested Aggregation
 Aggregates on nested documents.
 - Class: `\Spameri\ElasticQuery\Aggregation\Nested`
