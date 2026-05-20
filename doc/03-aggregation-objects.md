@@ -457,6 +457,19 @@ $composite->addSource(new \Spameri\ElasticQuery\Aggregation\Histogram('price', 5
 // $composite->addSource(new \Spameri\ElasticQuery\Aggregation\DateHistogram('date', calendarInterval: 'day'));
 ```
 
+##### MultiTerms Aggregation
+Groups documents by the combination of values from multiple fields.
+- Class: `\Spameri\ElasticQuery\Aggregation\MultiTerms`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-multi-terms-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/MultiTerms.php)
+
+```php
+new \Spameri\ElasticQuery\Aggregation\MultiTerms(
+	terms: ['brand', 'color'],
+	size: 10,
+);
+```
+
 ##### ReverseNested Aggregation
 Moves back from a nested context to the parent (or an ancestor at `path`).
 - Class: `\Spameri\ElasticQuery\Aggregation\ReverseNested`
