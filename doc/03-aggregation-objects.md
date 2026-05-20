@@ -507,6 +507,20 @@ new \Spameri\ElasticQuery\Aggregation\DiversifiedSampler(
 );
 ```
 
+##### AdjacencyMatrix Aggregation
+Buckets for each named filter and each pairwise intersection.
+- Class: `\Spameri\ElasticQuery\Aggregation\AdjacencyMatrix`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-adjacency-matrix-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/AdjacencyMatrix.php)
+
+```php
+$filterA = new \Spameri\ElasticQuery\Filter\FilterCollection();
+$filterA->must()->add(new \Spameri\ElasticQuery\Query\Term('status', 'active'));
+
+$matrix = new \Spameri\ElasticQuery\Aggregation\AdjacencyMatrix();
+$matrix->addFilter('group_a', $filterA);
+```
+
 ##### ReverseNested Aggregation
 Moves back from a nested context to the parent (or an ancestor at `path`).
 - Class: `\Spameri\ElasticQuery\Aggregation\ReverseNested`
