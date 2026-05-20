@@ -203,6 +203,19 @@ Computes the weighted centroid of a set of geo points.
 new \Spameri\ElasticQuery\Aggregation\GeoCentroid(field: 'location');
 ```
 
+##### GeoBounds Aggregation
+Computes the bounding box of all matching geo points.
+- Class: `\Spameri\ElasticQuery\Aggregation\GeoBounds`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-metrics-geobounds-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/GeoBounds.php)
+
+```php
+new \Spameri\ElasticQuery\Aggregation\GeoBounds(
+	field: 'location',
+	wrapLongitude: true, // Default true, allow boxes crossing the dateline
+);
+```
+
 ##### Cardinality Aggregation
 Approximate count of distinct values using HyperLogLog++.
 - Class: `\Spameri\ElasticQuery\Aggregation\Cardinality`
