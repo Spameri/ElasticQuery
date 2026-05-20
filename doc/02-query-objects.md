@@ -683,6 +683,18 @@ new \Spameri\ElasticQuery\Query\SpanWithin(
 );
 ```
 
+##### SpanMulti Query
+Wrap a multi-term query (prefix/wildcard/regexp/fuzzy/range) so it can be used inside other span queries.
+- Class: `\Spameri\ElasticQuery\Query\SpanMulti`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-span-multi-term-query.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Query/SpanMulti.php)
+
+```php
+new \Spameri\ElasticQuery\Query\SpanMulti(
+	match: new \Spameri\ElasticQuery\Query\Prefix(field: 'user', query: 'ki'),
+);
+```
+
 ##### SpanTerm Query
 Match a single term in a span-aware way.
 - Class: `\Spameri\ElasticQuery\Query\SpanTerm`
