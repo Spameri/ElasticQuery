@@ -88,6 +88,19 @@ new \Spameri\ElasticQuery\Query\Fuzzy(
 );
 ```
 
+##### SimpleQueryString Query
+User-safe Lucene-lite syntax (does not error on invalid input).
+- Class: `\Spameri\ElasticQuery\Query\SimpleQueryString`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-simple-query-string-query.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Query/SimpleQueryString.php)
+
+```php
+new \Spameri\ElasticQuery\Query\SimpleQueryString(
+	query: 'foo + bar -baz',
+	fields: ['title^2', 'body'],
+);
+```
+
 ##### QueryString Query
 Lucene-syntax query — supports boolean operators, wildcards, regex, fielded search.
 - Class: `\Spameri\ElasticQuery\Query\QueryString`
