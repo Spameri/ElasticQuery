@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Spameri\ElasticQuery\Query;
 
+
 /**
  * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-geo-shape-query.html
  */
@@ -11,19 +12,26 @@ class GeoShape implements \Spameri\ElasticQuery\Query\LeafQueryInterface
 {
 
 	/**
-	 * @param array<string, mixed> $shape GeoJSON-style shape, e.g.
-	 *                                    ['type' => 'envelope', 'coordinates' => [[13, 53], [14, 52]]].
+	 * @param array<string, mixed>|null $shape Inline GeoJSON shape; null when $indexedShape is used.
 	 */
 	public function __construct(
 		private string $field,
-		private array $shape,
+		private array|null $shape = null,
 		private string $relation = 'intersects',
 		private bool|null $ignoreUnmapped = null,
+		private \Spameri\ElasticQuery\Query\IndexedShape|null $indexedShape = null,
+		private float $boost = 1.0,
 	)
 	{
 		if ( ! \in_array($relation, ['intersects', 'disjoint', 'within', 'contains'], true)) {
 			throw new \Spameri\ElasticQuery\Exception\InvalidArgumentException(
 				'GeoShape relation must be one of: intersects, disjoint, within, contains.',
+			);
+		}
+
+		if ($shape === null && $indexedShape === null) {
+			throw new \Spameri\ElasticQuery\Exception\InvalidArgumentException(
+				'GeoShape requires either an inline shape or an indexedShape.',
 			);
 		}
 	}
@@ -36,23 +44,33 @@ class GeoShape implements \Spameri\ElasticQuery\Query\LeafQueryInterface
 
 
 	/**
-	 * @return array<string, array<string, array<string, mixed>>>
+	 * @return array<string, array<string, mixed>>
 	 */
 	public function toArray(): array
 	{
 		$inner = [
-			'shape' => $this->shape,
 			'relation' => $this->relation,
 		];
 
+		if ($this->shape !== null) {
+			$inner['shape'] = $this->shape;
+		}
+
+		if ($this->indexedShape !== null) {
+			$inner['indexed_shape'] = $this->indexedShape->toArray();
+		}
+
+		$body = [
+			$this->field => $inner,
+			'boost' => $this->boost,
+		];
+
 		if ($this->ignoreUnmapped !== null) {
-			$inner['ignore_unmapped'] = $this->ignoreUnmapped;
+			$body['ignore_unmapped'] = $this->ignoreUnmapped;
 		}
 
 		return [
-			'geo_shape' => [
-				$this->field => $inner,
-			],
+			'geo_shape' => $body,
 		];
 	}
 

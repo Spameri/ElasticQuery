@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Spameri\ElasticQuery\Query;
 
+
 /**
  * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-geo-bounding-box-query.html
  */
@@ -17,6 +18,9 @@ class GeoBoundingBox implements \Spameri\ElasticQuery\Query\LeafQueryInterface
 		private float $bottomRightLat,
 		private float $bottomRightLon,
 		private string|null $type = null,
+		private string|null $validationMethod = null,
+		private bool|null $ignoreUnmapped = null,
+		private float $boost = 1.0,
 	)
 	{
 	}
@@ -44,10 +48,19 @@ class GeoBoundingBox implements \Spameri\ElasticQuery\Query\LeafQueryInterface
 					'lon' => $this->bottomRightLon,
 				],
 			],
+			'boost' => $this->boost,
 		];
 
 		if ($this->type !== null) {
 			$body['type'] = $this->type;
+		}
+
+		if ($this->validationMethod !== null) {
+			$body['validation_method'] = $this->validationMethod;
+		}
+
+		if ($this->ignoreUnmapped !== null) {
+			$body['ignore_unmapped'] = $this->ignoreUnmapped;
 		}
 
 		return [
