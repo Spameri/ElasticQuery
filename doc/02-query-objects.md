@@ -88,6 +88,19 @@ new \Spameri\ElasticQuery\Query\Fuzzy(
 );
 ```
 
+##### MatchBoolPrefix Query
+Match where the final term is treated as a prefix and the rest as match terms.
+- Class: `\Spameri\ElasticQuery\Query\MatchBoolPrefix`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-match-bool-prefix-query.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Query/MatchBoolPrefix.php)
+
+```php
+new \Spameri\ElasticQuery\Query\MatchBoolPrefix(
+	field: 'message',
+	query: 'quick brown f',
+);
+```
+
 ---
 
 ## Term-level Queries
