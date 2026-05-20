@@ -614,6 +614,21 @@ new \Spameri\ElasticQuery\Query\SpanFirst(
 );
 ```
 
+##### SpanNear Query
+Match multiple span clauses within `slop` positions of each other.
+- Class: `\Spameri\ElasticQuery\Query\SpanNear`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-span-near-query.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Query/SpanNear.php)
+
+```php
+$span = new \Spameri\ElasticQuery\Query\SpanNear(
+	new \Spameri\ElasticQuery\Query\SpanTerm('field', 'value1'),
+	slop: 12,
+	inOrder: false,
+);
+$span->addClause(new \Spameri\ElasticQuery\Query\SpanTerm('field', 'value2'));
+```
+
 ##### SpanTerm Query
 Match a single term in a span-aware way.
 - Class: `\Spameri\ElasticQuery\Query\SpanTerm`
