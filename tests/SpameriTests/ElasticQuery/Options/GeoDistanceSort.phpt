@@ -144,6 +144,21 @@ class GeoDistanceSort extends \Tester\TestCase
 	}
 
 
+	public function testIgnoreUnmappedFalse(): void
+	{
+		$geoSort = new \Spameri\ElasticQuery\Options\GeoDistanceSort(
+			field: 'location',
+			lat: 0.0,
+			lon: 0.0,
+			ignoreUnmapped: false,
+		);
+
+		$array = $geoSort->toArray();
+
+		\Tester\Assert::false($array['_geo_distance']['ignore_unmapped']);
+	}
+
+
 	public function testInvalidSortTypeThrowsException(): void
 	{
 		\Tester\Assert::exception(

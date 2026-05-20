@@ -6,7 +6,7 @@ namespace Spameri\ElasticQuery\Options;
 
 
 /**
- * @see https://www.elastic.co/guide/en/elasticsearch/reference/7.3/search-request-body.html#geo-sorting
+ * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/sort-search-results.html#geo-sorting
  */
 readonly class GeoDistanceSort implements \Spameri\ElasticQuery\Entity\EntityInterface
 {
@@ -19,6 +19,7 @@ readonly class GeoDistanceSort implements \Spameri\ElasticQuery\Entity\EntityInt
 		public string $unit = 'km',
 		public string $mode = 'min',
 		public string $distanceType = 'arc',
+		public bool $ignoreUnmapped = true,
 	)
 	{
 		if ( ! \in_array($type, [Sort::ASC, Sort::DESC], true)) {
@@ -35,6 +36,9 @@ readonly class GeoDistanceSort implements \Spameri\ElasticQuery\Entity\EntityInt
 	}
 
 
+	/**
+	 * @return array<string, array<string, mixed>>
+	 */
 	public function toArray(): array
 	{
 		return [
@@ -44,10 +48,10 @@ readonly class GeoDistanceSort implements \Spameri\ElasticQuery\Entity\EntityInt
 					$this->lon,
 				],
 				'order' => $this->type,
-				"unit" => $this->unit,
-				"mode" => $this->mode,
-				"distance_type" => $this->distanceType,
-				"ignore_unmapped" => true,
+				'unit' => $this->unit,
+				'mode' => $this->mode,
+				'distance_type' => $this->distanceType,
+				'ignore_unmapped' => $this->ignoreUnmapped,
 			],
 		];
 	}

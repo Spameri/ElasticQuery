@@ -10,7 +10,7 @@ class PhrasePrefix implements \Spameri\ElasticQuery\Query\LeafQueryInterface
 	public function __construct(
 		private string $field,
 		private string $queryString,
-		private int $boost = 1,
+		private float $boost = 1.0,
 		private int $slop = 1,
 	)
 	{
