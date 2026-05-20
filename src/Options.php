@@ -84,7 +84,7 @@ class Options
 		}
 
 		foreach ($this->sort as $item) {
-			if ($item->field === '_score') {
+			if ($item instanceof \Spameri\ElasticQuery\Options\Sort && $item->field === '_score') {
 				$array['sort'][] = $item->field;
 				continue;
 			}

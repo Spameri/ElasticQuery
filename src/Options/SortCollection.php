@@ -12,9 +12,8 @@ class SortCollection extends \Spameri\ElasticQuery\Collection\AbstractCollection
 	{
 		$array = [];
 
-		/** @var \Spameri\ElasticQuery\Options\Sort $sort */
 		foreach ($this->collection as $sort) {
-			if ($sort->field === '_score') {
+			if ($sort instanceof \Spameri\ElasticQuery\Options\Sort && $sort->field === '_score') {
 				$array[] = $sort->field;
 				continue;
 			}
