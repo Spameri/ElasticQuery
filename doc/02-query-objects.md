@@ -192,6 +192,20 @@ new \Spameri\ElasticQuery\Query\Regexp(
 );
 ```
 
+##### TermSet Query
+Match documents containing at least N of M provided terms (N defined by a field or script).
+- Class: `\Spameri\ElasticQuery\Query\TermSet`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-terms-set-query.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Query/TermSet.php)
+
+```php
+new \Spameri\ElasticQuery\Query\TermSet(
+	field: 'programming_languages',
+	terms: ['c++', 'java', 'php'],
+	minimumShouldMatchField: 'required_matches',
+);
+```
+
 ##### WildCard Query
 Match using wildcard patterns (* and ?).
 - Class: `\Spameri\ElasticQuery\Query\WildCard`
