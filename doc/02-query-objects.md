@@ -490,6 +490,21 @@ new \Spameri\ElasticQuery\Query\GeoBoundingBox(
 
 ---
 
+##### Script Query
+Filter documents with a Painless boolean script.
+- Class: `\Spameri\ElasticQuery\Query\Script`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-script-query.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Query/Script.php)
+
+```php
+new \Spameri\ElasticQuery\Query\Script(
+	source: "doc['amount'].value > params.threshold",
+	params: ['threshold' => 100],
+);
+```
+
+---
+
 ## Boolean Query Collections
 
 These collections implement `LeafQueryInterface` and can be nested arbitrarily.
