@@ -601,6 +601,19 @@ new \Spameri\ElasticQuery\Query\Script(
 
 Positional matching — useful for term-position-aware searches. Span clauses can be composed via the `*_near`, `*_or`, etc. queries.
 
+##### SpanFirst Query
+Match a span only if it appears within the first N positions.
+- Class: `\Spameri\ElasticQuery\Query\SpanFirst`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-span-first-query.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Query/SpanFirst.php)
+
+```php
+new \Spameri\ElasticQuery\Query\SpanFirst(
+	match: new \Spameri\ElasticQuery\Query\SpanTerm('user', 'kimchy'),
+	end: 3,
+);
+```
+
 ##### SpanTerm Query
 Match a single term in a span-aware way.
 - Class: `\Spameri\ElasticQuery\Query\SpanTerm`
