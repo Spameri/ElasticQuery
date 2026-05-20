@@ -441,6 +441,23 @@ new \Spameri\ElasticQuery\Query\GeoDistance(
 );
 ```
 
+##### GeoShape Query
+Match `geo_shape`-indexed documents against an arbitrary geometry.
+- Class: `\Spameri\ElasticQuery\Query\GeoShape`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-geo-shape-query.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Query/GeoShape.php)
+
+```php
+new \Spameri\ElasticQuery\Query\GeoShape(
+	field: 'location',
+	shape: [
+		'type' => 'envelope',
+		'coordinates' => [[13.0, 53.0], [14.0, 52.0]],
+	],
+	relation: 'within', // intersects | disjoint | within | contains
+);
+```
+
 ##### GeoBoundingBox Query
 Match documents whose geo_point falls inside a top-left/bottom-right rectangle.
 - Class: `\Spameri\ElasticQuery\Query\GeoBoundingBox`
