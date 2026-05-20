@@ -597,6 +597,22 @@ new \Spameri\ElasticQuery\Query\Script(
 
 ---
 
+## Span Queries
+
+Positional matching — useful for term-position-aware searches. Span clauses can be composed via the `*_near`, `*_or`, etc. queries.
+
+##### SpanTerm Query
+Match a single term in a span-aware way.
+- Class: `\Spameri\ElasticQuery\Query\SpanTerm`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-span-term-query.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Query/SpanTerm.php)
+
+```php
+new \Spameri\ElasticQuery\Query\SpanTerm(field: 'text', query: 'quick');
+```
+
+---
+
 ## Boolean Query Collections
 
 These collections implement `LeafQueryInterface` and can be nested arbitrarily.
