@@ -88,6 +88,20 @@ new \Spameri\ElasticQuery\Query\Fuzzy(
 );
 ```
 
+##### CombinedFields Query
+BM25-aware multi-field full-text search that treats fields as one combined field.
+- Class: `\Spameri\ElasticQuery\Query\CombinedFields`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-combined-fields-query.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Query/CombinedFields.php)
+
+```php
+new \Spameri\ElasticQuery\Query\CombinedFields(
+	fields: ['title', 'abstract', 'body'],
+	query: 'distributed search',
+	operator: 'and',
+);
+```
+
 ##### MatchBoolPrefix Query
 Match where the final term is treated as a prefix and the rest as match terms.
 - Class: `\Spameri\ElasticQuery\Query\MatchBoolPrefix`
