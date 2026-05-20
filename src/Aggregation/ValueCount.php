@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Spameri\ElasticQuery\Aggregation;
 
+
 /**
  * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-metrics-valuecount-aggregation.html
  */
@@ -12,6 +13,8 @@ class ValueCount implements \Spameri\ElasticQuery\Aggregation\LeafAggregationInt
 
 	public function __construct(
 		private string $field,
+		private \Spameri\ElasticQuery\Script|null $script = null,
+		private string|null $format = null,
 	)
 	{
 	}
@@ -24,15 +27,21 @@ class ValueCount implements \Spameri\ElasticQuery\Aggregation\LeafAggregationInt
 
 
 	/**
-	 * @return array<string, array<string, string>>
+	 * @return array<string, array<string, mixed>>
 	 */
 	public function toArray(): array
 	{
-		return [
-			'value_count' => [
-				'field' => $this->field,
-			],
-		];
+		$array = ['field' => $this->field];
+
+		if ($this->script !== null) {
+			$array['script'] = $this->script->toArray();
+		}
+
+		if ($this->format !== null) {
+			$array['format'] = $this->format;
+		}
+
+		return ['value_count' => $array];
 	}
 
 }

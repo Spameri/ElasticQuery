@@ -5,10 +5,10 @@ namespace SpameriTests\ElasticQuery\Aggregation;
 require_once __DIR__ . '/../../bootstrap.php';
 
 
-class Avg extends \SpameriTests\ElasticQuery\AbstractElasticTestCase
+class Sum extends \SpameriTests\ElasticQuery\AbstractElasticTestCase
 {
 
-	protected const INDEX = 'spameri_test_aggregation_avg';
+	protected const INDEX = 'spameri_test_aggregation_sum';
 
 
 	protected function mapping(): array|null
@@ -19,21 +19,20 @@ class Avg extends \SpameriTests\ElasticQuery\AbstractElasticTestCase
 
 	public function testToArray(): void
 	{
-		\Tester\Assert::same('price', (new \Spameri\ElasticQuery\Aggregation\Avg('price'))->toArray()['avg']['field']);
+		\Tester\Assert::same('price', (new \Spameri\ElasticQuery\Aggregation\Sum('price'))->toArray()['sum']['field']);
 	}
 
 
 	public function testToArrayWithOptions(): void
 	{
-		$avg = new \Spameri\ElasticQuery\Aggregation\Avg(
+		$sum = new \Spameri\ElasticQuery\Aggregation\Sum(
 			field: 'price',
 			missing: 0,
-			script: new \Spameri\ElasticQuery\Script(source: "doc['price'].value"),
-			format: '00.00',
+			format: '0.00',
 		);
-		$array = $avg->toArray();
-		\Tester\Assert::same(0, $array['avg']['missing']);
-		\Tester\Assert::same("doc['price'].value", $array['avg']['script']['source']);
+		$array = $sum->toArray();
+		\Tester\Assert::same(0, $array['sum']['missing']);
+		\Tester\Assert::same('0.00', $array['sum']['format']);
 	}
 
 
@@ -43,7 +42,7 @@ class Avg extends \SpameriTests\ElasticQuery\AbstractElasticTestCase
 
 		$elasticQuery = new \Spameri\ElasticQuery\ElasticQuery();
 		$elasticQuery->aggregation()->add(new \Spameri\ElasticQuery\Aggregation\LeafAggregationCollection(
-			'price_avg', null, new \Spameri\ElasticQuery\Aggregation\Avg('price'),
+			'price_sum', null, new \Spameri\ElasticQuery\Aggregation\Sum('price'),
 		));
 
 		\Tester\Assert::same(1, $this->search($elasticQuery)->stats()->total());
@@ -51,4 +50,4 @@ class Avg extends \SpameriTests\ElasticQuery\AbstractElasticTestCase
 
 }
 
-(new Avg())->run();
+(new Sum())->run();

@@ -5,21 +5,15 @@ namespace SpameriTests\ElasticQuery\Aggregation;
 require_once __DIR__ . '/../../bootstrap.php';
 
 
-class Min extends \Tester\TestCase
+class Min extends \SpameriTests\ElasticQuery\AbstractElasticTestCase
 {
 
-	private const INDEX = 'spameri_test_aggregation_min';
+	protected const INDEX = 'spameri_test_aggregation_min';
 
 
-	public function setUp(): void
+	protected function mapping(): array|null
 	{
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'PUT');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-
-		\curl_exec($ch);
+		return ['mappings' => ['properties' => ['price' => ['type' => 'long']]]];
 	}
 
 
@@ -27,71 +21,67 @@ class Min extends \Tester\TestCase
 	{
 		$min = new \Spameri\ElasticQuery\Aggregation\Min('price');
 
-		$array = $min->toArray();
-
-		\Tester\Assert::true(isset($array['min']['field']));
-		\Tester\Assert::same('price', $array['min']['field']);
+		\Tester\Assert::same('price', $min->toArray()['min']['field']);
 	}
 
 
-	public function testKey(): void
+	public function testToArrayWithOptions(): void
 	{
-		$min = new \Spameri\ElasticQuery\Aggregation\Min('price');
+		$min = new \Spameri\ElasticQuery\Aggregation\Min(
+			field: 'price',
+			missing: 0,
+			script: new \Spameri\ElasticQuery\Script(source: "doc['price'].value * 2", lang: 'painless'),
+			format: '00.00',
+		);
 
-		\Tester\Assert::same('min_price', $min->key());
+		$array = $min->toArray();
+
+		\Tester\Assert::same(0, $array['min']['missing']);
+		\Tester\Assert::same("doc['price'].value * 2", $array['min']['script']['source']);
+		\Tester\Assert::same('00.00', $array['min']['format']);
 	}
 
 
 	public function testCreate(): void
 	{
-		$min = new \Spameri\ElasticQuery\Aggregation\Min('price');
+		$this->indexDocument(['price' => 100]);
+		$this->indexDocument(['price' => 200]);
 
 		$elasticQuery = new \Spameri\ElasticQuery\ElasticQuery();
 		$elasticQuery->aggregation()->add(
 			new \Spameri\ElasticQuery\Aggregation\LeafAggregationCollection(
 				'price_min',
 				null,
-				$min,
+				new \Spameri\ElasticQuery\Aggregation\Min('price'),
 			),
 		);
 
-		$document = new \Spameri\ElasticQuery\Document(
-			self::INDEX,
-			new \Spameri\ElasticQuery\Document\Body\Plain(
-				$elasticQuery->toArray(),
-			),
-		);
+		$result = $this->search($elasticQuery);
 
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . $document->index . '/_search');
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'GET');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-		\curl_setopt(
-			$ch,
-			\CURLOPT_POSTFIELDS,
-			\json_encode($document->toArray()['body']),
-		);
-
-		\Tester\Assert::noError(static function () use ($ch): void {
-			$response = \curl_exec($ch);
-			$resultMapper = new \Spameri\ElasticQuery\Response\ResultMapper();
-			/** @var \Spameri\ElasticQuery\Response\ResultSearch $result */
-			$result = $resultMapper->map(\json_decode($response, true));
-			\Tester\Assert::type(\Spameri\ElasticQuery\Response\ResultSearch::class, $result);
-		});
+		\Tester\Assert::same(2, $result->stats()->total());
 	}
 
 
-	public function tearDown(): void
+	public function testCreateWithOptions(): void
 	{
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'DELETE');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+		$this->indexDocument(['price' => 100]);
 
-		\curl_exec($ch);
+		$elasticQuery = new \Spameri\ElasticQuery\ElasticQuery();
+		$elasticQuery->aggregation()->add(
+			new \Spameri\ElasticQuery\Aggregation\LeafAggregationCollection(
+				'price_min',
+				null,
+				new \Spameri\ElasticQuery\Aggregation\Min(
+					field: 'price',
+					missing: 0,
+					format: '00.00',
+				),
+			),
+		);
+
+		$result = $this->search($elasticQuery);
+
+		\Tester\Assert::same(1, $result->stats()->total());
 	}
 
 }

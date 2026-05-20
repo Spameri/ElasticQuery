@@ -6,9 +6,9 @@ namespace Spameri\ElasticQuery\Aggregation;
 
 
 /**
- * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-metrics-max-aggregation.html
+ * @see https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-metrics-sum-aggregation.html
  */
-class Max implements \Spameri\ElasticQuery\Aggregation\LeafAggregationInterface
+class Sum implements \Spameri\ElasticQuery\Aggregation\LeafAggregationInterface
 {
 
 	public function __construct(
@@ -23,7 +23,7 @@ class Max implements \Spameri\ElasticQuery\Aggregation\LeafAggregationInterface
 
 	public function key(): string
 	{
-		return 'max_' . $this->field;
+		return 'sum_' . $this->field;
 	}
 
 
@@ -46,7 +46,7 @@ class Max implements \Spameri\ElasticQuery\Aggregation\LeafAggregationInterface
 			$array['format'] = $this->format;
 		}
 
-		return ['max' => $array];
+		return ['sum' => $array];
 	}
 
 }

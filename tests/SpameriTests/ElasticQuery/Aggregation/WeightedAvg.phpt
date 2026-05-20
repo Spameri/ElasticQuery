@@ -5,27 +5,31 @@ namespace SpameriTests\ElasticQuery\Aggregation;
 require_once __DIR__ . '/../../bootstrap.php';
 
 
-class WeightedAvg extends \Tester\TestCase
+class WeightedAvg extends \SpameriTests\ElasticQuery\AbstractElasticTestCase
 {
 
-	private const INDEX = 'spameri_test_aggregation_weighted_avg';
+	protected const INDEX = 'spameri_test_aggregation_weighted_avg';
 
 
-	public function setUp(): void
+	protected function mapping(): array|null
 	{
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'PUT');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-
-		\curl_exec($ch);
+		return [
+			'mappings' => [
+				'properties' => [
+					'grade' => ['type' => 'long'],
+					'weight' => ['type' => 'long'],
+				],
+			],
+		];
 	}
 
 
 	public function testToArray(): void
 	{
-		$weightedAvg = new \Spameri\ElasticQuery\Aggregation\WeightedAvg('grade', 'weight');
+		$weightedAvg = new \Spameri\ElasticQuery\Aggregation\WeightedAvg(
+			value: new \Spameri\ElasticQuery\Aggregation\WeightedAvg\WeightedAvgValue(field: 'grade'),
+			weight: new \Spameri\ElasticQuery\Aggregation\WeightedAvg\WeightedAvgValue(field: 'weight'),
+		);
 
 		$array = $weightedAvg->toArray();
 
@@ -34,17 +38,53 @@ class WeightedAvg extends \Tester\TestCase
 	}
 
 
+	public function testToArrayWithMissing(): void
+	{
+		$weightedAvg = new \Spameri\ElasticQuery\Aggregation\WeightedAvg(
+			value: new \Spameri\ElasticQuery\Aggregation\WeightedAvg\WeightedAvgValue(field: 'grade', missing: 0),
+			weight: new \Spameri\ElasticQuery\Aggregation\WeightedAvg\WeightedAvgValue(field: 'weight', missing: 1),
+			format: '00.00',
+		);
+
+		$array = $weightedAvg->toArray();
+
+		\Tester\Assert::same(0, $array['weighted_avg']['value']['missing']);
+		\Tester\Assert::same(1, $array['weighted_avg']['weight']['missing']);
+		\Tester\Assert::same('00.00', $array['weighted_avg']['format']);
+	}
+
+
+	public function testValueRequiresFieldOrScript(): void
+	{
+		\Tester\Assert::exception(
+			static function (): void {
+				new \Spameri\ElasticQuery\Aggregation\WeightedAvg\WeightedAvgValue();
+			},
+			\Spameri\ElasticQuery\Exception\InvalidArgumentException::class,
+		);
+	}
+
+
 	public function testKey(): void
 	{
-		$weightedAvg = new \Spameri\ElasticQuery\Aggregation\WeightedAvg('grade', 'weight');
+		$weightedAvg = new \Spameri\ElasticQuery\Aggregation\WeightedAvg(
+			value: new \Spameri\ElasticQuery\Aggregation\WeightedAvg\WeightedAvgValue(field: 'grade'),
+			weight: new \Spameri\ElasticQuery\Aggregation\WeightedAvg\WeightedAvgValue(field: 'weight'),
+		);
 
-		\Tester\Assert::same('weighted_avg_grade', $weightedAvg->key());
+		\Tester\Assert::same('weighted_avg', $weightedAvg->key());
 	}
 
 
 	public function testCreate(): void
 	{
-		$weightedAvg = new \Spameri\ElasticQuery\Aggregation\WeightedAvg('grade', 'weight');
+		$this->indexDocument(['grade' => 80, 'weight' => 2]);
+		$this->indexDocument(['grade' => 90, 'weight' => 3]);
+
+		$weightedAvg = new \Spameri\ElasticQuery\Aggregation\WeightedAvg(
+			value: new \Spameri\ElasticQuery\Aggregation\WeightedAvg\WeightedAvgValue(field: 'grade'),
+			weight: new \Spameri\ElasticQuery\Aggregation\WeightedAvg\WeightedAvgValue(field: 'weight'),
+		);
 
 		$elasticQuery = new \Spameri\ElasticQuery\ElasticQuery();
 		$elasticQuery->aggregation()->add(
@@ -55,43 +95,9 @@ class WeightedAvg extends \Tester\TestCase
 			),
 		);
 
-		$document = new \Spameri\ElasticQuery\Document(
-			self::INDEX,
-			new \Spameri\ElasticQuery\Document\Body\Plain(
-				$elasticQuery->toArray(),
-			),
-		);
+		$result = $this->search($elasticQuery);
 
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . $document->index . '/_search');
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'GET');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-		\curl_setopt(
-			$ch,
-			\CURLOPT_POSTFIELDS,
-			\json_encode($document->toArray()['body']),
-		);
-
-		\Tester\Assert::noError(static function () use ($ch): void {
-			$response = \curl_exec($ch);
-			$resultMapper = new \Spameri\ElasticQuery\Response\ResultMapper();
-			/** @var \Spameri\ElasticQuery\Response\ResultSearch $result */
-			$result = $resultMapper->map(\json_decode($response, true));
-			\Tester\Assert::type(\Spameri\ElasticQuery\Response\ResultSearch::class, $result);
-		});
-	}
-
-
-	public function tearDown(): void
-	{
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'DELETE');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-
-		\curl_exec($ch);
+		\Tester\Assert::same(2, $result->stats()->total());
 	}
 
 }

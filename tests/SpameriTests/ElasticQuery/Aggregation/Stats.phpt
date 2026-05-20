@@ -5,93 +5,47 @@ namespace SpameriTests\ElasticQuery\Aggregation;
 require_once __DIR__ . '/../../bootstrap.php';
 
 
-class Stats extends \Tester\TestCase
+class Stats extends \SpameriTests\ElasticQuery\AbstractElasticTestCase
 {
 
-	private const INDEX = 'spameri_test_aggregation_stats';
+	protected const INDEX = 'spameri_test_aggregation_stats';
 
 
-	public function setUp(): void
+	protected function mapping(): array|null
 	{
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'PUT');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-
-		\curl_exec($ch);
+		return ['mappings' => ['properties' => ['price' => ['type' => 'long']]]];
 	}
 
 
 	public function testToArray(): void
 	{
-		$stats = new \Spameri\ElasticQuery\Aggregation\Stats('price');
-
-		$array = $stats->toArray();
-
-		\Tester\Assert::true(isset($array['stats']['field']));
-		\Tester\Assert::same('price', $array['stats']['field']);
+		\Tester\Assert::same('price', (new \Spameri\ElasticQuery\Aggregation\Stats('price'))->toArray()['stats']['field']);
 	}
 
 
-	public function testKey(): void
+	public function testToArrayWithOptions(): void
 	{
-		$stats = new \Spameri\ElasticQuery\Aggregation\Stats('price');
-
-		\Tester\Assert::same('stats_price', $stats->key());
+		$stats = new \Spameri\ElasticQuery\Aggregation\Stats(
+			field: 'price',
+			missing: 0,
+			format: '00.00',
+		);
+		$array = $stats->toArray();
+		\Tester\Assert::same(0, $array['stats']['missing']);
+		\Tester\Assert::same('00.00', $array['stats']['format']);
 	}
 
 
 	public function testCreate(): void
 	{
-		$stats = new \Spameri\ElasticQuery\Aggregation\Stats('price');
+		$this->indexDocument(['price' => 100]);
 
 		$elasticQuery = new \Spameri\ElasticQuery\ElasticQuery();
-		$elasticQuery->aggregation()->add(
-			new \Spameri\ElasticQuery\Aggregation\LeafAggregationCollection(
-				'price_stats',
-				null,
-				$stats,
-			),
-		);
+		$elasticQuery->aggregation()->add(new \Spameri\ElasticQuery\Aggregation\LeafAggregationCollection(
+			'price_stats', null, new \Spameri\ElasticQuery\Aggregation\Stats('price'),
+		));
 
-		$document = new \Spameri\ElasticQuery\Document(
-			self::INDEX,
-			new \Spameri\ElasticQuery\Document\Body\Plain(
-				$elasticQuery->toArray(),
-			),
-		);
-
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . $document->index . '/_search');
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'GET');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-		\curl_setopt(
-			$ch,
-			\CURLOPT_POSTFIELDS,
-			\json_encode($document->toArray()['body']),
-		);
-
-		\Tester\Assert::noError(static function () use ($ch): void {
-			$response = \curl_exec($ch);
-			$resultMapper = new \Spameri\ElasticQuery\Response\ResultMapper();
-			/** @var \Spameri\ElasticQuery\Response\ResultSearch $result */
-			$result = $resultMapper->map(\json_decode($response, true));
-			\Tester\Assert::type(\Spameri\ElasticQuery\Response\ResultSearch::class, $result);
-		});
-	}
-
-
-	public function tearDown(): void
-	{
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'DELETE');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-
-		\curl_exec($ch);
+		\Tester\Assert::same(1, $this->search($elasticQuery)->stats()->total());
 	}
 
 }
