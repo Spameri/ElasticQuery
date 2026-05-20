@@ -183,6 +183,16 @@ new \Spameri\ElasticQuery\Aggregation\StringStats(
 );
 ```
 
+##### BoxPlot Aggregation
+Computes min, max, median and quartiles for plotting box-and-whisker diagrams.
+- Class: `\Spameri\ElasticQuery\Aggregation\BoxPlot`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-metrics-boxplot-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/BoxPlot.php)
+
+```php
+new \Spameri\ElasticQuery\Aggregation\BoxPlot(field: 'load_time');
+```
+
 ##### Cardinality Aggregation
 Approximate count of distinct values using HyperLogLog++.
 - Class: `\Spameri\ElasticQuery\Aggregation\Cardinality`
