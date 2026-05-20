@@ -370,6 +370,20 @@ new \Spameri\ElasticQuery\Aggregation\SignificantTerms(
 );
 ```
 
+##### SignificantText Aggregation
+Like significant terms but optimised for free-text fields.
+- Class: `\Spameri\ElasticQuery\Aggregation\SignificantText`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-significanttext-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/SignificantText.php)
+
+```php
+new \Spameri\ElasticQuery\Aggregation\SignificantText(
+	field: 'content',
+	size: 20,
+	filterDuplicateText: true,
+);
+```
+
 ##### Nested Aggregation
 Aggregates on nested documents.
 - Class: `\Spameri\ElasticQuery\Aggregation\Nested`
