@@ -695,6 +695,19 @@ new \Spameri\ElasticQuery\Aggregation\BucketScript(
 );
 ```
 
+##### BucketSelector Aggregation
+Filters buckets to those whose script returns true.
+- Class: `\Spameri\ElasticQuery\Aggregation\BucketSelector`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-pipeline-bucket-selector-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/BucketSelector.php)
+
+```php
+new \Spameri\ElasticQuery\Aggregation\BucketSelector(
+	bucketsPath: ['totalSales' => 'total_sales'],
+	script: 'params.totalSales > 100',
+);
+```
+
 ---
 
 ## Aggregation Collections
