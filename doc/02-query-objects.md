@@ -519,6 +519,19 @@ new \Spameri\ElasticQuery\Query\MoreLikeThis(
 );
 ```
 
+##### RankFeature Query
+Boost documents by a `rank_feature` field (saturation/log/sigmoid/linear functions).
+- Class: `\Spameri\ElasticQuery\Query\RankFeature`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-rank-feature-query.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Query/RankFeature.php)
+
+```php
+new \Spameri\ElasticQuery\Query\RankFeature(
+	field: 'pagerank',
+	function: ['saturation' => ['pivot' => 8]],
+);
+```
+
 ##### Script Query
 Filter documents with a Painless boolean script.
 - Class: `\Spameri\ElasticQuery\Query\Script`
