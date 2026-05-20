@@ -695,6 +695,19 @@ new \Spameri\ElasticQuery\Query\SpanMulti(
 );
 ```
 
+##### FieldMaskingSpan Query
+Mask a span clause to act on a different field — enables span queries across multiple fields.
+- Class: `\Spameri\ElasticQuery\Query\FieldMaskingSpan`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-span-field-masking-query.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Query/FieldMaskingSpan.php)
+
+```php
+new \Spameri\ElasticQuery\Query\FieldMaskingSpan(
+	query: new \Spameri\ElasticQuery\Query\SpanTerm('text.stems', 'fox'),
+	field: 'text',
+);
+```
+
 ##### SpanTerm Query
 Match a single term in a span-aware way.
 - Class: `\Spameri\ElasticQuery\Query\SpanTerm`
