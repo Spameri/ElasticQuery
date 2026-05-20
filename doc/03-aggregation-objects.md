@@ -405,6 +405,19 @@ new \Spameri\ElasticQuery\Aggregation\GeoDistance(
 );
 ```
 
+##### GeoHashGrid Aggregation
+Groups geo points into geohash-prefixed cells of configurable precision.
+- Class: `\Spameri\ElasticQuery\Aggregation\GeoHashGrid`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-geohashgrid-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/GeoHashGrid.php)
+
+```php
+new \Spameri\ElasticQuery\Aggregation\GeoHashGrid(
+	field: 'location',
+	precision: 5,
+);
+```
+
 ##### Nested Aggregation
 Aggregates on nested documents.
 - Class: `\Spameri\ElasticQuery\Aggregation\Nested`
