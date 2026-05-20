@@ -384,6 +384,27 @@ new \Spameri\ElasticQuery\Aggregation\SignificantText(
 );
 ```
 
+##### GeoDistance Aggregation
+Groups documents into concentric distance buckets around an origin point.
+- Class: `\Spameri\ElasticQuery\Aggregation\GeoDistance`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-geodistance-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/GeoDistance.php)
+
+```php
+$ranges = new \Spameri\ElasticQuery\Aggregation\RangeValueCollection(
+	new \Spameri\ElasticQuery\Aggregation\RangeValue('near', null, 100),
+	new \Spameri\ElasticQuery\Aggregation\RangeValue('far', 100, null),
+);
+
+new \Spameri\ElasticQuery\Aggregation\GeoDistance(
+	field: 'location',
+	lat: 50.0,
+	lon: 14.4,
+	ranges: $ranges,
+	unit: 'km',
+);
+```
+
 ##### Nested Aggregation
 Aggregates on nested documents.
 - Class: `\Spameri\ElasticQuery\Aggregation\Nested`
