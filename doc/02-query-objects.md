@@ -297,6 +297,19 @@ new \Spameri\ElasticQuery\Query\WildCard(
 
 Wrap other queries to combine, filter, or modify their scoring.
 
+##### ConstantScore Query
+Wraps a filter so all matching docs share the same score.
+- Class: `\Spameri\ElasticQuery\Query\ConstantScore`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-constant-score-query.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Query/ConstantScore.php)
+
+```php
+new \Spameri\ElasticQuery\Query\ConstantScore(
+	filter: new \Spameri\ElasticQuery\Query\Term('status', 'active'),
+	boost: 1.2,
+);
+```
+
 ##### Boosting Query
 Match `positive` docs but lower the score of `negative` matches.
 - Class: `\Spameri\ElasticQuery\Query\Boosting`
