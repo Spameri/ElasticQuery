@@ -553,6 +553,24 @@ new \Spameri\ElasticQuery\Aggregation\ReverseNested(path: 'parent_field');
 
 ---
 
+## Pipeline Aggregations
+
+Aggregations whose input is the output of other aggregations (referenced by `bucketsPath`).
+
+##### AvgBucket Aggregation
+Average of values across sibling buckets.
+- Class: `\Spameri\ElasticQuery\Aggregation\AvgBucket`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-pipeline-avg-bucket-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/AvgBucket.php)
+
+```php
+new \Spameri\ElasticQuery\Aggregation\AvgBucket(
+	bucketsPath: 'sales_per_month>sales',
+);
+```
+
+---
+
 ## Aggregation Collections
 
 ##### AggregationCollection
