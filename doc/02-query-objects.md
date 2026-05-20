@@ -546,6 +546,19 @@ new \Spameri\ElasticQuery\Query\DistanceFeature(
 );
 ```
 
+##### Pinned Query
+Promote specific document IDs above an organic query's results.
+- Class: `\Spameri\ElasticQuery\Query\Pinned`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-pinned-query.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Query/Pinned.php)
+
+```php
+new \Spameri\ElasticQuery\Query\Pinned(
+	organic: new \Spameri\ElasticQuery\Query\ElasticMatch('content', 'elasticsearch'),
+	ids: ['1', '4', '100'],
+);
+```
+
 ##### Script Query
 Filter documents with a Painless boolean script.
 - Class: `\Spameri\ElasticQuery\Query\Script`
