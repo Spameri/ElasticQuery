@@ -441,6 +441,22 @@ Aggregates on nested documents.
 new \Spameri\ElasticQuery\Aggregation\Nested(path: 'comments');
 ```
 
+##### Composite Aggregation
+Paginated multi-source buckets — useful for retrieving all unique value combinations.
+- Class: `\Spameri\ElasticQuery\Aggregation\Composite`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-bucket-composite-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/Composite.php)
+
+```php
+$composite = new \Spameri\ElasticQuery\Aggregation\Composite(
+	key: 'my_buckets',
+	source: new \Spameri\ElasticQuery\Aggregation\Term('product'),
+	size: 100,
+);
+$composite->addSource(new \Spameri\ElasticQuery\Aggregation\Histogram('price', 50));
+// $composite->addSource(new \Spameri\ElasticQuery\Aggregation\DateHistogram('date', calendarInterval: 'day'));
+```
+
 ##### ReverseNested Aggregation
 Moves back from a nested context to the parent (or an ancestor at `path`).
 - Class: `\Spameri\ElasticQuery\Aggregation\ReverseNested`
