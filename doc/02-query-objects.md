@@ -179,15 +179,27 @@ new \Spameri\ElasticQuery\Query\Term(
 ```
 
 ##### Terms Query
-Match any of multiple exact values.
+Match any of multiple exact values, or fetch values from another document.
 - Class: `\Spameri\ElasticQuery\Query\Terms`
 - [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-terms-query.html)
 - [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Query/Terms.php)
 
 ```php
+// Inline values
 new \Spameri\ElasticQuery\Query\Terms(
 	field: 'category',
-	values: ['books', 'movies', 'music'],
+	query: ['books', 'movies', 'music'],
+);
+
+// terms_lookup — values pulled from another document
+new \Spameri\ElasticQuery\Query\Terms(
+	field: 'user_id',
+	query: new \Spameri\ElasticQuery\Query\TermsLookup(
+		index: 'users',
+		id: '42',
+		path: 'friends',
+		routing: null,
+	),
 );
 ```
 
@@ -418,12 +430,98 @@ Query nested objects with their own scope.
 - [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Query/Nested.php)
 
 ```php
-$nested = new \Spameri\ElasticQuery\Query\Nested(path: 'comments');
+$nested = new \Spameri\ElasticQuery\Query\Nested(
+	path: 'comments',
+	scoreMode: \Spameri\ElasticQuery\Query\Nested::SCORE_MODE_AVG,    // optional
+	ignoreUnmapped: false,                                            // optional
+	innerHits: new \Spameri\ElasticQuery\Query\InnerHits(             // optional
+		name: 'matched_comments',
+		size: 5,
+	),
+);
 $nested->getQuery()->must()->add(
 	new \Spameri\ElasticQuery\Query\Term('comments.author', 'john')
 );
-$nested->getQuery()->must()->add(
-	new \Spameri\ElasticQuery\Query\Range('comments.date', gte: '2024-01-01')
+```
+
+##### Knn Query
+k-nearest neighbour vector similarity search.
+- Class: `\Spameri\ElasticQuery\Query\Knn`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-knn-query.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Query/Knn.php)
+
+```php
+new \Spameri\ElasticQuery\Query\Knn(
+	field: 'vector',
+	queryVector: [1.0, 2.0, 3.0],
+	k: 5,
+	numCandidates: 50,
+	similarity: 0.7,                                              // optional
+	filter: new \Spameri\ElasticQuery\Query\Term('status', 'on'), // optional
+	boost: 1.0,
+);
+```
+
+##### SparseVector Query
+Sparse vector / ELSER-style query.
+- Class: `\Spameri\ElasticQuery\Query\SparseVector`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-sparse-vector-query.html)
+
+```php
+// Via inference endpoint
+new \Spameri\ElasticQuery\Query\SparseVector(
+	field: 'tokens',
+	inferenceId: '.elser_model_2',
+	query: 'big cat',
+);
+
+// Via pre-computed tokens
+new \Spameri\ElasticQuery\Query\SparseVector(
+	field: 'tokens',
+	queryVector: ['lion' => 0.5, 'tiger' => 0.7],
+);
+```
+
+##### Semantic Query
+Query a `semantic_text` field.
+- Class: `\Spameri\ElasticQuery\Query\Semantic`
+
+```php
+new \Spameri\ElasticQuery\Query\Semantic(field: 'inference_field', query: 'large cat');
+```
+
+##### TextExpansion Query
+Legacy ELSER (`model_id`/`model_text`).
+- Class: `\Spameri\ElasticQuery\Query\TextExpansion`
+
+```php
+new \Spameri\ElasticQuery\Query\TextExpansion(
+	field: 'tokens',
+	modelId: '.elser_model_2',
+	modelText: 'big cat',
+);
+```
+
+##### RuleQuery
+Apply Search Application query rules over an organic query.
+- Class: `\Spameri\ElasticQuery\Query\RuleQuery`
+
+```php
+new \Spameri\ElasticQuery\Query\RuleQuery(
+	organic: new \Spameri\ElasticQuery\Query\ElasticMatch('title', 'puggles'),
+	rulesetIds: ['my-ruleset'],
+	matchCriteria: ['query_string' => 'puggles'],
+);
+```
+
+##### WeightedTokens Query
+Token weights against a sparse_vector field.
+- Class: `\Spameri\ElasticQuery\Query\WeightedTokens`
+
+```php
+new \Spameri\ElasticQuery\Query\WeightedTokens(
+	field: 'tokens',
+	tokens: ['lion' => 0.5, 'tiger' => 0.7],
 );
 ```
 
@@ -438,6 +536,11 @@ new \Spameri\ElasticQuery\Query\GeoDistance(
 	field: 'location',
 	lat: 40.7128,
 	lon: -74.0060,
+	distance: '50km',
+	distanceType: 'arc',          // optional: 'arc' | 'plane'
+	validationMethod: 'STRICT',   // optional: 'STRICT' | 'COERCE' | 'IGNORE_MALFORMED'
+	ignoreUnmapped: false,         // optional
+	boost: 1.0,
 );
 ```
 

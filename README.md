@@ -4,13 +4,16 @@ A PHP library that converts Elasticsearch query DSL into strongly-typed PHP obje
 
 ## Features
 
-- **Type-safe queries** - Full-text, term-level, compound, geo, and nested queries
-- **Aggregations** - Metric (min, max, avg) and bucket (terms, histogram, range, filter) aggregations
-- **Response mapping** - Automatic mapping of Elasticsearch responses to typed objects
-- **Index mapping** - Define index settings, analyzers, tokenizers, and filters
-- **Function scoring** - Custom scoring with field value factors, weights, and random scores
-- **Highlighting** - Search result highlighting support
-- **Pagination & sorting** - Options for size, offset, scroll, and geo-distance sorting
+- **Type-safe queries** — full-text, term-level, compound, geo, nested, joining, vector (knn / sparse_vector / semantic), span queries, and rule queries
+- **Aggregations** — metric (min, max, avg, stats, weighted_avg, top_hits, top_metrics, t_test, geo_line, …), bucket (terms, histogram, date_histogram, range, filter, filters, composite with typed sources, ip_prefix, time_series, …), pipeline (cumulative_*, bucket_*, normalize, serial_diff, inference, …)
+- **Function scoring** — field value factor, weight, random, decay (gauss / linear / exp), script_score; score_mode + boost_mode
+- **Sort** — field, geo-distance, script-based, with nested sort (filter / max_children / recursive)
+- **Highlight** — per-field config (type, fragment_size, boundary scanner, encoder, fragmenter, highlight_query, matched_fields, no_match_size, order, phrase_limit, …)
+- **Search options** — `_source`, `track_total_hits`, `search_after`, `pit`, `collapse`, `rescore`, `suggest` (term / phrase / completion), `runtime_mappings`, `script_fields`, `docvalue_fields`, `stored_fields`, `terminate_after`, `timeout`, `profile`, `stats`, `ext`
+- **Response mapping** — automatic mapping of Elasticsearch responses (including composite/named buckets, IP/date range buckets) to typed objects
+- **Index mapping** — index settings, analyzers, tokenizers, filters
+
+See [CHANGELOG.md](CHANGELOG.md) for the full list of types and arguments added in v2.
 
 ## Requirements
 
