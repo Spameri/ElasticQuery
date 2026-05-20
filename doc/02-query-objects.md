@@ -532,6 +532,20 @@ new \Spameri\ElasticQuery\Query\RankFeature(
 );
 ```
 
+##### DistanceFeature Query
+Boost documents whose date or geo_point is close to an origin.
+- Class: `\Spameri\ElasticQuery\Query\DistanceFeature`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-distance-feature-query.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Query/DistanceFeature.php)
+
+```php
+new \Spameri\ElasticQuery\Query\DistanceFeature(
+	field: 'production_date',
+	origin: 'now',
+	pivot: '7d',
+);
+```
+
 ##### Script Query
 Filter documents with a Painless boolean script.
 - Class: `\Spameri\ElasticQuery\Query\Script`
