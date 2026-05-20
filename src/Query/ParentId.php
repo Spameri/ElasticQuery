@@ -14,6 +14,7 @@ class ParentId implements \Spameri\ElasticQuery\Query\LeafQueryInterface
 		private string $type,
 		private string $id,
 		private bool|null $ignoreUnmapped = null,
+		private float $boost = 1.0,
 	)
 	{
 	}
@@ -33,6 +34,7 @@ class ParentId implements \Spameri\ElasticQuery\Query\LeafQueryInterface
 		$body = [
 			'type' => $this->type,
 			'id' => $this->id,
+			'boost' => $this->boost,
 		];
 
 		if ($this->ignoreUnmapped !== null) {

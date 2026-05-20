@@ -5,52 +5,67 @@ namespace SpameriTests\ElasticQuery\Query;
 require_once __DIR__ . '/../../bootstrap.php';
 
 
-class ParentId extends \Tester\TestCase
+class ParentId extends \SpameriTests\ElasticQuery\AbstractElasticTestCase
 {
 
-	private const INDEX = 'spameri_test_query_parent_id';
+	protected const INDEX = 'spameri_test_query_parent_id';
 
 
-	public function setUp(): void
+	protected function mapping(): array|null
 	{
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'PUT');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-
-		\curl_exec($ch);
+		return [
+			'mappings' => [
+				'properties' => [
+					'my_join_field' => [
+						'type' => 'join',
+						'relations' => ['blog' => 'comment'],
+					],
+				],
+			],
+		];
 	}
 
 
 	public function testToArray(): void
 	{
-		$parentId = new \Spameri\ElasticQuery\Query\ParentId(type: 'comment', id: '1');
+		$parentId = new \Spameri\ElasticQuery\Query\ParentId(type: 'comment', id: '1', boost: 2.0);
 
 		$array = $parentId->toArray();
 
 		\Tester\Assert::same('comment', $array['parent_id']['type']);
 		\Tester\Assert::same('1', $array['parent_id']['id']);
+		\Tester\Assert::same(2.0, $array['parent_id']['boost']);
 	}
 
 
 	public function testKey(): void
 	{
 		$parentId = new \Spameri\ElasticQuery\Query\ParentId('comment', '1');
-
 		\Tester\Assert::same('parent_id_comment_1', $parentId->key());
 	}
 
 
-	public function tearDown(): void
+	public function testCreate(): void
 	{
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'DELETE');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+		$this->indexDocument(['my_join_field' => 'blog'], id: '1');
+		$this->request(
+			'PUT',
+			self::INDEX . '/_doc/2?refresh=true&routing=1',
+			['my_join_field' => ['name' => 'comment', 'parent' => '1']],
+		);
 
-		\curl_exec($ch);
+		$query = new \Spameri\ElasticQuery\ElasticQuery(
+			new \Spameri\ElasticQuery\Query\QueryCollection(
+				null,
+				new \Spameri\ElasticQuery\Query\MustCollection(
+					new \Spameri\ElasticQuery\Query\ParentId(type: 'comment', id: '1'),
+				),
+			),
+		);
+
+		$result = $this->search($query);
+
+		\Tester\Assert::same(1, $result->stats()->total());
 	}
 
 }

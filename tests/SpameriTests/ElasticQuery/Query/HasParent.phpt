@@ -5,21 +5,26 @@ namespace SpameriTests\ElasticQuery\Query;
 require_once __DIR__ . '/../../bootstrap.php';
 
 
-class HasParent extends \Tester\TestCase
+class HasParent extends \SpameriTests\ElasticQuery\AbstractElasticTestCase
 {
 
-	private const INDEX = 'spameri_test_query_has_parent';
+	protected const INDEX = 'spameri_test_query_has_parent';
 
 
-	public function setUp(): void
+	protected function mapping(): array|null
 	{
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'PUT');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
-
-		\curl_exec($ch);
+		return [
+			'mappings' => [
+				'properties' => [
+					'my_join_field' => [
+						'type' => 'join',
+						'relations' => ['blog' => 'comment'],
+					],
+					'tag' => ['type' => 'keyword'],
+					'author' => ['type' => 'keyword'],
+				],
+			],
+		];
 	}
 
 
@@ -38,6 +43,18 @@ class HasParent extends \Tester\TestCase
 	}
 
 
+	public function testToArrayWithInnerHits(): void
+	{
+		$hasParent = new \Spameri\ElasticQuery\Query\HasParent(
+			parentType: 'blog',
+			query: new \Spameri\ElasticQuery\Query\Term('tag', 'tech'),
+			innerHits: new \Spameri\ElasticQuery\Query\InnerHits(name: 'parent'),
+		);
+
+		\Tester\Assert::same('parent', $hasParent->toArray()['has_parent']['inner_hits']['name']);
+	}
+
+
 	public function testKey(): void
 	{
 		$hasParent = new \Spameri\ElasticQuery\Query\HasParent(
@@ -49,15 +66,32 @@ class HasParent extends \Tester\TestCase
 	}
 
 
-	public function tearDown(): void
+	public function testCreate(): void
 	{
-		$ch = \curl_init();
-		\curl_setopt($ch, \CURLOPT_URL, \ELASTICSEARCH_HOST . '/' . self::INDEX);
-		\curl_setopt($ch, \CURLOPT_RETURNTRANSFER, 1);
-		\curl_setopt($ch, \CURLOPT_CUSTOMREQUEST, 'DELETE');
-		\curl_setopt($ch, \CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+		$this->indexDocument(['tag' => 'tech', 'my_join_field' => 'blog'], id: '1');
+		$this->request(
+			'PUT',
+			self::INDEX . '/_doc/2?refresh=true&routing=1',
+			['author' => 'john', 'my_join_field' => ['name' => 'comment', 'parent' => '1']],
+		);
 
-		\curl_exec($ch);
+		$query = new \Spameri\ElasticQuery\ElasticQuery(
+			new \Spameri\ElasticQuery\Query\QueryCollection(
+				null,
+				new \Spameri\ElasticQuery\Query\MustCollection(
+					new \Spameri\ElasticQuery\Query\HasParent(
+						parentType: 'blog',
+						query: new \Spameri\ElasticQuery\Query\Term('tag', 'tech'),
+						score: true,
+						innerHits: new \Spameri\ElasticQuery\Query\InnerHits(),
+					),
+				),
+			),
+		);
+
+		$result = $this->search($query);
+
+		\Tester\Assert::same(1, $result->stats()->total());
 	}
 
 }
