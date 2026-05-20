@@ -121,6 +121,19 @@ new \Spameri\ElasticQuery\Aggregation\ExtendedStats(
 );
 ```
 
+##### Percentiles Aggregation
+Calculates percentile values (e.g. p50, p95, p99) over a numeric field.
+- Class: `\Spameri\ElasticQuery\Aggregation\Percentiles`
+- [Documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-aggregations-metrics-percentile-aggregation.html)
+- [Implementation](https://github.com/Spameri/ElasticQuery/blob/master/src/Aggregation/Percentiles.php)
+
+```php
+new \Spameri\ElasticQuery\Aggregation\Percentiles(
+	field: 'load_time',
+	percents: [50, 95, 99], // Optional, default [1, 5, 25, 50, 75, 95, 99]
+);
+```
+
 ##### Cardinality Aggregation
 Approximate count of distinct values using HyperLogLog++.
 - Class: `\Spameri\ElasticQuery\Aggregation\Cardinality`
