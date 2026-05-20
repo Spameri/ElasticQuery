@@ -195,6 +195,57 @@ class FilterCollection extends \Tester\TestCase
 	}
 
 
+	public function testShouldArm(): void
+	{
+		$filter = new \Spameri\ElasticQuery\Filter\FilterCollection();
+		$filter->should()->add(new \Spameri\ElasticQuery\Query\Term('status', 'a'));
+		$filter->should()->add(new \Spameri\ElasticQuery\Query\Term('status', 'b'));
+
+		$array = $filter->toArray();
+
+		\Tester\Assert::count(2, $array['bool']['should']);
+	}
+
+
+	public function testMustNotArm(): void
+	{
+		$filter = new \Spameri\ElasticQuery\Filter\FilterCollection();
+		$filter->mustNot()->add(new \Spameri\ElasticQuery\Query\Term('deleted', true));
+
+		$array = $filter->toArray();
+
+		\Tester\Assert::count(1, $array['bool']['must_not']);
+	}
+
+
+	public function testFilterArm(): void
+	{
+		$filter = new \Spameri\ElasticQuery\Filter\FilterCollection();
+		$filter->filter()->add(new \Spameri\ElasticQuery\Query\Term('region', 'eu'));
+
+		$array = $filter->toArray();
+
+		\Tester\Assert::count(1, $array['bool']['filter']);
+	}
+
+
+	public function testAllArmsCombined(): void
+	{
+		$filter = new \Spameri\ElasticQuery\Filter\FilterCollection();
+		$filter->must()->add(new \Spameri\ElasticQuery\Query\Term('m', 'x'));
+		$filter->should()->add(new \Spameri\ElasticQuery\Query\Term('s', 'y'));
+		$filter->mustNot()->add(new \Spameri\ElasticQuery\Query\Term('mn', 'z'));
+		$filter->filter()->add(new \Spameri\ElasticQuery\Query\Term('f', 'w'));
+
+		$array = $filter->toArray();
+
+		\Tester\Assert::count(1, $array['bool']['must']);
+		\Tester\Assert::count(1, $array['bool']['should']);
+		\Tester\Assert::count(1, $array['bool']['must_not']);
+		\Tester\Assert::count(1, $array['bool']['filter']);
+	}
+
+
 	public function testComplexFilterScenario(): void
 	{
 		$filter = new \Spameri\ElasticQuery\Filter\FilterCollection();
