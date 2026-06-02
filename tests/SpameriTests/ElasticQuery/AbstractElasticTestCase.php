@@ -105,7 +105,6 @@ abstract class AbstractElasticTestCase extends \Tester\TestCase
 		}
 
 		$response = \curl_exec($ch);
-		\curl_close($ch);
 
 		if ($response === false) {
 			return [];
